@@ -1,0 +1,30 @@
+/*
+ * videocompressorthread.h
+ *
+ *  Created on: Jan 14, 2010
+ *      Author: meg2meg
+ */
+
+#ifndef VIDEOCOMPRESSORTHREAD_H_
+#define VIDEOCOMPRESSORTHREAD_H_
+
+#include "stoppablethread.h"
+#include "cycdatabuffer.h"
+
+class VideoCompressorThread : public StoppableThread
+{
+public:
+	VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, bool _color, int _jpgQuality);
+	virtual ~VideoCompressorThread();
+
+protected:
+	virtual void stoppableRun();
+
+private:
+	CycDataBuffer*	inpBuf;
+	CycDataBuffer*	outBuf;
+	bool			color;
+	int				jpgQuality;
+};
+
+#endif /* VIDEOCOMPRESSORTHREAD_H_ */
