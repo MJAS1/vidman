@@ -31,8 +31,6 @@ CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* _cycBuf, boo
 
 CameraThread::~CameraThread()
 {
-    for(size_t i = 0; i < events.size(); i++)
-        delete events[i];
 }
 
 

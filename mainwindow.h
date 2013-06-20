@@ -24,6 +24,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void toggleStart(bool);
     
 private slots:
     void onStart();
@@ -42,7 +43,6 @@ private slots:
     void addFadeOutEvent();
     void addImageEvent();
     void addTextEvent();
-
     void addImageObject();
 
     void updateTime();
@@ -52,15 +52,11 @@ private slots:
 private:
     Ui::MainWindow*     ui;
 
-    void                initVideo();
-
     bool                load(const QString &f);
     bool                maybeSave();
     void                setCurrentFileName(const QString &fileName);
 
     cv::VideoCapture*   capCam;
-    dc1394_t*           dc1394Context;
-    dc1394camera_t*     camera;
     VideoDialog*        videoDialog;
 
     QTimer*             timeTmr;

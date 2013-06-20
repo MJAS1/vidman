@@ -13,15 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    capCam = new cv::VideoCapture;
 
-    capCam->open(300);
-    if(!capCam->isOpened())
-           ui->startButton->setEnabled(false);
-
-    initVideo();
-
-    videoDialog = new VideoDialog(capCam, camera, 1);
+    videoDialog = new VideoDialog(1, this);
     videoDialog->show();
 
     timeTmr = new QTimer;
@@ -48,11 +41,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    videoDialog->stopThreads();
-    dc1394_camera_free(camera);
-    dc1394_free(dc1394Context);
-    delete capCam;
     delete ui;
+}
+
+void MainWindow::toggleStart(bool arg)
+{
+   ui->startButton->setEnabled(arg);
 }
 
 void MainWindow::onStart()
@@ -249,44 +243,4 @@ void MainWindow::closeEvent(QCloseEvent *e)
     }
     else
         e->ignore();
-}
-
-void MainWindow::initVideo()
-{
-    dc1394camera_list_t*	camList;
-    dc1394error_t			err;
-
-    dc1394Context = dc1394_new();
-    if(!dc1394Context)
-    {
-        std::cerr << "Cannot initialize!" << std::endl;
-        abort();
-    }
-
-    err = dc1394_camera_enumerate(dc1394Context, &camList);
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Failed to enumerate cameras" << std::endl;
-        abort();
-    }
-
-    camera = NULL;
-
-    if (camList->num == 0)
-    {
-        std::cerr << "No cameras found" << std::endl;
-        return;
-    }
-
-    // use the first camera in the list
-    camera = dc1394_camera_new(dc1394Context, camList->ids[0].guid);
-    if (!camera)
-    {
-        std::cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << std::endl;
-        abort();
-    }
-    std::cout << "Using camera with GUID " << camera->guid << std::endl;
-
-
-    dc1394_camera_free_list(camList);
 }

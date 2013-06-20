@@ -15,6 +15,8 @@
 #include "eventcontainer.h"
 #include "eventreader.h"
 
+class MainWindow;
+
 namespace Ui {
 class VideoDialog;
 }
@@ -24,7 +26,7 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit VideoDialog(cv::VideoCapture *capCam, dc1394camera_t *camera, int _cameraId, QWidget *parent = 0);
+    explicit VideoDialog(int _cameraId, MainWindow *window, QWidget *parent = 0);
     ~VideoDialog();
     volatile bool color;
 
@@ -46,10 +48,15 @@ private slots:
     void getNextEvent();
 
 private:
+    bool initVideo();
+
     Ui::VideoDialog *ui;
+    MainWindow*     window;
 
     cv::VideoCapture*       capCam;
+
     dc1394camera_t*         camera;
+    dc1394_t*           dc1394Context;
 
     CameraThread*       	cameraThread;
     CycDataBuffer*			cycVideoBufRaw;
@@ -57,7 +64,7 @@ private:
     VideoFileWriter*		videoFileWriter;
     VideoCompressorThread*	videoCompressorThread;
 
-    bool        isRec;
+    bool        isRec, videoAvailable;
 
     char*		imBuf;
 
