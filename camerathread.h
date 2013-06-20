@@ -37,11 +37,9 @@ private:
     cv::Mat                     frame;
     CycDataBuffer*              cycBuf;
 
-    bool                        color;
-    bool                        eventsOn;
+    bool                        color, eventsOn;
 
     EventContainer              events;
-    std::vector<std::string>    images;
 
     void                        applyEvents();
 };
