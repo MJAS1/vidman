@@ -35,15 +35,23 @@ int Event::getId() const
     return id;
 }
 
-int RemoveEvent::apply(cv::Mat &frame)
+void RemoveEvent::apply(cv::Mat &frame)
 {
-    return getId();
 }
 
-int FlipEvent::apply(cv::Mat &frame)
+EventType RemoveEvent::getRemoveType() const
+{
+    return removeType;
+}
+
+int RemoveEvent::getRemoveId() const
+{
+    return removeId;
+}
+
+void FlipEvent::apply(cv::Mat &frame)
 {
     cv::flip(frame, frame, 1);
-    return -1;
 }
 
 FadeInEvent::FadeInEvent(float start, float duration, float delay, int id) :
@@ -63,14 +71,12 @@ void FadeInEvent::increaseAmount()
     }
 }
 
-int FadeInEvent::apply(cv::Mat &frame)
+void FadeInEvent::apply(cv::Mat &frame)
 {
     if(!timer->isActive() && !stopped)
         timer->start(1000.0/255.0*duration);
 
     frame += cv::Scalar(amount, amount, amount);
-
-    return -1;
 }
 
 FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id) :
@@ -91,27 +97,23 @@ void FadeOutEvent::decreaseAmount()
 }
 
 
-int FadeOutEvent::apply(cv::Mat &frame)
+void FadeOutEvent::apply(cv::Mat &frame)
 {
     if(!timer->isActive() && !stopped)
         timer->start(1000.0/255.0*duration);
 
     frame += cv::Scalar(amount, amount, amount);
-
-    return -1;
 }
 
 ImageEvent::ImageEvent(float start, cv::Point2i pos, const cv::Mat& image, float delay, int id) :
-    Event(EVENT_IMAGE, start, delay, duration, id), image(image), pos(pos)
+    Event(EVENT_IMAGE, start, delay, 0, id), image(image), pos(pos)
 {
 }
 
-int ImageEvent::apply(cv::Mat &frame)
+void ImageEvent::apply(cv::Mat &frame)
 {
     if(!frame.empty() && !image.empty())
         overlayImage(frame, image, frame, pos);
-
-    return -1;
 }
 
 //Code from Jepson's Blog http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
@@ -162,22 +164,19 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-int TextEvent::apply(cv::Mat &frame)
+void TextEvent::apply(cv::Mat &frame)
 {
     cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 2, cv::Scalar(256, 100, 100), 2);
-    return -1;
 }
 
-int RotateEvent::apply(cv::Mat &frame)
+void RotateEvent::apply(cv::Mat &frame)
 {
     cv::Point2f center(frame.cols/2., frame.rows/2.);
     cv::Mat rotMat = getRotationMatrix2D(center, angle, 1.0);
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
-
-    return -1;
 }
 
-int FreezeEvent::apply(cv::Mat &frame)
+void FreezeEvent::apply(cv::Mat &frame)
 {
     if(!started)
     {
@@ -185,5 +184,4 @@ int FreezeEvent::apply(cv::Mat &frame)
         started = true;
     }
     freezedFrame.copyTo(frame);
-    return -1;
 }

@@ -9,6 +9,7 @@
 
 enum EventType
 {
+    EVENT_NULL,
     EVENT_FLIP,
     EVENT_FADEIN,
     EVENT_FADEOUT,
@@ -26,7 +27,7 @@ public:
                 Event(EventType type, float start, float delay=0, float duration=0, int id = -1);
     virtual     ~Event();
 
-    virtual int apply(cv::Mat &frame) = 0;
+    virtual void apply(cv::Mat &frame) = 0;
 
     float       getStart() const;
     float       getDelay() const;
@@ -47,9 +48,21 @@ class RemoveEvent : public Event
 {
 public:
 
-    RemoveEvent(float start, float delay, int id) : Event(EVENT_REMOVE, start, delay, 0, id) {}
+    RemoveEvent(float start, float delay, int removeId) :
+        Event(EVENT_REMOVE, start, delay, 0), removeId(removeId), removeType(EVENT_NULL) {}
 
-    int apply(cv::Mat &frame);
+    RemoveEvent(float start, float delay, EventType removeType) :
+        Event(EVENT_REMOVE, start, delay, 0), removeType(removeType) {}
+
+    void apply(cv::Mat &frame);
+
+    EventType getRemoveType() const;
+    int getRemoveId() const;
+
+private:
+    int removeId;
+    EventType removeType;
+
 };
 
 
@@ -59,7 +72,7 @@ public:
 
     FlipEvent(float start, float delay, int id = -1) : Event(EVENT_FLIP, start, delay, 0, id) {}
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 };
 
 
@@ -69,7 +82,7 @@ class FadeInEvent : public QObject, public Event
 public:
     FadeInEvent(float start, float duration = 5, float delay=0, int id = -1);
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private slots:
     void increaseAmount();
@@ -86,7 +99,7 @@ class FadeOutEvent: public QObject, public Event
 public:
     FadeOutEvent(float start, float duration = 5, float delay=0, int id = -1);
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private slots:
     void decreaseAmount();
@@ -104,7 +117,7 @@ public:
     ImageEvent(float start, cv::Point2i pos,
                     const cv::Mat &image, float delay, int id = -1);
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 private:
 
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
@@ -121,7 +134,7 @@ public:
         TextEvent(float start, QString str,cv::Point2i pos, float delay, int id = -1) :
             Event(EVENT_TEXT, start, delay, 0, id), pos(pos), str(str) {}
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private:
     cv::Point2i pos;
@@ -135,7 +148,7 @@ public:
     RotateEvent(float start, int angle, float delay, int id = -1)
         : Event(EVENT_ROTATE, start, delay, 0, id), angle(angle) {}
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private:
     int angle;
@@ -148,7 +161,7 @@ public:
     FreezeEvent(float start, float delay, int id = -1)
                         : Event(EVENT_FREEZE, start, delay, 0, id), started(false) {}
 
-    int apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private:
     bool    started;

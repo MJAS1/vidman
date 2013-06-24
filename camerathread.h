@@ -10,6 +10,7 @@
 
 #include <cv.h>
 #include <highgui.h>
+#include <QMutex>
 
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
@@ -27,6 +28,7 @@ public:
 public slots:
     void mirrorVideo();
     void addEvent(Event *ev);
+    void removeEvent(RemoveEvent *ev);
     void addImage();
 
 protected:
@@ -36,6 +38,8 @@ private:
     cv::VideoCapture*           capCam;
     cv::Mat                     frame;
     CycDataBuffer*              cycBuf;
+
+    QMutex                      mutex;
 
     bool                        color, eventsOn;
 

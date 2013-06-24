@@ -87,17 +87,18 @@ void CameraThread::clearEvents()
 
 void CameraThread::applyEvents()
 {
-    int EventId;
-    for(size_t i = 0; i < events.size(); i++)
+    mutex.lock();
+    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
     {
-        if((EventId = events[i]->apply(frame)) >= 0)
-            events.removeId(EventId);
+        (*iter)->apply(frame);
     }
+    mutex.unlock();
 
 }
 
 void CameraThread::addEvent(Event *ev)
 {
+    mutex.lock();
     if (ev->getType() == EVENT_FADEIN || ev->getType() == EVENT_FADEOUT)
     {
         events.removeType(EVENT_FADEIN);
@@ -105,6 +106,17 @@ void CameraThread::addEvent(Event *ev)
     }
 
     events.push_back(ev);
+    mutex.unlock();
+}
+
+void CameraThread::removeEvent(RemoveEvent *ev)
+{
+    mutex.lock();
+    if(ev->getRemoveType() != EVENT_NULL)
+        events.removeType(ev->getRemoveType());
+    else
+        events.removeId(ev->getRemoveId());
+    mutex.unlock();
 }
 
 void CameraThread::setEvents(bool value)

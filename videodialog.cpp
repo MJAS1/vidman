@@ -170,7 +170,11 @@ void VideoDialog::recordVideo()
 void VideoDialog::getNextEvent()
 {
     Event *event = events->pop_front();
-    cameraThread->addEvent(event);
+
+    if(event->getType() == EVENT_REMOVE)
+        cameraThread->removeEvent(dynamic_cast<RemoveEvent*>(event));
+    else
+        cameraThread->addEvent(event);
 
     if(!events->empty())
     {

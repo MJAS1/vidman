@@ -61,8 +61,8 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
 {
     QStringList strList = str.split(',');
 
-    float start = 0, duration = 0;
-    int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0, delay=0;
+    float start = 0, duration = 0, delay=0;
+    int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0;
     bool typeOk = false, imageIdOk = false;
     QString text;
     EventType type;
@@ -243,8 +243,9 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     QStringList strList = str.split(',');
 
     int id;
+    EventType type;
     float start = 0, delay=0;
-    bool idOk = false;
+    bool idOk = false, typeOk = false;
 
     for(int i = 0; i < strList.size(); i++)
     {
@@ -258,6 +259,23 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
                 return false;
 
             idOk = true;
+        }
+        else if(param == "type")
+        {
+            typeOk = true;
+            if(value == "flip") type = EVENT_FLIP;
+            else if(value == "fadein") type = EVENT_FADEIN;
+            else if(value == "fadeout") type = EVENT_FADEOUT;
+            else if(value == "image") type = EVENT_IMAGE;
+            else if(value == "text") type = EVENT_TEXT;
+            else if(value == "freeze") type = EVENT_FREEZE;
+            else if(value == "rotate") type = EVENT_ROTATE;
+            else if(value == "remove") type = EVENT_REMOVE;
+            else
+            {
+                errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                return false;
+            }
         }
         else if(param == "start")
         {
@@ -274,6 +292,11 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     if(idOk)
     {
         Event* ev = new RemoveEvent(start, delay, id);
+        events->push_back(ev);
+    }
+    else if(typeOk)
+    {
+        Event* ev = new RemoveEvent(start, delay, type);
         events->push_back(ev);
     }
     else
