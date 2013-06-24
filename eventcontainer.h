@@ -4,18 +4,13 @@
 #include <QVector>
 #include "event.h"
 
-class EventContainer
+class EventContainer : public QVector<Event*>
 {
 public:
     EventContainer();
-    EventContainer(const EventContainer& other);
-    EventContainer& operator=(const EventContainer& other);
 
     ~EventContainer();
 
-    bool    empty() const;
-    size_t  size() const;
-    void    push_back(Event* ev);
     void    clear();
 
     void    removeId(int id);
@@ -23,10 +18,9 @@ public:
 
     Event*  pop_front();
 
-    Event*& operator[](const int i);
-
 private:
-    QVector<Event*> events;
+    EventContainer(const EventContainer& other);
+    EventContainer& operator=(const EventContainer& other);
 };
 
 #endif // EventContainer_H
