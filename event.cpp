@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(EventType type, float start, float delay, int id) : type(type), start(start), delay(delay), id(id)
+Event::Event(EventType type, float start, float delay, float duration, int id) : type(type), start(start), delay(delay), duration(duration), id(id)
 {
 }
 
@@ -18,6 +18,11 @@ float Event::getStart() const
 float Event::getDelay() const
 {
     return delay;
+}
+
+float Event::getDuration() const
+{
+    return duration;
 }
 
 EventType Event::getType() const
@@ -42,7 +47,7 @@ int FlipEvent::apply(cv::Mat &frame)
 }
 
 FadeInEvent::FadeInEvent(float start, float duration, float delay, int id) :
-    Event(EVENT_FADEIN, start, delay, id), amount(-255), duration(duration), stopped(false)
+    Event(EVENT_FADEIN, start, delay, duration, id), amount(-255), stopped(false)
 {
     timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(increaseAmount()));
@@ -69,7 +74,7 @@ int FadeInEvent::apply(cv::Mat &frame)
 }
 
 FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id) :
-    Event(EVENT_FADEOUT, start, delay, id), amount(0), duration(duration), stopped(false)
+    Event(EVENT_FADEOUT, start, delay, duration, id), amount(0), stopped(false)
 {
     timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(decreaseAmount()));
@@ -97,7 +102,7 @@ int FadeOutEvent::apply(cv::Mat &frame)
 }
 
 ImageEvent::ImageEvent(float start, cv::Point2i pos, const cv::Mat& image, float delay, int id) :
-    Event(EVENT_IMAGE, start, delay, id), image(image), pos(pos)
+    Event(EVENT_IMAGE, start, delay, duration, id), image(image), pos(pos)
 {
 }
 

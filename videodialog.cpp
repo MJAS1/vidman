@@ -175,7 +175,7 @@ void VideoDialog::getNextEvent()
     if(!events->empty())
     {
         Event *nextEvent = (*events)[0];
-        eventTmr->start((nextEvent->getStart()+event->getDelay())*1000);
+        eventTmr->start((nextEvent->getStart()+event->getDuration()+event->getDelay())*1000);
     }
 }
 

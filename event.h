@@ -23,19 +23,22 @@ enum EventType
 class Event
 {
 public:
-                Event(EventType type, float start, float delay=0, int id = -1);
+                Event(EventType type, float start, float delay=0, float duration=0, int id = -1);
     virtual     ~Event();
 
     virtual int apply(cv::Mat &frame) = 0;
+
     float       getStart() const;
     float       getDelay() const;
+    float       getDuration() const;
+
     int         getId() const;
     EventType   getType() const;
 
 protected:
     EventType   type;
 
-    float       start, delay;
+    float       start, delay, duration;
     int         id;
 };
 
@@ -44,7 +47,7 @@ class RemoveEvent : public Event
 {
 public:
 
-    RemoveEvent(float start, float delay, int id) : Event(EVENT_REMOVE, start, delay, id) {}
+    RemoveEvent(float start, float delay, int id) : Event(EVENT_REMOVE, start, delay, 0, id) {}
 
     int apply(cv::Mat &frame);
 };
@@ -54,7 +57,7 @@ class FlipEvent : public Event
 {
 public:
 
-    FlipEvent(float start, float delay, int id = -1) : Event(EVENT_FLIP, start, delay, id) {}
+    FlipEvent(float start, float delay, int id = -1) : Event(EVENT_FLIP, start, delay, 0, id) {}
 
     int apply(cv::Mat &frame);
 };
@@ -74,7 +77,6 @@ private slots:
 private:
     QTimer* timer;
     int     amount;
-    float   duration;
     bool    stopped;
 };
 
@@ -92,7 +94,6 @@ private slots:
 private:
     QTimer* timer;
     int     amount;
-    float   duration;
     bool    stopped;
 
 };
@@ -118,7 +119,7 @@ class TextEvent : public Event
 {
 public:
         TextEvent(float start, QString str,cv::Point2i pos, float delay, int id = -1) :
-            Event(EVENT_TEXT, start, delay, id), pos(pos), str(str) {}
+            Event(EVENT_TEXT, start, delay, 0, id), pos(pos), str(str) {}
 
     int apply(cv::Mat &frame);
 
@@ -132,7 +133,7 @@ class RotateEvent : public Event
 {
 public:
     RotateEvent(float start, int angle, float delay, int id = -1)
-        : Event(EVENT_ROTATE, start, delay, id), angle(angle) {}
+        : Event(EVENT_ROTATE, start, delay, 0, id), angle(angle) {}
 
     int apply(cv::Mat &frame);
 
@@ -145,7 +146,7 @@ class FreezeEvent: public Event
 {
 public:
     FreezeEvent(float start, float delay, int id = -1)
-                        : Event(EVENT_FREEZE, start, delay, id), started(false) {}
+                        : Event(EVENT_FREEZE, start, delay, 0, id), started(false) {}
 
     int apply(cv::Mat &frame);
 

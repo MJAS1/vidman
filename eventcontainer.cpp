@@ -15,10 +15,10 @@ void EventContainer::clear()
 {
     if(!empty())
     {
-        for(size_t i = 0; i < size(); i++)
-            delete operator[](i);
+        for(iterator iter = begin(); iter != end(); iter++)
+            delete *iter;
 
-        clear();
+        QVector<Event*>::clear();
     }
 }
 
