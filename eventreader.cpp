@@ -289,7 +289,12 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
         }
     }
 
-    if(idOk)
+    if(idOk && typeOk)
+    {
+        errorMsg(QString("Remove event declared with id and type in line %1.").arg(lineNumber));
+        return false;
+    }
+    else if(idOk)
     {
         Event* ev = new RemoveEvent(start, delay, id);
         events->push_back(ev);
@@ -315,7 +320,7 @@ void EventReader::errorMsg(const QString &message) const
     msgBox.exec();
 }
 
-float EventReader::toFloat(const QString &str, const int line, const QString &param) const
+float EventReader::toFloat(const QString &str, int line, const QString &param) const
 {
     bool ok;
     QString string = str.toLower().replace(" ", "");
@@ -333,7 +338,7 @@ float EventReader::toFloat(const QString &str, const int line, const QString &pa
     return  num;
 }
 
-int EventReader::toInt(const QString &str, const int line, const QString &param) const
+int EventReader::toInt(const QString &str, int line, const QString &param) const
 {
     bool ok;
     QString string = str.toLower().replace(" ", "");

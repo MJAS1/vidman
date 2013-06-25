@@ -19,8 +19,8 @@ private:
     bool    readRemoveEvent(const QString &str, EventContainer *events, int lineNumber);
 
     void    errorMsg(const QString &message) const;
-    float   toFloat(const QString &str, const int line, const QString &param) const;
-    int     toInt(const QString &str, const int line, const QString &param) const;
+    float   toFloat(const QString &str, int line, const QString &param) const;
+    int     toInt(const QString &str, int line, const QString &param) const;
 
     ImageContainer imageContainer;
 };

@@ -244,3 +244,8 @@ void MainWindow::closeEvent(QCloseEvent *e)
     else
         e->ignore();
 }
+
+void MainWindow::toggleVideoDialogChecked(bool arg)
+{
+    ui->viewVideoDialogAction->setChecked(arg);
+}

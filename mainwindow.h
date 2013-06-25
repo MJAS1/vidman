@@ -25,6 +25,7 @@ public:
     ~MainWindow();
 
     void toggleStart(bool);
+    void toggleVideoDialogChecked(bool);
     
 private slots:
     void onStart();

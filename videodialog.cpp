@@ -8,7 +8,7 @@
 
 
 VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
-    QDialog(parent), window(window), ui(new Ui::VideoDialog), isRec(false)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false)
 {
     ui->setupUi(this);
 
@@ -341,4 +341,9 @@ bool VideoDialog::initVideo()
 
     videoAvailable = true;
     return true;
+}
+
+void VideoDialog::closeEvent(QCloseEvent *)
+{
+    window->toggleVideoDialogChecked(false);
 }

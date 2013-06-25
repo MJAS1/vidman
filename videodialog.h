@@ -48,6 +48,9 @@ private slots:
     void getNextEvent();
 
 private:
+
+    void closeEvent(QCloseEvent *);
+
     bool initVideo();
 
     Ui::VideoDialog *ui;
