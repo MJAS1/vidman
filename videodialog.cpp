@@ -192,11 +192,7 @@ bool VideoDialog::start(const QString eventStr)
     if(eventReader.loadEvents(strList, events))
     {
         if(!events->empty())
-        {
-            cameraThread->clearEvents();
-            cameraThread->setEvents(true);
             eventTmr->start((*events)[0]->getStart()*1000);
-        }
 
         return true;
     }
@@ -209,7 +205,7 @@ bool VideoDialog::start(const QString eventStr)
 
 void VideoDialog::stop()
 {
-    cameraThread->setEvents(false);
+    cameraThread->clearEvents();
     eventTmr->stop();
     events->clear();
 }

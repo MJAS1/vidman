@@ -35,6 +35,16 @@ int Event::getId() const
     return id;
 }
 
+RemoveEvent::RemoveEvent(float start, float delay, int removeId) :
+    Event(EVENT_REMOVE, start, delay, 0), removeId(removeId), removeType(EVENT_NULL)
+{
+}
+
+RemoveEvent::RemoveEvent(float start, float delay, EventType removeType) :
+    Event(EVENT_REMOVE, start, delay, 0), removeType(removeType)
+{
+}
+
 void RemoveEvent::apply(cv::Mat &frame)
 {
 }
@@ -47,6 +57,11 @@ EventType RemoveEvent::getRemoveType() const
 int RemoveEvent::getRemoveId() const
 {
     return removeId;
+}
+
+FlipEvent::FlipEvent(float start, float delay, int id) :
+    Event(EVENT_FLIP, start, delay, 0, id)
+{
 }
 
 void FlipEvent::apply(cv::Mat &frame)
@@ -164,9 +179,19 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
+TextEvent::TextEvent(float start, QString str,cv::Point2i pos, float delay, int id) :
+    Event(EVENT_TEXT, start, delay, 0, id), pos(pos), str(str)
+{
+}
+
 void TextEvent::apply(cv::Mat &frame)
 {
     cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 2, cv::Scalar(256, 100, 100), 2);
+}
+
+RotateEvent::RotateEvent(float start, int angle, float delay, int id)
+    : Event(EVENT_ROTATE, start, delay, 0, id), angle(angle)
+{
 }
 
 void RotateEvent::apply(cv::Mat &frame)
@@ -174,6 +199,11 @@ void RotateEvent::apply(cv::Mat &frame)
     cv::Point2f center(frame.cols/2., frame.rows/2.);
     cv::Mat rotMat = getRotationMatrix2D(center, angle, 1.0);
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
+}
+
+FreezeEvent::FreezeEvent(float start, float delay, int id)
+                    : Event(EVENT_FREEZE, start, delay, 0, id), started(false)
+{
 }
 
 void FreezeEvent::apply(cv::Mat &frame)

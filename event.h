@@ -48,11 +48,9 @@ class RemoveEvent : public Event
 {
 public:
 
-    RemoveEvent(float start, float delay, int removeId) :
-        Event(EVENT_REMOVE, start, delay, 0), removeId(removeId), removeType(EVENT_NULL) {}
+    RemoveEvent(float start, float delay, int removeId);
 
-    RemoveEvent(float start, float delay, EventType removeType) :
-        Event(EVENT_REMOVE, start, delay, 0), removeType(removeType) {}
+    RemoveEvent(float start, float delay, EventType removeType);
 
     void apply(cv::Mat &frame);
 
@@ -70,7 +68,7 @@ class FlipEvent : public Event
 {
 public:
 
-    FlipEvent(float start, float delay, int id = -1) : Event(EVENT_FLIP, start, delay, 0, id) {}
+    FlipEvent(float start, float delay, int id = -1);
 
     void apply(cv::Mat &frame);
 };
@@ -131,8 +129,7 @@ private:
 class TextEvent : public Event
 {
 public:
-        TextEvent(float start, QString str,cv::Point2i pos, float delay, int id = -1) :
-            Event(EVENT_TEXT, start, delay, 0, id), pos(pos), str(str) {}
+        TextEvent(float start, QString str,cv::Point2i pos, float delay, int id = -1);
 
     void apply(cv::Mat &frame);
 
@@ -145,8 +142,7 @@ private:
 class RotateEvent : public Event
 {
 public:
-    RotateEvent(float start, int angle, float delay, int id = -1)
-        : Event(EVENT_ROTATE, start, delay, 0, id), angle(angle) {}
+    RotateEvent(float start, int angle, float delay, int id = -1);
 
     void apply(cv::Mat &frame);
 
@@ -158,8 +154,7 @@ private:
 class FreezeEvent: public Event
 {
 public:
-    FreezeEvent(float start, float delay, int id = -1)
-                        : Event(EVENT_FREEZE, start, delay, 0, id), started(false) {}
+    FreezeEvent(float start, float delay, int id = -1);
 
     void apply(cv::Mat &frame);
 

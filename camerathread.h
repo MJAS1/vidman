@@ -24,12 +24,10 @@ public:
     CameraThread(cv::VideoCapture* capCam, CycDataBuffer* _cycBuf, bool _color);
 	virtual ~CameraThread();
     void clearEvents();
-    void setEvents(bool);
+
 public slots:
-    void mirrorVideo();
     void addEvent(Event *ev);
     void removeEvent(RemoveEvent *ev);
-    void addImage();
 
 protected:
 	virtual void stoppableRun();
@@ -41,7 +39,7 @@ private:
 
     QMutex                      mutex;
 
-    bool                        color, eventsOn;
+    bool                        color;
 
     EventContainer              events;
 

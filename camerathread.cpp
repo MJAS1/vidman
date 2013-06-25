@@ -18,7 +18,7 @@ using namespace std;
 
 
 CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* _cycBuf, bool _color) :
-    capCam(capCam), cycBuf(_cycBuf), color(_color), eventsOn(false)
+    capCam(capCam), cycBuf(_cycBuf), color(_color)
 {
     shouldStop = false;
     if(!capCam->set(CV_CAP_PROP_FPS, 30))
@@ -65,8 +65,7 @@ void CameraThread::stoppableRun()
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
 
-        if(eventsOn)
-            applyEvents();
+        applyEvents();
 
         cv::cvtColor(frame, frame, CV_BGR2RGB);
 
@@ -82,7 +81,9 @@ void CameraThread::stoppableRun()
 
 void CameraThread::clearEvents()
 {
+    mutex.lock();
     events.clear();
+    mutex.unlock();
 }
 
 void CameraThread::applyEvents()
@@ -119,7 +120,3 @@ void CameraThread::removeEvent(RemoveEvent *ev)
     mutex.unlock();
 }
 
-void CameraThread::setEvents(bool value)
-{
-    eventsOn = value;
-}
