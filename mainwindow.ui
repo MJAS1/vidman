@@ -279,7 +279,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-cut"/>
+    <iconset theme="edit-cut">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -293,7 +295,9 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-copy"/>
+    <iconset theme="edit-copy">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -307,13 +311,35 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="edit-paste"/>
+    <iconset theme="edit-paste">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>paste</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionAddRotateEvent">
+   <property name="text">
+    <string>Add &amp;Rotate Event</string>
+   </property>
+  </action>
+  <action name="actionAddFreezeEvent">
+   <property name="text">
+    <string>Add Free&amp;ze Event</string>
+   </property>
+  </action>
+  <action name="actionRemoveEventId">
+   <property name="text">
+    <string>Remove Event (&amp;id)</string>
+   </property>
+  </action>
+  <action name="actionRemoveEventType">
+   <property name="text">
+    <string>Remove Event (&amp;type)</string>
    </property>
   </action>
  </widget>
@@ -711,6 +737,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAddRotateEvent</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRotateEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAddFreezeEvent</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addFreezeEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemoveEventId</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRemoveEventId()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemoveEventType</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addRemoveEventType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -727,5 +817,9 @@
   <slot>addImageObject()</slot>
   <slot>addImageEvent()</slot>
   <slot>addTextEvent()</slot>
+  <slot>addRotateEvent()</slot>
+  <slot>addFreezeEvent()</slot>
+  <slot>addRemoveEventId()</slot>
+  <slot>addRemoveEventType()</slot>
  </slots>
 </ui>

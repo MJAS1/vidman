@@ -22,12 +22,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually.
     QMenu *menu = new QMenu();
+    menu->addAction(ui->actionAddImageObject);
+    menu->addSeparator();
     menu->addAction(ui->actionAddFadeInEvent);
     menu->addAction(ui->actionAddFadeOutEvent);
     menu->addAction(ui->actionAddFlipEvent);
-    menu->addAction(ui->actionAddImageObject);
+    menu->addAction(ui->actionAddFreezeEvent);
     menu->addAction(ui->actionAddImageEvent);
+    menu->addAction(ui->actionAddRotateEvent);
     menu->addAction(ui->actionAddTextEvent);
+    menu->addSeparator();
+    menu->addAction(ui->actionRemoveEventId);
+    menu->addAction(ui->actionRemoveEventType);
+
     QToolButton *toolBtn = new QToolButton();
     toolBtn->setMenu(menu);
     toolBtn->setIcon(QIcon::fromTheme("insert-object"));
@@ -205,13 +212,13 @@ void MainWindow::addFlipEvent()
 
 void MainWindow::addFadeInEvent()
 {
-    QString str("#Event: type=fade in, start=0, duration=5");
+    QString str("#Event: type=fade in, start=0, duration=5, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeOutEvent()
 {
-    QString str("#Event: type=fade out, start=0, duration=5");
+    QString str("#Event: type=fade out, start=0, duration=5, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -233,6 +240,29 @@ void MainWindow::addImageObject()
     ui->textEdit->insertPlainText(str);
 }
 
+void MainWindow::addRotateEvent()
+{
+    QString str("#Event: type=rotate, start=0, angle=90");
+    ui->textEdit->insertPlainText(str);
+}
+
+void MainWindow::addFreezeEvent()
+{
+    QString str("#Event: type=freeze, start=0");
+    ui->textEdit->insertPlainText(str);
+}
+
+void MainWindow::addRemoveEventId()
+{
+    QString str("#RemoveEvent: id=0, start=0");
+    ui->textEdit->insertPlainText(str);
+}
+
+void MainWindow::addRemoveEventType()
+{
+    QString str("#RemoveEvent: type=, start=0");
+    ui->textEdit->insertPlainText(str);
+}
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {

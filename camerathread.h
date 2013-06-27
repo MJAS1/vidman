@@ -11,6 +11,8 @@
 #include <cv.h>
 #include <highgui.h>
 #include <QMutex>
+#include <QSemaphore>
+#include <QString>
 
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
@@ -38,6 +40,8 @@ private:
     CycDataBuffer*              cycBuf;
 
     QMutex                      mutex;
+    QSemaphore                  logSemaphore;
+    QString                     log;
 
     bool                        color;
 

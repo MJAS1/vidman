@@ -2,6 +2,8 @@
 #define VIDEODIALOG_H
 
 #include <QDialog>
+#include <QElapsedTimer>
+#include <QFile>
 #include <cv.h>
 #include <highgui.h>
 #include <jpeglib.h>
@@ -34,7 +36,7 @@ public:
     void stop();
 
 public slots:
-    void onDrawFrame(unsigned char* _jpegBuf);
+    void onDrawFrame(unsigned char* _jpegBuf, int logSize);
 
     void onShutterChanged(int _newVal);
     void onGainChanged(int _newVal);
@@ -81,6 +83,8 @@ private:
 
     QTimer *brightnessTmr;
     QTimer *eventTmr;
+    QElapsedTimer elapsedTimer;
+    QFile logFile;
 };
 
 #endif // VIDEODIALOG_H

@@ -1,5 +1,7 @@
 #include <QTimer>
 #include <QMessageBox>
+#include <QTextStream>
+#include <time.h>
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
@@ -63,7 +65,7 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath, _cameraId);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
 
-        connect(cycVideoBufJpeg, SIGNAL(chunkReady(unsigned char*)), this, SLOT(onDrawFrame(unsigned char*)));
+        connect(cycVideoBufJpeg, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));
 
         // Start video running
         videoFileWriter->start();
@@ -114,12 +116,15 @@ VideoDialog::~VideoDialog()
     delete ui;
 }
 
-void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf)
+void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
 {
     int 		i;
-    ChunkAttrib chunkAttrib;
+    QTextStream logStream(&logFile);
+    ChunkAttrib chunkAttrib;  
 
-    chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)));
+    chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)-logSize-1));
+
+    QString log = QString::fromAscii((char*)(_jpegBuf - logSize-1), logSize);
 
     //---------------------------------------------------------------------
     // Decompress JPEG image to memory
@@ -149,6 +154,20 @@ void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf)
 
     QImage qImg((uchar*)imBuf, VIDEO_WIDTH, VIDEO_HEIGHT, QImage::Format_RGB888);
     ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
+    qint64 elapsedTime = elapsedTimer.nsecsElapsed();
+
+    if(logSize)
+    {
+        logStream << elapsedTime/1000000000 << "s "
+                  << (elapsedTime%1000000000)/1000000 << "ms "
+                  << (elapsedTime%1000000000)%1000000 << "ns "
+                  << log << "\n";
+
+        std::cout << elapsedTime/1000000000 << "s "
+                  << (elapsedTime%1000000000)/1000000 << "ms "
+                  << (elapsedTime%1000000000)%1000000 << "ns "
+                  << log.toStdString() << std::endl;
+    }
 }
 
 void VideoDialog::stopThreads()
@@ -185,6 +204,8 @@ void VideoDialog::getNextEvent()
 
 bool VideoDialog::start(const QString eventStr)
 {
+    logFile.setFileName(QString("log.txt"));
+    logFile.open(QFile::WriteOnly | QFile::Truncate);
     QStringList strList = eventStr.split("\n");
     strList.append("");
     EventReader eventReader;
@@ -194,13 +215,13 @@ bool VideoDialog::start(const QString eventStr)
         if(!events->empty())
             eventTmr->start((*events)[0]->getStart()*1000);
 
+        elapsedTimer.restart();
+
         return true;
     }
 
     else
         return false;
-
-
 }
 
 void VideoDialog::stop()
@@ -208,6 +229,7 @@ void VideoDialog::stop()
     cameraThread->clearEvents();
     eventTmr->stop();
     events->clear();
+    logFile.close();
 }
 
 void VideoDialog::onShutterChanged(int _newVal)

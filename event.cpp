@@ -186,7 +186,7 @@ TextEvent::TextEvent(float start, QString str,cv::Point2i pos, float delay, int 
 
 void TextEvent::apply(cv::Mat &frame)
 {
-    cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 2, cv::Scalar(256, 100, 100), 2);
+    cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(0, 0, 0), 2);
 }
 
 RotateEvent::RotateEvent(float start, int angle, float delay, int id)

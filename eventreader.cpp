@@ -69,83 +69,86 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
 
     for(int i = 0; i < strList.size(); i++)
     {
-        QStringList split = strList[i].split('=');
-        QString param = split[0].toLower().replace(" ", "");
-        QString value = split[1].toLower().replace(" ", "");
-
-        if(param == "type")
+        if(strList[i].contains("="))
         {
-            typeOk = true;
-            if(value == "flip") type = EVENT_FLIP;
-            else if(value == "fadein") type = EVENT_FADEIN;
-            else if(value == "fadeout") type = EVENT_FADEOUT;
-            else if(value == "image") type = EVENT_IMAGE;
-            else if(value == "text") type = EVENT_TEXT;
-            else if(value == "freeze") type = EVENT_FREEZE;
-            else if(value == "rotate") type = EVENT_ROTATE;
-            else if(value == "remove") type = EVENT_REMOVE;
+            QStringList split = strList[i].split('=');
+            QString param = split[0].toLower().replace(" ", "");
+            QString value = split[1].toLower().replace(" ", "");
+
+            if(param == "type")
+            {
+                typeOk = true;
+                if(value == "flip") type = EVENT_FLIP;
+                else if(value == "fadein") type = EVENT_FADEIN;
+                else if(value == "fadeout") type = EVENT_FADEOUT;
+                else if(value == "image") type = EVENT_IMAGE;
+                else if(value == "text") type = EVENT_TEXT;
+                else if(value == "freeze") type = EVENT_FREEZE;
+                else if(value == "rotate") type = EVENT_ROTATE;
+                else if(value == "remove") type = EVENT_REMOVE;
+                else
+                {
+                    errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                    return false;
+                }
+            }
+            else if(param == "start")
+            {
+                if((start = toFloat(split[1], lineNumber, QString("start time"))) == -1)
+                    return false;
+            }
+            else if(param == "duration")
+            {
+                if((duration = toFloat(split[1], lineNumber, QString("duration"))) == -1)
+                    return false;
+            }
+            else if(param == "x")
+            {
+                if((x = toInt(split[1], lineNumber, QString("x-coordinate"))) == -1)
+                    return false;
+            }
+            else if(param == "y")
+            {
+                if((y = toInt(split[1], lineNumber, QString("y-coordinate"))) == -1)
+                    return false;
+            }
+            else if(param == "imageid")
+            {
+                if((imageId = toInt(split[1], lineNumber, QString("image ID"))) == -1)
+                    return false;
+
+                if(!imageContainer.contains(imageId))
+                {
+                    errorMsg(QString("Couldn't find image object with id %1 in line %2").arg(imageId).arg(lineNumber));
+                    return false;
+                }
+                imageIdOk = true;
+            }
+            else if(param == "text")
+            {
+                text=split[1];
+            }
+            else if(param == "angle")
+            {
+                if((angle = toInt(split[1], lineNumber, QString("angle"))) == -1)
+                    return false;
+            }
+            else if(param == "id")
+            {
+                if((eventId = toInt(split[1], lineNumber, QString("id"))) == -1)
+                    return false;
+            }
+            else if(param == "delay")
+            {
+                if((delay = toFloat(split[1], lineNumber, QString("delay"))) == -1)
+                    return false;
+            }
+            else if(param.replace(" ", "").isEmpty());
             else
             {
-                errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                errorMsg(QString("Couldn't understand '%1' in line %2.").arg(param).arg(lineNumber));
                 return false;
             }
-        }
-        else if(param == "start")
-        {
-            if((start = toFloat(split[1], lineNumber, QString("start time"))) == -1)
-                return false;
-        }
-        else if(param == "duration")
-        {
-            if((duration = toFloat(split[1], lineNumber, QString("duration"))) == -1)
-                return false;
-        }
-        else if(param == "x")
-        {
-            if((x = toInt(split[1], lineNumber, QString("x-coordinate"))) == -1)
-                return false;
-        }
-        else if(param == "y")
-        {
-            if((y = toInt(split[1], lineNumber, QString("y-coordinate"))) == -1)
-                return false;
-        }
-        else if(param == "imageid")
-        {
-            if((imageId = toInt(split[1], lineNumber, QString("image ID"))) == -1)
-                return false;
-
-            if(!imageContainer.contains(imageId))
-            {
-                errorMsg(QString("Couldn't find image object with id %1 in line %2").arg(imageId).arg(lineNumber));
-                return false;
-            }
-            imageIdOk = true;
-        }
-        else if(param == "text")
-        {
-            text=split[1];
-        }
-        else if(param == "angle")
-        {
-            if((angle = toInt(split[1], lineNumber, QString("angle"))) == -1)
-                return false;
-        }
-        else if(param == "id")
-        {
-            if((eventId = toInt(split[1], lineNumber, QString("id"))) == -1)
-                return false;
-        }
-        else if(param == "delay")
-        {
-            if((delay = toFloat(split[1], lineNumber, QString("delay"))) == -1)
-                return false;
-        }
-        else if(param.replace(" ", "").isEmpty());
-        else
-        {
-            errorMsg(QString("Couldn't understand '%1' in line %2.").arg(param).arg(lineNumber));
-            return false;
         }
 
     }
@@ -207,30 +210,33 @@ bool EventReader::readImageObject(const QString &str, int lineNumber)
 
     for(int i = 0; i < strList.size(); i++)
     {
-        QStringList split = strList[i].split('=');
-        QString param = split[0].toLower().replace(" ", "");
-        QString value = split[1];
-
-        if(param == "filename")
+        if(strList[i].contains("="))
         {
-            filename = value;
-        }
+            QStringList split = strList[i].split('=');
+            QString param = split[0].toLower().replace(" ", "");
+            QString value = split[1];
 
-        else if(param == "id")
-        {
-            if((id = toInt(value, lineNumber, "id")) == -1)
+            if(param == "filename")
+            {
+                filename = value;
+            }
+
+            else if(param == "id")
+            {
+                if((id = toInt(value, lineNumber, "id")) == -1)
+                    return false;
+            }
+            else
+            {
+                errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
                 return false;
-        }
-        else
-        {
-            errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
-            return false;
+            }
         }
     }
 
     if(!imageContainer.addImage(id, filename))
     {
-        errorMsg(QString("Couldn't load file %1.").arg(filename));
+        errorMsg(QString("Couldn't load image file '%1'.").arg(filename));
         return false;
     }
 
@@ -249,43 +255,46 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
 
     for(int i = 0; i < strList.size(); i++)
     {
-        QStringList split = strList[i].split("=");
-        QString param = split[0].toLower().replace(" ", "");
-        QString value = split[1];
-
-        if(param == "id")
+        if(strList[i].contains("="))
         {
-            if((id = toInt(value, lineNumber, "id")) == -1)
-                return false;
+            QStringList split = strList[i].split("=");
+            QString param = split[0].toLower().replace(" ", "");
+            QString value = split[1];
 
-            idOk = true;
-        }
-        else if(param == "type")
-        {
-            typeOk = true;
-            if(value == "flip") type = EVENT_FLIP;
-            else if(value == "fadein") type = EVENT_FADEIN;
-            else if(value == "fadeout") type = EVENT_FADEOUT;
-            else if(value == "image") type = EVENT_IMAGE;
-            else if(value == "text") type = EVENT_TEXT;
-            else if(value == "freeze") type = EVENT_FREEZE;
-            else if(value == "rotate") type = EVENT_ROTATE;
-            else if(value == "remove") type = EVENT_REMOVE;
+            if(param == "id")
+            {
+                if((id = toInt(value, lineNumber, "id")) == -1)
+                    return false;
+
+                idOk = true;
+            }
+            else if(param == "type")
+            {
+                typeOk = true;
+                if(value == "flip") type = EVENT_FLIP;
+                else if(value == "fadein") type = EVENT_FADEIN;
+                else if(value == "fadeout") type = EVENT_FADEOUT;
+                else if(value == "image") type = EVENT_IMAGE;
+                else if(value == "text") type = EVENT_TEXT;
+                else if(value == "freeze") type = EVENT_FREEZE;
+                else if(value == "rotate") type = EVENT_ROTATE;
+                else if(value == "remove") type = EVENT_REMOVE;
+                else
+                {
+                    errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                    return false;
+                }
+            }
+            else if(param == "start")
+            {
+                if((start = toFloat(value, lineNumber, "start time")) == -1)
+                    return false;
+            }
             else
             {
-                errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
                 return false;
             }
-        }
-        else if(param == "start")
-        {
-            if((start = toFloat(value, lineNumber, "start time")) == -1)
-                return false;
-        }
-        else
-        {
-            errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
-            return false;
         }
     }
 

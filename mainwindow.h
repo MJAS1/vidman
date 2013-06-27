@@ -44,6 +44,10 @@ private slots:
     void addFadeOutEvent();
     void addImageEvent();
     void addTextEvent();
+    void addRotateEvent();
+    void addFreezeEvent();
+    void addRemoveEventId();
+    void addRemoveEventType();
     void addImageObject();
 
     void updateTime();

@@ -11,13 +11,16 @@
 #include <stdint.h>
 #include <QObject>
 #include <QSemaphore>
+#include <string>
 
 //! Attributes associated with each data chunk.
 typedef struct
 {
+    int         logSize;
 	int			chunkSize;
 	uint64_t	timestamp;
 	bool		isRec;
+    char*       log;
 } ChunkAttrib;
 
 
@@ -54,7 +57,7 @@ public:
 	 */
 	CycDataBuffer(int _bufSize);
 	virtual ~CycDataBuffer();
-	void insertChunk(unsigned char* _data, ChunkAttrib _attrib);
+    void insertChunk(unsigned char* _data, ChunkAttrib &_attrib);
 
 	/*!
 	 * Acquire a chunk and return a pointer to it. The chunk is implicitly
@@ -69,7 +72,7 @@ signals:
 	 * buffer. _data points to the chunk's data. The corresponding ChunkAttrib
 	 * structure is placed immediately before _data.
 	 */
-    void chunkReady(unsigned char* _data);
+    void chunkReady(unsigned char* _data, int logSize);
 
 private:
 	volatile bool	isRec;

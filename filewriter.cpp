@@ -77,7 +77,7 @@ void FileWriter::stoppableRun()
 				timeNow = time(NULL);
 				timeNowParsed = localtime(&timeNow);
 				// TODO: replace sprintf with C++ strings
-				sprintf(nameBuf, "%s/%04i-%02i-%02i--%02i-%02i-%02i%s_%02i.%s",
+                sprintf(nameBuf, "%s/%04i-%02i-%02i--%02i-%02i-%02i%s_%02i.%s",
 						path,
 						timeNowParsed->tm_year+1900,
 						timeNowParsed->tm_mon+1,
@@ -122,5 +122,7 @@ void FileWriter::stoppableRun()
 			}
 			return;
 		}
+
+        delete[]chunkAttrib.log;
 	}
 }
