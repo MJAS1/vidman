@@ -76,7 +76,6 @@ void VideoCompressorThread::stoppableRun()
 		free(jpgBuf);
 		jpeg_destroy_compress(&cinfo);
 
-        if(chunkAttrib.logSize)
-            delete []chunkAttrib.log;
+        delete []chunkAttrib.log;
 	}
 }

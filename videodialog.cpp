@@ -1,6 +1,7 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QTextStream>
+#include <QDateTime>
 #include <time.h>
 #include "mainwindow.h"
 #include "videodialog.h"
@@ -10,7 +11,7 @@
 
 
 VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
 {
     ui->setupUi(this);
 
@@ -72,8 +73,6 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
         videoCompressorThread->start();
         cameraThread->start();
 
-        brightnessTmr = new QTimer();
-
         eventTmr = new QTimer;
         eventTmr->setSingleShot(true);
         connect(eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
@@ -118,13 +117,9 @@ VideoDialog::~VideoDialog()
 
 void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
 {
-    int 		i;
     QTextStream logStream(&logFile);
-    ChunkAttrib chunkAttrib;  
-
-    chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)-logSize-1));
-
-    QString log = QString::fromAscii((char*)(_jpegBuf - logSize-1), logSize);
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)-logSize-1));
+    QString log = QString::fromAscii((char*)(_jpegBuf - logSize-1));
 
     //---------------------------------------------------------------------
     // Decompress JPEG image to memory
@@ -137,8 +132,7 @@ void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
     jpeg_read_header(&cinfo, TRUE);
     jpeg_start_decompress(&cinfo);
 
-
-    for (i=0; i<VIDEO_HEIGHT; i++)
+    for (int i=0; i<VIDEO_HEIGHT; i++)
     {
         jpeg_read_scanlines(&cinfo, row_pointer, 1);
         memcpy((char*)imBuf + i*VIDEO_WIDTH*(color?3:1), row_pointer[0], VIDEO_WIDTH*(color?3:1));
@@ -156,18 +150,11 @@ void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
     ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
 
-    if(logSize)
-    {
+    if(logSize && keepLog)
         logStream << elapsedTime/1000000000 << "s "
                   << (elapsedTime%1000000000)/1000000 << "ms "
                   << (elapsedTime%1000000000)%1000000 << "ns "
                   << log << "\n";
-
-        std::cout << elapsedTime/1000000000 << "s "
-                  << (elapsedTime%1000000000)/1000000 << "ms "
-                  << (elapsedTime%1000000000)%1000000 << "ns "
-                  << log.toStdString() << std::endl;
-    }
 }
 
 void VideoDialog::stopThreads()
@@ -180,10 +167,15 @@ void VideoDialog::stopThreads()
     cameraThread->stop();
 }
 
-void VideoDialog::recordVideo()
+void VideoDialog::setKeepLog(bool arg)
 {
-    isRec = !isRec;
-    cycVideoBufJpeg->setIsRec(isRec);
+    keepLog = arg;
+}
+
+void VideoDialog::toggleRecord(bool arg)
+{
+    isRec = arg;
+    cycVideoBufJpeg->setIsRec(arg);
 }
 
 void VideoDialog::getNextEvent()
@@ -204,12 +196,23 @@ void VideoDialog::getNextEvent()
 
 bool VideoDialog::start(const QString eventStr)
 {
-    logFile.setFileName(QString("log.txt"));
-    logFile.open(QFile::WriteOnly | QFile::Truncate);
+    if(keepLog)
+    {
+        logFile.setFileName(QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
+        logFile.open(QFile::WriteOnly | QFile::Truncate);
+        if(!logFile.isOpen())
+        {
+            QMessageBox msgBox;
+            msgBox.setText(QString("Error creating log file."));
+            msgBox.exec();
+            return false;
+        }
+    }
+
     QStringList strList = eventStr.split("\n");
     strList.append("");
-    EventReader eventReader;
 
+    EventReader eventReader;
     if(eventReader.loadEvents(strList, events))
     {
         if(!events->empty())
@@ -236,11 +239,6 @@ void VideoDialog::onShutterChanged(int _newVal)
 {
     dc1394error_t	err;
 
-    if (!cameraThread)
-    {
-        return;
-    }
-
     err = dc1394_set_register(camera, SHUTTER_ADDR, _newVal + SHUTTER_OFFSET);
 
     if (err != DC1394_SUCCESS)
@@ -253,11 +251,6 @@ void VideoDialog::onShutterChanged(int _newVal)
 void VideoDialog::onGainChanged(int _newVal)
 {
     dc1394error_t	err;
-
-    if (!cameraThread)
-    {
-        return;
-    }
 
     err = dc1394_set_register(camera, GAIN_ADDR, _newVal + GAIN_OFFSET);
 
@@ -273,11 +266,6 @@ void VideoDialog::onUVChanged(int _newVal)
 {
     dc1394error_t	err;
 
-    if (!cameraThread)
-    {
-        return;
-    }
-
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(camera, WHITEBALANCE_ADDR, _newVal * UV_REG_SHIFT + ui->vrSlider->value() + WHITEBALANCE_OFFSET);
 
@@ -292,11 +280,6 @@ void VideoDialog::onUVChanged(int _newVal)
 void VideoDialog::onVRChanged(int _newVal)
 {
     dc1394error_t	err;
-
-    if (!cameraThread)
-    {
-        return;
-    }
 
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(camera, WHITEBALANCE_ADDR, _newVal + UV_REG_SHIFT * ui->uvSlider->value() + WHITEBALANCE_OFFSET);

@@ -31,7 +31,8 @@ Event* EventContainer::pop_front()
 
 void EventContainer::removeId(int id)
 {
-    for(QVector<Event*>::iterator iter = begin(); iter != end();)
+    Iterator iter = begin();
+    while(iter != end())
     {
         if((*iter)->getId() == id)
         {
@@ -46,7 +47,8 @@ void EventContainer::removeId(int id)
 
 void EventContainer::removeType(EventType type)
 {
-    for(QVector<Event*>::iterator iter = begin(); iter != end();)
+    Iterator iter = begin();
+    while(iter != end())
     {
         if((*iter)->getType() == type)
         {

@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     videocompressorthread.cpp \
     stoppablethread.cpp \
     settings.cpp \
-    glvideowidget.cpp \
     filewriter.cpp \
     cycdatabuffer.cpp \
     camerathread.cpp \
@@ -35,7 +34,6 @@ HEADERS  += mainwindow.h \
     videocompressorthread.h \
     stoppablethread.h \
     settings.h \
-    glvideowidget.h \
     filewriter.h \
     cycdatabuffer.h \
     config.h \

@@ -69,19 +69,15 @@ void CameraThread::stoppableRun()
 		msec += timestamp.tv_sec * 1000;
 
         mutex.lock();
+
         applyEvents();
         cv::cvtColor(frame, frame, CV_BGR2RGB);
 
-        if(logSemaphore.tryAcquire())
-        {
-            logSemaphore.acquire(logSemaphore.available());
-            chunkAttrib.log = new char[log.size()+1];
-            strncpy(chunkAttrib.log, log.toStdString().c_str(), log.size()+1);
-            chunkAttrib.logSize = log.size();
-            log.clear();
-        }
-        else
-            chunkAttrib.logSize = 0;
+        chunkAttrib.log = new char[log.size()+1];
+        strncpy(chunkAttrib.log, log.toStdString().c_str(), log.size()+1);
+        chunkAttrib.logSize = log.size();
+        log.clear();
+
         mutex.unlock();
 
 		chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * (color ? 3 : 1);
@@ -89,9 +85,7 @@ void CameraThread::stoppableRun()
 
         cycBuf->insertChunk((uchar*)frame.data, chunkAttrib);
 
-
-        if(chunkAttrib.logSize)
-            delete []chunkAttrib.log;
+        delete []chunkAttrib.log;
 
     }
 
@@ -115,43 +109,92 @@ void CameraThread::applyEvents()
 void CameraThread::addEvent(Event *ev)
 {
     mutex.lock();
-    if (ev->getType() == EVENT_FADEIN || ev->getType() == EVENT_FADEOUT)
+
+    switch(ev->getType())
     {
-        events.removeType(EVENT_FADEIN);
-        events.removeType(EVENT_FADEOUT);
+        case EVENT_FLIP:
+            log.append("Flip event added ");
+            break;
+
+        case EVENT_FADEIN:
+            log.append("Fadein event added ");
+            events.removeType(EVENT_FADEIN);
+            events.removeType(EVENT_FADEOUT);
+            break;
+
+        case EVENT_FADEOUT:
+            log.append("Fadeout event added ");
+            events.removeType(EVENT_FADEIN);
+            events.removeType(EVENT_FADEOUT);
+            break;
+
+        case EVENT_IMAGE:
+            log.append("Image event added ");
+            break;
+
+        case EVENT_TEXT:
+            log.append("Text event added ");
+            break;
+
+        case EVENT_ROTATE:
+            log.append("Rotate event added ");
+            break;
+
+        case EVENT_FREEZE:
+            log.append("Freeze event added ");
+            break;
+
+        default:
+            break;
     }
-
-    if(ev->getType() == EVENT_FLIP) log.append("Flip event added ");
-    else if(ev->getType() == EVENT_FADEIN) log.append("Fadein event added ");
-    else if(ev->getType() == EVENT_FADEOUT) log.append("Fadeout event added ");
-    else if(ev->getType() == EVENT_IMAGE) log.append("Image event added ");
-    else if(ev->getType() == EVENT_TEXT) log.append("Text event added ");
-    else if(ev->getType() == EVENT_ROTATE) log.append("Rotate event added ");
-    else if(ev->getType() == EVENT_FREEZE) log.append("Freeze event added ");
-
-    logSemaphore.release();
-
     events.push_back(ev);
+
     mutex.unlock();
 }
 
 void CameraThread::removeEvent(RemoveEvent *ev)
 {
     mutex.lock();
+
     if(ev->getRemoveType() != EVENT_NULL)
         events.removeType(ev->getRemoveType());
     else
         events.removeId(ev->getRemoveId());
 
-    if(ev->getRemoveType() == EVENT_FLIP) log.append("Flip event removed ");
-    else if(ev->getRemoveType() == EVENT_FADEIN) log.append("Fadein event removed ");
-    else if(ev->getRemoveType() == EVENT_FADEOUT) log.append("Fadeout event removed ");
-    else if(ev->getRemoveType() == EVENT_IMAGE) log.append("Image event removed ");
-    else if(ev->getRemoveType() == EVENT_TEXT) log.append("Text event removed ");
-    else if(ev->getRemoveType() == EVENT_ROTATE) log.append("Rotate event removed ");
-    else if(ev->getRemoveType() == EVENT_FREEZE) log.append("Freeze event removed ");
-    else log.append(QString("Event ID %1 removed ").arg(ev->getRemoveId()));
-    logSemaphore.release();
+    switch(ev->getRemoveType())
+    {
+        case EVENT_FLIP:
+            log.append("Flip event removed ");
+            break;
+
+        case EVENT_FADEIN:
+            log.append("Fadein event removed ");
+            break;
+
+        case EVENT_FADEOUT:
+            log.append("Fadeout event removed ");
+            break;
+
+        case EVENT_IMAGE:
+            log.append("Image event removed ");
+            break;
+
+        case EVENT_TEXT:
+            log.append("Text event removed ");
+            break;
+
+        case EVENT_ROTATE:
+            log.append("Rotate event removed ");
+            break;
+
+        case EVENT_FREEZE:
+            log.append("Freeze event removed ");
+            break;
+
+        default:
+            log.append(QString("Event ID %1 removed ").arg(ev->getRemoveId()));
+            break;
+    }
 
     mutex.unlock();
 }

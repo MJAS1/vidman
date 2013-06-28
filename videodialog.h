@@ -34,6 +34,7 @@ public:
 
     bool start(const QString eventStr);
     void stop();
+    void setKeepLog(bool);
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int logSize);
@@ -44,7 +45,7 @@ public slots:
     void onVRChanged(int _newVal);
 
     void stopThreads();
-    void recordVideo();
+    void toggleRecord(bool);
 
 private slots:
     void getNextEvent();
@@ -52,16 +53,14 @@ private slots:
 private:
 
     void closeEvent(QCloseEvent *);
-
     bool initVideo();
 
     Ui::VideoDialog *ui;
     MainWindow*     window;
 
     cv::VideoCapture*       capCam;
-
     dc1394camera_t*         camera;
-    dc1394_t*           dc1394Context;
+    dc1394_t*               dc1394Context;
 
     CameraThread*       	cameraThread;
     CycDataBuffer*			cycVideoBufRaw;
@@ -69,8 +68,7 @@ private:
     VideoFileWriter*		videoFileWriter;
     VideoCompressorThread*	videoCompressorThread;
 
-    bool        isRec, videoAvailable;
-
+    bool        isRec, videoAvailable, keepLog;
     char*		imBuf;
 
     // JPEG-related stuff
@@ -79,9 +77,7 @@ private:
     JSAMPROW 	row_pointer[1];
 
     EventContainer* events;
-    std::vector<std::string> images;
 
-    QTimer *brightnessTmr;
     QTimer *eventTmr;
     QElapsedTimer elapsedTimer;
     QFile logFile;

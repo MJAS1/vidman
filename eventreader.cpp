@@ -31,26 +31,30 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
             continue;
         }
 
-        if(str == "#event")
+        if(strList[i].contains(":"))
         {
-            if(!readEvent(split[1], events, i+1))
+
+            if(str == "#event")
+            {
+                if(!readEvent(split[1], events, i+1))
+                    return false;
+            }
+            else if(str == "#imageobject")
+            {
+                if(!readImageObject(split[1], i+1))
+                    return false;
+            }
+            else if(str == "#removeevent")
+            {
+                if(!readRemoveEvent(split[1], events, i+1))
+                    return false;
+            }
+            else if(str[0] == '#' || split[0].simplified() == "");
+            else
+            {
+                errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0]).arg(i+1));
                 return false;
-        }
-        else if(str == "#imageobject")
-        {
-            if(!readImageObject(split[1], i+1))
-                return false;
-        }
-        else if(str == "#removeevent")
-        {
-            if(!readRemoveEvent(split[1], events, i+1))
-                return false;
-        }
-        else if(str[0] == '#' || split[0].simplified() == "");
-        else
-        {
-            errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0]).arg(i+1));
-            return false;
+            }
         }
     }
 
@@ -156,46 +160,48 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
     if(typeOk)
     {
         Event* ev;
-        if(type == EVENT_FLIP)
+        switch(type)
         {
-            ev = new FlipEvent(start, delay, eventId);
-        }
-        else if(type == EVENT_FADEIN)
-        {
-            ev = new FadeInEvent(start, duration, delay);
-        }
-        else if(type == EVENT_FADEOUT)
-        {
-            ev = new FadeOutEvent(start, duration, delay);
-        }
-        else if(type == EVENT_IMAGE)
-        {
-            if(imageIdOk)
-                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId);
-            else
-            {
-                errorMsg(QString("Image event declared without object id in line %1").arg(lineNumber));
+            case EVENT_FLIP:
+                ev = new FlipEvent(start, delay, eventId);
+                break;
+
+            case EVENT_FADEIN:
+                ev = new FadeInEvent(start, duration, delay, eventId);
+                break;
+
+            case EVENT_FADEOUT:
+                ev = new FadeOutEvent(start, duration, delay, eventId);
+                break;
+
+            case EVENT_IMAGE:
+                if(imageIdOk)
+                    ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId);
+                else
+                {
+                    errorMsg(QString("Image event declared without object id in line %1").arg(lineNumber));
+                    return false;
+                }
+                break;
+
+            case EVENT_TEXT:
+                ev = new TextEvent(start, text, cv::Point2i(x, y), delay, eventId);
+                break;
+
+            case EVENT_FREEZE:
+                ev = new FreezeEvent(start, delay, eventId);
+                break;
+
+            case EVENT_ROTATE:
+                ev = new RotateEvent(start, angle, delay, eventId);
+                break;
+
+            default:
+                errorMsg(QString("Event declared without type in line %1").arg(lineNumber));
                 return false;
-            }
-        }
-        else if(type == EVENT_TEXT)
-        {
-            ev = new TextEvent(start, text, cv::Point2i(x, y), delay, eventId);
-        }
-        else if(type == EVENT_FREEZE)
-        {
-            ev = new FreezeEvent(start, delay, eventId);
-        }
-        else if(type == EVENT_ROTATE)
-        {
-            ev = new RotateEvent(start, angle, delay, eventId);
+
         }
         events->push_back(ev);
-    }
-    else
-    {
-        errorMsg(QString("Event declared without type in line %1").arg(lineNumber));
-        return false;
     }
 
     return true;
@@ -259,7 +265,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
         {
             QStringList split = strList[i].split("=");
             QString param = split[0].toLower().replace(" ", "");
-            QString value = split[1];
+            QString value = split[1].toLower().replace(" ", "");
 
             if(param == "id")
             {
@@ -315,7 +321,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     }
     else
     {
-        errorMsg(QString("Remove event declared without id in line %1").arg(lineNumber));
+        errorMsg(QString("Remove event declared without id or type in line %1").arg(lineNumber));
     }
 
     return true;

@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBtn->setIcon(QIcon::fromTheme("insert-object"));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
     toolBtn->setShortcut(QString("Ctrl+e"));
-    ui->toolBar->addWidget(toolBtn);
+    ui->toolBar2->addWidget(toolBtn);
 
     highlighter = new Highlighter(ui->textEdit->document());
 
@@ -73,9 +73,11 @@ void MainWindow::onStart()
 void MainWindow::onStop()
 {
 
-        ui->startButton->toggle();
-        ui->startButton->setEnabled(true);
-        ui->stopButton->setEnabled(false);
+    ui->startButton->toggle();
+    ui->startButton->setEnabled(true);
+    ui->stopButton->setEnabled(false);
+    ui->recButton->setChecked(false);
+    videoDialog->toggleRecord(false);
 
 
     videoDialog->stop();
@@ -84,9 +86,9 @@ void MainWindow::onStop()
     timeTmr->stop();
 }
 
-void MainWindow::onRec()
+void MainWindow::onRec(bool arg)
 {
-    videoDialog->recordVideo();
+    videoDialog->toggleRecord(arg);
 }
 
 
@@ -97,6 +99,11 @@ void MainWindow::onViewVideoDialog(bool checked)
 
     else
         videoDialog->close();
+}
+
+void MainWindow::onKeepLog(bool arg)
+{
+    videoDialog->setKeepLog(arg);
 }
 
 void MainWindow::updateTime()
@@ -254,13 +261,13 @@ void MainWindow::addFreezeEvent()
 
 void MainWindow::addRemoveEventId()
 {
-    QString str("#RemoveEvent: id=0, start=0");
+    QString str("#RemoveEvent: start=0, id=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addRemoveEventType()
 {
-    QString str("#RemoveEvent: type=, start=0");
+    QString str("#RemoveEvent: start=0, type=");
     ui->textEdit->insertPlainText(str);
 }
 

@@ -96,9 +96,7 @@ unsigned char* CycDataBuffer::getChunk(ChunkAttrib* _attrib)
     _attrib->log = new char[_attrib->logSize+1];
 
     buffSemaphore->acquire(_attrib->logSize+1);
-    if(_attrib->logSize)
-        memcpy(_attrib->log, dataBuf+getPtr, _attrib->logSize+1);
-
+    memcpy(_attrib->log, dataBuf+getPtr, _attrib->logSize+1);
     getPtr += _attrib->logSize+1;
 
 	buffSemaphore->acquire(_attrib->chunkSize);

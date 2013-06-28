@@ -40,7 +40,6 @@ private:
     CycDataBuffer*              cycBuf;
 
     QMutex                      mutex;
-    QSemaphore                  logSemaphore;
     QString                     log;
 
     bool                        color;

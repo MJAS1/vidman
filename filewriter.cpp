@@ -8,6 +8,8 @@
 #include <fstream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cerrno>
+#include <QDateTime>
 
 #include "filewriter.h"
 
@@ -58,9 +60,6 @@ void FileWriter::stoppableRun()
 	unsigned char*	databuf;
 	bool			prevIsRec=false;
 	ofstream		outData;
-	char			nameBuf[500];
-	time_t			timeNow;
-    struct tm*		timeNowParsed;
     ChunkAttrib		chunkAttrib;
     uint32_t		chunkSz;
 
@@ -74,25 +73,14 @@ void FileWriter::stoppableRun()
 		{
 			if (!prevIsRec)
 			{
-				timeNow = time(NULL);
-				timeNowParsed = localtime(&timeNow);
-				// TODO: replace sprintf with C++ strings
-                sprintf(nameBuf, "%s/%04i-%02i-%02i--%02i-%02i-%02i%s_%02i.%s",
-						path,
-						timeNowParsed->tm_year+1900,
-						timeNowParsed->tm_mon+1,
-						timeNowParsed->tm_mday,
-						timeNowParsed->tm_hour,
-						timeNowParsed->tm_min,
-						timeNowParsed->tm_sec,
-						suffix,
-						streamId,
-						ext);
-                outData.open(nameBuf, ios_base::out | ios_base::binary | ios_base::trunc);
+
+                QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh-mm-ss%2_%3.%4"));
+                name = name.arg(path).arg(suffix).arg(streamId).arg(ext);
+
+                outData.open(name.toStdString().c_str(), ios_base::out | ios_base::binary | ios_base::trunc);
 				if(outData.fail())
 				{
-					// TODO: Add more elaborate error checking
-					cerr << "Error opening the file " << nameBuf << endl;
+                    cerr << "Error opening the file " << name.toStdString()  << ". " << strerror(errno) << endl;
 					abort();
 				}
 				header = getHeader(&headerLen);

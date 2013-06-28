@@ -30,9 +30,10 @@ public:
 private slots:
     void onStart();
     void onStop();
-    void onRec();
+    void onRec(bool);
 
-    void onViewVideoDialog(bool arg1);
+    void onViewVideoDialog(bool);
+    void onKeepLog(bool);
 
     void fileNew();
     void fileOpen();

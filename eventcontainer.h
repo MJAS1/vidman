@@ -8,11 +8,9 @@ class EventContainer : public QVector<Event*>
 {
 public:
     EventContainer();
-
     ~EventContainer();
 
     void    clear();
-
     void    removeId(int id);
     void    removeType(EventType);
 
