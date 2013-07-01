@@ -23,7 +23,7 @@
 class CameraThread : public StoppableThread
 {
 public:
-    CameraThread(cv::VideoCapture* capCam, CycDataBuffer* _cycBuf, bool _color);
+    CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color);
 	virtual ~CameraThread();
     void clearEvents();
 

@@ -17,8 +17,8 @@
 using namespace std;
 
 
-CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* _cycBuf, bool _color) :
-    capCam(capCam), cycBuf(_cycBuf), color(_color)
+CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color) :
+    capCam(capCam), cycBuf(cycBuf), color(color)
 {
     shouldStop = false;
     if(!capCam->set(CV_CAP_PROP_FPS, 30))

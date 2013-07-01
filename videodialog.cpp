@@ -20,14 +20,14 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
 
     // Allocate memory. Since we do not know whether the image is going to BW
     // or color, allocate for color since it requires more memory.
-    imBuf = (char*)malloc(VIDEO_HEIGHT*VIDEO_WIDTH*3);
+    imBuf =  new char[VIDEO_HEIGHT*VIDEO_WIDTH*3];
     if (!imBuf)
     {
         std::cerr << "Error allocating memory" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    row_pointer[0] = (unsigned char *)malloc(VIDEO_WIDTH*3);
+    row_pointer[0] =  new unsigned char[VIDEO_WIDTH*3];
     if(!(row_pointer[0]))
     {
         std::cerr << "Error allocating memory" << std::endl;
@@ -110,8 +110,8 @@ VideoDialog::~VideoDialog()
         delete videoFileWriter;
         delete videoCompressorThread;
     }
-    free(imBuf);
-    free(row_pointer[0]);    
+    delete []imBuf;
+    delete []row_pointer[0];
     delete ui;
 }
 

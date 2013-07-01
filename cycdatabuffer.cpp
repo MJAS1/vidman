@@ -24,7 +24,7 @@ CycDataBuffer::CycDataBuffer(int _bufSize)
 
     // Allocate the buffer. Reserve some extra space necessary to handle
     // chunks of varying size.
-    dataBuf = (unsigned char*)malloc(bufSize + 2 * (int(bufSize*MAX_CHUNK_SIZE) + sizeof(ChunkAttrib) + 255));
+    dataBuf = new unsigned char[bufSize + 2 * (int(bufSize*MAX_CHUNK_SIZE) + sizeof(ChunkAttrib) + 255)];
     if (!dataBuf)
     {
     	cerr << "Cannot allocate memory for circular buffer" << endl;
@@ -35,8 +35,8 @@ CycDataBuffer::CycDataBuffer(int _bufSize)
 
 CycDataBuffer::~CycDataBuffer()
 {
-    free(dataBuf);
-    delete(buffSemaphore);
+    delete []dataBuf;
+    delete []buffSemaphore;
 }
 
 

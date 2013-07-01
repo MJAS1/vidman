@@ -15,43 +15,14 @@
 
 using namespace std;
 
-FileWriter::FileWriter(CycDataBuffer* _cycBuf, const char* _path, const char* _suffix, const char* _ext, int _streamId)
+FileWriter::FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, int streamId) :
+    cycBuf(cycBuf), path(path), suffix(suffix), ext(ext), streamId(streamId)
 {
-	cycBuf = _cycBuf;
-	streamId = _streamId;
-
-	path = (char*)malloc(strlen(_path)+1);
-	if(!path)
-	{
-		cerr << "Cannot allocate memory!" << endl;
-		abort();
-	}
-
-	suffix = (char*)malloc(strlen(_suffix)+1);
-	if(!suffix)
-	{
-		cerr << "Cannot allocate memory!" << endl;
-		abort();
-	}
-
-	ext = (char*)malloc(strlen(_ext)+1);
-	if(!ext)
-	{
-		cerr << "Cannot allocate memory!" << endl;
-		abort();
-	}
-
-	strcpy(path, _path);
-	strcpy(suffix, _suffix);
-	strcpy(ext, _ext);
 }
 
 
 FileWriter::~FileWriter()
 {
-	free(ext);
-	free(suffix);
-	free(path);
 }
 
 
@@ -74,7 +45,7 @@ void FileWriter::stoppableRun()
 			if (!prevIsRec)
 			{
 
-                QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh-mm-ss%2_%3.%4"));
+                QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh:mm:ss%2_%3.%4"));
                 name = name.arg(path).arg(suffix).arg(streamId).arg(ext);
 
                 outData.open(name.toStdString().c_str(), ios_base::out | ios_base::binary | ios_base::trunc);

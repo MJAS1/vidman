@@ -8,6 +8,7 @@
 #ifndef FILEWRITER_H_
 #define FILEWRITER_H_
 
+#include <QString>
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
 
@@ -30,7 +31,7 @@
 class FileWriter : public StoppableThread
 {
 protected:
-	FileWriter(CycDataBuffer* _cycBuf, const char* _path, const char* _suffix, const char* _ext, int _streamId);
+    FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, int _streamId);
 	virtual ~FileWriter();
 	virtual void stoppableRun();
 
@@ -39,9 +40,8 @@ protected:
 
 private:
 	CycDataBuffer*	cycBuf;
-	char*			path;
-	char*			suffix;
-	char*			ext;
+    QString			path, suffix, ext;
+
 	int				streamId;
 };
 
