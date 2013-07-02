@@ -8,7 +8,6 @@
 #include <sched.h>
 #include <time.h>
 #include <QCoreApplication>
-#include <stdlib.h>
 #include <QTimer>
 
 #include "camerathread.h"
@@ -74,7 +73,7 @@ void CameraThread::stoppableRun()
         cv::cvtColor(frame, frame, CV_BGR2RGB);
 
         chunkAttrib.log = new char[log.size()+1];
-        strncpy(chunkAttrib.log, log.toStdString().c_str(), log.size()+1);
+        strcpy(chunkAttrib.log, log.toStdString().c_str());
         chunkAttrib.logSize = log.size();
         log.clear();
 
@@ -83,7 +82,7 @@ void CameraThread::stoppableRun()
 		chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * (color ? 3 : 1);
         chunkAttrib.timestamp = msec;
 
-        cycBuf->insertChunk((uchar*)frame.data, chunkAttrib);
+        cycBuf->insertChunk(frame.data, chunkAttrib);
 
         delete []chunkAttrib.log;
 
@@ -113,6 +112,7 @@ void CameraThread::addEvent(Event *ev)
     switch(ev->getType())
     {
         case EVENT_FLIP:
+            events.removeType(EVENT_FLIP);
             log.append("Flip event added ");
             break;
 
@@ -137,6 +137,7 @@ void CameraThread::addEvent(Event *ev)
             break;
 
         case EVENT_ROTATE:
+            events.removeType(EVENT_ROTATE);
             log.append("Rotate event added ");
             break;
 
@@ -156,7 +157,7 @@ void CameraThread::removeEvent(RemoveEvent *ev)
 {
     mutex.lock();
 
-    if(ev->getRemoveType() != EVENT_NULL)
+    if(ev->getRemoveType())
         events.removeType(ev->getRemoveType());
     else
         events.removeId(ev->getRemoveId());
@@ -195,6 +196,8 @@ void CameraThread::removeEvent(RemoveEvent *ev)
             log.append(QString("Event ID %1 removed ").arg(ev->getRemoveId()));
             break;
     }
+
+    delete ev;
 
     mutex.unlock();
 }

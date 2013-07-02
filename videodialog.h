@@ -32,17 +32,17 @@ public:
     ~VideoDialog();
     volatile bool color;
 
-    bool start(const QString eventStr);
+    bool start(const QString& eventStr);
     void stop();
     void setKeepLog(bool);
 
 public slots:
-    void onDrawFrame(unsigned char* _jpegBuf, int logSize);
+    void onDrawFrame(unsigned char* jpegBuf, int logSize);
 
-    void onShutterChanged(int _newVal);
-    void onGainChanged(int _newVal);
-    void onUVChanged(int _newVal);
-    void onVRChanged(int _newVal);
+    void onShutterChanged(int newVal);
+    void onGainChanged(int newVal);
+    void onUVChanged(int newVal);
+    void onVRChanged(int newVal);
 
     void stopThreads();
     void toggleRecord(bool);

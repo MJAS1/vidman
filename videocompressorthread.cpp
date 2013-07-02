@@ -11,8 +11,8 @@
 #include "config.h"
 #include "videocompressorthread.h"
 
-VideoCompressorThread::VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, bool _color, int _jpgQuality) :
-    inpBuf(_inpBuf), outBuf(_outBuf), color(_color), jpgQuality(_jpgQuality)
+VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf, CycDataBuffer* outBuf, bool color, int jpgQuality) :
+    inpBuf(inpBuf), outBuf(outBuf), color(color), jpgQuality(jpgQuality)
 {
 }
 

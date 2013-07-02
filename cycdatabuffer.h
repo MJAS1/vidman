@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <QObject>
 #include <QSemaphore>
-#include <string>
+#include <QString>
 
 //! Attributes associated with each data chunk.
 typedef struct

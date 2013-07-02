@@ -17,11 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog = new VideoDialog(1, this);
     videoDialog->show();
 
-    timeTmr = new QTimer;
+    timeTmr = new QTimer(this);
     connect(timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually.
-    QMenu *menu = new QMenu();
+    QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionAddImageObject);
     menu->addSeparator();
     menu->addAction(ui->actionAddFadeInEvent);
@@ -48,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete videoDialog;
     delete ui;
 }
 
@@ -114,12 +115,10 @@ void MainWindow::updateTime()
 
 void MainWindow::fileOpen()
 {
-
     QString fn = QFileDialog::getOpenFileName(this, "Open File...",
                                               QString(), tr("MEG files (*.meg);;All Files (*)"));
     if (!fn.isEmpty())
         load(fn);
-
 }
 
 bool MainWindow::load(const QString &f)

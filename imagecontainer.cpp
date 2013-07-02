@@ -17,12 +17,10 @@ bool ImageContainer::addImage(const int id, const QString &filename)
         delete iter.value();
 
     cv::Mat file = cv::imread(filename.toStdString(), CV_LOAD_IMAGE_UNCHANGED);
-
     if(file.empty())
         return false;
 
     cv::Mat *image = new cv::Mat(file);
-
     QMap<int, cv::Mat*>::operator [](id) = image;
 
     return true;

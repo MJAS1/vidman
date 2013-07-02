@@ -29,15 +29,6 @@ public:
 	int				jpgQuality;
 	bool			color;
 
-	// audio
-	unsigned int	sampRate;
-	unsigned int	framesPerPeriod;
-	unsigned int	nPeriods;
-	unsigned int	spkBufSz;
-	char			inpAudioDev[500];
-	char			outAudioDev[500];
-	bool			useFeedback;
-
 	// misc
 	char			storagePath[500];
 };

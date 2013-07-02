@@ -14,8 +14,8 @@
 using namespace std;
 
 
-VideoFileWriter::VideoFileWriter(CycDataBuffer* _cycBuf, const char* _path, int _camId)
-	:	FileWriter(_cycBuf, _path, "_video", "vid", _camId)
+VideoFileWriter::VideoFileWriter(CycDataBuffer* cycBuf, const char* path, int camId)
+    :	FileWriter(cycBuf, path, "_video", "vid", camId)
 {
 	uint32_t ver = VIDEO_FILE_VERSION;
 

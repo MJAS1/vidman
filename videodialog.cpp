@@ -73,7 +73,7 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
         videoCompressorThread->start();
         cameraThread->start();
 
-        eventTmr = new QTimer;
+        eventTmr = new QTimer(this);
         eventTmr->setSingleShot(true);
         connect(eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
 
@@ -96,7 +96,6 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
 
 VideoDialog::~VideoDialog()
 {
-
     if(videoAvailable)
     {
         stopThreads();
@@ -117,7 +116,6 @@ VideoDialog::~VideoDialog()
 
 void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
 {
-    QTextStream logStream(&logFile);
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromAscii((char*)(_jpegBuf - logSize-1));
 
@@ -150,10 +148,11 @@ void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
     ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
 
+    QTextStream logStream(&logFile);
     if(logSize && keepLog)
-        logStream << elapsedTime/1000000000 << "s "
+        logStream << "[" << elapsedTime/1000000000 << "s "
                   << (elapsedTime%1000000000)/1000000 << "ms "
-                  << (elapsedTime%1000000000)%1000000 << "ns "
+                  << (elapsedTime%1000000000)%1000000 << "ns] "
                   << log << "\n";
 }
 
@@ -194,7 +193,7 @@ void VideoDialog::getNextEvent()
     }
 }
 
-bool VideoDialog::start(const QString eventStr)
+bool VideoDialog::start(const QString& eventStr)
 {
     if(keepLog)
     {
@@ -235,11 +234,11 @@ void VideoDialog::stop()
     logFile.close();
 }
 
-void VideoDialog::onShutterChanged(int _newVal)
+void VideoDialog::onShutterChanged(int newVal)
 {
     dc1394error_t	err;
 
-    err = dc1394_set_register(camera, SHUTTER_ADDR, _newVal + SHUTTER_OFFSET);
+    err = dc1394_set_register(camera, SHUTTER_ADDR, newVal + SHUTTER_OFFSET);
 
     if (err != DC1394_SUCCESS)
     {
@@ -248,11 +247,11 @@ void VideoDialog::onShutterChanged(int _newVal)
     }
 }
 
-void VideoDialog::onGainChanged(int _newVal)
+void VideoDialog::onGainChanged(int newVal)
 {
     dc1394error_t	err;
 
-    err = dc1394_set_register(camera, GAIN_ADDR, _newVal + GAIN_OFFSET);
+    err = dc1394_set_register(camera, GAIN_ADDR, newVal + GAIN_OFFSET);
 
     if (err != DC1394_SUCCESS)
     {
@@ -262,12 +261,12 @@ void VideoDialog::onGainChanged(int _newVal)
 }
 
 
-void VideoDialog::onUVChanged(int _newVal)
+void VideoDialog::onUVChanged(int newVal)
 {
     dc1394error_t	err;
 
     // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, _newVal * UV_REG_SHIFT + ui->vrSlider->value() + WHITEBALANCE_OFFSET);
+    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, newVal * UV_REG_SHIFT + ui->vrSlider->value() + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
     {
@@ -277,12 +276,12 @@ void VideoDialog::onUVChanged(int _newVal)
 }
 
 
-void VideoDialog::onVRChanged(int _newVal)
+void VideoDialog::onVRChanged(int newVal)
 {
     dc1394error_t	err;
 
     // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, _newVal + UV_REG_SHIFT * ui->uvSlider->value() + WHITEBALANCE_OFFSET);
+    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, newVal + UV_REG_SHIFT * ui->uvSlider->value() + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
     {
@@ -299,6 +298,7 @@ bool VideoDialog::initVideo()
     if(!capCam->isOpened())
     {
         std::cerr << "No cameras found" << std::endl;
+        delete capCam;
         return false;
     }
 
@@ -310,6 +310,7 @@ bool VideoDialog::initVideo()
     if(!dc1394Context)
     {
         std::cerr << "Cannot initialize!" << std::endl;
+        delete capCam;
         return false;
     }
 
@@ -317,6 +318,8 @@ bool VideoDialog::initVideo()
     if (err != DC1394_SUCCESS)
     {
         std::cerr << "Failed to enumerate cameras" << std::endl;
+        free(dc1394Context);
+        delete capCam;
         return false;
     }
 
@@ -325,6 +328,8 @@ bool VideoDialog::initVideo()
     if (camList->num == 0)
     {
         std::cerr << "No cameras found" << std::endl;
+        free(dc1394Context);
+        delete capCam;
         return false;
     }
 
@@ -333,6 +338,8 @@ bool VideoDialog::initVideo()
     if (!camera)
     {
         std::cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << std::endl;
+        free(dc1394Context);
+        delete capCam;
         return false;
     }
     std::cout << "Using camera with GUID " << camera->guid << std::endl;
