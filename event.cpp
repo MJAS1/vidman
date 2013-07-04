@@ -1,6 +1,7 @@
 #include "event.h"
 
-Event::Event(EventType type, float start, float delay, float duration, int id) : type(type), start(start), delay(delay), duration(duration), id(id)
+Event::Event(EventType type, float start, float delay, float duration, int id) :
+    type(type), start(start), delay(delay), duration(duration), id(id)
 {
 }
 
@@ -70,9 +71,8 @@ void FlipEvent::apply(cv::Mat &frame)
 }
 
 FadeInEvent::FadeInEvent(float start, float duration, float delay, int id) :
-    Event(EVENT_FADEIN, start, delay, duration, id), amount(-255), stopped(false)
+    Event(EVENT_FADEIN, start, delay, duration, id), timer(new QTimer(this)), amount(-255), stopped(false)
 {
-    timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(increaseAmount()));
 }
 
@@ -95,9 +95,8 @@ void FadeInEvent::apply(cv::Mat &frame)
 }
 
 FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id) :
-    Event(EVENT_FADEOUT, start, delay, duration, id), amount(0), stopped(false)
+    Event(EVENT_FADEOUT, start, delay, duration, id), timer(new QTimer(this)), amount(0), stopped(false)
 {
-    timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(decreaseAmount()));
 }
 

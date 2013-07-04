@@ -16,13 +16,27 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>-60</x>
-     <y>540</y>
+     <x>-40</x>
+     <y>510</y>
      <width>641</width>
-     <height>66</height>
+     <height>92</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="2">
+     <widget class="QSlider" name="gainSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="gainLabel">
+      <property name="text">
+       <string>Gain:</string>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="2">
      <widget class="QSlider" name="shutterSlider">
       <property name="orientation">
@@ -37,8 +51,43 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="3">
-     <spacer name="horizontalSpacer_2">
+    <item row="1" column="5">
+     <widget class="QLabel" name="vrLabel">
+      <property name="text">
+       <string>VR:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QLabel" name="wbLabel">
+      <property name="text">
+       <string>White balance =&gt; </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="6">
+     <widget class="QSlider" name="uvSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QSlider" name="vrSlider">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="shutterLabel">
+      <property name="text">
+       <string>Shutter:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -50,57 +99,8 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="2">
-     <widget class="QSlider" name="gainSlider">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="5">
-     <widget class="QLabel" name="vrLabel">
-      <property name="text">
-       <string>VR:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="gainLabel">
-      <property name="text">
-       <string>Gain:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="6">
-     <widget class="QSlider" name="uvSlider">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="4">
-     <widget class="QLabel" name="wbLabel">
-      <property name="text">
-       <string>White balance =&gt; </string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="shutterLabel">
-      <property name="text">
-       <string>Shutter:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <widget class="QSlider" name="vrSlider">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <spacer name="horizontalSpacer">
+    <item row="0" column="3">
+     <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>

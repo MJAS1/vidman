@@ -15,7 +15,7 @@ void EventContainer::clear()
 {
     if(!empty())
     {
-        for(iterator iter = begin(); iter != end(); iter++)
+        for(Iterator iter = begin(); iter != end(); iter++)
             delete *iter;
 
         QVector<Event*>::clear();

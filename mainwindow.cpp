@@ -9,15 +9,10 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent), ui(new Ui::MainWindow), videoDialog(new VideoDialog(1, this)), timeTmr(new QTimer(this))
 {
     ui->setupUi(this);
-
-    videoDialog = new VideoDialog(1, this);
     videoDialog->show();
-
-    timeTmr = new QTimer(this);
     connect(timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually.
@@ -35,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction(ui->actionRemoveEventId);
     menu->addAction(ui->actionRemoveEventType);
 
-    QToolButton *toolBtn = new QToolButton();
+    QToolButton *toolBtn = new QToolButton(this);
     toolBtn->setMenu(menu);
     toolBtn->setIcon(QIcon::fromTheme("insert-object"));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
@@ -78,10 +73,10 @@ void MainWindow::onStop()
     ui->startButton->setEnabled(true);
     ui->stopButton->setEnabled(false);
     ui->recButton->setChecked(false);
+
     videoDialog->toggleRecord(false);
-
-
     videoDialog->stop();
+
     time.setHMS(0, 0, 0);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
     timeTmr->stop();

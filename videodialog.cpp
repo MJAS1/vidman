@@ -10,7 +10,7 @@
 #include "config.h"
 
 
-VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
+VideoDialog::VideoDialog(int cameraId, MainWindow *window, QWidget *parent) :
     QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
 {
     ui->setupUi(this);
@@ -63,7 +63,7 @@ VideoDialog::VideoDialog(int _cameraId, MainWindow *window, QWidget *parent) :
         cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cameraThread = new CameraThread(capCam, cycVideoBufRaw, settings.color);
-        videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath, _cameraId);
+        videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath, cameraId);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
 
         connect(cycVideoBufJpeg, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));
@@ -114,10 +114,10 @@ VideoDialog::~VideoDialog()
     delete ui;
 }
 
-void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
+void VideoDialog::onDrawFrame(unsigned char*  jpegBuf, int logSize)
 {
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(_jpegBuf-sizeof(ChunkAttrib)-logSize-1));
-    QString log = QString::fromAscii((char*)(_jpegBuf - logSize-1));
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(jpegBuf-sizeof(ChunkAttrib)-logSize-1));
+    QString log = QString::fromAscii((char*)(jpegBuf - logSize-1));
 
     //---------------------------------------------------------------------
     // Decompress JPEG image to memory
@@ -126,7 +126,7 @@ void VideoDialog::onDrawFrame(unsigned char*  _jpegBuf, int logSize)
     // initialize JPEG
     cinfo.err = jpeg_std_error(&jerr);
     jpeg_create_decompress(&cinfo);
-    jpeg_mem_src(&cinfo, _jpegBuf, chunkAttrib.chunkSize);
+    jpeg_mem_src(&cinfo, jpegBuf, chunkAttrib.chunkSize);
     jpeg_read_header(&cinfo, TRUE);
     jpeg_start_decompress(&cinfo);
 

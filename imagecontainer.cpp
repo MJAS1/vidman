@@ -28,6 +28,6 @@ bool ImageContainer::addImage(const int id, const QString &filename)
 
 const cv::Mat& ImageContainer::operator [](int id) const
 {
-    QMap<int, cv::Mat*>::ConstIterator iter = find(id);
+    ConstIterator iter = find(id);
     return *(iter.value());
 }

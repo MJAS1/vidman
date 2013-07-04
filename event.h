@@ -56,7 +56,6 @@ class RemoveEvent : public Event
 public:
 
     RemoveEvent(float start, float delay, int removeId);
-
     RemoveEvent(float start, float delay, EventType removeType);
 
     void apply(cv::Mat &frame);
@@ -113,7 +112,6 @@ private:
     QTimer* timer;
     int     amount;
     bool    stopped;
-
 };
 
 class ImageEvent : public Event

@@ -44,7 +44,6 @@ void FileWriter::stoppableRun()
 		{
 			if (!prevIsRec)
 			{
-
                 QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh:mm:ss%2_%3.%4"));
                 name = name.arg(path).arg(suffix).arg(streamId).arg(ext);
 

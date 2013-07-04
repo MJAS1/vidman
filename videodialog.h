@@ -28,7 +28,7 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit VideoDialog(int _cameraId, MainWindow *window, QWidget *parent = 0);
+    explicit VideoDialog(int cameraId, MainWindow *window, QWidget *parent = 0);
     ~VideoDialog();
     volatile bool color;
 

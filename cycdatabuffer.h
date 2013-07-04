@@ -77,12 +77,13 @@ signals:
 private:
 	volatile bool	isRec;
 
-    QSemaphore*		buffSemaphore;	// counts number of bytes available for reading
     unsigned char*	dataBuf;
 
 	int				insertPtr;
 	int				getPtr;
 	int				bufSize;
+
+    QSemaphore*		buffSemaphore;	// counts number of bytes available for reading
 };
 
 #endif /* CYCDATABUFFER_H_ */

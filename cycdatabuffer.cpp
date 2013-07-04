@@ -14,14 +14,9 @@
 using namespace std;
 
 
-CycDataBuffer::CycDataBuffer(int _bufSize)
+CycDataBuffer::CycDataBuffer(int bufSize) :
+    isRec(false), insertPtr(0), getPtr(0), bufSize(bufSize), buffSemaphore(new QSemaphore())
 {
-	insertPtr = 0;
-	getPtr = 0;
-	isRec = false;
-	bufSize = _bufSize;
-    buffSemaphore = new QSemaphore();
-
     // Allocate the buffer. Reserve some extra space necessary to handle
     // chunks of varying size.
     dataBuf = new unsigned char[bufSize + 2 * (int(bufSize*MAX_CHUNK_SIZE) + sizeof(ChunkAttrib))];
