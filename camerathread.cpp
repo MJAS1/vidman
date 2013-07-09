@@ -142,6 +142,7 @@ void CameraThread::addEvent(Event *ev)
             break;
 
         case EVENT_FREEZE:
+            events.removeType(EVENT_FREEZE);
             log.append("Freeze event added ");
             break;
 
