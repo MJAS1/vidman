@@ -148,11 +148,11 @@ void VideoDialog::onDrawFrame(unsigned char*  jpegBuf, int logSize)
     ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
 
+    //Write to to the logfile
     QTextStream logStream(&logFile);
     if(logSize && keepLog)
         logStream << "[" << elapsedTime/1000000000 << "s "
-                  << (elapsedTime%1000000000)/1000000 << "ms "
-                  << (elapsedTime%1000000000)%1000000 << "ns] "
+                  << (elapsedTime%1000000000)/1000000 << "ms]"
                   << log << "\n";
 }
 

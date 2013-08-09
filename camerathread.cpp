@@ -113,42 +113,31 @@ void CameraThread::addEvent(Event *ev)
     {
         case EVENT_FLIP:
             events.removeType(EVENT_FLIP);
-            log.append("Flip event added ");
             break;
 
         case EVENT_FADEIN:
-            log.append("Fadein event added ");
             events.removeType(EVENT_FADEIN);
             events.removeType(EVENT_FADEOUT);
             break;
 
         case EVENT_FADEOUT:
-            log.append("Fadeout event added ");
             events.removeType(EVENT_FADEIN);
             events.removeType(EVENT_FADEOUT);
             break;
 
-        case EVENT_IMAGE:
-            log.append("Image event added ");
-            break;
-
-        case EVENT_TEXT:
-            log.append("Text event added ");
-            break;
-
         case EVENT_ROTATE:
             events.removeType(EVENT_ROTATE);
-            log.append("Rotate event added ");
             break;
 
         case EVENT_FREEZE:
             events.removeType(EVENT_FREEZE);
-            log.append("Freeze event added ");
             break;
 
         default:
             break;
     }
+
+    log.append(ev->getLog());
     events.push_back(ev);
 
     mutex.unlock();
@@ -163,40 +152,7 @@ void CameraThread::removeEvent(RemoveEvent *ev)
     else
         events.removeId(ev->getRemoveId());
 
-    switch(ev->getRemoveType())
-    {
-        case EVENT_FLIP:
-            log.append("Flip event removed ");
-            break;
-
-        case EVENT_FADEIN:
-            log.append("Fadein event removed ");
-            break;
-
-        case EVENT_FADEOUT:
-            log.append("Fadeout event removed ");
-            break;
-
-        case EVENT_IMAGE:
-            log.append("Image event removed ");
-            break;
-
-        case EVENT_TEXT:
-            log.append("Text event removed ");
-            break;
-
-        case EVENT_ROTATE:
-            log.append("Rotate event removed ");
-            break;
-
-        case EVENT_FREEZE:
-            log.append("Freeze event removed ");
-            break;
-
-        default:
-            log.append(QString("Event ID %1 removed ").arg(ev->getRemoveId()));
-            break;
-    }
+    log.append(ev->getLog());
 
     delete ev;
 

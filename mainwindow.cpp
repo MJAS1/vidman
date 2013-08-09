@@ -231,7 +231,7 @@ void MainWindow::addImageEvent()
 
 void MainWindow::addTextEvent()
 {
-    QString str("#Event: type=text, start=0, x=0, y=0, text=");
+    QString str("#Event: type=text, start=0, x=0, y=0, color=black, text=");
     ui->textEdit->insertPlainText(str);
 }
 

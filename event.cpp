@@ -36,6 +36,16 @@ int Event::getId() const
     return id;
 }
 
+void Event::appendLog(const QString &str)
+{
+    log = str;
+}
+
+QString Event::getLog() const
+{
+    return log;
+}
+
 RemoveEvent::RemoveEvent(float start, float delay, int removeId) :
     Event(EVENT_REMOVE, start, delay, 0), removeId(removeId), removeType(EVENT_NULL)
 {
@@ -178,14 +188,14 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-TextEvent::TextEvent(float start, QString str,cv::Point2i pos, float delay, int id) :
-    Event(EVENT_TEXT, start, delay, 0, id), pos(pos), str(str)
+TextEvent::TextEvent(float start, QString str, cv::Scalar color, cv::Point2i pos, float delay, int id) :
+    Event(EVENT_TEXT, start, delay, 0, id), color(color), pos(pos), str(str)
 {
 }
 
 void TextEvent::apply(cv::Mat &frame)
 {
-    cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(0, 0, 0), 2);
+    cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, color, 2);
 }
 
 RotateEvent::RotateEvent(float start, int angle, float delay, int id)

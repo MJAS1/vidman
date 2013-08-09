@@ -1,17 +1,15 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <functional>
 #include <cv.h>
 #include <highgui.h>
 #include <QTimer>
-#include <string>
 
 /*!
 Event classes are used to process an acquired frame i.e. add an event to the video.
 Event is an abstract base class that should be inherited by all subclasses. Event has
-a pure virtual function apply(&frame) which takes an OpenCV matrice as a parameter
-and which should be implemented in subclasses.
+a pure virtual function apply(&frame) which takes a reference to an OpenCV matrice as
+a parameter and which should be implemented by subclasses.
   */
 
 
@@ -43,11 +41,16 @@ public:
     int         getId() const;
     EventType   getType() const;
 
+    void        appendLog(const QString &str);
+    QString     getLog() const;
+
 protected:
     EventType   type;
 
     float       start, delay, duration;
     int         id;
+
+    QString     log;
 };
 
 
@@ -134,11 +137,12 @@ private:
 class TextEvent : public Event
 {
 public:
-        TextEvent(float start, QString str,cv::Point2i pos, float delay, int id = -1);
+        TextEvent(float start, QString str, cv::Scalar color, cv::Point2i pos, float delay, int id = -1);
 
     void apply(cv::Mat &frame);
 
 private:
+    cv::Scalar color;
     cv::Point2i pos;
     QString     str;
 };

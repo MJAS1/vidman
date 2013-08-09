@@ -36,7 +36,6 @@ void EventContainer::removeId(int id)
     {
         if((*iter)->getId() == id)
         {
-
             delete (*iter);
             iter = erase(iter);
             continue;

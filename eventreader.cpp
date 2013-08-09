@@ -69,6 +69,7 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
     int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0;
     bool typeOk = false, imageIdOk = false;
     QString text;
+    cv::Scalar color(0, 0, 0);
     EventType type;
 
     for(int i = 0; i < strList.size(); i++)
@@ -147,6 +148,18 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
                 if((delay = toFloat(split[1], lineNumber, QString("delay"))) == -1)
                     return false;
             }
+            else if(param == "color")
+            {
+                if(value=="black") color=cv::Scalar(0, 0, 0);
+                else if(value=="white") color=cv::Scalar(255, 255, 255);
+                else if(value=="red") color=cv::Scalar(0, 0, 255);
+                else if(value=="blue") color=cv::Scalar(255, 0, 0);
+                else
+                {
+                    errorMsg(QString("Couldn't understand color '%1' in line %2. Try black, white, red or blue.").arg(split[1]).arg(lineNumber));
+                    return false;
+                }
+            }
             else if(param.replace(" ", "").isEmpty());
             else
             {
@@ -164,19 +177,25 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
         {
             case EVENT_FLIP:
                 ev = new FlipEvent(start, delay, eventId);
+                ev->appendLog(QString("Flip event added."));
                 break;
 
             case EVENT_FADEIN:
                 ev = new FadeInEvent(start, duration, delay, eventId);
+                ev->appendLog(QString("Fade in event added. "));
                 break;
 
             case EVENT_FADEOUT:
                 ev = new FadeOutEvent(start, duration, delay, eventId);
+                ev->appendLog(QString("Fade out event added. "));
                 break;
 
             case EVENT_IMAGE:
                 if(imageIdOk)
+                {
                     ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId);
+                    ev->appendLog(QString("Image event added. "));
+                }
                 else
                 {
                     errorMsg(QString("Image event declared without object id in line %1").arg(lineNumber));
@@ -185,15 +204,18 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
                 break;
 
             case EVENT_TEXT:
-                ev = new TextEvent(start, text, cv::Point2i(x, y), delay, eventId);
+                ev = new TextEvent(start, text, color, cv::Point2i(x, y), delay, eventId);
+                ev->appendLog(QString("Text event added. "));
                 break;
 
             case EVENT_FREEZE:
                 ev = new FreezeEvent(start, delay, eventId);
+                ev->appendLog(QString("Freeze event added. "));
                 break;
 
             case EVENT_ROTATE:
                 ev = new RotateEvent(start, angle, delay, eventId);
+                ev->appendLog(QString("Rotate event added. "));
                 break;
 
             default:
@@ -284,7 +306,6 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
                 else if(value == "text") type = EVENT_TEXT;
                 else if(value == "freeze") type = EVENT_FREEZE;
                 else if(value == "rotate") type = EVENT_ROTATE;
-                else if(value == "remove") type = EVENT_REMOVE;
                 else
                 {
                     errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
@@ -312,11 +333,41 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     else if(idOk)
     {
         Event* ev = new RemoveEvent(start, delay, id);
+        ev->appendLog(QString("Event ID %1 removed. ").arg(id));
         events->push_back(ev);
     }
     else if(typeOk)
     {
         Event* ev = new RemoveEvent(start, delay, type);
+
+        switch(type)
+        {
+            case EVENT_FLIP:
+                ev->appendLog(QString("Flip event removed. "));
+                break;
+            case EVENT_FADEIN:
+                ev->appendLog(QString("Fade in event removed. "));
+                break;
+            case EVENT_FADEOUT:
+                ev->appendLog(QString("Fade out event removed. "));
+                break;
+            case EVENT_IMAGE:
+                ev->appendLog(QString("Image event removed. "));
+                break;
+            case EVENT_TEXT:
+                ev->appendLog(QString("Text event removed. "));
+                 break;
+            case EVENT_ROTATE:
+                ev->appendLog(QString("Rotate event removed. "));
+                break;
+            case EVENT_FREEZE:
+                ev->appendLog(QString("Freeze event removed. "));
+                break;
+
+            default:
+                break;
+        }
+
         events->push_back(ev);
     }
     else

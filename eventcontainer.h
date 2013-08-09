@@ -4,6 +4,10 @@
 #include <QVector>
 #include "event.h"
 
+/*!
+Custom vector class for storaging events. Handles memory deallocation.
+  */
+
 class EventContainer : public QVector<Event*>
 {
 public:
@@ -17,6 +21,7 @@ public:
     Event*  pop_front();
 
 private:
+    //Rule of Three
     EventContainer(const EventContainer& other);
     EventContainer& operator=(const EventContainer& other);
 };
