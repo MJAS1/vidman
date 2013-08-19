@@ -4,8 +4,6 @@ EventContainer::EventContainer()
 {
 }
 
-
-
 EventContainer::~EventContainer()
 {
     clear();

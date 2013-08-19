@@ -6,6 +6,10 @@
 #include "eventcontainer.h"
 #include "imagecontainer.h"
 
+/*!
+  Reads events from a QStringList and stores them in a eventcontainer.
+*/
+
 class EventReader
 {
 public:
