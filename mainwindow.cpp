@@ -9,7 +9,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), videoDialog(new VideoDialog(1, this)), timeTmr(new QTimer(this))
+    QMainWindow(parent), ui(new Ui::MainWindow), videoDialog(new VideoDialog(this)), timeTmr(new QTimer(this))
 {
     ui->setupUi(this);
     videoDialog->show();

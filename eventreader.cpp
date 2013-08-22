@@ -90,7 +90,6 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
                 else if(value == "text") type = EVENT_TEXT;
                 else if(value == "freeze") type = EVENT_FREEZE;
                 else if(value == "rotate") type = EVENT_ROTATE;
-                else if(value == "remove") type = EVENT_REMOVE;
                 else
                 {
                     errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));

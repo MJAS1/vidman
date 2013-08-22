@@ -10,7 +10,7 @@
 #include "config.h"
 
 
-VideoDialog::VideoDialog(int cameraId, MainWindow *window, QWidget *parent) :
+VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
 {
     ui->setupUi(this);
@@ -63,7 +63,7 @@ VideoDialog::VideoDialog(int cameraId, MainWindow *window, QWidget *parent) :
         cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cameraThread = new CameraThread(capCam, cycVideoBufRaw, settings.color);
-        videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath, cameraId);
+        videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
 
         connect(cycVideoBufJpeg, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));

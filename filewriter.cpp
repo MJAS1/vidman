@@ -15,8 +15,8 @@
 
 using namespace std;
 
-FileWriter::FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, int streamId) :
-    cycBuf(cycBuf), path(path), suffix(suffix), ext(ext), streamId(streamId)
+FileWriter::FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext) :
+    cycBuf(cycBuf), path(path), suffix(suffix), ext(ext)
 {
 }
 
@@ -44,8 +44,8 @@ void FileWriter::stoppableRun()
 		{
 			if (!prevIsRec)
 			{
-                QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh:mm:ss%2_%3.%4"));
-                name = name.arg(path).arg(suffix).arg(streamId).arg(ext);
+                QString name(QDateTime::currentDateTime().toString(".%1/yyyy-MM-dd--hh:mm:ss%2.%3"));
+                name = name.arg(path).arg(suffix).arg(ext);
 
                 outData.open(name.toStdString().c_str(), ios_base::out | ios_base::binary | ios_base::trunc);
 				if(outData.fail())

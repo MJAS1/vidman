@@ -5,7 +5,7 @@
 #include "event.h"
 
 /*!
-Custom vector class for storaging events. Handles memory deallocation.
+Custom vector class for storing events. Handles memory deallocation.
   */
 
 class EventContainer : public QVector<Event*>

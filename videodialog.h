@@ -7,7 +7,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <jpeglib.h>
-#include <queue>
 #include <dc1394/dc1394.h>
 #include "cycdatabuffer.h"
 #include "videofilewriter.h"
@@ -28,7 +27,7 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit VideoDialog(int cameraId, MainWindow *window, QWidget *parent = 0);
+    explicit VideoDialog(MainWindow *window, QWidget *parent = 0);
     ~VideoDialog();
     volatile bool color;
 
