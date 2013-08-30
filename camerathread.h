@@ -43,6 +43,7 @@ private:
     QString                     log;
 
     bool                        color;
+    bool                        trigCode;
 
     EventContainer              events;
 

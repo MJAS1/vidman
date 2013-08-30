@@ -67,6 +67,7 @@ private:
     VideoFileWriter*		videoFileWriter;
     VideoCompressorThread*	videoCompressorThread;
 
+    int         fileDescriptor;
     bool        isRec, videoAvailable, keepLog;
     char*		imBuf;
 

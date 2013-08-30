@@ -17,7 +17,7 @@ using namespace std;
 
 
 CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color) :
-    capCam(capCam), cycBuf(cycBuf), color(color)
+    capCam(capCam), cycBuf(cycBuf), color(color), trigCode(false)
 {
     shouldStop = false;
     if(!capCam->set(CV_CAP_PROP_FPS, 30))
@@ -77,7 +77,11 @@ void CameraThread::stoppableRun()
         chunkAttrib.logSize = log.size();
         log.clear();
 
+        chunkAttrib.trigCode = trigCode;
+        trigCode = false;
+
         mutex.unlock();
+
 
 		chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * (color ? 3 : 1);
         chunkAttrib.timestamp = msec;
@@ -136,6 +140,8 @@ void CameraThread::addEvent(Event *ev)
         default:
             break;
     }
+
+    trigCode = ev->getTrigCode();
 
     log.append(ev->getLog());
     events.push_back(ev);

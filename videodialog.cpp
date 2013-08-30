@@ -3,6 +3,9 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <time.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
+#include <termios.h>
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
@@ -11,27 +14,20 @@
 
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), fileDescriptor(-1),
+    isRec(false), keepLog(false)
 {
     ui->setupUi(this);
 
     Settings settings;
     color = settings.color;
 
-    // Allocate memory. Since we do not know whether the image is going to BW
-    // or color, allocate for color since it requires more memory.
-    imBuf =  new char[VIDEO_HEIGHT*VIDEO_WIDTH*3];
-    if (!imBuf)
+    //Open USB port for trigger signals
+    if((fileDescriptor = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
     {
-        std::cerr << "Error allocating memory" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    row_pointer[0] =  new unsigned char[VIDEO_WIDTH*3];
-    if(!(row_pointer[0]))
-    {
-        std::cerr << "Error allocating memory" << std::endl;
-        exit(EXIT_FAILURE);
+        QMessageBox msgBox;
+        msgBox.setText("Couldn't open USB port for trigger signals.");
+        msgBox.exec();
     }
 
     if(initVideo())
@@ -66,7 +62,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
 
-        connect(cycVideoBufJpeg, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));
+        connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));
 
         // Start video running
         videoFileWriter->start();
@@ -109,44 +105,26 @@ VideoDialog::~VideoDialog()
         delete videoFileWriter;
         delete videoCompressorThread;
     }
-    delete []imBuf;
-    delete []row_pointer[0];
     delete ui;
 }
 
-void VideoDialog::onDrawFrame(unsigned char*  jpegBuf, int logSize)
+void VideoDialog::onDrawFrame(unsigned char*  imBuf, int logSize)
 {
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(jpegBuf-sizeof(ChunkAttrib)-logSize-1));
-    QString log = QString::fromAscii((char*)(jpegBuf - logSize-1));
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
+    QString log = QString::fromAscii((char*)(imBuf - logSize-1));
 
-    //---------------------------------------------------------------------
-    // Decompress JPEG image to memory
-    //
-
-    // initialize JPEG
-    cinfo.err = jpeg_std_error(&jerr);
-    jpeg_create_decompress(&cinfo);
-    jpeg_mem_src(&cinfo, jpegBuf, chunkAttrib.chunkSize);
-    jpeg_read_header(&cinfo, TRUE);
-    jpeg_start_decompress(&cinfo);
-
-    for (int i=0; i<VIDEO_HEIGHT; i++)
-    {
-        jpeg_read_scanlines(&cinfo, row_pointer, 1);
-        memcpy((char*)imBuf + i*VIDEO_WIDTH*(color?3:1), row_pointer[0], VIDEO_WIDTH*(color?3:1));
-    }
-
-    // clean-up JPEG
-    jpeg_finish_decompress(&cinfo);
-    jpeg_destroy_decompress(&cinfo);
-
-    //
-    // done decompressing
-    //---------------------------------------------------------------------
-
+    //Draw the frame on screen
     QImage qImg((uchar*)imBuf, VIDEO_WIDTH, VIDEO_HEIGHT, QImage::Format_RGB888);
     ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
+
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
+
+    //Set modem control line as 'Request to Send'
+    if(fileDescriptor >= 1 && chunkAttrib.trigCode)
+    {
+        std::cout << "Request to send" << std::endl;
+        ioctl(fileDescriptor, TIOCMSET, TIOCM_RTS);
+    }
 
     //Write to to the logfile
     QTextStream logStream(&logFile);

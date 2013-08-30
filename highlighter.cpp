@@ -23,7 +23,8 @@ Highlighter::Highlighter(QTextDocument *parent) :
     QStringList keywordPatterns;
     keywordPatterns << "\\btype\\b" << "\\bstart\\b" << "\\bduration\\b" << "\\bx\\b"
                     << "\\by\\b"<< "\\bfilename\\b" << "\\bid\\b" << "\\bimageid\\b"
-                    << "\\bimage id\\b" << "\\bangle\\b" << "\\bdelay\\b" << "\\bcolor\\b";
+                    << "\\bimage id\\b" << "\\bangle\\b" << "\\bdelay\\b" << "\\bcolor\\b"
+                    << "\\btrigcode\\b";
 
     foreach(const QString& pattern, keywordPatterns)
     {

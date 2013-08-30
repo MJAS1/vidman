@@ -20,6 +20,7 @@ typedef struct
 	int			chunkSize;
 	uint64_t	timestamp;
 	bool		isRec;
+    bool        trigCode;
     char*       log;
 } ChunkAttrib;
 
