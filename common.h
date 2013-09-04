@@ -14,6 +14,13 @@
 
 #define COMMON_H_
 
+//Trigger codes
+enum TrigCode
+{
+    NULL_CODE,
+    RTS,
+    DTR
+};
 
 #endif /* COMMON_H_ */
 

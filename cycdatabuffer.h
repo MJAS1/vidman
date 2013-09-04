@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QSemaphore>
 #include <QString>
+#include <common.h>
 
 //! Attributes associated with each data chunk.
 typedef struct
@@ -20,7 +21,7 @@ typedef struct
 	int			chunkSize;
 	uint64_t	timestamp;
 	bool		isRec;
-    bool        trigCode;
+    TrigCode    trigCode;
     char*       log;
 } ChunkAttrib;
 

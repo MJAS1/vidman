@@ -16,6 +16,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
 
+        //Ignore comments
         if(str.startsWith("#comment"))
         {
             while(!str.contains("#endcomment"))
@@ -32,6 +33,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
 
             continue;
         }
+
 
         if(strList[i].contains(":"))
         {
@@ -70,26 +72,23 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
     //Event parameters
     float start = 0, duration = 0, delay=0;
     int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0;
-    bool typeOk = false, imageIdOk = false, trigCode = false;
+    bool imageIdOk = false;
+    TrigCode trigCode = NULL_CODE;
     QString text;
     cv::Scalar color(0, 0, 0);
-    EventType type;
+    EventType type = EVENT_NULL;
 
-    //Read and create the event
+    //Fill all the parameters required to create an event
     for(int i = 0; i < strList.size(); i++)
     {
         if(strList[i].contains("="))
         {
             QStringList split = strList[i].split('=');
             QString param = split[0].toLower().replace(" ", "");
-            QString value;
-
-            if(strList[i].contains("="))
-                value = split[1].toLower().replace(" ", "");
+            QString value = split[1].toLower().replace(" ", "");;
 
             if(param == "type")
             {
-                typeOk = true;
                 if(value == "flip") type = EVENT_FLIP;
                 else if(value == "fadein") type = EVENT_FADEIN;
                 else if(value == "fadeout") type = EVENT_FADEOUT;
@@ -156,7 +155,13 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             }
             else if(param == "trigcode")
             {
-                trigCode = true;
+                if(value == "dtr") trigCode = DTR;
+                else if(value == "rts") trigCode = RTS;
+                else
+                {
+                    errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                    return false;
+                }
             }
             else if(param == "color")
             {
@@ -180,61 +185,59 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
 
     }
 
-    if(typeOk)
+    //Create the new event with acquired parameters
+    Event* ev;
+    switch(type)
     {
-        Event* ev;
-        switch(type)
-        {
-            case EVENT_FLIP:
-                ev = new FlipEvent(start, delay, eventId, trigCode);
-                ev->appendLog(QString("Flip event added."));
-                break;
+        case EVENT_FLIP:
+            ev = new FlipEvent(start, delay, eventId, trigCode);
+            ev->appendLog(QString("Flip event added."));
+            break;
 
-            case EVENT_FADEIN:
-                ev = new FadeInEvent(start, duration, delay, eventId, trigCode);
-                ev->appendLog(QString("Fade in event added. "));
-                break;
+        case EVENT_FADEIN:
+            ev = new FadeInEvent(start, duration, delay, eventId, trigCode);
+            ev->appendLog(QString("Fade in event added. "));
+            break;
 
-            case EVENT_FADEOUT:
-                ev = new FadeOutEvent(start, duration, delay, eventId, trigCode);
-                ev->appendLog(QString("Fade out event added. "));
-                break;
+        case EVENT_FADEOUT:
+            ev = new FadeOutEvent(start, duration, delay, eventId, trigCode);
+            ev->appendLog(QString("Fade out event added. "));
+            break;
 
-            case EVENT_IMAGE:
-                if(imageIdOk)
-                {
-                    ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId, trigCode);
-                    ev->appendLog(QString("Image event added. "));
-                }
-                else
-                {
-                    errorMsg(QString("Image event declared without object id in line %1").arg(lineNumber));
-                    return false;
-                }
-                break;
-
-            case EVENT_TEXT:
-                ev = new TextEvent(start, text, color, cv::Point2i(x, y), delay, eventId, trigCode);
-                ev->appendLog(QString("Text event added. "));
-                break;
-
-            case EVENT_FREEZE:
-                ev = new FreezeEvent(start, delay, eventId, trigCode);
-                ev->appendLog(QString("Freeze event added. "));
-                break;
-
-            case EVENT_ROTATE:
-                ev = new RotateEvent(start, angle, delay, eventId, trigCode);
-                ev->appendLog(QString("Rotate event added. "));
-                break;
-
-            default:
-                errorMsg(QString("Event declared without type in line %1").arg(lineNumber));
+        case EVENT_IMAGE:
+            if(imageIdOk)
+            {
+                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId, trigCode);
+                ev->appendLog(QString("Image event added. "));
+            }
+            else
+            {
+                errorMsg(QString("Image event declared without object id in line %1").arg(lineNumber));
                 return false;
+            }
+            break;
 
-        }
-        events->push_back(ev);
+        case EVENT_TEXT:
+            ev = new TextEvent(start, text, color, cv::Point2i(x, y), delay, eventId, trigCode);
+            ev->appendLog(QString("Text event added. "));
+            break;
+
+        case EVENT_FREEZE:
+            ev = new FreezeEvent(start, delay, eventId, trigCode);
+            ev->appendLog(QString("Freeze event added. "));
+            break;
+
+        case EVENT_ROTATE:
+            ev = new RotateEvent(start, angle, delay, eventId, trigCode);
+            ev->appendLog(QString("Rotate event added. "));
+            break;
+
+        default:
+            errorMsg(QString("Event declared without type in line %1").arg(lineNumber));
+            return false;
+
     }
+    events->push_back(ev);
 
     return true;
 }
@@ -286,10 +289,11 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
 {
     QStringList strList = str.split(',');
 
-    int id;
-    EventType type;
-    float start = 0, delay=0;
-    bool idOk = false, typeOk = false, trigCode = false;
+    //Event parameters
+    int id = -1;
+    EventType type = EVENT_NULL;
+    float start = 0, delay = 0;
+    TrigCode trigCode = NULL_CODE;
 
     for(int i = 0; i < strList.size(); i++)
     {
@@ -303,12 +307,10 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
             {
                 if((id = toInt(value, lineNumber, "id")) == -1)
                     return false;
-
-                idOk = true;
             }
+
             else if(param == "type")
             {
-                typeOk = true;
                 if(value == "flip") type = EVENT_FLIP;
                 else if(value == "fadein") type = EVENT_FADEIN;
                 else if(value == "fadeout") type = EVENT_FADEOUT;
@@ -328,7 +330,16 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
                     return false;
             }
             else if(param == "trigcode")
-                trigCode = true;
+            {
+
+                if(value == "dtr") trigCode = DTR;
+                else if(value == "rts") trigCode = RTS;
+                else
+                {
+                    errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                    return false;
+                }
+            }
             else
             {
                 errorMsg(QString("Couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
@@ -337,18 +348,18 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
         }
     }
 
-    if(idOk && typeOk)
+    if(id > -1 && type)
     {
         errorMsg(QString("Remove event declared with id and type in line %1.").arg(lineNumber));
         return false;
     }
-    else if(idOk)
+    else if(id > -1)
     {
         Event* ev = new RemoveEvent(start, delay, id, trigCode);
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
         events->push_back(ev);
     }
-    else if(typeOk)
+    else
     {
         Event* ev = new RemoveEvent(start, delay, type, trigCode);
 
@@ -377,15 +388,14 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
                 break;
 
             default:
-                break;
+                errorMsg(QString("Remove event declared without id or type in line %1").arg(lineNumber));
+                delete ev;
+                return false;
         }
 
         events->push_back(ev);
     }
-    else
-    {
-        errorMsg(QString("Remove event declared without id or type in line %1").arg(lineNumber));
-    }
+
 
     return true;
 

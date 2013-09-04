@@ -19,7 +19,7 @@
 #include "event.h"
 #include "eventcontainer.h"
 
-//! This thread acquires and timestamps frames for a single libdc1394 video camera.
+//! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
 class CameraThread : public StoppableThread
 {
 public:
@@ -43,7 +43,7 @@ private:
     QString                     log;
 
     bool                        color;
-    bool                        trigCode;
+    TrigCode                    trigCode;
 
     EventContainer              events;
 

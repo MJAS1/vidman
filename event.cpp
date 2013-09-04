@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(EventType type, float start, float delay, float duration, int id, bool trigCode) :
+Event::Event(EventType type, float start, float delay, float duration, int id, TrigCode trigCode) :
     type(type), start(start), delay(delay), duration(duration), id(id), trigCode(trigCode)
 {
 }
@@ -46,18 +46,18 @@ QString Event::getLog() const
     return log;
 }
 
-bool Event::getTrigCode() const
+TrigCode Event::getTrigCode() const
 {
     return trigCode;
 }
 
-RemoveEvent::RemoveEvent(float start, float delay, int removeId, bool trigCode) :
-    Event(EVENT_REMOVE, start, delay, 0, trigCode), removeId(removeId), removeType(EVENT_NULL)
+RemoveEvent::RemoveEvent(float start, float delay, int removeId, TrigCode trigCode) :
+    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeId(removeId), removeType(EVENT_NULL)
 {
 }
 
-RemoveEvent::RemoveEvent(float start, float delay, EventType removeType, bool trigCode) :
-    Event(EVENT_REMOVE, start, delay, 0, trigCode), removeType(removeType)
+RemoveEvent::RemoveEvent(float start, float delay, EventType removeType, TrigCode trigCode) :
+    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeType(removeType)
 {
 }
 
@@ -75,7 +75,7 @@ int RemoveEvent::getRemoveId() const
     return removeId;
 }
 
-FlipEvent::FlipEvent(float start, float delay, int id, bool trigCode) :
+FlipEvent::FlipEvent(float start, float delay, int id, TrigCode trigCode) :
     Event(EVENT_FLIP, start, delay, 0, id, trigCode)
 {
 }
@@ -85,7 +85,7 @@ void FlipEvent::apply(cv::Mat &frame)
     cv::flip(frame, frame, 1);
 }
 
-FadeInEvent::FadeInEvent(float start, float duration, float delay, int id, bool trigCode) :
+FadeInEvent::FadeInEvent(float start, float duration, float delay, int id, TrigCode trigCode) :
     Event(EVENT_FADEIN, start, delay, duration, id, trigCode), timer(new QTimer(this)), amount(-255), stopped(false)
 {
     connect(timer, SIGNAL(timeout()), this, SLOT(increaseAmount()));
@@ -109,7 +109,7 @@ void FadeInEvent::apply(cv::Mat &frame)
     frame += cv::Scalar(amount, amount, amount);
 }
 
-FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id, bool trigCode) :
+FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id, TrigCode trigCode) :
     Event(EVENT_FADEOUT, start, delay, duration, id, trigCode), timer(new QTimer(this)), amount(0), stopped(false)
 {
     connect(timer, SIGNAL(timeout()), this, SLOT(decreaseAmount()));
@@ -134,7 +134,7 @@ void FadeOutEvent::apply(cv::Mat &frame)
     frame += cv::Scalar(amount, amount, amount);
 }
 
-ImageEvent::ImageEvent(float start, cv::Point2i pos, const cv::Mat& image, float delay, int id, bool trigCode) :
+ImageEvent::ImageEvent(float start, cv::Point2i pos, const cv::Mat& image, float delay, int id, TrigCode trigCode) :
     Event(EVENT_IMAGE, start, delay, 0, id, trigCode), image(image), pos(pos)
 {
 }
@@ -193,7 +193,7 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-TextEvent::TextEvent(float start, QString str, cv::Scalar color, cv::Point2i pos, float delay, int id, bool trigCode) :
+TextEvent::TextEvent(float start, QString str, cv::Scalar color, cv::Point2i pos, float delay, int id, TrigCode trigCode) :
     Event(EVENT_TEXT, start, delay, 0, id, trigCode), color(color), pos(pos), str(str)
 {
 }
@@ -203,7 +203,7 @@ void TextEvent::apply(cv::Mat &frame)
     cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, color, 2);
 }
 
-RotateEvent::RotateEvent(float start, int angle, float delay, int id, bool trigCode)
+RotateEvent::RotateEvent(float start, int angle, float delay, int id, TrigCode trigCode)
     : Event(EVENT_ROTATE, start, delay, 0, id, trigCode), angle(angle)
 {
 }
@@ -215,7 +215,7 @@ void RotateEvent::apply(cv::Mat &frame)
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
-FreezeEvent::FreezeEvent(float start, float delay, int id, bool trigCode)
+FreezeEvent::FreezeEvent(float start, float delay, int id, TrigCode trigCode)
                     : Event(EVENT_FREEZE, start, delay, 0, id, trigCode), started(false)
 {
 }

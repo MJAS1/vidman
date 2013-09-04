@@ -119,19 +119,35 @@ void VideoDialog::onDrawFrame(unsigned char*  imBuf, int logSize)
 
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
 
-    //Set modem control line as 'Request to Send'
+    //Set modem control line according to the trigcode
     if(fileDescriptor >= 1 && chunkAttrib.trigCode)
     {
-        std::cout << "Request to send" << std::endl;
-        ioctl(fileDescriptor, TIOCMSET, TIOCM_RTS);
+
+        switch(chunkAttrib.trigCode)
+        {
+            case NULL_CODE:
+                ioctl(fileDescriptor, TIOCMSET, 0);
+                break;
+            case RTS:
+                std::cout << "Request to send" << std::endl;
+                ioctl(fileDescriptor, TIOCMSET, TIOCM_RTS);
+                break;
+
+            case DTR:
+                std::cout << "Data terminal ready" << std::endl;
+                ioctl(fileDescriptor, TIOCMSET, TIOCM_DTR);
+                break;
+        }
     }
 
     //Write to to the logfile
-    QTextStream logStream(&logFile);
     if(logSize && keepLog)
+    {
+        QTextStream logStream(&logFile);
         logStream << "[" << elapsedTime/1000000000 << "s "
                   << (elapsedTime%1000000000)/1000000 << "ms]"
-                  << log << "\n";
+                  << log << "\n";   
+    }
 }
 
 void VideoDialog::stopThreads()

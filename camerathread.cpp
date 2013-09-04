@@ -17,7 +17,7 @@ using namespace std;
 
 
 CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color) :
-    capCam(capCam), cycBuf(cycBuf), color(color), trigCode(false)
+    capCam(capCam), cycBuf(cycBuf), color(color), trigCode(NULL_CODE)
 {
     shouldStop = false;
     if(!capCam->set(CV_CAP_PROP_FPS, 30))
@@ -78,7 +78,7 @@ void CameraThread::stoppableRun()
         log.clear();
 
         chunkAttrib.trigCode = trigCode;
-        trigCode = false;
+        trigCode = NULL_CODE;
 
         mutex.unlock();
 
@@ -113,6 +113,7 @@ void CameraThread::addEvent(Event *ev)
 {
     mutex.lock();
 
+    //Remove duplicate events of certain event types to prevent the program from slowing down
     switch(ev->getType())
     {
         case EVENT_FLIP:
@@ -157,6 +158,8 @@ void CameraThread::removeEvent(RemoveEvent *ev)
         events.removeType(ev->getRemoveType());
     else
         events.removeId(ev->getRemoveId());
+
+    trigCode = ev->getTrigCode();
 
     log.append(ev->getLog());
 
