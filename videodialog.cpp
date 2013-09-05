@@ -6,6 +6,8 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <termios.h>
+#include <cerrno>
+#include <stdio.h>
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
@@ -122,22 +124,27 @@ void VideoDialog::onDrawFrame(unsigned char*  imBuf, int logSize)
     //Set modem control line according to the trigcode
     if(fileDescriptor >= 1 && chunkAttrib.trigCode)
     {
+        int status;
 
         switch(chunkAttrib.trigCode)
         {
             case NULL_CODE:
-                ioctl(fileDescriptor, TIOCMSET, 0);
+                status = 0;
+                std::cout << "---" << std::endl;
                 break;
             case RTS:
+                status = TIOCM_RTS;
                 std::cout << "Request to send" << std::endl;
-                ioctl(fileDescriptor, TIOCMSET, TIOCM_RTS);
                 break;
 
             case DTR:
+                status = TIOCM_DTR;
                 std::cout << "Data terminal ready" << std::endl;
-                ioctl(fileDescriptor, TIOCMSET, TIOCM_DTR);
                 break;
         }
+
+        if(ioctl(fileDescriptor, TIOCMSET, &status) == -1)
+            fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
     }
 
     //Write to to the logfile
