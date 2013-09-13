@@ -21,7 +21,7 @@ typedef struct
 	int			chunkSize;
 	uint64_t	timestamp;
 	bool		isRec;
-    TrigCode    trigCode;
+    int         trigCode;
     char*       log;
 } ChunkAttrib;
 

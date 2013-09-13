@@ -17,9 +17,10 @@ using namespace std;
 
 
 CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color) :
-    capCam(capCam), cycBuf(cycBuf), color(color), trigCode(NULL_CODE)
+    capCam(capCam), color(color), trigCode(0), cycBuf(cycBuf)
 {
     shouldStop = false;
+
     if(!capCam->set(CV_CAP_PROP_FPS, 30))
     {
         std::cerr << "Could not set framerate" << std::endl;
@@ -78,7 +79,7 @@ void CameraThread::stoppableRun()
         log.clear();
 
         chunkAttrib.trigCode = trigCode;
-        trigCode = NULL_CODE;
+        trigCode = 0;
 
         mutex.unlock();
 
@@ -143,7 +144,6 @@ void CameraThread::addEvent(Event *ev)
     }
 
     trigCode = ev->getTrigCode();
-
     log.append(ev->getLog());
     events.push_back(ev);
 
@@ -154,13 +154,13 @@ void CameraThread::removeEvent(RemoveEvent *ev)
 {
     mutex.lock();
 
+    //Remove all events of given type or id
     if(ev->getRemoveType())
         events.removeType(ev->getRemoveType());
     else
         events.removeId(ev->getRemoveId());
 
     trigCode = ev->getTrigCode();
-
     log.append(ev->getLog());
 
     delete ev;

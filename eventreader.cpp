@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QMessageBox>
+#include <sys/ioctl.h>
 #include "eventreader.h"
 
 EventReader::EventReader()
@@ -13,6 +14,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
     //Start reading the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
+
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
 
@@ -35,7 +37,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
         }
 
 
-        if(strList[i].contains(":"))
+        if(split.size() > 1)
         {
 
             if(str == "#event")
@@ -71,9 +73,8 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
 
     //Event parameters
     float start = 0, duration = 0, delay=0;
-    int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0;
+    int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0, trigCode = 0;
     bool imageIdOk = false;
-    TrigCode trigCode = NULL_CODE;
     QString text;
     cv::Scalar color(0, 0, 0);
     EventType type = EVENT_NULL;
@@ -155,8 +156,8 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             }
             else if(param == "trigcode")
             {
-                if(value == "dtr") trigCode = DTR;
-                else if(value == "rts") trigCode = RTS;
+                if(value == "dtr") trigCode = TIOCM_DTR;
+                else if(value == "rts") trigCode = TIOCM_RTS;
                 else
                 {
                     errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));
@@ -290,10 +291,9 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     QStringList strList = str.split(',');
 
     //Event parameters
-    int id = -1;
+    int id = -1,  trigCode = 0;
     EventType type = EVENT_NULL;
     float start = 0, delay = 0;
-    TrigCode trigCode = NULL_CODE;
 
     for(int i = 0; i < strList.size(); i++)
     {
@@ -332,8 +332,8 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
             else if(param == "trigcode")
             {
 
-                if(value == "dtr") trigCode = DTR;
-                else if(value == "rts") trigCode = RTS;
+                if(value == "dtr") trigCode = TIOCM_DTR;
+                else if(value == "rts") trigCode = TIOCM_RTS;
                 else
                 {
                     errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));

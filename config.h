@@ -54,7 +54,7 @@
 #define SPK_THREAD_PRIORITY 5
 
 // Used for storing application settings
-#define ORG_NAME "Becs"
+#define ORG_NAME "BECS"
 #define APP_NAME "VideoManipulation"
 
 #define CONFIG_H_

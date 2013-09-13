@@ -90,6 +90,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         msgBox.exec();
     }
 
+
 }
 
 VideoDialog::~VideoDialog()
@@ -122,28 +123,10 @@ void VideoDialog::onDrawFrame(unsigned char*  imBuf, int logSize)
     qint64 elapsedTime = elapsedTimer.nsecsElapsed();
 
     //Set modem control line according to the trigcode
-    if(fileDescriptor >= 1 && chunkAttrib.trigCode)
+    if(fileDescriptor >= 1)
     {
-        int status;
 
-        switch(chunkAttrib.trigCode)
-        {
-            case NULL_CODE:
-                status = 0;
-                std::cout << "---" << std::endl;
-                break;
-            case RTS:
-                status = TIOCM_RTS;
-                std::cout << "Request to send" << std::endl;
-                break;
-
-            case DTR:
-                status = TIOCM_DTR;
-                std::cout << "Data terminal ready" << std::endl;
-                break;
-        }
-
-        if(ioctl(fileDescriptor, TIOCMSET, &status) == -1)
+        if(ioctl(fileDescriptor, TIOCMSET, &chunkAttrib.trigCode) == -1)
             fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
     }
 
@@ -356,3 +339,4 @@ void VideoDialog::closeEvent(QCloseEvent *)
 {
     window->toggleVideoDialogChecked(false);
 }
+

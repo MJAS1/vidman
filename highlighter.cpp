@@ -10,7 +10,8 @@ Highlighter::Highlighter(QTextDocument *parent) :
     QStringList typePatterns;
     typePatterns << "\\bfade in\\b" << "\\bfadein\\b" << "\\bfadeout\\b"
                     << "\\bfade out\\b" << "\\bflip\\b" << "\\bimage\\b"
-                    << "\\btext\\b" << "\\bfreeze\\b" << "\\brotate\\b";
+                    << "\\btext\\b" << "\\bfreeze\\b" << "\\brotate\\b"
+                    << "\\brts\\b" << "\\bdtr\\b";
 
     foreach(const QString& pattern, typePatterns)
     {

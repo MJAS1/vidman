@@ -11,7 +11,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <QMutex>
-#include <QSemaphore>
 #include <QString>
 
 #include "stoppablethread.h"
@@ -37,14 +36,14 @@ protected:
 private:
     cv::VideoCapture*           capCam;
     cv::Mat                     frame;
-    CycDataBuffer*              cycBuf;
 
     QMutex                      mutex;
     QString                     log;
 
     bool                        color;
-    TrigCode                    trigCode;
+    int                         trigCode;
 
+    CycDataBuffer*              cycBuf;
     EventContainer              events;
 
     void                        applyEvents();

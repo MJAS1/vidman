@@ -30,7 +30,7 @@ enum EventType
 class Event
 {
 public:
-                Event(EventType type, float start, float delay=0, float duration=0, int id = -1, TrigCode trigCode = NULL_CODE);
+                Event(EventType type, float start, float delay=0, float duration=0, int id = -1, int trigCode = 0);
     virtual     ~Event();
 
     virtual void apply(cv::Mat &frame) = 0;
@@ -40,7 +40,7 @@ public:
     float       getDuration() const;
     int         getId() const;
     EventType   getType() const;
-    TrigCode    getTrigCode() const;
+    int         getTrigCode() const;
 
     void        appendLog(const QString &str);
     QString     getLog() const;
@@ -50,7 +50,7 @@ protected:
 
     float       start, delay, duration;
     int         id;
-    TrigCode    trigCode;
+    int         trigCode;
 
     QString     log;
 };
@@ -60,8 +60,8 @@ class RemoveEvent : public Event
 {
 public:
 
-    RemoveEvent(float start, float delay, int removeId, TrigCode trigCode = NULL_CODE);
-    RemoveEvent(float start, float delay, EventType removeType, TrigCode trigCode = NULL_CODE);
+    RemoveEvent(float start, float delay, int removeId, int trigCode = 0);
+    RemoveEvent(float start, float delay, EventType removeType, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -79,7 +79,7 @@ class FlipEvent : public Event
 {
 public:
 
-    FlipEvent(float start, float delay, int id = -1, TrigCode trigCode = NULL_CODE);
+    FlipEvent(float start, float delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 };
@@ -89,7 +89,7 @@ class FadeInEvent : public QObject, public Event
 {
     Q_OBJECT
 public:
-    FadeInEvent(float start, float duration = 5, float delay=0, int id = -1, TrigCode trigCode = NULL_CODE);
+    FadeInEvent(float start, float duration = 5, float delay=0, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -106,7 +106,7 @@ class FadeOutEvent: public QObject, public Event
 {
     Q_OBJECT
 public:
-    FadeOutEvent(float start, float duration = 5, float delay=0, int id = -1, TrigCode trigCode = NULL_CODE);
+    FadeOutEvent(float start, float duration = 5, float delay=0, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -123,7 +123,7 @@ class ImageEvent : public Event
 {
 public:
     ImageEvent(float start, cv::Point2i pos,
-               const cv::Mat &image, float delay, int id = -1, TrigCode trigCode = NULL_CODE);
+               const cv::Mat &image, float delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 private:
@@ -140,7 +140,7 @@ class TextEvent : public Event
 {
 public:
         TextEvent(float start, QString str, cv::Scalar color,
-                  cv::Point2i pos, float delay, int id = -1, TrigCode trigCode = NULL_CODE);
+                  cv::Point2i pos, float delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -154,7 +154,7 @@ private:
 class RotateEvent : public Event
 {
 public:
-    RotateEvent(float start, int angle, float delay, int id = -1, TrigCode trigCode = NULL_CODE);
+    RotateEvent(float start, int angle, float delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -166,7 +166,7 @@ private:
 class FreezeEvent: public Event
 {
 public:
-    FreezeEvent(float start, float delay, int id = -1, TrigCode trigCode = NULL_CODE);
+    FreezeEvent(float start, float delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
