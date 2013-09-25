@@ -12,7 +12,6 @@
 #include <highgui.h>
 #include <QMutex>
 #include <QString>
-
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
 #include "event.h"

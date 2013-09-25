@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     imagecontainer.cpp \
     linenumberarea.cpp \
     textedit.cpp \
-    highlighter.cpp
+    highlighter.cpp \
+    glvideowidget.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -45,7 +46,8 @@ HEADERS  += mainwindow.h \
     imagecontainer.h \
     linenumberarea.h \
     textedit.h \
-    highlighter.h
+    highlighter.h \
+    glvideowidget.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui

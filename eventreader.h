@@ -6,7 +6,7 @@
 #include "eventcontainer.h"
 #include "imagecontainer.h"
 
-/*! Reads events from a QStringList and stores them in eventcontainer. The
+/*! Reads events from a QStringList and stores them in an eventcontainer. The
 QStringList is created from MainWindow's TextEdit when start is clicked.
 LoadEvents returns false if the input text is incorrectly formatted.
 */

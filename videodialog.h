@@ -8,6 +8,7 @@
 #include <highgui.h>
 #include <jpeglib.h>
 #include <dc1394/dc1394.h>
+#include "glvideowidget.h"
 #include "cycdatabuffer.h"
 #include "videofilewriter.h"
 #include "camerathread.h"
@@ -34,9 +35,9 @@ public:
     bool start(const QString& eventStr);
     void stop();
     void setKeepLog(bool);
+    void writeToLogFile(QString);
 
 public slots:
-    void onDrawFrame(unsigned char* jpegBuf, int logSize);
 
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
@@ -67,16 +68,11 @@ private:
     VideoFileWriter*		videoFileWriter;
     VideoCompressorThread*	videoCompressorThread;
 
-    int         fileDescriptor;
     bool        isRec, videoAvailable, keepLog;
     char*		imBuf;
 
-    // JPEG-related stuff
-    struct		jpeg_decompress_struct cinfo;
-    struct		jpeg_error_mgr jerr;
-    JSAMPROW 	row_pointer[1];
-
     EventContainer* events;
+    GLVideoWidget*  glVideoWidget;
 
     QTimer *eventTmr;
     QElapsedTimer elapsedTimer;

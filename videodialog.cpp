@@ -8,6 +8,8 @@
 #include <termios.h>
 #include <cerrno>
 #include <stdio.h>
+#include <QGLFormat>
+#include "glvideowidget.h"
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
@@ -16,21 +18,20 @@
 
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), fileDescriptor(-1),
+    QDialog(parent), ui(new Ui::VideoDialog), window(window),
     isRec(false), keepLog(false)
 {
     ui->setupUi(this);
 
+    /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
+      trigger signals with screen refresh rate. */
+    QGLFormat format;
+    format.setSwapInterval(1);
+    glVideoWidget = new GLVideoWidget(format, this);
+    glVideoWidget->setGeometry(0, 20, 640, 480);
+
     Settings settings;
     color = settings.color;
-
-    //Open USB port for trigger signals
-    if((fileDescriptor = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Couldn't open USB port for trigger signals.");
-        msgBox.exec();
-    }
 
     if(initVideo())
     {
@@ -64,7 +65,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
 
-        connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), this, SLOT(onDrawFrame(unsigned char*, int)));
+        connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget, SLOT(onDrawFrame(unsigned char*, int)));
 
         // Start video running
         videoFileWriter->start();
@@ -109,35 +110,6 @@ VideoDialog::~VideoDialog()
         delete videoCompressorThread;
     }
     delete ui;
-}
-
-void VideoDialog::onDrawFrame(unsigned char*  imBuf, int logSize)
-{
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
-    QString log = QString::fromAscii((char*)(imBuf - logSize-1));
-
-    //Draw the frame on screen
-    QImage qImg((uchar*)imBuf, VIDEO_WIDTH, VIDEO_HEIGHT, QImage::Format_RGB888);
-    ui->pixmapLabel->setPixmap(QPixmap::fromImage(qImg));
-
-    qint64 elapsedTime = elapsedTimer.nsecsElapsed();
-
-    //Set modem control line according to the trigcode
-    if(fileDescriptor >= 1)
-    {
-
-        if(ioctl(fileDescriptor, TIOCMSET, &chunkAttrib.trigCode) == -1)
-            fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
-    }
-
-    //Write to to the logfile
-    if(logSize && keepLog)
-    {
-        QTextStream logStream(&logFile);
-        logStream << "[" << elapsedTime/1000000000 << "s "
-                  << (elapsedTime%1000000000)/1000000 << "ms]"
-                  << log << "\n";   
-    }
 }
 
 void VideoDialog::stopThreads()
@@ -340,3 +312,15 @@ void VideoDialog::closeEvent(QCloseEvent *)
     window->toggleVideoDialogChecked(false);
 }
 
+void VideoDialog::writeToLogFile(QString log)
+{
+    qint64 elapsedTime = elapsedTimer.nsecsElapsed();
+
+    if(keepLog)
+    {
+        QTextStream logStream(&logFile);
+        logStream << "[" << elapsedTime/1000000000 << "s "
+                  << (elapsedTime%1000000000)/1000000 << "ms]"
+                  << log << "\n";
+    }
+}

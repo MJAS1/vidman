@@ -7,7 +7,7 @@
 #include <common.h>
 
 /*!
-Event classes are used to process an acquired frame i.e. add an event to the video.
+Event classes are used to process a video frame i.e. add an event to the video.
 Event is an abstract base class that should be inherited by all subclasses. Event has
 a pure virtual function apply(&frame) which takes a reference to an OpenCV matrice as
 a parameter and which should be implemented by subclasses.
