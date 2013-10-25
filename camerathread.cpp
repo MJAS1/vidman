@@ -145,7 +145,10 @@ void CameraThread::addEvent(Event *ev)
 
     trigCode = ev->getTrigCode();
     log.append(ev->getLog());
-    events.push_back(ev);
+    if(ev->getType() == EVENT_FREEZE)
+        events.push_front(ev);
+    else
+        events.push_back(ev);
 
     mutex.unlock();
 }
@@ -164,6 +167,48 @@ void CameraThread::removeEvent(RemoveEvent *ev)
     log.append(ev->getLog());
 
     delete ev;
+
+    mutex.unlock();
+}
+
+void CameraThread::pause()
+{
+    mutex.lock();
+
+    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
+    {
+        if((*iter)->getType() == EVENT_FADEIN)
+        {
+            dynamic_cast<FadeInEvent*>(*iter)->pause();
+            break;
+        }
+        else if(((*iter)->getType() == EVENT_FADEOUT))
+        {
+            dynamic_cast<FadeOutEvent*>(*iter)->pause();
+            break;
+        }
+    }
+
+    mutex.unlock();
+}
+
+void CameraThread::unpause()
+{
+    mutex.lock();
+
+    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
+    {
+        if((*iter)->getType() == EVENT_FADEIN)
+        {
+            dynamic_cast<FadeInEvent*>(*iter)->unpause();
+            break;
+        }
+        else if(((*iter)->getType() == EVENT_FADEOUT))
+        {
+            dynamic_cast<FadeOutEvent*>(*iter)->unpause();
+            break;
+        }
+    }
 
     mutex.unlock();
 }

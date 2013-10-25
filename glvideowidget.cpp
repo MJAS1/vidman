@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <QMessageBox>
+#include <QtConcurrentRun>
 #include <unistd.h>
 #include "videodialog.h"
 #include "config.h"

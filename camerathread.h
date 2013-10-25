@@ -25,6 +25,9 @@ public:
 	virtual ~CameraThread();
     void clearEvents();
 
+    void pause();
+    void unpause();
+
 public slots:
     void addEvent(Event *ev);
     void removeEvent(RemoveEvent *ev);

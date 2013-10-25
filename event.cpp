@@ -1,6 +1,6 @@
 #include "event.h"
 
-Event::Event(EventType type, float start, float delay, float duration, int id, int trigCode) :
+Event::Event(EventType type, int start, int delay, int duration, int id, int trigCode) :
     type(type), start(start), delay(delay), duration(duration), id(id), trigCode(trigCode)
 {
 }
@@ -10,18 +10,18 @@ Event::~Event()
 
 }
 
-float Event::getStart() const
+int Event::getStart() const
 {
     return start;
 }
 
 
-float Event::getDelay() const
+int Event::getDelay() const
 {
     return delay;
 }
 
-float Event::getDuration() const
+int Event::getDuration() const
 {
     return duration;
 }
@@ -51,12 +51,13 @@ int Event::getTrigCode() const
     return trigCode;
 }
 
-RemoveEvent::RemoveEvent(float start, float delay, int removeId, int trigCode) :
+
+RemoveEvent::RemoveEvent(int start, int delay, int removeId, int trigCode) :
     Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeId(removeId), removeType(EVENT_NULL)
 {
 }
 
-RemoveEvent::RemoveEvent(float start, float delay, EventType removeType, int trigCode) :
+RemoveEvent::RemoveEvent(int start, int delay, EventType removeType, int trigCode) :
     Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeType(removeType)
 {
 }
@@ -75,7 +76,7 @@ int RemoveEvent::getRemoveId() const
     return removeId;
 }
 
-FlipEvent::FlipEvent(float start, float delay, int id, int trigCode) :
+FlipEvent::FlipEvent(int start, int delay, int id, int trigCode) :
     Event(EVENT_FLIP, start, delay, 0, id, trigCode)
 {
 }
@@ -85,56 +86,83 @@ void FlipEvent::apply(cv::Mat &frame)
     cv::flip(frame, frame, 1);
 }
 
-FadeInEvent::FadeInEvent(float start, float duration, float delay, int id, int trigCode) :
-    Event(EVENT_FADEIN, start, delay, duration, id, trigCode), timer(new QTimer(this)), amount(-255), stopped(false)
+FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
+    Event(EVENT_FADEIN, start, delay, duration, id, trigCode), amount(-255), stopped(false)
 {
-    connect(timer, SIGNAL(timeout()), this, SLOT(increaseAmount()));
-}
-
-void FadeInEvent::increaseAmount()
-{
-    amount++;
-    if(amount >= 0)
-    {
-        timer->stop();
-        stopped = true;
-    }
+    timerWithPause.invalidate();
 }
 
 void FadeInEvent::apply(cv::Mat &frame)
 {
-    if(!timer->isActive() && !stopped)
-        timer->start(1000.0/255.0*duration);
-
+    if(!stopped)
+    {
+        if(!timerWithPause.isValid())
+        {
+            timerWithPause.start();
+            interval = duration/255;
+        }
+        int msecsElapsed = timerWithPause.nsecsElapsed()/1000000;
+        amount = -255 + msecsElapsed/interval;
+        if(amount >= 0)
+        {
+            amount = 0;
+            stopped = true;
+        }
+    }
     frame += cv::Scalar(amount, amount, amount);
 }
 
-FadeOutEvent::FadeOutEvent(float start, float duration, float delay, int id, int trigCode) :
-    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode), timer(new QTimer(this)), amount(0), stopped(false)
+void FadeInEvent::pause()
 {
-    connect(timer, SIGNAL(timeout()), this, SLOT(decreaseAmount()));
+    stopped = true;
+    timerWithPause.pause();
 }
 
-void FadeOutEvent::decreaseAmount()
+void FadeInEvent::unpause()
 {
-    amount--;
-    if(amount <= -255)
-    {
-        timer->stop();
-        stopped = true;
-    }
+    stopped = false;
+    timerWithPause.resume();
 }
 
+FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
+    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount(0), stopped(false)
+{
+    timerWithPause.invalidate();
+}
 
 void FadeOutEvent::apply(cv::Mat &frame)
 {
-    if(!timer->isActive() && !stopped)
-        timer->start(1000.0/255.0*duration);
-
+    if(!stopped)
+    {
+        if(!timerWithPause.isValid())
+        {
+            timerWithPause.start();
+            interval = duration/255;
+        }
+        int msecsElapsed = timerWithPause.nsecsElapsed()/1000000;
+        amount = -msecsElapsed/interval;
+        if(amount <= -255)
+        {
+            amount = -255;
+            stopped = true;
+        }
+    }
     frame += cv::Scalar(amount, amount, amount);
 }
 
-ImageEvent::ImageEvent(float start, cv::Point2i pos, const cv::Mat& image, float delay, int id, int trigCode) :
+void FadeOutEvent::pause()
+{
+    stopped = true;
+    timerWithPause.pause();
+}
+
+void FadeOutEvent::unpause()
+{
+    stopped = false;
+    timerWithPause.resume();
+}
+
+ImageEvent::ImageEvent(int start, cv::Point2i pos, const cv::Mat& image, int delay, int id, int trigCode) :
     Event(EVENT_IMAGE, start, delay, 0, id, trigCode), image(image), pos(pos)
 {
 }
@@ -193,7 +221,7 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-TextEvent::TextEvent(float start, QString str, cv::Scalar color, cv::Point2i pos, float delay, int id, int trigCode) :
+TextEvent::TextEvent(int start, QString str, cv::Scalar color, cv::Point2i pos, int delay, int id, int trigCode) :
     Event(EVENT_TEXT, start, delay, 0, id, trigCode), color(color), pos(pos), str(str)
 {
 }
@@ -203,7 +231,7 @@ void TextEvent::apply(cv::Mat &frame)
     cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, color, 2);
 }
 
-RotateEvent::RotateEvent(float start, int angle, float delay, int id, int trigCode)
+RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
     : Event(EVENT_ROTATE, start, delay, 0, id, trigCode), angle(angle)
 {
 }
@@ -215,7 +243,7 @@ void RotateEvent::apply(cv::Mat &frame)
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
-FreezeEvent::FreezeEvent(float start, float delay, int id, int trigCode)
+FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
                     : Event(EVENT_FREEZE, start, delay, 0, id, trigCode), started(false)
 {
 }

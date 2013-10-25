@@ -11,10 +11,17 @@
 #include "event.h"
 #include "eventreader.h"
 #include "highlighter.h"
+#include "timerwithpause.h"
 
 namespace Ui {
 class MainWindow;
 }
+
+enum State {
+    STOPPED,
+    PLAYING,
+    PAUSED
+};
 
 class MainWindow : public QMainWindow
 {
@@ -61,11 +68,16 @@ private:
     bool                load(const QString &f);
     bool                maybeSave();
     void                setCurrentFileName(const QString &fileName);
+    void                pause();
+    void                unpause();
+
+    State               programState;
 
     cv::VideoCapture*   capCam;
     VideoDialog*        videoDialog;
 
     QTimer*             timeTmr;
+    TimerWithPause      runningTime;
     QTime               time;
     QString             fileName;
 

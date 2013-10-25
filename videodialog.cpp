@@ -18,13 +18,13 @@
 
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window),
-    isRec(false), keepLog(false)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
 {
     ui->setupUi(this);
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
+
     QGLFormat format;
     format.setSwapInterval(1);
     glVideoWidget = new GLVideoWidget(format, this);
@@ -145,8 +145,12 @@ void VideoDialog::getNextEvent()
     if(!events->empty())
     {
         Event *nextEvent = (*events)[0];
-        eventTmr->start((nextEvent->getStart()+event->getDuration()+event->getDelay())*1000);
+        eventDuration = (nextEvent->getStart()+event->getDuration()+event->getDelay());
+        eventTmr->start(eventDuration);
+        time=elapsedTimer.nsecsElapsed()/1000000;
     }
+
+
 }
 
 bool VideoDialog::start(const QString& eventStr)
@@ -171,8 +175,10 @@ bool VideoDialog::start(const QString& eventStr)
     if(eventReader.loadEvents(strList, events))
     {
         if(!events->empty())
-            eventTmr->start((*events)[0]->getStart()*1000);
-
+        {
+            eventTmr->start((*events)[0]->getStart());
+            time=0;
+        }
         elapsedTimer.restart();
 
         return true;
@@ -188,6 +194,24 @@ void VideoDialog::stop()
     eventTmr->stop();
     events->clear();
     logFile.close();
+}
+
+void VideoDialog::pause()
+{
+    eventTmr->stop();
+    cameraThread->pause();
+    time = elapsedTimer.nsecsElapsed()/1000000-time;
+}
+
+void VideoDialog::unpause()
+{
+    cameraThread->unpause();
+    if(!events->empty())
+    {
+        eventDuration = eventDuration - time;
+        eventTmr->start(eventDuration);
+    }
+    time = elapsedTimer.nsecsElapsed()/1000000;
 }
 
 void VideoDialog::onShutterChanged(int newVal)

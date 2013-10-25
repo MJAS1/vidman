@@ -34,6 +34,8 @@ public:
 
     bool start(const QString& eventStr);
     void stop();
+    void pause();
+    void unpause();
     void setKeepLog(bool);
     void writeToLogFile(QString);
 
@@ -70,6 +72,7 @@ private:
 
     bool        isRec, videoAvailable, keepLog;
     char*		imBuf;
+    int         eventDuration;
 
     EventContainer* events;
     GLVideoWidget*  glVideoWidget;
@@ -77,6 +80,8 @@ private:
     QTimer *eventTmr;
     QElapsedTimer elapsedTimer;
     QFile logFile;
+
+    qint64 time;
 };
 
 #endif // VIDEODIALOG_H

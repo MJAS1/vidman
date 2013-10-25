@@ -5,6 +5,7 @@
 #include <highgui.h>
 #include <QTimer>
 #include <common.h>
+#include "timerwithpause.h"
 
 /*!
 Event classes are used to process a video frame i.e. add an event to the video.
@@ -30,14 +31,14 @@ enum EventType
 class Event
 {
 public:
-                Event(EventType type, float start, float delay=0, float duration=0, int id = -1, int trigCode = 0);
+                Event(EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
     virtual     ~Event();
 
     virtual void apply(cv::Mat &frame) = 0;
 
-    float       getStart() const;
-    float       getDelay() const;
-    float       getDuration() const;
+    int         getStart() const;
+    int         getDelay() const;
+    int         getDuration() const;
     int         getId() const;
     EventType   getType() const;
     int         getTrigCode() const;
@@ -48,7 +49,7 @@ public:
 protected:
     EventType   type;
 
-    float       start, delay, duration;
+    int         start, delay, duration;
     int         id;
     int         trigCode;
 
@@ -60,8 +61,8 @@ class RemoveEvent : public Event
 {
 public:
 
-    RemoveEvent(float start, float delay, int removeId, int trigCode = 0);
-    RemoveEvent(float start, float delay, EventType removeType, int trigCode = 0);
+    RemoveEvent(int start, int delay, int removeId, int trigCode = 0);
+    RemoveEvent(int start, int delay, EventType removeType, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -79,7 +80,7 @@ class FlipEvent : public Event
 {
 public:
 
-    FlipEvent(float start, float delay, int id = -1, int trigCode = 0);
+    FlipEvent(int start, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 };
@@ -89,41 +90,40 @@ class FadeInEvent : public QObject, public Event
 {
     Q_OBJECT
 public:
-    FadeInEvent(float start, float duration = 5, float delay=0, int id = -1, int trigCode = 0);
+    FadeInEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
+    void pause();
+    void unpause();
 
-private slots:
-    void increaseAmount();
 
 private:
-    QTimer* timer;
-    int     amount;
-    bool    stopped;
+    TimerWithPause  timerWithPause;
+    int             amount, interval;
+    bool            stopped;
 };
 
 class FadeOutEvent: public QObject, public Event
 {
     Q_OBJECT
 public:
-    FadeOutEvent(float start, float duration = 5, float delay=0, int id = -1, int trigCode = 0);
+    FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
-
-private slots:
-    void decreaseAmount();
+    void pause();
+    void unpause();
 
 private:
-    QTimer* timer;
-    int     amount;
+    TimerWithPause  timerWithPause;
+    int     amount, interval;
     bool    stopped;
 };
 
 class ImageEvent : public Event
 {
 public:
-    ImageEvent(float start, cv::Point2i pos,
-               const cv::Mat &image, float delay, int id = -1, int trigCode = 0);
+    ImageEvent(int start, cv::Point2i pos,
+               const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 private:
@@ -139,8 +139,8 @@ private:
 class TextEvent : public Event
 {
 public:
-        TextEvent(float start, QString str, cv::Scalar color,
-                  cv::Point2i pos, float delay, int id = -1, int trigCode = 0);
+        TextEvent(int start, QString str, cv::Scalar color,
+                  cv::Point2i pos, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -154,7 +154,7 @@ private:
 class RotateEvent : public Event
 {
 public:
-    RotateEvent(float start, int angle, float delay, int id = -1, int trigCode = 0);
+    RotateEvent(int start, int angle, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -166,7 +166,7 @@ private:
 class FreezeEvent: public Event
 {
 public:
-    FreezeEvent(float start, float delay, int id = -1, int trigCode = 0);
+    FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 

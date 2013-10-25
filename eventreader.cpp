@@ -72,7 +72,7 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
     QStringList strList = str.split(',');
 
     //Event parameters
-    float start = 0, duration = 0, delay=0;
+    int start = 0, duration = 0, delay=0;
     int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0, trigCode = 0;
     bool imageIdOk = false;
     QString text;
@@ -105,12 +105,12 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             }
             else if(param == "start")
             {
-                if((start = toFloat(split[1], lineNumber, QString("start time"))) == -1)
+                if((start = toInt(split[1], lineNumber, QString("start time"))) == -1)
                     return false;
             }
             else if(param == "duration")
             {
-                if((duration = toFloat(split[1], lineNumber, QString("duration"))) == -1)
+                if((duration = toInt(split[1], lineNumber, QString("duration"))) == -1)
                     return false;
             }
             else if(param == "x")
@@ -151,7 +151,7 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             }
             else if(param == "delay")
             {
-                if((delay = toFloat(split[1], lineNumber, QString("delay"))) == -1)
+                if((delay = toInt(split[1], lineNumber, QString("delay"))) == -1)
                     return false;
             }
             else if(param == "trigcode")
@@ -293,7 +293,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     //Event parameters
     int id = -1,  trigCode = 0;
     EventType type = EVENT_NULL;
-    float start = 0, delay = 0;
+    int start = 0, delay = 0;
 
     for(int i = 0; i < strList.size(); i++)
     {
@@ -326,7 +326,12 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
             }
             else if(param == "start")
             {
-                if((start = toFloat(value, lineNumber, "start time")) == -1)
+                if((start = toInt(value, lineNumber, "start time")) == -1)
+                    return false;
+            }
+            else if(param == "delay")
+            {
+                if((delay = toInt(value, lineNumber, QString("delay"))) == -1)
                     return false;
             }
             else if(param == "trigcode")
@@ -430,7 +435,7 @@ int EventReader::toInt(const QString &str, int line, const QString &param) const
 {
     bool ok;
     QString string = str.toLower().replace(" ", "");
-    float num = string.toInt(&ok);
+    int num = string.toInt(&ok);
     if(!ok)
     {
         errorMsg(QString("Couldn't convert %1 '%2' in line %3 to integer").arg(param).arg(str).arg(line));
