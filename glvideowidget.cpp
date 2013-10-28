@@ -23,8 +23,8 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, QWidget* parent)
-    : QGLWidget(format, parent), fileDescriptor(-1)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
+    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), fileDescriptor(-1), frames(0)
 {
     color = true;
 
@@ -37,14 +37,8 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, QWidget* parent)
         exit(EXIT_FAILURE);
     }
 
-    //Open USB port for trigger signals
-    if((fileDescriptor = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-    {
-        QMessageBox msgBox;
-        msgBox.setText("Couldn't open USB port for trigger signals.");
-        msgBox.exec();
-    }
-
+    connect(fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
+    fpsTimer->start(1000);
 }
 
 
@@ -114,12 +108,20 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     glEnd();
 
     updateGL();
+    frames++;
 
-    //Set modem control line according to the trigcode
     if(fileDescriptor >= 1)
     {
-        if(ioctl(fileDescriptor, TIOCMSET, &chunkAttrib.trigCode) == -1)
-            fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
+        if(trigPort == PORT_USB)
+        {
+            if(ioctl(fileDescriptor, TIOCMSET, &chunkAttrib.trigCode) == -1)
+                fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
+        }
+        else if(trigPort == PORT_PRINTER)
+        {
+            if (write(fileDescriptor, &chunkAttrib.trigCode, 1) != 1)
+                fprintf(stderr, "Cannot write to /dev/port: %s\n", strerror(errno));
+        }
     }
 
     //Write to log file. Parent widget must be a VideoDialog.
@@ -127,3 +129,15 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
         dynamic_cast<VideoDialog*>(parent())->writeToLogFile(log);
 }
 
+void GLVideoWidget::setTrigPort(int fd, PortType port)
+{
+    fileDescriptor = fd;
+    trigPort = port;
+}
+
+void GLVideoWidget::countFPS()
+{
+    int fps = frames;
+    frames = 0;
+    dynamic_cast<VideoDialog*>(parent())->setFPS(fps);
+}

@@ -143,6 +143,10 @@
     <addaction name="actionPaste"/>
     <addaction name="separator"/>
     <addaction name="actionKeepLog"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionUSBPort"/>
+    <addaction name="actionPrinterPort"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -394,6 +398,22 @@
    </property>
    <property name="text">
     <string>E&amp;xit</string>
+   </property>
+  </action>
+  <action name="actionUSBPort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use USB port</string>
+   </property>
+  </action>
+  <action name="actionPrinterPort">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Use Printer Port</string>
    </property>
   </action>
  </widget>
@@ -887,6 +907,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionUSBPort</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onUSBPort(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPrinterPort</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onPrinterPort(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -908,5 +960,7 @@
   <slot>addRemoveEventId()</slot>
   <slot>addRemoveEventType()</slot>
   <slot>onKeepLog(bool)</slot>
+  <slot>onUSBPort(bool)</slot>
+  <slot>onPrinterPort(bool)</slot>
  </slots>
 </ui>

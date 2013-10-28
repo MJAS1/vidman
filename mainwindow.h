@@ -33,6 +33,7 @@ public:
 
     void toggleStart(bool);
     void toggleVideoDialogChecked(bool);
+    qint64 getRunningTime() const;
     
 private slots:
     void onStart();
@@ -41,6 +42,8 @@ private slots:
 
     void onViewVideoDialog(bool);
     void onKeepLog(bool);
+    void onUSBPort(bool);
+    void onPrinterPort(bool);
 
     void fileNew();
     void fileOpen();
@@ -83,6 +86,9 @@ private:
 
     EventReader         eventReader;
     Highlighter*        highlighter;
+
+    int                 trigPortFd;
+    PortType            trigPort;
 };
 
 #endif // MAINWINDOW_H

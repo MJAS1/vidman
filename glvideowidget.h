@@ -10,15 +10,21 @@
 
 #include <QGLWidget>
 #include <jpeglib.h>
+#include <QTimer>
+#include "stoppablethread.h"
+#include "common.h"
+
+class VideoDialog;
 
 class GLVideoWidget : public QGLWidget
 {
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, QWidget* parent=0);
+    GLVideoWidget(const QGLFormat& format, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
     volatile bool color;
+    void setTrigPort(int fd, PortType port);
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -28,9 +34,17 @@ protected:
     void resizeGL(int _w, int _h);
 
 private:
-    char*		imBuf;
 
+    QTimer *fpsTimer;
+
+    char*		imBuf;
     int fileDescriptor;
+    int frames;
+
+    PortType trigPort;
+
+private slots:
+    void countFPS();
 };
 
 #endif /* GLVIDEOWIDGET_H_ */

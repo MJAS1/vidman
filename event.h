@@ -46,6 +46,9 @@ public:
     void        appendLog(const QString &str);
     QString     getLog() const;
 
+    virtual void pause();
+    virtual void unpause();
+
 protected:
     EventType   type;
 

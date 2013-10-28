@@ -8,6 +8,7 @@
 #include <highgui.h>
 #include <jpeglib.h>
 #include <dc1394/dc1394.h>
+#include <QMainWindow>
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"
 #include "videofilewriter.h"
@@ -38,6 +39,8 @@ public:
     void unpause();
     void setKeepLog(bool);
     void writeToLogFile(QString);
+    void setTrigPort(int fd, PortType trigPort);
+    void setFPS(int fps);
 
 public slots:
 

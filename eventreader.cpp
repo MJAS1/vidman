@@ -158,11 +158,8 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             {
                 if(value == "dtr") trigCode = TIOCM_DTR;
                 else if(value == "rts") trigCode = TIOCM_RTS;
-                else
-                {
-                    errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));
+                else if((trigCode = toInt(split[1], lineNumber, QString("trigcode"))) == -1)
                     return false;
-                }
             }
             else if(param == "color")
             {

@@ -176,18 +176,7 @@ void CameraThread::pause()
     mutex.lock();
 
     for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
-    {
-        if((*iter)->getType() == EVENT_FADEIN)
-        {
-            dynamic_cast<FadeInEvent*>(*iter)->pause();
-            break;
-        }
-        else if(((*iter)->getType() == EVENT_FADEOUT))
-        {
-            dynamic_cast<FadeOutEvent*>(*iter)->pause();
-            break;
-        }
-    }
+        (*iter)->pause();
 
     mutex.unlock();
 }
@@ -197,18 +186,7 @@ void CameraThread::unpause()
     mutex.lock();
 
     for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
-    {
-        if((*iter)->getType() == EVENT_FADEIN)
-        {
-            dynamic_cast<FadeInEvent*>(*iter)->unpause();
-            break;
-        }
-        else if(((*iter)->getType() == EVENT_FADEOUT))
-        {
-            dynamic_cast<FadeOutEvent*>(*iter)->unpause();
-            break;
-        }
-    }
+        (*iter)->unpause();
 
     mutex.unlock();
 }

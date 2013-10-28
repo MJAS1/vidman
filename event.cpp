@@ -51,6 +51,13 @@ int Event::getTrigCode() const
     return trigCode;
 }
 
+void Event::pause()
+{
+}
+
+void Event::unpause()
+{
+}
 
 RemoveEvent::RemoveEvent(int start, int delay, int removeId, int trigCode) :
     Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeId(removeId), removeType(EVENT_NULL)

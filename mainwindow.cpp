@@ -5,13 +5,15 @@
 #include <QStringList>
 #include <QMenu>
 #include <QCloseEvent>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), programState(STOPPED), videoDialog(new VideoDialog(this)),
-    timeTmr(new QTimer(this))
+    timeTmr(new QTimer(this)), trigPortFd(-1)
 {
     ui->setupUi(this);
     videoDialog->show();
@@ -136,6 +138,54 @@ void MainWindow::onKeepLog(bool arg)
     videoDialog->setKeepLog(arg);
 }
 
+void MainWindow::onUSBPort(bool arg)
+{
+    if(arg)
+    {
+        ui->actionPrinterPort->setChecked(false);
+        if((trigPortFd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
+        {
+            ui->actionUSBPort->setChecked(false);
+            QMessageBox msgBox;
+            msgBox.setText("Cannot open USB port.");
+            msgBox.exec();
+            trigPortFd = -1;
+        }
+    }
+    else
+        trigPortFd = -1;
+
+    videoDialog->setTrigPort(trigPortFd, PORT_USB);
+}
+
+void MainWindow::onPrinterPort(bool arg)
+{
+    if(arg)
+    {
+        ui->actionUSBPort->setChecked(false);
+        if((trigPortFd = ::open("/dev/port", O_RDWR | O_NDELAY)) < 0)
+        {
+            ui->actionPrinterPort->setChecked(false);
+            QMessageBox msgBox;
+            msgBox.setText("Cannot open /dev/port");
+            msgBox.exec();
+            trigPortFd = -1;
+        }
+        if (lseek(trigPortFd, 888, SEEK_SET) < 0)
+        {
+            ui->actionPrinterPort->setChecked(false);
+            QMessageBox msgBox;
+            msgBox.setText("Cannot seek /dev/port to the given address.");
+            msgBox.exec();
+            trigPortFd = -1;
+        }
+    }
+    else
+        trigPortFd = -1;
+
+    videoDialog->setTrigPort(trigPortFd, PORT_PRINTER);
+}
+
 void MainWindow::updateTime()
 {
     time.setHMS(0, 0, 0);
@@ -249,13 +299,13 @@ void MainWindow::addFlipEvent()
 
 void MainWindow::addFadeInEvent()
 {
-    QString str("#Event: type=fade in, start=0, duration=5, delay=0");
+    QString str("#Event: type=fade in, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeOutEvent()
 {
-    QString str("#Event: type=fade out, start=0, duration=5, delay=0");
+    QString str("#Event: type=fade out, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -315,4 +365,9 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::toggleVideoDialogChecked(bool arg)
 {
     ui->viewVideoDialogAction->setChecked(arg);
+}
+
+qint64 MainWindow::getRunningTime() const
+{
+    return runningTime.nsecsElapsed();
 }

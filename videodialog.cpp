@@ -21,14 +21,21 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
 {
     ui->setupUi(this);
+    //ui->gridLayout->setAlignment(Qt::AlignTop);
+
+    QStringList strList = QApplication::arguments();
+    int swapInterval = 0;
+    if(strList.contains(QString("vsync")))
+        swapInterval = 1;
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
 
     QGLFormat format;
-    format.setSwapInterval(1);
+    format.setSwapInterval(swapInterval);
     glVideoWidget = new GLVideoWidget(format, this);
-    glVideoWidget->setGeometry(0, 20, 640, 480);
+    ui->verticalLayout->addWidget(glVideoWidget);
+    ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
     Settings settings;
     color = settings.color;
@@ -338,7 +345,7 @@ void VideoDialog::closeEvent(QCloseEvent *)
 
 void VideoDialog::writeToLogFile(QString log)
 {
-    qint64 elapsedTime = elapsedTimer.nsecsElapsed();
+    qint64 elapsedTime = window->getRunningTime();
 
     if(keepLog)
     {
@@ -347,4 +354,14 @@ void VideoDialog::writeToLogFile(QString log)
                   << (elapsedTime%1000000000)/1000000 << "ms]"
                   << log << "\n";
     }
+}
+
+void VideoDialog::setTrigPort(int fd, PortType trigPort)
+{
+    glVideoWidget->setTrigPort(fd, trigPort);
+}
+
+void VideoDialog::setFPS(int fps)
+{
+    ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
