@@ -42,6 +42,17 @@ Settings::Settings()
         color = settings.value("video/color").toBool();
 	}
 
+    //Use vsync
+    if(!settings.contains("video/vsync"))
+    {
+        settings.setValue("video/vsync", false);
+        vsync = false;
+    }
+    else
+    {
+        vsync = settings.value("video/vsync").toBool();
+    }
+
 	//---------------------------------------------------------------------
 	// Misc settings
 	//
@@ -56,5 +67,16 @@ Settings::Settings()
 	{
 		sprintf(storagePath, settings.value("misc/data_storage_path").toString().toLocal8Bit().data());
 	}
+
+    //Printer port address
+    if(!settings.contains("misc/printer_port_address"))
+    {
+        settings.setValue("misc/printer_port_address", 0x3010);
+        printerPortAddr = 0x3010;
+    }
+    else
+    {
+        printerPortAddr = settings.value("misc/printer_port_address").toInt();
+    }
 }
 

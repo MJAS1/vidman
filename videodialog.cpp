@@ -23,9 +23,8 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     ui->setupUi(this);
     //ui->gridLayout->setAlignment(Qt::AlignTop);
 
-    QStringList strList = QApplication::arguments();
     int swapInterval = 0;
-    if(strList.contains(QString("vsync")))
+    if(settings.vsync)
         swapInterval = 1;
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
@@ -364,4 +363,17 @@ void VideoDialog::setTrigPort(int fd, PortType trigPort)
 void VideoDialog::setFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
+}
+
+void VideoDialog::mouseDoubleClickEvent(QMouseEvent *e)
+{
+    if(isFullScreen())
+    {
+        showNormal();
+    }
+    else
+    {
+        setWindowFlags(Qt::Window);
+        showFullScreen();
+    }
 }

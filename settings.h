@@ -28,9 +28,11 @@ public:
 	// video
 	int				jpgQuality;
 	bool			color;
+    bool            vsync;
 
 	// misc
 	char			storagePath[500];
+    int             printerPortAddr;
 };
 
 #endif /* SETTINGS_H_ */

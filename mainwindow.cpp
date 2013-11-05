@@ -171,7 +171,7 @@ void MainWindow::onPrinterPort(bool arg)
             msgBox.exec();
             trigPortFd = -1;
         }
-        if (lseek(trigPortFd, 888, SEEK_SET) < 0)
+        if (lseek(trigPortFd, settings.printerPortAddr, SEEK_SET) < 0)
         {
             ui->actionPrinterPort->setChecked(false);
             QMessageBox msgBox;

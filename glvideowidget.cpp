@@ -39,6 +39,8 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 
     connect(fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
     fpsTimer->start(1000);
+
+
 }
 
 
@@ -92,10 +94,8 @@ void GLVideoWidget::resizeGL(int _w, int _h)
 
 void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 {
-
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromAscii((char*)(imBuf - logSize-1));
-
 
     makeCurrent();
     glTexImage2D(GL_TEXTURE_2D, 0, (color ? GL_RGB8 : GL_LUMINANCE8), VIDEO_WIDTH, VIDEO_HEIGHT, 0, (color ? GL_RGB : GL_LUMINANCE), GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
@@ -141,3 +141,5 @@ void GLVideoWidget::countFPS()
     frames = 0;
     dynamic_cast<VideoDialog*>(parent())->setFPS(fps);
 }
+
+

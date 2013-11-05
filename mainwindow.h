@@ -12,6 +12,7 @@
 #include "eventreader.h"
 #include "highlighter.h"
 #include "timerwithpause.h"
+#include "settings.h"
 
 namespace Ui {
 class MainWindow;
@@ -89,6 +90,9 @@ private:
 
     int                 trigPortFd;
     PortType            trigPort;
+    int                 printerPortAddr;
+
+    Settings            settings;
 };
 
 #endif // MAINWINDOW_H

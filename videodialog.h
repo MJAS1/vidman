@@ -17,6 +17,7 @@
 #include "event.h"
 #include "eventcontainer.h"
 #include "eventreader.h"
+#include "settings.h"
 
 class MainWindow;
 
@@ -52,6 +53,8 @@ public slots:
     void stopThreads();
     void toggleRecord(bool);
 
+protected:
+    void mouseDoubleClickEvent(QMouseEvent *e);
 private slots:
     void getNextEvent();
 
@@ -85,6 +88,8 @@ private:
     QFile logFile;
 
     qint64 time;
+
+    Settings settings;
 };
 
 #endif // VIDEODIALOG_H

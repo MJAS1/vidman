@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 #include <iostream>
-
 #include "config.h"
 #include "cycdatabuffer.h"
 
@@ -37,6 +36,7 @@ CycDataBuffer::~CycDataBuffer()
 
 void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
 {
+
 	// Check for buffer overflow. CIRC_BUF_MARG is the safety margin against
 	// race condition between consumer and producer threads when the buffer
 	// is close to full.
@@ -70,7 +70,6 @@ void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
 	buffSemaphore->release(_attrib.chunkSize);
 
     emit chunkReady(dataBuf + insertPtr, _attrib.logSize);
-
 	insertPtr += _attrib.chunkSize;
 	if(insertPtr >= bufSize)
 	{
