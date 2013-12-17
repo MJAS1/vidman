@@ -5,6 +5,7 @@
 #ifndef COMMON_H_
 
 enum PortType {
+    PORT_NULL,
     PORT_USB,
     PORT_PRINTER
 };

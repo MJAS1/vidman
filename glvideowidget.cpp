@@ -24,8 +24,9 @@ using namespace std;
 
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
-    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), fileDescriptor(-1), frames(0)
+    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH)
 {
+    //setAutoBufferSwap(false);
     color = true;
 
     // Allocate memory. Since we do not know whether the image is going to BW
@@ -73,8 +74,8 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     // Change the viewport to preserve the aspect ratio.
     // Compute new height corresponding to the current width and new width
     // corresponding to the current heigh and see which one fits.
-    dispH = int(floor((_w / float(VIDEO_WIDTH)) * VIDEO_HEIGHT));
-    dispW = int(floor((_h / float(VIDEO_HEIGHT)) * VIDEO_WIDTH));
+    dispH = int(floor((_w / float(videoWidth)) * VIDEO_HEIGHT));
+    dispW = int(floor((_h / float(VIDEO_HEIGHT)) * videoWidth));
 
     if(dispH <= _h)
     {
@@ -94,45 +95,34 @@ void GLVideoWidget::resizeGL(int _w, int _h)
 
 void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 {
+    glClear( GL_COLOR_BUFFER_BIT);
+
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromAscii((char*)(imBuf - logSize-1));
 
     makeCurrent();
+
+
     glTexImage2D(GL_TEXTURE_2D, 0, (color ? GL_RGB8 : GL_LUMINANCE8), VIDEO_WIDTH, VIDEO_HEIGHT, 0, (color ? GL_RGB : GL_LUMINANCE), GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
 
+
     glBegin(GL_QUADS);
-    glTexCoord2d(0.0,0.0); glVertex2d(-1.0,+1.0);
-    glTexCoord2d(1.0,0.0); glVertex2d(+1.0,+1.0);
-    glTexCoord2d(1.0,1.0); glVertex2d(+1.0,-1.0);
-    glTexCoord2d(0.0,1.0); glVertex2d(-1.0,-1.0);
+    glTexCoord2f(0.0,0.0); glVertex2f(-1.0,+1.0);
+    glTexCoord2f(1.0,0.0); glVertex2f(+1.0,+1.0);
+    glTexCoord2f(1.0,1.0); glVertex2f(+1.0,-1.0);
+    glTexCoord2f(0.0,1.0); glVertex2f(-1.0,-1.0);
     glEnd();
 
     updateGL();
+
     frames++;
 
-    if(fileDescriptor >= 1)
-    {
-        if(trigPort == PORT_USB)
-        {
-            if(ioctl(fileDescriptor, TIOCMSET, &chunkAttrib.trigCode) == -1)
-                fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
-        }
-        else if(trigPort == PORT_PRINTER)
-        {
-            if (write(fileDescriptor, &chunkAttrib.trigCode, 1) != 1)
-                fprintf(stderr, "Cannot write to /dev/port: %s\n", strerror(errno));
-        }
-    }
+    dynamic_cast<VideoDialog*>(parent())->sendTrigSignal(chunkAttrib.trigCode);
 
     //Write to log file. Parent widget must be a VideoDialog.
     if(logSize)
         dynamic_cast<VideoDialog*>(parent())->writeToLogFile(log);
-}
 
-void GLVideoWidget::setTrigPort(int fd, PortType port)
-{
-    fileDescriptor = fd;
-    trigPort = port;
 }
 
 void GLVideoWidget::countFPS()
@@ -142,4 +132,22 @@ void GLVideoWidget::countFPS()
     dynamic_cast<VideoDialog*>(parent())->setFPS(fps);
 }
 
+void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
+{
+    if(isFullScreen())
+    {
+        setWindowFlags(Qt::Widget);
+        showNormal();
+    }
+    else
+    {
+        setWindowFlags(Qt::Window);
+        showFullScreen();
+    }
+}
 
+void GLVideoWidget::setVideoWidth(int newVal)
+{
+    videoWidth = newVal;
+    resizeGL(width(), height());
+}

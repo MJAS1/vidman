@@ -40,7 +40,8 @@ public:
     void unpause();
     void setKeepLog(bool);
     void writeToLogFile(QString);
-    void setTrigPort(int fd, PortType trigPort);
+    bool setTrigPort(PortType trigPort);
+    void sendTrigSignal(int trigCode) const;
     void setFPS(int fps);
 
 public slots:
@@ -49,12 +50,11 @@ public slots:
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
+    void onWidthChanged(int newVal);
 
     void stopThreads();
     void toggleRecord(bool);
 
-protected:
-    void mouseDoubleClickEvent(QMouseEvent *e);
 private slots:
     void getNextEvent();
 
@@ -79,6 +79,7 @@ private:
     bool        isRec, videoAvailable, keepLog;
     char*		imBuf;
     int         eventDuration;
+    int         trigPortFd;
 
     EventContainer* events;
     GLVideoWidget*  glVideoWidget;
@@ -90,6 +91,8 @@ private:
     qint64 time;
 
     Settings settings;
+
+    PortType trigPort;
 };
 
 #endif // VIDEODIALOG_H

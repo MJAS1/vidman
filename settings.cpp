@@ -53,6 +53,39 @@ Settings::Settings()
         vsync = settings.value("video/vsync").toBool();
     }
 
+    //Flip the video image on default
+    if(!settings.contains("video/flip"))
+    {
+        settings.setValue("video/flip", true);
+        flip = true;
+    }
+    else
+    {
+        flip = settings.value("video/flip").toBool();
+    }
+
+    //Turn the video image upside down on default
+    if(!settings.contains("video/turn_video_around"))
+    {
+        settings.setValue("video/turn_video_around", true);
+        turnAround = true;
+    }
+    else
+    {
+        turnAround = settings.value("video/turn_video_around").toBool();
+    }
+
+    //Frames per second
+    if(!settings.contains("video/fps"))
+    {
+        settings.setValue("video/fps", 30);
+        fps = 30;
+    }
+    else
+    {
+        fps = settings.value("video/fps").toInt();
+    }
+
 	//---------------------------------------------------------------------
 	// Misc settings
 	//

@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <time.h>
 #include <sys/ioctl.h>
+#include <sys/io.h>
 #include <fcntl.h>
 #include <termios.h>
 #include <cerrno>
@@ -18,10 +19,9 @@
 
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false), trigPortFd(-1), trigPort(PORT_NULL)
 {
     ui->setupUi(this);
-    //ui->gridLayout->setAlignment(Qt::AlignTop);
 
     int swapInterval = 0;
     if(settings.vsync)
@@ -276,6 +276,11 @@ void VideoDialog::onVRChanged(int newVal)
     }
 }
 
+void VideoDialog::onWidthChanged(int newVal)
+{
+    glVideoWidget->setVideoWidth(newVal);
+}
+
 bool VideoDialog::initVideo()
 {
     capCam = new cv::VideoCapture;
@@ -330,7 +335,27 @@ bool VideoDialog::initVideo()
     }
     std::cout << "Using camera with GUID " << camera->guid << std::endl;
 
+    /*
+    err = dc1394_video_set_operation_mode(camera, DC1394_OPERATION_MODE_1394B);
+    if (err != DC1394_SUCCESS)
+    {
+        std::cerr << "Could not set operation mode" << std::endl;
+        free(dc1394Context);
+        delete capCam;
+        delete camera;
+        return false;
+    }
 
+    err = dc1394_video_set_iso_speed(camera, DC1394_ISO_SPEED_MAX);
+    if (err != DC1394_SUCCESS)
+    {
+        std::cerr << "Failed to set ISO speed" << std::endl;
+        free(dc1394Context);
+        delete capCam;
+        delete camera;
+        return false;
+    }
+    */
     dc1394_camera_free_list(camList);
 
     videoAvailable = true;
@@ -355,9 +380,36 @@ void VideoDialog::writeToLogFile(QString log)
     }
 }
 
-void VideoDialog::setTrigPort(int fd, PortType trigPort)
+bool VideoDialog::setTrigPort(PortType port)
 {
-    glVideoWidget->setTrigPort(fd, trigPort);
+
+    if(port == PORT_PRINTER)
+    {
+        if (ioperm(settings.printerPortAddr, 1, 1))
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Cannot get the port. May be you should run this program as root\n");
+            msgBox.exec();
+            trigPort = PORT_NULL;
+            return false;
+        }
+    }
+    else if(port == PORT_USB)
+    {
+        if((trigPortFd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Cannot open USB port.");
+            msgBox.exec();
+            trigPort = PORT_NULL;
+            trigPortFd = -1;
+            return false;
+        }
+    }
+
+    trigPort = port;
+
+    return true;
 }
 
 void VideoDialog::setFPS(int fps)
@@ -365,15 +417,17 @@ void VideoDialog::setFPS(int fps)
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
 
-void VideoDialog::mouseDoubleClickEvent(QMouseEvent *e)
+void VideoDialog::sendTrigSignal(int trigCode) const
 {
-    if(isFullScreen())
-    {
-        showNormal();
-    }
-    else
-    {
-        setWindowFlags(Qt::Window);
-        showFullScreen();
-    }
+        if(trigPort == PORT_USB)
+        {
+            if(ioctl(trigPortFd, TIOCMSET, &trigCode) == -1)
+            {
+                fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
+            }
+        }
+        else if(trigPort == PORT_PRINTER)
+        {
+            outb(trigCode, settings.printerPortAddr);
+        }
 }

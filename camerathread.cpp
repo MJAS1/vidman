@@ -21,7 +21,7 @@ CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool
 {
     shouldStop = false;
 
-    if(!capCam->set(CV_CAP_PROP_FPS, 30))
+    if(!capCam->set(CV_CAP_PROP_FPS, settings.fps))
     {
         std::cerr << "Could not set framerate" << std::endl;
         abort();
@@ -52,15 +52,29 @@ void CameraThread::stoppableRun()
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
     }
 
+    bool flip = settings.flip;
+    bool turnAround = settings.turnAround;
+
     // Start the acquisition loop
     while (!shouldStop)
     {
+
         *capCam >> frame;
 
         if (frame.empty())
         {
             std::cerr << "Error dequeuing a frame" << std::endl;
             abort();
+        }
+
+        if(flip)
+            cv::flip(frame, frame, 1);
+
+        if(turnAround)
+        {
+            cv::Point2f center(frame.cols/2., frame.rows/2.);
+            cv::Mat rotMat = getRotationMatrix2D(center, 180, 1.0);
+            cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
         }
 
         clock_gettime(CLOCK_REALTIME, &timestamp);

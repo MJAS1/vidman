@@ -27,8 +27,11 @@ public:
 
 	// video
 	int				jpgQuality;
+    int             fps;
 	bool			color;
     bool            vsync;
+    bool            flip;
+    bool            turnAround;
 
 	// misc
 	char			storagePath[500];

@@ -24,7 +24,8 @@ public:
     GLVideoWidget(const QGLFormat& format, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
     volatile bool color;
-    void setTrigPort(int fd, PortType port);
+
+    void setVideoWidth(int newVal);
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -32,16 +33,15 @@ public slots:
 protected:
     void initializeGL();
     void resizeGL(int _w, int _h);
+    void mouseDoubleClickEvent(QMouseEvent *e);
 
 private:
 
-    QTimer *fpsTimer;
+    QTimer      *fpsTimer;
 
-    char*		imBuf;
-    int fileDescriptor;
-    int frames;
-
-    PortType trigPort;
+    char        *imBuf;
+    int         frames;
+    int         videoWidth;
 
 private slots:
     void countFPS();

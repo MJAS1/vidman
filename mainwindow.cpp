@@ -143,19 +143,11 @@ void MainWindow::onUSBPort(bool arg)
     if(arg)
     {
         ui->actionPrinterPort->setChecked(false);
-        if((trigPortFd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-        {
+        if(!videoDialog->setTrigPort(PORT_USB))
             ui->actionUSBPort->setChecked(false);
-            QMessageBox msgBox;
-            msgBox.setText("Cannot open USB port.");
-            msgBox.exec();
-            trigPortFd = -1;
-        }
     }
     else
-        trigPortFd = -1;
-
-    videoDialog->setTrigPort(trigPortFd, PORT_USB);
+        videoDialog->setTrigPort(PORT_NULL);
 }
 
 void MainWindow::onPrinterPort(bool arg)
@@ -163,27 +155,11 @@ void MainWindow::onPrinterPort(bool arg)
     if(arg)
     {
         ui->actionUSBPort->setChecked(false);
-        if((trigPortFd = ::open("/dev/port", O_RDWR | O_NDELAY)) < 0)
-        {
+        if(!videoDialog->setTrigPort(PORT_PRINTER))
             ui->actionPrinterPort->setChecked(false);
-            QMessageBox msgBox;
-            msgBox.setText("Cannot open /dev/port");
-            msgBox.exec();
-            trigPortFd = -1;
-        }
-        if (lseek(trigPortFd, settings.printerPortAddr, SEEK_SET) < 0)
-        {
-            ui->actionPrinterPort->setChecked(false);
-            QMessageBox msgBox;
-            msgBox.setText("Cannot seek /dev/port to the given address.");
-            msgBox.exec();
-            trigPortFd = -1;
-        }
     }
     else
-        trigPortFd = -1;
-
-    videoDialog->setTrigPort(trigPortFd, PORT_PRINTER);
+        videoDialog->setTrigPort(PORT_NULL);
 }
 
 void MainWindow::updateTime()
