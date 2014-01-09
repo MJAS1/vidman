@@ -32,6 +32,7 @@ public:
     bool            vsync;
     bool            flip;
     bool            turnAround;
+    bool            fixPoint;
 
 	// misc
 	char			storagePath[500];

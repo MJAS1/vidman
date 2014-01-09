@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog->show();
     connect(timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
 
-    //For some reason ToolButton can't be assigned to toolbar in ui designer so it has to be done manually in the code.
+    //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionAddImageObject);
     menu->addSeparator();
@@ -84,7 +84,6 @@ void MainWindow::onStart()
 
 void MainWindow::onStop()
 {
-
     ui->startButton->toggle();
     ui->stopButton->setEnabled(false);
     ui->recButton->setChecked(false);

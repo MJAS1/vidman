@@ -29,7 +29,6 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
-
     QGLFormat format;
     format.setSwapInterval(swapInterval);
     glVideoWidget = new GLVideoWidget(format, this);
@@ -37,7 +36,6 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
     Settings settings;
-    color = settings.color;
 
     if(initVideo())
     {
@@ -60,16 +58,12 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         ui->vrSlider->setMinimum(VR_MIN_VAL);
         ui->vrSlider->setMaximum(VR_MAX_VAL);
 
-        ui->uvLabel->setEnabled(settings.color);
-        ui->vrLabel->setEnabled(settings.color);
-        ui->wbLabel->setEnabled(settings.color);
-
         // Set up video recording
         cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-        cameraThread = new CameraThread(capCam, cycVideoBufRaw, settings.color);
+        cameraThread = new CameraThread(capCam, cycVideoBufRaw);
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
-        videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.color, settings.jpgQuality);
+        videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
 
         connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget, SLOT(onDrawFrame(unsigned char*, int)));
 
@@ -155,8 +149,6 @@ void VideoDialog::getNextEvent()
         eventTmr->start(eventDuration);
         time=elapsedTimer.nsecsElapsed()/1000000;
     }
-
-
 }
 
 bool VideoDialog::start(const QString& eventStr)

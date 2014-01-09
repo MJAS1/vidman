@@ -85,7 +85,6 @@ private:
     QTime               time;
     QString             fileName;
 
-    EventReader         eventReader;
     Highlighter*        highlighter;
 
     int                 trigPortFd;

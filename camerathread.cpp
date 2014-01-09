@@ -16,8 +16,8 @@
 using namespace std;
 
 
-CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color) :
-    capCam(capCam), color(color), trigCode(0), cycBuf(cycBuf)
+CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf) :
+    capCam(capCam), trigCode(0), cycBuf(cycBuf)
 {
     shouldStop = false;
 
@@ -52,8 +52,21 @@ void CameraThread::stoppableRun()
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
     }
 
-    bool flip = settings.flip;
-    bool turnAround = settings.turnAround;
+    if(settings.flip)
+        preEvents.append(new FlipEvent(0, 0));
+
+    if(settings.turnAround)
+        preEvents.append(new RotateEvent(0, 180, 0));
+
+    if(settings.fixPoint)
+    {
+        cv::Mat fixImg = cv::imread("./img/fixPoint.png", CV_LOAD_IMAGE_UNCHANGED);
+
+        if(!fixImg.empty())
+            preEvents.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixImg.cols)/2, (VIDEO_HEIGHT-fixImg.rows)/2), fixImg, 0));
+        else
+            std::cerr << "Couldn't load fixPoint.png" << std::endl;
+    }
 
     // Start the acquisition loop
     while (!shouldStop)
@@ -61,20 +74,12 @@ void CameraThread::stoppableRun()
 
         *capCam >> frame;
 
+        applyEvents(&preEvents);
+
         if (frame.empty())
         {
             std::cerr << "Error dequeuing a frame" << std::endl;
             abort();
-        }
-
-        if(flip)
-            cv::flip(frame, frame, 1);
-
-        if(turnAround)
-        {
-            cv::Point2f center(frame.cols/2., frame.rows/2.);
-            cv::Mat rotMat = getRotationMatrix2D(center, 180, 1.0);
-            cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
         }
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
@@ -84,7 +89,7 @@ void CameraThread::stoppableRun()
 
         mutex.lock();
 
-        applyEvents();
+        applyEvents(&events);
         cv::cvtColor(frame, frame, CV_BGR2RGB);
 
         chunkAttrib.log = new char[log.size()+1];
@@ -98,7 +103,7 @@ void CameraThread::stoppableRun()
         mutex.unlock();
 
 
-		chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * (color ? 3 : 1);
+        chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * 3;
         chunkAttrib.timestamp = msec;
 
         cycBuf->insertChunk(frame.data, chunkAttrib);
@@ -116,9 +121,9 @@ void CameraThread::clearEvents()
     mutex.unlock();
 }
 
-void CameraThread::applyEvents()
+void CameraThread::applyEvents(const EventContainer *ev)
 {
-    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
+    for(EventContainer::ConstIterator iter = ev->begin(); iter != ev->end(); iter++)
     {
         (*iter)->apply(frame);
     }
@@ -159,6 +164,7 @@ void CameraThread::addEvent(Event *ev)
 
     trigCode = ev->getTrigCode();
     log.append(ev->getLog());
+
     if(ev->getType() == EVENT_FREEZE)
         events.push_front(ev);
     else

@@ -14,7 +14,7 @@
 class VideoCompressorThread : public StoppableThread
 {
 public:
-	VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, bool _color, int _jpgQuality);
+    VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, int _jpgQuality);
 	virtual ~VideoCompressorThread();
 
 protected:
@@ -23,7 +23,6 @@ protected:
 private:
 	CycDataBuffer*	inpBuf;
 	CycDataBuffer*	outBuf;
-	bool			color;
 	int				jpgQuality;
 };
 

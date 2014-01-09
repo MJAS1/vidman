@@ -32,7 +32,6 @@ class VideoDialog : public QDialog
 public:
     explicit VideoDialog(MainWindow *window, QWidget *parent = 0);
     ~VideoDialog();
-    volatile bool color;
 
     bool start(const QString& eventStr);
     void stop();

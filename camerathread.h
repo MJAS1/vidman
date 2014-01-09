@@ -22,7 +22,7 @@
 class CameraThread : public StoppableThread
 {
 public:
-    CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf, bool color);
+    CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf);
 	virtual ~CameraThread();
     void clearEvents();
 
@@ -43,14 +43,13 @@ private:
     QMutex                      mutex;
     QString                     log;
 
-    bool                        color;
     int                         trigCode;
 
     CycDataBuffer*              cycBuf;
-    EventContainer              events;
+    EventContainer              events, preEvents;
     Settings                    settings;
 
-    void                        applyEvents();
+    void                        applyEvents(const EventContainer*);
 };
 
 #endif /* CAMERATHREAD_H_ */

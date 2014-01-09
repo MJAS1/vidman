@@ -11,8 +11,8 @@
 #include "config.h"
 #include "videocompressorthread.h"
 
-VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf, CycDataBuffer* outBuf, bool color, int jpgQuality) :
-    inpBuf(inpBuf), outBuf(outBuf), color(color), jpgQuality(jpgQuality)
+VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf, CycDataBuffer* outBuf, int jpgQuality) :
+    inpBuf(inpBuf), outBuf(outBuf), jpgQuality(jpgQuality)
 {
 }
 
@@ -47,8 +47,8 @@ void VideoCompressorThread::stoppableRun()
 		// Set the parameters of the output file
 		cinfo.image_width = VIDEO_WIDTH;
 		cinfo.image_height = VIDEO_HEIGHT;
-		cinfo.input_components = (color ? 3 : 1);
-		cinfo.in_color_space = (color ? JCS_RGB : JCS_GRAYSCALE);
+        cinfo.input_components = 3;
+        cinfo.in_color_space = JCS_RGB;
 
 		// Use default compression parameters
 		jpeg_set_defaults(&cinfo);
@@ -60,7 +60,7 @@ void VideoCompressorThread::stoppableRun()
 		// write one row at a time
 		while(cinfo.next_scanline < cinfo.image_height)
 		{
-			row_pointer = (data + (cinfo.next_scanline * cinfo.image_width * (color ? 3 : 1)));
+            row_pointer = (data + (cinfo.next_scanline * cinfo.image_width * 3));
 			jpeg_write_scanlines(&cinfo, &row_pointer, 1);
 		}
 

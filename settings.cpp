@@ -75,6 +75,17 @@ Settings::Settings()
         turnAround = settings.value("video/turn_video_around").toBool();
     }
 
+    //Add a fixation point to the video
+    if(!settings.contains("video/fixPoint"))
+    {
+        settings.setValue("video/fixPoint", true);
+        fixPoint = true;
+    }
+    else
+    {
+        fixPoint = settings.value("video/fixPoint").toBool();
+    }
+
     //Frames per second
     if(!settings.contains("video/fps"))
     {
