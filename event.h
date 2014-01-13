@@ -25,7 +25,8 @@ enum EventType
     EVENT_TEXT,
     EVENT_REMOVE,
     EVENT_ROTATE,
-    EVENT_FREEZE
+    EVENT_FREEZE,
+    EVENT_DETECT_MOTION
 };
 
 class Event
@@ -177,6 +178,15 @@ private:
     bool    started;
 
     cv::Mat freezedFrame;
+};
+
+class DetectMotionEvent: public Event
+{
+public:
+    DetectMotionEvent(int start, int delay, int trigCode = 0);
+
+    void apply(cv::Mat &frame);
+
 };
 
 #endif // EVENT_H

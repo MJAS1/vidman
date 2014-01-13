@@ -17,6 +17,7 @@
 #include "event.h"
 #include "eventcontainer.h"
 #include "settings.h"
+#include "motiondetector.h"
 
 //! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
 class CameraThread : public StoppableThread
@@ -48,6 +49,7 @@ private:
     CycDataBuffer*              cycBuf;
     EventContainer              events, preEvents;
     Settings                    settings;
+    MotionDetector              motionDetector;
 
     void                        applyEvents(const EventContainer*);
 };

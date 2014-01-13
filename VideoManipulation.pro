@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     textedit.cpp \
     highlighter.cpp \
     glvideowidget.cpp \
-    timerwithpause.cpp
+    timerwithpause.cpp \
+    motiondetector.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     textedit.h \
     highlighter.h \
     glvideowidget.h \
-    timerwithpause.h
+    timerwithpause.h \
+    motiondetector.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui

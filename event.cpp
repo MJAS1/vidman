@@ -264,3 +264,11 @@ void FreezeEvent::apply(cv::Mat &frame)
     }
     freezedFrame.copyTo(frame);
 }
+
+DetectMotionEvent::DetectMotionEvent(int start, int delay, int trigCode) : Event(EVENT_DETECT_MOTION, start, delay, 0, -1, trigCode)
+{
+}
+
+void DetectMotionEvent::apply(cv::Mat &frame)
+{
+}
