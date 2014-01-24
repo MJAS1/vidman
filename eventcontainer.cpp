@@ -1,59 +1,116 @@
 #include "eventcontainer.h"
+#include "videoevent.h"
 
-EventContainer::EventContainer()
+template <typename T>
+EventContainer<T>::EventContainer()
 {
 }
 
-EventContainer::~EventContainer()
+template <typename T>
+EventContainer<T>::~EventContainer()
 {
     clear();
 }
 
-void EventContainer::clear()
+template <typename T>
+void EventContainer<T>::clear()
 {
-    if(!empty())
+    if(!this->empty())
     {
-        for(Iterator iter = begin(); iter != end(); iter++)
+        for(Iterator iter = events.begin(); iter != events.end(); iter++)
             delete *iter;
 
-        QVector<Event*>::clear();
+        events.clear();
     }
 }
 
-Event* EventContainer::pop_front()
+template <typename T>
+Event* EventContainer<T>::pop_front()
 {
-    Event *ev = *begin();
-    erase(begin());
+    Event *ev = *events.begin();
+    events.erase(events.begin());
     return ev;
 }
 
-void EventContainer::removeId(int id)
+template <typename T>
+void EventContainer<T>::removeId(int id)
 {
-    Iterator iter = begin();
-    while(iter != end())
+    Iterator iter = events.begin();
+    while(iter != events.end())
     {
         if((*iter)->getId() == id)
         {
             delete (*iter);
-            iter = erase(iter);
+            iter = events.erase(iter);
             continue;
         }
         iter++;
     }
 }
 
-void EventContainer::removeType(EventType type)
+template <typename T>
+void EventContainer<T>::removeType(EventType type)
 {
-    Iterator iter = begin();
-    while(iter != end())
+    Iterator iter = events.begin();
+    while(iter != events.end())
     {
         if((*iter)->getType() == type)
         {
             delete (*iter);
-            iter = erase(iter);
+            iter = events.erase(iter);
             continue;
         }
         iter++;
     }
 }
 
+template <typename T>
+bool EventContainer<T>::empty()
+{
+    return events.empty();
+}
+
+template <typename T>
+T EventContainer<T>::operator [](int id) const
+{
+    return events[id];
+}
+
+template <typename T>
+void EventContainer<T>::append(T event)
+{
+    events.append(event);
+}
+
+template <typename T>
+void EventContainer<T>::prepend(T event)
+{
+    events.prepend(event);
+}
+
+template <typename T>
+typename EventContainer<T>::Iterator EventContainer<T>::begin()
+{
+    return events.begin();
+}
+
+template <typename T>
+typename EventContainer<T>::Iterator EventContainer<T>::end()
+{
+    return events.end();
+}
+
+template <typename T>
+typename EventContainer<T>::ConstIterator EventContainer<T>::begin() const
+{
+    return events.begin();
+}
+
+template <typename T>
+typename EventContainer<T>::ConstIterator EventContainer<T>::end() const
+{
+    return events.end();
+}
+
+template class EventContainer<Event*>;
+template class EventContainer<VideoEvent*>;

@@ -4,21 +4,18 @@ MotionDetector::MotionDetector()
 {
 }
 
-void MotionDetector::updateBackground(cv::Mat frame)
+void MotionDetector::updateBackground(cv::Mat &frame)
 {
-    back = frame;
+    back = frame.clone();
 }
 
-void MotionDetector::updateFrame(cv::Mat frame)
+void MotionDetector::updateFrame(cv::Mat &frame)
 {
-
     cv::absdiff(frame, back, fore);
     cv::cvtColor(fore, fore, CV_BGR2GRAY);
     cv::threshold(fore, fore, 100, 0xff, CV_THRESH_BINARY);
     cv::erode(fore,fore,cv::Mat());
     cv::dilate(fore,fore,cv::Mat());
-
-    cv::cvtColor(frame, frame, CV_BGR2RGB);
 }
 
 void MotionDetector::startTracking()
@@ -31,7 +28,7 @@ bool MotionDetector::movementDetected()
     //Calculate the distance between the centroids of the current frame and the frame when tracking started
     //If distance is big enough, interpret it as movement
     double norm = cv::norm(centroid-getCentroid(fore));
-    if(norm > 10)
+    if(norm > 15)
     {
         return true;
     }
@@ -39,7 +36,7 @@ bool MotionDetector::movementDetected()
     return false;
 }
 
-cv::Point MotionDetector::getCentroid(cv::Mat frame)
+cv::Point MotionDetector::getCentroid(cv::Mat &frame)
 {
     cv::Point Coord;
     cv::Moments mm = cv::moments(frame,false);

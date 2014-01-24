@@ -42,6 +42,7 @@ public:
     bool setTrigPort(PortType trigPort);
     void sendTrigSignal(int trigCode) const;
     void setFPS(int fps);
+    void updateBackground();
 
 public slots:
 
@@ -75,12 +76,12 @@ private:
     VideoFileWriter*		videoFileWriter;
     VideoCompressorThread*	videoCompressorThread;
 
-    bool        isRec, videoAvailable, keepLog;
-    char*		imBuf;
+    bool        videoAvailable;
+    bool        keepLog;
     int         eventDuration;
     int         trigPortFd;
 
-    EventContainer* events;
+    EventContainer<Event*>* events;
     GLVideoWidget*  glVideoWidget;
 
     QTimer *eventTmr;

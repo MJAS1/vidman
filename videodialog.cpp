@@ -16,10 +16,11 @@
 #include "ui_videodialog.h"
 #include "settings.h"
 #include "config.h"
+#include "videoevent.h"
 
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), isRec(false), keepLog(false), trigPortFd(-1), trigPort(PORT_NULL)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPortFd(-1), trigPort(PORT_NULL)
 {
     ui->setupUi(this);
 
@@ -76,7 +77,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         eventTmr->setSingleShot(true);
         connect(eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
 
-        events = new EventContainer();
+        events = new EventContainer<Event*>();
     }
     else
     {
@@ -129,7 +130,6 @@ void VideoDialog::setKeepLog(bool arg)
 
 void VideoDialog::toggleRecord(bool arg)
 {
-    isRec = arg;
     cycVideoBufJpeg->setIsRec(arg);
 }
 
@@ -137,10 +137,21 @@ void VideoDialog::getNextEvent()
 {
     Event *event = events->pop_front();
 
-    if(event->getType() == EVENT_REMOVE)
-        cameraThread->removeEvent(dynamic_cast<RemoveEvent*>(event));
-    else
-        cameraThread->addEvent(event);
+    switch(event->getType())
+    {
+
+        case EVENT_DETECT_MOTION:
+            cameraThread->detectMotion(event);
+            break;
+
+        case EVENT_REMOVE:
+            cameraThread->removeEvent(static_cast<RemoveEvent*>(event));
+            break;
+
+        default:
+            cameraThread->addVideoEvent(static_cast<VideoEvent*>(event));
+            break;
+    }
 
     if(!events->empty())
     {
@@ -361,10 +372,10 @@ void VideoDialog::closeEvent(QCloseEvent *)
 
 void VideoDialog::writeToLogFile(QString log)
 {
-    qint64 elapsedTime = window->getRunningTime();
-
     if(keepLog)
     {
+        qint64 elapsedTime = window->getRunningTime();
+
         QTextStream logStream(&logFile);
         logStream << "[" << elapsedTime/1000000000 << "s "
                   << (elapsedTime%1000000000)/1000000 << "ms]"
@@ -411,6 +422,8 @@ void VideoDialog::setFPS(int fps)
 
 void VideoDialog::sendTrigSignal(int trigCode) const
 {
+    if(trigCode)
+
         if(trigPort == PORT_USB)
         {
             if(ioctl(trigPortFd, TIOCMSET, &trigCode) == -1)
@@ -422,4 +435,9 @@ void VideoDialog::sendTrigSignal(int trigCode) const
         {
             outb(trigCode, settings.printerPortAddr);
         }
+}
+
+void VideoDialog::updateBackground()
+{
+    cameraThread->updateBackground();
 }

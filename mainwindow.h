@@ -45,6 +45,7 @@ private slots:
     void onKeepLog(bool);
     void onUSBPort(bool);
     void onPrinterPort(bool);
+    void onUpdateBackground();
 
     void fileNew();
     void fileOpen();
@@ -87,7 +88,6 @@ private:
 
     Highlighter*        highlighter;
 
-    int                 trigPortFd;
     PortType            trigPort;
     int                 printerPortAddr;
 

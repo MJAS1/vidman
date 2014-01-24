@@ -117,11 +117,11 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     frames++;
 
-    dynamic_cast<VideoDialog*>(parent())->sendTrigSignal(chunkAttrib.trigCode);
+    static_cast<VideoDialog*>(parent())->sendTrigSignal(chunkAttrib.trigCode);
 
     //Write to log file. Parent widget must be a VideoDialog.
     if(logSize)
-        dynamic_cast<VideoDialog*>(parent())->writeToLogFile(log);
+        static_cast<VideoDialog*>(parent())->writeToLogFile(log);
 
 }
 
@@ -129,7 +129,7 @@ void GLVideoWidget::countFPS()
 {
     int fps = frames;
     frames = 0;
-    dynamic_cast<VideoDialog*>(parent())->setFPS(fps);
+    static_cast<VideoDialog*>(parent())->setFPS(fps);
 }
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)

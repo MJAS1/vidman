@@ -16,8 +16,8 @@ class MotionDetector
 public:
     MotionDetector();
 
-    void updateBackground(cv::Mat frame);
-    void updateFrame(cv::Mat frame);
+    void updateBackground(cv::Mat &frame);
+    void updateFrame(cv::Mat &frame);
     void startTracking();
 
     bool movementDetected();
@@ -26,7 +26,7 @@ public:
 
 private:
 
-    cv::Point getCentroid(cv::Mat frame);
+    cv::Point getCentroid(cv::Mat &frame);
 
     cv::Mat   back, fore;
     cv::Point centroid;

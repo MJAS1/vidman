@@ -5,25 +5,46 @@
 #include "event.h"
 
 /*!
-Custom vector class for storing events. Handles memory deallocation.
+Custom template class for storing events. Should only store pointers to
+Event class or subclass objects. Handles memory deallocation.
   */
 
-class EventContainer : public QVector<Event*>
+template <typename T>
+class EventContainer
 {
 public:
+
+    typedef typename QVector<T>::Iterator Iterator;
+    typedef typename QVector<T>::ConstIterator ConstIterator;
+
     EventContainer();
     ~EventContainer();
 
     void    clear();
     void    removeId(int id);
     void    removeType(EventType);
+    void    append(T event);
+    void    prepend(T event);
+    bool    empty();
+
+    Iterator      begin();
+    Iterator      end();
+    ConstIterator begin() const;
+    ConstIterator end() const;
 
     Event*  pop_front();
 
+    T operator [](int id) const;
+
+
+
 private:
-    //Rule of Three
+
+    QVector<T> events;
+
     EventContainer(const EventContainer& other);
     EventContainer& operator=(const EventContainer& other);
 };
+
 
 #endif // EventContainer_H

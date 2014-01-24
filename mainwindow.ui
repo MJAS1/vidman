@@ -147,6 +147,8 @@
     <addaction name="separator"/>
     <addaction name="actionUSBPort"/>
     <addaction name="actionPrinterPort"/>
+    <addaction name="separator"/>
+    <addaction name="actionUpdateBackground"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -414,6 +416,11 @@
    </property>
    <property name="text">
     <string>Use Printer Port</string>
+   </property>
+  </action>
+  <action name="actionUpdateBackground">
+   <property name="text">
+    <string>Update Background</string>
    </property>
   </action>
  </widget>
@@ -939,6 +946,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionUpdateBackground</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onUpdateBackground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>243</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -962,5 +985,6 @@
   <slot>onKeepLog(bool)</slot>
   <slot>onUSBPort(bool)</slot>
   <slot>onPrinterPort(bool)</slot>
+  <slot>onUpdateBackground()</slot>
  </slots>
 </ui>

@@ -21,16 +21,36 @@ CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf) :
 {
     shouldStop = false;
 
+    detectMotionEvent = NULL;
+
     if(!capCam->set(CV_CAP_PROP_FPS, settings.fps))
     {
         std::cerr << "Could not set framerate" << std::endl;
         abort();
+    }
+
+    if(settings.flip)
+        preEvents.append(new FlipEvent(0, 0));
+
+    if(settings.turnAround)
+        preEvents.append(new RotateEvent(0, 180, 0));
+
+    if(settings.fixPoint)
+    {
+        cv::Mat fixImg = cv::imread("./img/fixPoint.png", CV_LOAD_IMAGE_UNCHANGED);
+
+        if(!fixImg.empty())
+            preEvents.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixImg.cols)/2, (VIDEO_HEIGHT-fixImg.rows)/2), fixImg, 0));
+        else
+            std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
 }
 
 
 CameraThread::~CameraThread()
 {
+    if(detectMotionEvent)
+        delete detectMotionEvent;
 }
 
 
@@ -52,35 +72,23 @@ void CameraThread::stoppableRun()
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
     }
 
-    if(settings.flip)
-        preEvents.append(new FlipEvent(0, 0));
-
-    if(settings.turnAround)
-        preEvents.append(new RotateEvent(0, 180, 0));
-
-    if(settings.fixPoint)
-    {
-        cv::Mat fixImg = cv::imread("./img/fixPoint.png", CV_LOAD_IMAGE_UNCHANGED);
-
-        if(!fixImg.empty())
-            preEvents.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixImg.cols)/2, (VIDEO_HEIGHT-fixImg.rows)/2), fixImg, 0));
-        else
-            std::cerr << "Couldn't load fixPoint.png" << std::endl;
-    }
+    *capCam >> frame;
+    motionDetector.updateBackground(frame);
 
     // Start the acquisition loop
     while (!shouldStop)
     {
 
         *capCam >> frame;
-
-        applyEvents(&preEvents);
-
         if (frame.empty())
         {
             std::cerr << "Error dequeuing a frame" << std::endl;
             abort();
         }
+
+        motionDetector.updateFrame(frame);
+
+        applyEvents(&preEvents);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
 
@@ -88,6 +96,17 @@ void CameraThread::stoppableRun()
 		msec += timestamp.tv_sec * 1000;
 
         mutex.lock();
+
+        if(detectMotionEvent)
+        {
+            if(motionDetector.movementDetected())
+            {
+                //std::cout << "test" << std::endl;
+                trigCode = detectMotionEvent->getTrigCode();
+                delete detectMotionEvent;
+                detectMotionEvent = NULL;
+            }
+        }
 
         applyEvents(&events);
         cv::cvtColor(frame, frame, CV_BGR2RGB);
@@ -98,6 +117,7 @@ void CameraThread::stoppableRun()
         log.clear();
 
         chunkAttrib.trigCode = trigCode;
+
         trigCode = 0;
 
         mutex.unlock();
@@ -109,7 +129,6 @@ void CameraThread::stoppableRun()
         cycBuf->insertChunk(frame.data, chunkAttrib);
 
         delete []chunkAttrib.log;
-
     }
 
 }
@@ -121,15 +140,15 @@ void CameraThread::clearEvents()
     mutex.unlock();
 }
 
-void CameraThread::applyEvents(const EventContainer *ev)
+void CameraThread::applyEvents(const EventContainer<VideoEvent*> *ev)
 {
-    for(EventContainer::ConstIterator iter = ev->begin(); iter != ev->end(); iter++)
+    for(EventContainer<VideoEvent*>::ConstIterator iter = ev->begin(); iter != ev->end(); iter++)
     {
         (*iter)->apply(frame);
     }
 }
 
-void CameraThread::addEvent(Event *ev)
+void CameraThread::addVideoEvent(VideoEvent *ev)
 {
     mutex.lock();
 
@@ -166,9 +185,9 @@ void CameraThread::addEvent(Event *ev)
     log.append(ev->getLog());
 
     if(ev->getType() == EVENT_FREEZE)
-        events.push_front(ev);
+        events.prepend(ev);
     else
-        events.push_back(ev);
+        events.append(ev);
 
     mutex.unlock();
 }
@@ -183,7 +202,9 @@ void CameraThread::removeEvent(RemoveEvent *ev)
     else
         events.removeId(ev->getRemoveId());
 
-    trigCode = ev->getTrigCode();
+    if(!trigCode)
+        trigCode = ev->getTrigCode();
+
     log.append(ev->getLog());
 
     delete ev;
@@ -195,7 +216,7 @@ void CameraThread::pause()
 {
     mutex.lock();
 
-    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
+    for(EventContainer<VideoEvent*>::Iterator iter = events.begin(); iter != events.end(); iter++)
         (*iter)->pause();
 
     mutex.unlock();
@@ -205,9 +226,25 @@ void CameraThread::unpause()
 {
     mutex.lock();
 
-    for(EventContainer::iterator iter = events.begin(); iter != events.end(); iter++)
+    for(EventContainer<VideoEvent*>::Iterator iter = events.begin(); iter != events.end(); iter++)
         (*iter)->unpause();
 
     mutex.unlock();
 }
 
+void CameraThread::detectMotion(Event *ev)
+{
+    mutex.lock();
+
+    detectMotionEvent = ev;
+    motionDetector.startTracking();
+
+    mutex.unlock();
+}
+
+void CameraThread::updateBackground()
+{
+    cv::Mat mat;
+    *capCam >> mat;
+    motionDetector.updateBackground(mat);
+}

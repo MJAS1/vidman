@@ -2,11 +2,13 @@
 #define TIMER_H
 
 #include <QElapsedTimer>
-#include <QTimer>
 
-class TimerWithPause : public QObject, public QElapsedTimer
+
+/* Timer with pause function*/
+
+class TimerWithPause : public QElapsedTimer
 {
-    Q_OBJECT
+
 public:
     explicit TimerWithPause();
 

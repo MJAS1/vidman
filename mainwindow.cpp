@@ -13,7 +13,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), programState(STOPPED), videoDialog(new VideoDialog(this)),
-    timeTmr(new QTimer(this)), trigPortFd(-1)
+    timeTmr(new QTimer(this))
 {
     ui->setupUi(this);
     videoDialog->show();
@@ -42,12 +42,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->toolBar2->addWidget(toolBtn);
 
     highlighter = new Highlighter(ui->textEdit->document());
-
 }
 
 MainWindow::~MainWindow()
 {
-    delete videoDialog;
     delete ui;
 }
 
@@ -130,6 +128,11 @@ void MainWindow::onViewVideoDialog(bool checked)
 
     else
         videoDialog->close();
+}
+
+void MainWindow::onUpdateBackground()
+{
+    videoDialog->updateBackground();
 }
 
 void MainWindow::onKeepLog(bool arg)
@@ -335,6 +338,8 @@ void MainWindow::closeEvent(QCloseEvent *e)
     }
     else
         e->ignore();
+
+    QApplication::quit();
 }
 
 void MainWindow::toggleVideoDialogChecked(bool arg)

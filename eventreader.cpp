@@ -2,12 +2,13 @@
 #include <QMessageBox>
 #include <sys/ioctl.h>
 #include "eventreader.h"
+#include "videoevent.h"
 
 EventReader::EventReader()
 {
 }
 
-bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
+bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*> *events)
 {
     events->clear();
 
@@ -67,7 +68,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer *events)
     return true;
 }
 
-bool EventReader::readEvent(const QString &str, EventContainer *events, int lineNumber)
+bool EventReader::readEvent(const QString &str, EventContainer<Event*> *events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -97,6 +98,7 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
                 else if(value == "text") type = EVENT_TEXT;
                 else if(value == "freeze") type = EVENT_FREEZE;
                 else if(value == "rotate") type = EVENT_ROTATE;
+                else if(value == "detectmotion") type = EVENT_DETECT_MOTION;
                 else
                 {
                     errorMsg(QString("Couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
@@ -230,12 +232,16 @@ bool EventReader::readEvent(const QString &str, EventContainer *events, int line
             ev->appendLog(QString("Rotate event added. "));
             break;
 
+        case EVENT_DETECT_MOTION:
+            ev = new Event(EVENT_DETECT_MOTION, start, delay, duration, eventId, trigCode);
+            break;
+
         default:
             errorMsg(QString("Event declared without type in line %1").arg(lineNumber));
             return false;
 
     }
-    events->push_back(ev);
+    events->append(ev);
 
     return true;
 }
@@ -283,7 +289,7 @@ bool EventReader::readImageObject(const QString &str, int lineNumber)
 }
 
 
-bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, int lineNumber)
+bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*> *events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -359,7 +365,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
     {
         Event* ev = new RemoveEvent(start, delay, id, trigCode);
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
-        events->push_back(ev);
+        events->append(ev);
     }
     else
     {
@@ -395,7 +401,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer *events, in
                 return false;
         }
 
-        events->push_back(ev);
+        events->append(ev);
     }
 
 

@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     highlighter.cpp \
     glvideowidget.cpp \
     timerwithpause.cpp \
-    motiondetector.cpp
+    motiondetector.cpp \
+    videoevent.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     highlighter.h \
     glvideowidget.h \
     timerwithpause.h \
-    motiondetector.h
+    motiondetector.h \
+    videoevent.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui
