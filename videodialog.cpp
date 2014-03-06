@@ -422,7 +422,6 @@ void VideoDialog::setFPS(int fps)
 
 void VideoDialog::sendTrigSignal(int trigCode) const
 {
-    if(trigCode)
 
         if(trigPort == PORT_USB)
         {
@@ -430,6 +429,9 @@ void VideoDialog::sendTrigSignal(int trigCode) const
             {
                 fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
             }
+            else
+                if(trigCode)
+                    std::cout << "test" << std::endl;
         }
         else if(trigPort == PORT_PRINTER)
         {

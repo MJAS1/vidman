@@ -9,6 +9,7 @@
 #include <time.h>
 #include <QCoreApplication>
 #include <QTimer>
+#include <QPixmap>
 
 #include "camerathread.h"
 #include "config.h"
@@ -20,7 +21,6 @@ CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf) :
     capCam(capCam), trigCode(0), cycBuf(cycBuf)
 {
     shouldStop = false;
-
     detectMotionEvent = NULL;
 
     if(!capCam->set(CV_CAP_PROP_FPS, settings.fps))
