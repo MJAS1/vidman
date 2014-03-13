@@ -63,6 +63,21 @@ void GLVideoWidget::initializeGL()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+
+    //glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE);
+
+    shaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/vertexShader.vsh");
+    shaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/fragmentShader.fsh");
+    shaderProgram.link();
+
+    vertices << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
+             << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
+
+    textureCoordinates << QVector2D(0, 0) << QVector2D(0, 1) << QVector2D(1, 1)
+                       << QVector2D(1, 1) << QVector2D(1, 0) << QVector2D(0, 0);
+
 }
 
 
@@ -102,16 +117,24 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     makeCurrent();
 
-
     glTexImage2D(GL_TEXTURE_2D, 0, (color ? GL_RGB8 : GL_LUMINANCE8), VIDEO_WIDTH, VIDEO_HEIGHT, 0, (color ? GL_RGB : GL_LUMINANCE), GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
 
+    shaderProgram.bind();
 
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0,0.0); glVertex2f(-1.0,+1.0);
-    glTexCoord2f(1.0,0.0); glVertex2f(+1.0,+1.0);
-    glTexCoord2f(1.0,1.0); glVertex2f(+1.0,-1.0);
-    glTexCoord2f(0.0,1.0); glVertex2f(-1.0,-1.0);
-    glEnd();
+    shaderProgram.setUniformValue("texture", 0);
+
+    shaderProgram.setAttributeArray("vertex", vertices.constData());
+    shaderProgram.enableAttributeArray("vertex");
+
+    shaderProgram.setAttributeArray("textureCoordinate", textureCoordinates.constData());
+    shaderProgram.enableAttributeArray("textureCoordinate");
+
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+
+    shaderProgram.disableAttributeArray("vertex");
+    shaderProgram.disableAttributeArray("textureCoordinate");
+
+    shaderProgram.release();
 
     updateGL();
 

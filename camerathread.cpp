@@ -101,7 +101,6 @@ void CameraThread::stoppableRun()
         {
             if(motionDetector.movementDetected())
             {
-                //std::cout << "test" << std::endl;
                 trigCode = detectMotionEvent->getTrigCode();
                 delete detectMotionEvent;
                 detectMotionEvent = NULL;

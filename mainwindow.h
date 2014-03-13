@@ -12,7 +12,6 @@
 #include "eventreader.h"
 #include "highlighter.h"
 #include "timerwithpause.h"
-#include "settings.h"
 
 namespace Ui {
 class MainWindow;
@@ -76,22 +75,14 @@ private:
     void                pause();
     void                unpause();
 
+    Highlighter*        highlighter;
     State               programState;
 
     cv::VideoCapture*   capCam;
     VideoDialog*        videoDialog;
-
-    QTimer*             timeTmr;
     TimerWithPause      runningTime;
-    QTime               time;
+    QTimer*             timeTmr;
     QString             fileName;
-
-    Highlighter*        highlighter;
-
-    PortType            trigPort;
-    int                 printerPortAddr;
-
-    Settings            settings;
 };
 
 #endif // MAINWINDOW_H

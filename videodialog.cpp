@@ -36,8 +36,6 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
-    Settings settings;
-
     if(initVideo())
     {
         // Setup gain/shutter sliders

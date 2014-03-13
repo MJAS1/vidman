@@ -89,7 +89,7 @@ void MainWindow::onStop()
     videoDialog->toggleRecord(false);
     videoDialog->stop();
 
-    time.setHMS(0, 0, 0);
+    QTime time(0, 0);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
     timeTmr->stop();
 
@@ -166,7 +166,8 @@ void MainWindow::onPrinterPort(bool arg)
 
 void MainWindow::updateTime()
 {
-    time.setHMS(0, 0, 0);
+    QTime time;
+    //time.setHMS(0, 0, 0);
     qint64 secsElapsed = runningTime.nsecsElapsed()/1000000000;
     time = time.addSecs(secsElapsed);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));

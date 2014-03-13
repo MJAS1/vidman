@@ -9,6 +9,7 @@
 #define GLVIDEOWIDGET_H_
 
 #include <QGLWidget>
+#include <QGLShaderProgram>
 #include <jpeglib.h>
 #include <QTimer>
 #include "stoppablethread.h"
@@ -42,6 +43,10 @@ private:
     char        *imBuf;
     int         frames;
     int         videoWidth;
+
+    QGLShaderProgram shaderProgram;
+    QVector<QVector2D> vertices;
+    QVector<QVector2D> textureCoordinates;
 
 private slots:
     void countFPS();
