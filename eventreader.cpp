@@ -263,7 +263,7 @@ bool EventReader::readImageObject(const QString &str, int lineNumber)
 
             if(param == "filename")
             {
-                filename = value;
+                filename = "./img/" + value;
             }
 
             else if(param == "id")
