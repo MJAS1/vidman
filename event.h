@@ -1,8 +1,8 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <QTimer>
 #include <common.h>
 #include "timerwithpause.h"

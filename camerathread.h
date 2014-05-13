@@ -8,8 +8,8 @@
 #ifndef CAMERATHREAD_H_
 #define CAMERATHREAD_H_
 
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <QMutex>
 #include <QString>
 #include "stoppablethread.h"

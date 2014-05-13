@@ -1,8 +1,8 @@
 #ifndef MOTIONDETECTOR_H
 #define MOTIONDETECTOR_H
 
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 /*This class detects movement between subsequent frames. It stores a frame of the
 background and then detects the hands of the subject by substracting the background from

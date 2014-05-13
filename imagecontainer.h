@@ -3,8 +3,8 @@
 
 #include <QMap>
 #include <QString>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 
 
 class ImageContainer : public QMap<int, cv::Mat*>

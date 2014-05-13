@@ -4,8 +4,8 @@
 #include <QDialog>
 #include <QElapsedTimer>
 #include <QFile>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <jpeglib.h>
 #include <dc1394/dc1394.h>
 #include <QMainWindow>

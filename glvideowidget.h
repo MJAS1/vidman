@@ -34,6 +34,7 @@ public slots:
 protected:
     void initializeGL();
     void resizeGL(int _w, int _h);
+    void paintGL();
     void mouseDoubleClickEvent(QMouseEvent *e);
 
 private:

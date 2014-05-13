@@ -13,7 +13,6 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <QMessageBox>
-#include <QtConcurrentRun>
 #include <unistd.h>
 #include "videodialog.h"
 #include "config.h"
@@ -80,6 +79,9 @@ void GLVideoWidget::initializeGL()
 
 }
 
+void GLVideoWidget::paintGL()
+{
+}
 
 void GLVideoWidget::resizeGL(int _w, int _h)
 {
@@ -113,7 +115,7 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     glClear( GL_COLOR_BUFFER_BIT);
 
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
-    QString log = QString::fromAscii((char*)(imBuf - logSize-1));
+    QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
     makeCurrent();
 
@@ -161,6 +163,7 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
     {
         setWindowFlags(Qt::Widget);
         showNormal();
+
     }
     else
     {

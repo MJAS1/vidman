@@ -948,7 +948,7 @@
   </connection>
   <connection>
    <sender>actionUpdateBackground</sender>
-   <signal>activated()</signal>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>onUpdateBackground()</slot>
    <hints>

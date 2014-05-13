@@ -1,8 +1,10 @@
+#version 130
+
 uniform sampler2D texture;
 
 in vec2 varyingTextureCoordinate;
 
-varying out vec4 fragColor;
+out vec4 fragColor;
 
 void main(void)
 {

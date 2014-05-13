@@ -1,9 +1,11 @@
+#version 130
+
 uniform mat4 mvpMatrix;
 
 in vec2 vertex;
 in vec2 textureCoordinate;
 
-varying out vec2 varyingTextureCoordinate;
+out vec2 varyingTextureCoordinate;
 
 void main(void)
 {

@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
 #include <dc1394/dc1394.h>
 #include "videodialog.h"
 #include "event.h"
