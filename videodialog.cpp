@@ -18,9 +18,8 @@
 #include "config.h"
 #include "videoevent.h"
 
-
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPortFd(-1), trigPort(PORT_NULL)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPort(new OutputDevice)
 {
     ui->setupUi(this);
 
@@ -32,7 +31,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
       trigger signals with screen refresh rate. */
     QGLFormat format;
     format.setSwapInterval(swapInterval);
-    glVideoWidget = new GLVideoWidget(format, this);
+    glVideoWidget = new GLVideoWidget(format, trigPort, this);
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
@@ -108,6 +107,8 @@ VideoDialog::~VideoDialog()
         delete videoFileWriter;
         delete videoCompressorThread;
     }
+
+    delete trigPort;
     delete ui;
 }
 
@@ -381,63 +382,26 @@ void VideoDialog::writeToLogFile(QString log)
     }
 }
 
-bool VideoDialog::setTrigPort(PortType port)
-{
-
-    if(port == PORT_PRINTER)
-    {
-        if (ioperm(settings.printerPortAddr, 1, 1))
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot get the port. May be you should run this program as root\n");
-            msgBox.exec();
-            trigPort = PORT_NULL;
-            return false;
-        }
-    }
-    else if(port == PORT_USB)
-    {
-        if((trigPortFd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot open USB port.");
-            msgBox.exec();
-            trigPort = PORT_NULL;
-            trigPortFd = -1;
-            return false;
-        }
-    }
-
-    trigPort = port;
-
-    return true;
-}
-
 void VideoDialog::setFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
 
-void VideoDialog::sendTrigSignal(int trigCode) const
-{
-
-        if(trigPort == PORT_USB)
-        {
-            if(ioctl(trigPortFd, TIOCMSET, &trigCode) == -1)
-            {
-                fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
-            }
-            else
-                if(trigCode)
-                    std::cout << "test" << std::endl;
-        }
-        else if(trigPort == PORT_PRINTER)
-        {
-            outb(trigCode, settings.printerPortAddr);
-        }
-}
 
 void VideoDialog::updateBackground()
 {
     cameraThread->updateBackground();
+}
+
+bool VideoDialog::setOutputDevice(PortType portType)
+{
+    if(portType)
+    {
+        if(!trigPort->open(portType))
+            return false;
+    }
+    else
+        trigPort->close();
+
+    return true;
 }

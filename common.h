@@ -4,12 +4,6 @@
 
 #ifndef COMMON_H_
 
-enum PortType {
-    PORT_NULL,
-    PORT_USB,
-    PORT_PRINTER
-};
-
 // Camera configuration
 #define VIDEO_HEIGHT     	480
 #define VIDEO_WIDTH      	640

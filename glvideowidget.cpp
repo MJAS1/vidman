@@ -22,8 +22,8 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
-    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, VideoDialog* parent)
+    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH), trigPort(trigPort)
 {
     //setAutoBufferSwap(false);
     color = true;
@@ -142,7 +142,8 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     frames++;
 
-    static_cast<VideoDialog*>(parent())->sendTrigSignal(chunkAttrib.trigCode);
+    if(!trigPort->isEmpty())
+        trigPort->writeData(chunkAttrib.trigCode);
 
     //Write to log file. Parent widget must be a VideoDialog.
     if(logSize)

@@ -140,28 +140,28 @@ void MainWindow::onKeepLog(bool arg)
     videoDialog->setKeepLog(arg);
 }
 
-void MainWindow::onUSBPort(bool arg)
+void MainWindow::onSerialPort(bool arg)
 {
     if(arg)
     {
-        ui->actionPrinterPort->setChecked(false);
-        if(!videoDialog->setTrigPort(PORT_USB))
-            ui->actionUSBPort->setChecked(false);
+        ui->actionParallelPort->setChecked(false);
+        if(!videoDialog->setOutputDevice(PORT_SERIAL))
+            ui->actionSerialPort->setChecked(false);
     }
     else
-        videoDialog->setTrigPort(PORT_NULL);
+        videoDialog->setOutputDevice(PORT_NULL);
 }
 
-void MainWindow::onPrinterPort(bool arg)
+void MainWindow::onParallelPort(bool arg)
 {
     if(arg)
     {
-        ui->actionUSBPort->setChecked(false);
-        if(!videoDialog->setTrigPort(PORT_PRINTER))
-            ui->actionPrinterPort->setChecked(false);
+        ui->actionSerialPort->setChecked(false);
+        if(!videoDialog->setOutputDevice(PORT_PARALLEL))
+            ui->actionParallelPort->setChecked(false);
     }
     else
-        videoDialog->setTrigPort(PORT_NULL);
+        videoDialog->setOutputDevice(PORT_NULL);
 }
 
 void MainWindow::updateTime()

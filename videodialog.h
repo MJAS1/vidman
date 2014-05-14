@@ -18,6 +18,7 @@
 #include "eventcontainer.h"
 #include "eventreader.h"
 #include "settings.h"
+#include "outputdevice.h"
 
 class MainWindow;
 
@@ -39,13 +40,12 @@ public:
     void unpause();
     void setKeepLog(bool);
     void writeToLogFile(QString);
-    bool setTrigPort(PortType trigPort);
-    void sendTrigSignal(int trigCode) const;
     void setFPS(int fps);
     void updateBackground();
 
 public slots:
 
+    bool setOutputDevice(PortType portType);
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
@@ -79,7 +79,6 @@ private:
     bool        videoAvailable;
     bool        keepLog;
     int         eventDuration;
-    int         trigPortFd;
 
     EventContainer<Event*>* events;
     GLVideoWidget*  glVideoWidget;
@@ -91,8 +90,7 @@ private:
     qint64 time;
 
     Settings settings;
-
-    PortType trigPort;
+    OutputDevice *trigPort;
 };
 
 #endif // VIDEODIALOG_H

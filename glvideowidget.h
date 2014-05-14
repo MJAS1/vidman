@@ -14,6 +14,7 @@
 #include <QTimer>
 #include "stoppablethread.h"
 #include "common.h"
+#include "outputdevice.h"
 
 class VideoDialog;
 
@@ -22,7 +23,7 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, VideoDialog* parent=0);
+    GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
     volatile bool color;
 
@@ -48,6 +49,8 @@ private:
     QGLShaderProgram shaderProgram;
     QVector<QVector2D> vertices;
     QVector<QVector2D> textureCoordinates;
+
+    OutputDevice *trigPort;
 
 private slots:
     void countFPS();

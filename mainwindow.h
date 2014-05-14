@@ -12,6 +12,7 @@
 #include "eventreader.h"
 #include "highlighter.h"
 #include "timerwithpause.h"
+#include "outputdevice.h"
 
 namespace Ui {
 class MainWindow;
@@ -42,8 +43,8 @@ private slots:
 
     void onViewVideoDialog(bool);
     void onKeepLog(bool);
-    void onUSBPort(bool);
-    void onPrinterPort(bool);
+    void onSerialPort(bool);
+    void onParallelPort(bool);
     void onUpdateBackground();
 
     void fileNew();
@@ -77,8 +78,8 @@ private:
 
     Highlighter*        highlighter;
     State               programState;
+    OutputDevice        *trigPort;
 
-    cv::VideoCapture*   capCam;
     VideoDialog*        videoDialog;
     TimerWithPause      runningTime;
     QTimer*             timeTmr;

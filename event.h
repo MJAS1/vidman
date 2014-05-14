@@ -31,7 +31,7 @@ class Event
 {
 public:
                 explicit Event(EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
-                ~Event();
+                virtual ~Event();
 
     int         getStart() const;
     int         getDelay() const;
