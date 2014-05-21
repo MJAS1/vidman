@@ -45,7 +45,7 @@ public:
 
 public slots:
 
-    bool setOutputDevice(PortType portType);
+    bool setOutputDevice(OutputDevice::PortType portType);
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);

@@ -86,6 +86,8 @@ void CameraThread::stoppableRun()
             abort();
         }
 
+        mutex.lock();
+
         motionDetector.updateFrame(frame);
 
         applyEvents(&preEvents);
@@ -94,8 +96,6 @@ void CameraThread::stoppableRun()
 
 		msec = timestamp.tv_nsec / 1000000;
 		msec += timestamp.tv_sec * 1000;
-
-        mutex.lock();
 
         if(detectMotionEvent)
         {

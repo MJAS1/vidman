@@ -393,7 +393,7 @@ void VideoDialog::updateBackground()
     cameraThread->updateBackground();
 }
 
-bool VideoDialog::setOutputDevice(PortType portType)
+bool VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
     if(portType)
     {

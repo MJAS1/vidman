@@ -145,11 +145,11 @@ void MainWindow::onSerialPort(bool arg)
     if(arg)
     {
         ui->actionParallelPort->setChecked(false);
-        if(!videoDialog->setOutputDevice(PORT_SERIAL))
+        if(!videoDialog->setOutputDevice(OutputDevice::PORT_SERIAL))
             ui->actionSerialPort->setChecked(false);
     }
     else
-        videoDialog->setOutputDevice(PORT_NULL);
+        videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::onParallelPort(bool arg)
@@ -157,17 +157,17 @@ void MainWindow::onParallelPort(bool arg)
     if(arg)
     {
         ui->actionSerialPort->setChecked(false);
-        if(!videoDialog->setOutputDevice(PORT_PARALLEL))
+        if(!videoDialog->setOutputDevice(OutputDevice::PORT_PARALLEL))
             ui->actionParallelPort->setChecked(false);
     }
     else
-        videoDialog->setOutputDevice(PORT_NULL);
+        videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::updateTime()
 {
     QTime time;
-    //time.setHMS(0, 0, 0);
+    time.setHMS(0, 0, 0);
     qint64 secsElapsed = runningTime.nsecsElapsed()/1000000000;
     time = time.addSecs(secsElapsed);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
