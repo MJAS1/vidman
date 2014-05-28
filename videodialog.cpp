@@ -139,11 +139,11 @@ void VideoDialog::getNextEvent()
     switch(event->getType())
     {
 
-        case EVENT_DETECT_MOTION:
+        case Event::EVENT_DETECT_MOTION:
             cameraThread->detectMotion(event);
             break;
 
-        case EVENT_REMOVE:
+        case Event::EVENT_REMOVE:
             cameraThread->removeEvent(static_cast<RemoveEvent*>(event));
             break;
 

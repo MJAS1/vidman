@@ -49,7 +49,7 @@ void EventContainer<T>::removeId(int id)
 }
 
 template <typename T>
-void EventContainer<T>::removeType(EventType type)
+void EventContainer<T>::removeType(Event::EventType type)
 {
     Iterator iter = events.begin();
     while(iter != events.end())

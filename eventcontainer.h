@@ -22,7 +22,7 @@ public:
 
     void    clear();
     void    removeId(int id);
-    void    removeType(EventType);
+    void    removeType(Event::EventType);
     void    append(T event);
     void    prepend(T event);
     bool    empty();

@@ -12,25 +12,28 @@ Event objects are used to specify the starting time, duration, effects etc.
 of events handled by the program.
   */
 
-//All possible events
-enum EventType
-{
-    EVENT_NULL,
-    EVENT_FLIP,
-    EVENT_FADEIN,
-    EVENT_FADEOUT,
-    EVENT_IMAGE,
-    EVENT_TEXT,
-    EVENT_REMOVE,
-    EVENT_ROTATE,
-    EVENT_FREEZE,
-    EVENT_DETECT_MOTION
-};
+
 
 class Event
 {
 public:
-                explicit Event(EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
+
+    //All possible events
+    enum EventType
+    {
+        EVENT_NULL,
+        EVENT_FLIP,
+        EVENT_FADEIN,
+        EVENT_FADEOUT,
+        EVENT_IMAGE,
+        EVENT_TEXT,
+        EVENT_REMOVE,
+        EVENT_ROTATE,
+        EVENT_FREEZE,
+        EVENT_DETECT_MOTION
+    };
+
+                explicit Event(Event::EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
                 virtual ~Event();
 
     int         getStart() const;

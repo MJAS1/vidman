@@ -154,26 +154,26 @@ void CameraThread::addVideoEvent(VideoEvent *ev)
     //Remove duplicate events of certain event types to prevent the program from slowing down
     switch(ev->getType())
     {
-        case EVENT_FLIP:
-            events.removeType(EVENT_FLIP);
+        case Event::EVENT_FLIP:
+            events.removeType(Event::EVENT_FLIP);
             break;
 
-        case EVENT_FADEIN:
-            events.removeType(EVENT_FADEIN);
-            events.removeType(EVENT_FADEOUT);
+        case Event::EVENT_FADEIN:
+            events.removeType(Event::EVENT_FADEIN);
+            events.removeType(Event::EVENT_FADEOUT);
             break;
 
-        case EVENT_FADEOUT:
-            events.removeType(EVENT_FADEIN);
-            events.removeType(EVENT_FADEOUT);
+        case Event::EVENT_FADEOUT:
+            events.removeType(Event::EVENT_FADEIN);
+            events.removeType(Event::EVENT_FADEOUT);
             break;
 
-        case EVENT_ROTATE:
-            events.removeType(EVENT_ROTATE);
+        case Event::EVENT_ROTATE:
+            events.removeType(Event::EVENT_ROTATE);
             break;
 
-        case EVENT_FREEZE:
-            events.removeType(EVENT_FREEZE);
+        case Event::EVENT_FREEZE:
+            events.removeType(Event::EVENT_FREEZE);
             break;
 
         default:
@@ -183,7 +183,7 @@ void CameraThread::addVideoEvent(VideoEvent *ev)
     trigCode = ev->getTrigCode();
     log.append(ev->getLog());
 
-    if(ev->getType() == EVENT_FREEZE)
+    if(ev->getType() == Event::EVENT_FREEZE)
         events.prepend(ev);
     else
         events.append(ev);

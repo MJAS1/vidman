@@ -26,7 +26,7 @@ int Event::getDuration() const
     return duration;
 }
 
-EventType Event::getType() const
+Event::EventType Event::getType() const
 {
     return type;
 }
@@ -69,7 +69,7 @@ RemoveEvent::RemoveEvent(int start, int delay, EventType removeType, int trigCod
 {
 }
 
-EventType RemoveEvent::getRemoveType() const
+Event::EventType RemoveEvent::getRemoveType() const
 {
     return removeType;
 }
