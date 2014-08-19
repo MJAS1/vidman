@@ -337,27 +337,6 @@ bool VideoDialog::initVideo()
     }
     std::cout << "Using camera with GUID " << camera->guid << std::endl;
 
-    /*
-    err = dc1394_video_set_operation_mode(camera, DC1394_OPERATION_MODE_1394B);
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Could not set operation mode" << std::endl;
-        free(dc1394Context);
-        delete capCam;
-        delete camera;
-        return false;
-    }
-
-    err = dc1394_video_set_iso_speed(camera, DC1394_ISO_SPEED_MAX);
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Failed to set ISO speed" << std::endl;
-        free(dc1394Context);
-        delete capCam;
-        delete camera;
-        return false;
-    }
-    */
     dc1394_camera_free_list(camList);
 
     videoAvailable = true;

@@ -9,11 +9,11 @@ TextEdit::TextEdit(QWidget *parent) :
 {
     lineNumberArea = new LineNumberArea(this);
 
-    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
-    updateLineNumberAreaWidth(0);
+    updateLineNumberAreaWidth();
     highlightCurrentLine();
 }
 
@@ -31,7 +31,7 @@ int TextEdit::lineNumberAreaWidth()
     return space;
 }
 
-void TextEdit::updateLineNumberAreaWidth(int newBlockCount)
+void TextEdit::updateLineNumberAreaWidth()
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
@@ -44,7 +44,7 @@ void TextEdit::updateLineNumberArea(const QRect &rect, int dy)
         lineNumberArea->update(0, rect.y(), lineNumberArea->width(),rect.height());
 
     if(rect.contains(viewport()->rect()))
-        updateLineNumberAreaWidth(0);
+        updateLineNumberAreaWidth();
 
 }
 

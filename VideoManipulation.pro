@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     timerwithpause.cpp \
     motiondetector.cpp \
     videoevent.cpp \
-    outputdevice.cpp
+    outputdevice.cpp \
+    glthread.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     timerwithpause.h \
     motiondetector.h \
     videoevent.h \
-    outputdevice.h
+    outputdevice.h \
+    glthread.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui

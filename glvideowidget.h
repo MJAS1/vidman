@@ -10,13 +10,19 @@
 
 #include <QGLWidget>
 #include <QGLShaderProgram>
+#include <QMutex>
 #include <jpeglib.h>
 #include <QTimer>
 #include "stoppablethread.h"
 #include "common.h"
 #include "outputdevice.h"
+#include "glthread.h"
 
 class VideoDialog;
+
+/* GLVideoWidget is used as the widget where each frame is drawn using OpenGL. The actual
+ * drawing and swapping of the buffers are done in a separate thread (GLThread). This is because
+ * when using 60 FPS for buffer swapping, it is enough to stall the UI thread especially with vsync on. */
 
 class GLVideoWidget : public QGLWidget
 {
@@ -25,7 +31,6 @@ class GLVideoWidget : public QGLWidget
 public:
     GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
-    volatile bool color;
 
     void setVideoWidth(int newVal);
 
@@ -37,6 +42,8 @@ protected:
     void resizeGL(int _w, int _h);
     void paintGL();
     void mouseDoubleClickEvent(QMouseEvent *e);
+    void resizeEvent(QResizeEvent*);
+    void mousePressEvent(QMouseEvent*);
 
 private:
 
@@ -51,6 +58,9 @@ private:
     QVector<QVector2D> textureCoordinates;
 
     OutputDevice *trigPort;
+
+    GLThread glt;
+    QMutex mutex;
 
 private slots:
     void countFPS();

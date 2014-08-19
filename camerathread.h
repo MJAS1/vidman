@@ -39,7 +39,7 @@ public slots:
     void detectMotion(Event *ev);
 
 protected:
-	virtual void stoppableRun();
+    virtual void stoppableRun();
 
 private:
     cv::VideoCapture*                        capCam;
