@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     motiondetector.cpp \
     videoevent.cpp \
     outputdevice.cpp \
-    glthread.cpp
+    glthread.cpp \
+    camera.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     motiondetector.h \
     videoevent.h \
     outputdevice.h \
-    glthread.h
+    glthread.h \
+    camera.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui

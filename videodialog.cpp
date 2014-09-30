@@ -35,20 +35,17 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
-    if(initVideo())
+    if(camera.init())
     {
         // Setup gain/shutter sliders
-        uint32_t shutter;
-        dc1394_get_register(camera, SHUTTER_ADDR, &shutter);
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(shutter - SHUTTER_OFFSET);
+        ui->shutterSlider->setValue(camera.getShutter() - SHUTTER_OFFSET);
 
-        uint32_t gain;
-        dc1394_get_register(camera, GAIN_ADDR, &gain);
+
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(gain - GAIN_OFFSET);
+        ui->gainSlider->setValue(camera.getGain() - GAIN_OFFSET);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
@@ -59,7 +56,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         // Set up video recording
         cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-        cameraThread = new CameraThread(capCam, cycVideoBufRaw);
+        cameraThread = new CameraThread(&camera, cycVideoBufRaw);
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
 
@@ -75,11 +72,13 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         connect(eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
 
         events = new EventContainer<Event*>();
+
+        window->toggleStart(true);
+        window->toggleRec(true);
     }
     else
     {
         videoAvailable = false;
-        window->toggleStart(false);
         ui->shutterSlider->setEnabled(false);
         ui->gainSlider->setEnabled(false);
         ui->uvSlider->setEnabled(false);
@@ -94,13 +93,10 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
 
 VideoDialog::~VideoDialog()
 {
-    if(videoAvailable)
+    if(camera.isInitialized())
     {
         stopThreads();
-        free(dc1394Context);
-        dc1394_camera_free(camera);
         delete events;
-        delete capCam;
         delete cycVideoBufRaw;
         delete cycVideoBufJpeg;
         delete cameraThread;
@@ -221,126 +217,30 @@ void VideoDialog::unpause()
     }
     time = elapsedTimer.nsecsElapsed()/1000000;
 }
-
 void VideoDialog::onShutterChanged(int newVal)
 {
-    dc1394error_t	err;
-
-    err = dc1394_set_register(camera, SHUTTER_ADDR, newVal + SHUTTER_OFFSET);
-
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Could not set shutter register" << std::endl;
-        //abort();
-    }
+        camera.setShutter(newVal);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
-    dc1394error_t	err;
-
-    err = dc1394_set_register(camera, GAIN_ADDR, newVal + GAIN_OFFSET);
-
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Could not set gain register" << std::endl;
-        //abort();
-    }
+        camera.setGain(newVal);
 }
 
 
 void VideoDialog::onUVChanged(int newVal)
 {
-    dc1394error_t	err;
-
-    // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, newVal * UV_REG_SHIFT + ui->vrSlider->value() + WHITEBALANCE_OFFSET);
-
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Could not set white balance register" << std::endl;
-        //abort();
-    }
+        camera.setUV(newVal, ui->vrSlider->value());
 }
-
 
 void VideoDialog::onVRChanged(int newVal)
 {
-    dc1394error_t	err;
-
-    // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(camera, WHITEBALANCE_ADDR, newVal + UV_REG_SHIFT * ui->uvSlider->value() + WHITEBALANCE_OFFSET);
-
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Could not set white balance register" << std::endl;
-        //abort();
-    }
+        camera.setVR(newVal, ui->uvSlider->value());
 }
 
 void VideoDialog::onWidthChanged(int newVal)
 {
     glVideoWidget->setVideoWidth(newVal);
-}
-
-bool VideoDialog::initVideo()
-{
-    capCam = new cv::VideoCapture;
-
-    capCam->open(300);
-    if(!capCam->isOpened())
-    {
-        std::cerr << "No cameras found" << std::endl;
-        delete capCam;
-        return false;
-    }
-
-
-    dc1394camera_list_t*	camList;
-    dc1394error_t			err;
-
-    dc1394Context = dc1394_new();
-    if(!dc1394Context)
-    {
-        std::cerr << "Cannot initialize!" << std::endl;
-        delete capCam;
-        return false;
-    }
-
-    err = dc1394_camera_enumerate(dc1394Context, &camList);
-    if (err != DC1394_SUCCESS)
-    {
-        std::cerr << "Failed to enumerate cameras" << std::endl;
-        free(dc1394Context);
-        delete capCam;
-        return false;
-    }
-
-    camera = NULL;
-
-    if (camList->num == 0)
-    {
-        std::cerr << "No cameras found" << std::endl;
-        free(dc1394Context);
-        delete capCam;
-        return false;
-    }
-
-    // use the first camera in the list
-    camera = dc1394_camera_new(dc1394Context, camList->ids[0].guid);
-    if (!camera)
-    {
-        std::cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << std::endl;
-        free(dc1394Context);
-        delete capCam;
-        return false;
-    }
-    std::cout << "Using camera with GUID " << camera->guid << std::endl;
-
-    dc1394_camera_free_list(camList);
-
-    videoAvailable = true;
-    return true;
 }
 
 void VideoDialog::closeEvent(QCloseEvent *)
@@ -383,4 +283,9 @@ bool VideoDialog::setOutputDevice(OutputDevice::PortType portType)
         trigPort->close();
 
     return true;
+}
+
+void VideoDialog::onExternTrig(bool on)
+{
+    camera.setExternTrigger(on);
 }

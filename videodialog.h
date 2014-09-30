@@ -19,6 +19,7 @@
 #include "eventreader.h"
 #include "settings.h"
 #include "outputdevice.h"
+#include "camera.h"
 
 class MainWindow;
 
@@ -51,6 +52,7 @@ public slots:
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
     void onWidthChanged(int newVal);
+    void onExternTrig(bool on);
 
     void stopThreads();
     void toggleRecord(bool);
@@ -61,14 +63,11 @@ private slots:
 private:
 
     void closeEvent(QCloseEvent *);
-    bool initVideo();
 
     Ui::VideoDialog *ui;
     MainWindow*     window;
 
-    cv::VideoCapture*       capCam;
-    dc1394camera_t*         camera;
-    dc1394_t*               dc1394Context;
+    Camera                  camera;
 
     CameraThread*       	cameraThread;
     CycDataBuffer*			cycVideoBufRaw;

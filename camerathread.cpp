@@ -17,17 +17,14 @@
 using namespace std;
 
 
-CameraThread::CameraThread(cv::VideoCapture* capCam, CycDataBuffer* cycBuf) :
-    capCam(capCam), trigCode(0), cycBuf(cycBuf)
+CameraThread::CameraThread(Camera* cam, CycDataBuffer* cycBuf) :
+    cam(cam), trigCode(0), cycBuf(cycBuf)
 {
     shouldStop = false;
     detectMotionEvent = NULL;
 
-    if(!capCam->set(CV_CAP_PROP_FPS, settings.fps))
-    {
-        std::cerr << "Could not set framerate" << std::endl;
-        abort();
-    }
+    cam->setFPS(settings.fps);
+
 
     if(settings.flip)
         preEvents.append(new FlipEvent(0, 0));
@@ -72,14 +69,14 @@ void CameraThread::stoppableRun()
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
     }
 
-    *capCam >> frame;
+    *cam >> frame;
     motionDetector.updateBackground(frame);
 
     // Start the acquisition loop
     while (!shouldStop)
     {
 
-        *capCam >> frame;
+        *cam >> frame;
         if (frame.empty())
         {
             std::cerr << "Error dequeuing a frame" << std::endl;
@@ -244,6 +241,6 @@ void CameraThread::detectMotion(Event *ev)
 void CameraThread::updateBackground()
 {
     cv::Mat mat;
-    *capCam >> mat;
+    *cam >> mat;
     motionDetector.updateBackground(mat);
 }

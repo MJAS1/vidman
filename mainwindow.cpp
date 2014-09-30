@@ -54,6 +54,11 @@ void MainWindow::toggleStart(bool arg)
    ui->startButton->setEnabled(arg);
 }
 
+void MainWindow::toggleRec(bool arg)
+{
+   ui->recButton->setEnabled(arg);
+}
+
 void MainWindow::onStart()
 {
     switch (programState) {

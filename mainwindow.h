@@ -33,6 +33,7 @@ public:
     ~MainWindow();
 
     void toggleStart(bool);
+    void toggleRec(bool);
     void toggleVideoDialogChecked(bool);
     qint64 getRunningTime() const;
     

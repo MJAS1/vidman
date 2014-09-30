@@ -39,6 +39,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QPushButton" name="startButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="toolTip">
          <string>Play</string>
         </property>
@@ -84,6 +87,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="recButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="toolTip">
          <string>Record</string>
         </property>
