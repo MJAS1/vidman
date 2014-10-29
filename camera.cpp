@@ -9,6 +9,7 @@ Camera::~Camera()
     if(initialized)
     {
         free(dc1394Context);
+        free(dc1394camera);
     }
 }
 
@@ -59,6 +60,8 @@ bool Camera::init()
     std::cout << "Using camera with GUID " << dc1394camera->guid << std::endl;
 
     dc1394_camera_free_list(camList);
+
+    return true;
 }
 
 void Camera::setFPS(int fps)
@@ -151,4 +154,10 @@ void Camera::setExternTrigger(bool on)
     dc1394error_t	err;
 
     err = dc1394_external_trigger_set_power(dc1394camera, on ? DC1394_ON : DC1394_OFF);
+
+    if (err != DC1394_SUCCESS)
+    {
+        std::cerr << "Couldn't set external trigger." << std::endl;
+        //abort();
+    }
 }

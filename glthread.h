@@ -16,7 +16,7 @@ public:
 
     void swapBuffers();
 
-    /*The drawing needs to be paused when glw is being resized to prevent
+    /*The buffer swap loop needs to be paused when glw is being resized to prevent
      * a segmentation fault. */
     void pause();
     void unpause();

@@ -97,7 +97,6 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     dispH = int(floor((_w / float(videoWidth)) * VIDEO_HEIGHT));
     dispW = int(floor((_h / float(VIDEO_HEIGHT)) * videoWidth));
 
-    mutex.lock();
     makeCurrent();
 
     if(dispH <= _h)
@@ -115,7 +114,6 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     }
 
     doneCurrent();
-    mutex.unlock();
 }
 
 
@@ -143,12 +141,12 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     glt.swapBuffers();
 
+    mutex.unlock();
     shaderProgram.disableAttributeArray("vertex");
     shaderProgram.disableAttributeArray("textureCoordinate");
 
     shaderProgram.release();
 
-    mutex.unlock();
 
     frames++;
 
@@ -201,7 +199,7 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
     resizeGL(e->size().width(), e->size().height());
 }
 
-void GLVideoWidget::mousePressEvent(QMouseEvent *)
+void GLVideoWidget::mousePressEvent(QMouseEvent *e)
 {
     glt.unpause();
 }

@@ -17,18 +17,18 @@
 namespace Ui {
 class MainWindow;
 }
-
-enum State {
-    STOPPED,
-    PLAYING,
-    PAUSED
-};
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
     
 public:
+
+    enum State {
+        STOPPED,
+        PLAYING,
+        PAUSED
+    };
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 

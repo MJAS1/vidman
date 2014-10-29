@@ -73,8 +73,6 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
 
         events = new EventContainer<Event*>();
 
-        window->toggleStart(true);
-        window->toggleRec(true);
     }
     else
     {
@@ -86,6 +84,8 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         QMessageBox msgBox;
         msgBox.setText("Couldn't initialize video.");
         msgBox.exec();
+        window->toggleStart(false);
+        window->toggleRec(false);
     }
 
 
