@@ -11,6 +11,7 @@
 #include <QGLWidget>
 #include <QGLShaderProgram>
 #include <QMutex>
+#include <QWaitCondition>
 #include <jpeglib.h>
 #include <QTimer>
 #include "stoppablethread.h"
@@ -33,6 +34,8 @@ public:
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);
+
+    GLThread glt;
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -59,7 +62,6 @@ private:
 
     OutputDevice *trigPort;
 
-    GLThread glt;
     QMutex mutex;
 
 private slots:

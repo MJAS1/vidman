@@ -122,9 +122,7 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
-    makeCurrent();
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
+    //makeCurrent();
 
     shaderProgram.bind();
 
@@ -138,7 +136,7 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     doneCurrent();
 
-    glt.swapBuffers();
+    glt.swapBuffers(imBuf);
 
     shaderProgram.disableAttributeArray("vertex");
     shaderProgram.disableAttributeArray("textureCoordinate");

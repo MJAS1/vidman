@@ -14,7 +14,7 @@ class GLThread : public StoppableThread
 public:
     GLThread(GLVideoWidget *glw, QMutex *mutex);
 
-    void swapBuffers();
+    void swapBuffers(unsigned char* imBuf);
 
     /*The buffer swap loop needs to be paused when glw is being resized to prevent
      * a segmentation fault. */
@@ -28,6 +28,7 @@ private:
 
     GLVideoWidget *glw;
     QMutex *mutex;
+    unsigned char* imBuf;
 };
 
 #endif // GLTHREAD_H
