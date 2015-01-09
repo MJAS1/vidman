@@ -18,6 +18,7 @@
 #include "common.h"
 #include "outputdevice.h"
 #include "glthread.h"
+#include "logfile.h"
 
 class VideoDialog;
 
@@ -30,7 +31,7 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, VideoDialog* parent=0);
+    GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, LogFile& logfile, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);

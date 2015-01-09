@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     videoevent.cpp \
     outputdevice.cpp \
     glthread.cpp \
-    camera.cpp
+    camera.cpp \
+    logfile.cpp
 
 HEADERS  += mainwindow.h \
     videodialog.h \
@@ -59,7 +60,8 @@ HEADERS  += mainwindow.h \
     videoevent.h \
     outputdevice.h \
     glthread.h \
-    camera.h
+    camera.h \
+    logfile.h
 
 FORMS    += mainwindow.ui \
     videodialog.ui

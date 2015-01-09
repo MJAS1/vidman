@@ -12,12 +12,12 @@
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), programState(STOPPED), timeTmr(new QTimer(this))
+    QMainWindow(parent), ui(new Ui::MainWindow), programState(STOPPED)
 {
     ui->setupUi(this);
     videoDialog = new VideoDialog(this);
     videoDialog->show();
-    connect(timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(&timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
     QMenu *menu = new QMenu(this);
@@ -64,13 +64,14 @@ void MainWindow::onStart()
     switch (programState) {
 
         case STOPPED:
+
             if(videoDialog->start(ui->textEdit->toPlainText()))
             {
                 ui->stopButton->setEnabled(true);
                 runningTime.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
                 programState = PLAYING;
-                timeTmr->start(100);
+                timeTmr.start(100);
             }
             break;
 
@@ -96,7 +97,7 @@ void MainWindow::onStop()
 
     QTime time(0, 0);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
-    timeTmr->stop();
+    timeTmr.stop();
 
     programState = STOPPED;
     ui->startButton->setChecked(false);
@@ -110,7 +111,7 @@ void MainWindow::onRec(bool arg)
 
 void MainWindow::pause()
 {
-    timeTmr->stop();
+    timeTmr.stop();
     runningTime.pause();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
     videoDialog->pause();
@@ -119,7 +120,7 @@ void MainWindow::pause()
 
 void MainWindow::unpause()
 {
-    timeTmr->start(100);
+    timeTmr.start(100);
     runningTime.resume();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
     videoDialog->unpause();
@@ -356,4 +357,10 @@ void MainWindow::toggleVideoDialogChecked(bool arg)
 qint64 MainWindow::getRunningTime() const
 {
     return runningTime.nsecsElapsed();
+}
+
+
+const TimerWithPause& MainWindow::getTimer()
+{
+    return runningTime;
 }

@@ -3,6 +3,8 @@
 
 #include <QMutex>
 #include "stoppablethread.h"
+#include "outputdevice.h"
+#include "logfile.h"
 
 class GLVideoWidget;
 
@@ -12,9 +14,9 @@ class GLVideoWidget;
 class GLThread : public StoppableThread
 {
 public:
-    GLThread(GLVideoWidget *glw, QMutex *mutex);
+    GLThread(GLVideoWidget *glw, QMutex *mutex, OutputDevice *trigPort, LogFile& logfile);
 
-    void swapBuffers(unsigned char* imBuf);
+    void swapBuffers(unsigned char* imBuf, int trigCode, const QString& log);
 
     /*The buffer swap loop needs to be paused when glw is being resized to prevent
      * a segmentation fault. */
@@ -28,7 +30,12 @@ private:
 
     GLVideoWidget *glw;
     QMutex *mutex;
+    OutputDevice* trigPort;
+    LogFile& logFile;
     unsigned char* imBuf;
+    QString log;
+
+    int trigCode;
 };
 
 #endif // GLTHREAD_H

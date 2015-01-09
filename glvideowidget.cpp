@@ -23,8 +23,10 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, VideoDialog* parent)
-    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH), trigPort(trigPort), glt(this, &mutex)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, LogFile& logFile, VideoDialog* parent)
+    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH), trigPort(trigPort),
+       glt(this, &mutex, trigPort, logFile)
+
 {
     setAutoBufferSwap(false);
 
@@ -136,7 +138,7 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     doneCurrent();
 
-    glt.swapBuffers(imBuf);
+    glt.swapBuffers(imBuf, chunkAttrib.trigCode, log);
 
     shaderProgram.disableAttributeArray("vertex");
     shaderProgram.disableAttributeArray("textureCoordinate");
@@ -145,13 +147,9 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
 
     frames++;
-
-    if(!trigPort->isEmpty())
-        trigPort->writeData(chunkAttrib.trigCode);
-
     //Write to log file. Parent widget must be a VideoDialog.
-    if(logSize)
-        static_cast<VideoDialog*>(parent())->writeToLogFile(log);
+    //if(logSize)
+     //   static_cast<VideoDialog*>(parent())->writeToLogFile(log);
 
 }
 

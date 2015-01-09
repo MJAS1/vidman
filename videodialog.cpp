@@ -19,7 +19,7 @@
 #include "videoevent.h"
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPort(new OutputDevice)
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPort(new OutputDevice), logFile(window->getTimer())
 {
     ui->setupUi(this);
 
@@ -31,7 +31,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
       trigger signals with screen refresh rate. */
     QGLFormat format;
     format.setSwapInterval(swapInterval);
-    glVideoWidget = new GLVideoWidget(format, trigPort, this);
+    glVideoWidget = new GLVideoWidget(format, trigPort, logFile, this);
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
@@ -161,6 +161,14 @@ bool VideoDialog::start(const QString& eventStr)
 {
     if(keepLog)
     {
+        if(!logFile.open())
+        {
+            QMessageBox msgBox;
+            msgBox.setText(QString("Error creating log file."));
+            msgBox.exec();
+            return false;
+        }
+        /*
         logFile.setFileName(QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
         logFile.open(QFile::WriteOnly | QFile::Truncate);
         if(!logFile.isOpen())
@@ -170,6 +178,7 @@ bool VideoDialog::start(const QString& eventStr)
             msgBox.exec();
             return false;
         }
+        */
     }
 
     QStringList strList = eventStr.split("\n");
@@ -250,6 +259,7 @@ void VideoDialog::closeEvent(QCloseEvent *)
 
 void VideoDialog::writeToLogFile(QString log)
 {
+    /*
     if(keepLog)
     {
         qint64 elapsedTime = window->getRunningTime();
@@ -259,6 +269,7 @@ void VideoDialog::writeToLogFile(QString log)
                   << (elapsedTime%1000000000)/1000000 << "ms]"
                   << log << "\n";
     }
+    */
 }
 
 void VideoDialog::setFPS(int fps)

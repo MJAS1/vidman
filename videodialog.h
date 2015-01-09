@@ -20,6 +20,7 @@
 #include "settings.h"
 #include "outputdevice.h"
 #include "camera.h"
+#include "logfile.h"
 
 class MainWindow;
 
@@ -84,12 +85,13 @@ private:
 
     QTimer *eventTmr;
     QElapsedTimer elapsedTimer;
-    QFile logFile;
+    //QFile logFile;
 
     qint64 time;
 
     Settings settings;
     OutputDevice *trigPort;
+    LogFile	logFile;
 };
 
 #endif // VIDEODIALOG_H

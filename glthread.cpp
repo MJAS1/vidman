@@ -2,7 +2,8 @@
 #include "glvideowidget.h"
 #include "iostream"
 
-GLThread::GLThread(GLVideoWidget *glw, QMutex *mutex) : shouldSwap(false), isPaused(false), glw(glw), mutex(mutex)
+GLThread::GLThread(GLVideoWidget *glw, QMutex *mutex, OutputDevice* trigPort, LogFile& logFile) : shouldSwap(false), isPaused(false), glw(glw),
+    mutex(mutex), trigPort(trigPort), logFile(logFile)
 {
 }
 
@@ -19,6 +20,13 @@ void GLThread::stoppableRun()
             glClear(GL_COLOR_BUFFER_BIT);
             glDrawArrays(GL_TRIANGLES, 0, 6);
             glw->swapBuffers();
+
+            if(!trigPort->isEmpty())
+                trigPort->writeData(trigCode);
+
+            if(!log.isEmpty())
+                logFile << log;
+
             glw->doneCurrent();
 
             shouldSwap = false;
@@ -28,9 +36,11 @@ void GLThread::stoppableRun()
     }
 }
 
-void GLThread::swapBuffers(unsigned char* buf)
+void GLThread::swapBuffers(unsigned char* buf, int code, const QString& s)
 {
     imBuf = buf;
+    trigCode = code;
+    log = s;
     shouldSwap = true;
 }
 

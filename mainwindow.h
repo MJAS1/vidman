@@ -4,9 +4,6 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <dc1394/dc1394.h>
 #include "videodialog.h"
 #include "event.h"
 #include "eventreader.h"
@@ -36,6 +33,7 @@ public:
     void toggleRec(bool);
     void toggleVideoDialogChecked(bool);
     qint64 getRunningTime() const;
+    const TimerWithPause& getTimer();
     
 private slots:
     void onStart();
@@ -69,6 +67,9 @@ private slots:
     void closeEvent(QCloseEvent *e);
 
 private:
+    MainWindow(const MainWindow& other);
+    MainWindow& operator=(const MainWindow& other);
+
     Ui::MainWindow*     ui;
 
     bool                load(const QString &f);
@@ -79,11 +80,10 @@ private:
 
     Highlighter*        highlighter;
     State               programState;
-    OutputDevice        *trigPort;
 
     VideoDialog*        videoDialog;
     TimerWithPause      runningTime;
-    QTimer*             timeTmr;
+    QTimer              timeTmr;
     QString             fileName;
 };
 
