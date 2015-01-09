@@ -11,7 +11,7 @@ OutputDevice::~OutputDevice()
 {
 }
 
-void OutputDevice::writeData(int trigCode)
+void OutputDevice::writeData(int trigCode) const
 {
     switch (portType)
     {

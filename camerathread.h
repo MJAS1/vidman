@@ -25,7 +25,7 @@
 class CameraThread : public StoppableThread
 {
 public:
-    CameraThread(Camera* cam, CycDataBuffer* cycBuf);
+    explicit CameraThread(Camera& cam, CycDataBuffer* cycBuf);
 	virtual ~CameraThread();
     void clearEvents();
 
@@ -43,7 +43,10 @@ protected:
     virtual void stoppableRun();
 
 private:
-    Camera*                                   cam;
+    CameraThread(const CameraThread&);
+    CameraThread& operator=(const CameraThread&);
+
+    Camera&                                  cam;
     cv::Mat                                  frame;
 
     QMutex                                   mutex;
@@ -58,7 +61,7 @@ private:
     Settings                                 settings;
     MotionDetector                           motionDetector;
 
-    void                                     applyEvents(const EventContainer<VideoEvent*>*);
+    void                                     applyEvents(const EventContainer<VideoEvent*>& events);
 };
 
 #endif /* CAMERATHREAD_H_ */

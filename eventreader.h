@@ -16,12 +16,12 @@ class EventReader
 public:
     EventReader();
 
-    bool loadEvents(const QStringList &strList, EventContainer<Event*> *events);
+    bool loadEvents(const QStringList &strList, EventContainer<Event*>& events);
 
 private:
-    bool    readEvent(const QString &str, EventContainer<Event*> *events, int lineNumber);
+    bool    readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
     bool    readImageObject(const QString &str, int lineNumber);
-    bool    readRemoveEvent(const QString &str, EventContainer<Event*> *events, int lineNumber);
+    bool    readRemoveEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
 
     void    errorMsg(const QString &message) const;
     float   toFloat(const QString &str, int line, const QString &param) const;

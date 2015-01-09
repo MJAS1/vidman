@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QDateTime>
 #include <QTextStream>
 #include "logfile.h"
@@ -26,7 +27,7 @@ void LogFile::write(const QString& log)
 {
     if(active)
     {
-        qint64 elapsedTime = timer.elapsed();
+        qint64 elapsedTime = timer.nsecsElapsed();
         QTextStream logStream(&file);
         logStream << "[" << elapsedTime/1000000000 << "s "
                   << (elapsedTime%1000000000)/1000000 << "ms]"

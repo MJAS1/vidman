@@ -14,7 +14,7 @@ class GLVideoWidget;
 class GLThread : public StoppableThread
 {
 public:
-    GLThread(GLVideoWidget *glw, QMutex *mutex, OutputDevice *trigPort, LogFile& logfile);
+    GLThread(GLVideoWidget *glw, QMutex& mutex, const OutputDevice& trigPort, LogFile& logfile);
 
     void swapBuffers(unsigned char* imBuf, int trigCode, const QString& log);
 
@@ -29,8 +29,8 @@ private:
     bool shouldSwap, isPaused;
 
     GLVideoWidget *glw;
-    QMutex *mutex;
-    OutputDevice* trigPort;
+    QMutex& mutex;
+    const OutputDevice& trigPort;
     LogFile& logFile;
     unsigned char* imBuf;
     QString log;

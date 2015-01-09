@@ -31,7 +31,7 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, LogFile& logfile, VideoDialog* parent=0);
+    GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPort, LogFile& logfile, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);
@@ -60,8 +60,6 @@ private:
     QGLShaderProgram shaderProgram;
     QVector<QVector2D> vertices;
     QVector<QVector2D> textureCoordinates;
-
-    OutputDevice *trigPort;
 
     QMutex mutex;
 

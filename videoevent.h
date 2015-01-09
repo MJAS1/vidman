@@ -63,14 +63,14 @@ private:
 class ImageEvent : public VideoEvent
 {
 public:
-    explicit ImageEvent(int start, cv::Point2i pos,
+    explicit ImageEvent(int start, const cv::Point2i& pos,
                const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 private:
 
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
-                                cv::Mat &output, cv::Point2i location);
+                                cv::Mat &output, const cv::Point2i& location);
 
     cv::Mat     image;
     cv::Point2i pos;
@@ -80,8 +80,8 @@ private:
 class TextEvent : public VideoEvent
 {
 public:
-    explicit TextEvent(int start, QString str, cv::Scalar color,
-                  cv::Point2i pos, int delay, int id = -1, int trigCode = 0);
+    explicit TextEvent(int start, const QString& str, cv::Scalar color,
+                  const cv::Point2i& pos, int delay, int id = -1, int trigCode = 0);
 
     void apply(cv::Mat &frame);
 

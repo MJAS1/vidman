@@ -23,9 +23,9 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, OutputDevice *trigPort, LogFile& logFile, VideoDialog* parent)
-    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH), trigPort(trigPort),
-       glt(this, &mutex, trigPort, logFile)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPort, LogFile& logFile, VideoDialog* parent)
+    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH),
+       glt(this, mutex, trigPort, logFile)
 
 {
     setAutoBufferSwap(false);
@@ -195,5 +195,6 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
 
 void GLVideoWidget::mousePressEvent(QMouseEvent *e)
 {
+    Q_UNUSED(e)
     glt.unpause();
 }

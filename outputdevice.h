@@ -23,7 +23,7 @@ public:
         PORT_PARALLEL
     };
 
-    void writeData(int trigSignal);
+    void writeData(int trigSignal) const;
     bool open(PortType port);
     void close();
     bool isEmpty() const;

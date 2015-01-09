@@ -362,5 +362,6 @@ qint64 MainWindow::getRunningTime() const
 
 const TimerWithPause& MainWindow::getTimer()
 {
+    std::cout << &runningTime << std::endl;
     return runningTime;
 }

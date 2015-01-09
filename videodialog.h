@@ -41,7 +41,6 @@ public:
     void pause();
     void unpause();
     void setKeepLog(bool);
-    void writeToLogFile(QString);
     void setFPS(int fps);
     void updateBackground();
 
@@ -77,20 +76,18 @@ private:
     VideoCompressorThread*	videoCompressorThread;
 
     bool        videoAvailable;
-    bool        keepLog;
     int         eventDuration;
 
-    EventContainer<Event*>* events;
+    EventContainer<Event*> events;
     GLVideoWidget*  glVideoWidget;
 
-    QTimer *eventTmr;
+    QTimer eventTmr;
     QElapsedTimer elapsedTimer;
-    //QFile logFile;
 
     qint64 time;
 
     Settings settings;
-    OutputDevice *trigPort;
+    OutputDevice trigPort;
     LogFile	logFile;
 };
 

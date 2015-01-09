@@ -1,7 +1,7 @@
 #ifndef EventContainer_H
 #define EventContainer_H
 
-#include <QVector>
+#include <QList>
 #include "event.h"
 
 /*!
@@ -14,8 +14,8 @@ class EventContainer
 {
 public:
 
-    typedef typename QVector<T>::Iterator Iterator;
-    typedef typename QVector<T>::ConstIterator ConstIterator;
+    typedef typename QList<T>::Iterator Iterator;
+    typedef typename QList<T>::ConstIterator ConstIterator;
 
     EventContainer();
     ~EventContainer();
@@ -40,7 +40,7 @@ public:
 
 private:
 
-    QVector<T> events;
+    QList<T> events;
 
     EventContainer(const EventContainer& other);
     EventContainer& operator=(const EventContainer& other);

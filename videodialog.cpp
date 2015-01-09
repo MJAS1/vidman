@@ -19,7 +19,7 @@
 #include "videoevent.h"
 
 VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), keepLog(false), trigPort(new OutputDevice), logFile(window->getTimer())
+    QDialog(parent), ui(new Ui::VideoDialog), window(window), logFile(window->getTimer())
 {
     ui->setupUi(this);
 
@@ -56,7 +56,7 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         // Set up video recording
         cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
         cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-        cameraThread = new CameraThread(&camera, cycVideoBufRaw);
+        cameraThread = new CameraThread(camera, cycVideoBufRaw);
         videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
         videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
 
@@ -67,11 +67,8 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         videoCompressorThread->start();
         cameraThread->start();
 
-        eventTmr = new QTimer(this);
-        eventTmr->setSingleShot(true);
-        connect(eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
-
-        events = new EventContainer<Event*>();
+        eventTmr.setSingleShot(true);
+        connect(&eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
 
     }
     else
@@ -96,7 +93,6 @@ VideoDialog::~VideoDialog()
     if(camera.isInitialized())
     {
         stopThreads();
-        delete events;
         delete cycVideoBufRaw;
         delete cycVideoBufJpeg;
         delete cameraThread;
@@ -104,7 +100,6 @@ VideoDialog::~VideoDialog()
         delete videoCompressorThread;
     }
 
-    delete trigPort;
     delete ui;
 }
 
@@ -120,7 +115,7 @@ void VideoDialog::stopThreads()
 
 void VideoDialog::setKeepLog(bool arg)
 {
-    keepLog = arg;
+    logFile.setActive(arg);
 }
 
 void VideoDialog::toggleRecord(bool arg)
@@ -130,7 +125,7 @@ void VideoDialog::toggleRecord(bool arg)
 
 void VideoDialog::getNextEvent()
 {
-    Event *event = events->pop_front();
+    Event *event = events.pop_front();
 
     switch(event->getType())
     {
@@ -148,18 +143,18 @@ void VideoDialog::getNextEvent()
             break;
     }
 
-    if(!events->empty())
+    if(!events.empty())
     {
-        Event *nextEvent = (*events)[0];
+        Event *nextEvent = events[0];
         eventDuration = (nextEvent->getStart()+event->getDuration()+event->getDelay());
-        eventTmr->start(eventDuration);
+        eventTmr.start(eventDuration);
         time=elapsedTimer.nsecsElapsed()/1000000;
     }
 }
 
 bool VideoDialog::start(const QString& eventStr)
 {
-    if(keepLog)
+    if(logFile.isActive())
     {
         if(!logFile.open())
         {
@@ -168,17 +163,6 @@ bool VideoDialog::start(const QString& eventStr)
             msgBox.exec();
             return false;
         }
-        /*
-        logFile.setFileName(QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
-        logFile.open(QFile::WriteOnly | QFile::Truncate);
-        if(!logFile.isOpen())
-        {
-            QMessageBox msgBox;
-            msgBox.setText(QString("Error creating log file."));
-            msgBox.exec();
-            return false;
-        }
-        */
     }
 
     QStringList strList = eventStr.split("\n");
@@ -187,9 +171,9 @@ bool VideoDialog::start(const QString& eventStr)
     EventReader eventReader;
     if(eventReader.loadEvents(strList, events))
     {
-        if(!events->empty())
+        if(!events.empty())
         {
-            eventTmr->start((*events)[0]->getStart());
+            eventTmr.start(events[0]->getStart());
             time=0;
         }
         elapsedTimer.restart();
@@ -204,14 +188,14 @@ bool VideoDialog::start(const QString& eventStr)
 void VideoDialog::stop()
 {
     cameraThread->clearEvents();
-    eventTmr->stop();
-    events->clear();
+    eventTmr.stop();
+    events.clear();
     logFile.close();
 }
 
 void VideoDialog::pause()
 {
-    eventTmr->stop();
+    eventTmr.stop();
     cameraThread->pause();
     time = elapsedTimer.nsecsElapsed()/1000000-time;
 }
@@ -219,10 +203,10 @@ void VideoDialog::pause()
 void VideoDialog::unpause()
 {
     cameraThread->unpause();
-    if(!events->empty())
+    if(!events.empty())
     {
         eventDuration = eventDuration - time;
-        eventTmr->start(eventDuration);
+        eventTmr.start(eventDuration);
     }
     time = elapsedTimer.nsecsElapsed()/1000000;
 }
@@ -257,21 +241,6 @@ void VideoDialog::closeEvent(QCloseEvent *)
     window->toggleVideoDialogChecked(false);
 }
 
-void VideoDialog::writeToLogFile(QString log)
-{
-    /*
-    if(keepLog)
-    {
-        qint64 elapsedTime = window->getRunningTime();
-
-        QTextStream logStream(&logFile);
-        logStream << "[" << elapsedTime/1000000000 << "s "
-                  << (elapsedTime%1000000000)/1000000 << "ms]"
-                  << log << "\n";
-    }
-    */
-}
-
 void VideoDialog::setFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
@@ -287,11 +256,11 @@ bool VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
     if(portType)
     {
-        if(!trigPort->open(portType))
+        if(!trigPort.open(portType))
             return false;
     }
     else
-        trigPort->close();
+        trigPort.close();
 
     return true;
 }

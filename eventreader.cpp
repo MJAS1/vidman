@@ -8,9 +8,9 @@ EventReader::EventReader()
 {
 }
 
-bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*> *events)
+bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>& events)
 {
-    events->clear();
+    events.clear();
 
     //Start reading the events, line by line
     for(int i = 0; i < strList.size(); i++)
@@ -68,7 +68,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*> 
     return true;
 }
 
-bool EventReader::readEvent(const QString &str, EventContainer<Event*> *events, int lineNumber)
+bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -241,7 +241,7 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*> *events, 
             return false;
 
     }
-    events->append(ev);
+    events.append(ev);
 
     return true;
 }
@@ -289,7 +289,7 @@ bool EventReader::readImageObject(const QString &str, int lineNumber)
 }
 
 
-bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*> *events, int lineNumber)
+bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -365,7 +365,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*> *ev
     {
         Event* ev = new RemoveEvent(start, delay, id, trigCode);
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
-        events->append(ev);
+        events.append(ev);
     }
     else
     {
@@ -401,7 +401,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*> *ev
                 return false;
         }
 
-        events->append(ev);
+        events.append(ev);
     }
 
 

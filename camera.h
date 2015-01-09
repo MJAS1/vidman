@@ -27,6 +27,8 @@ public:
     void operator>>(cv::Mat& frame);
 
 private:
+    Camera(const Camera&);
+    Camera& operator=(const Camera&);
 
     cv::VideoCapture       capCam;
     dc1394camera_t*         dc1394camera;

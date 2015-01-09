@@ -96,7 +96,7 @@ void FadeOutEvent::unpause()
     timerWithPause.resume();
 }
 
-ImageEvent::ImageEvent(int start, cv::Point2i pos, const cv::Mat& image, int delay, int id, int trigCode) :
+ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image, int delay, int id, int trigCode) :
     VideoEvent(EVENT_IMAGE, start, delay, 0, id, trigCode), image(image), pos(pos)
 {
 }
@@ -109,7 +109,7 @@ void ImageEvent::apply(cv::Mat &frame)
 
 //Code from Jepson's Blog http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
 void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foreground,
-  cv::Mat &output, cv::Point2i location)
+  cv::Mat &output, const cv::Point2i& location)
 {
   background.copyTo(output);
 
@@ -155,7 +155,7 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-TextEvent::TextEvent(int start, QString str, cv::Scalar color, cv::Point2i pos, int delay, int id, int trigCode) :
+TextEvent::TextEvent(int start, const QString& str, cv::Scalar color, const cv::Point2i& pos, int delay, int id, int trigCode) :
     VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color(color), pos(pos), str(str)
 {
 }

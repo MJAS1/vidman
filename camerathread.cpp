@@ -17,13 +17,13 @@
 using namespace std;
 
 
-CameraThread::CameraThread(Camera* cam, CycDataBuffer* cycBuf) :
+CameraThread::CameraThread(Camera& cam, CycDataBuffer* cycBuf) :
     cam(cam), trigCode(0), cycBuf(cycBuf)
 {
     shouldStop = false;
     detectMotionEvent = NULL;
 
-    cam->setFPS(settings.fps);
+    cam.setFPS(settings.fps);
 
 
     if(settings.flip)
@@ -69,14 +69,14 @@ void CameraThread::stoppableRun()
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
     }
 
-    *cam >> frame;
+    cam >> frame;
     motionDetector.updateBackground(frame);
 
     // Start the acquisition loop
     while (!shouldStop)
     {
 
-        *cam >> frame;
+        cam >> frame;
         if (frame.empty())
         {
             std::cerr << "Error dequeuing a frame" << std::endl;
@@ -87,7 +87,7 @@ void CameraThread::stoppableRun()
 
         motionDetector.updateFrame(frame);
 
-        applyEvents(&preEvents);
+        applyEvents(preEvents);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
 
@@ -104,7 +104,7 @@ void CameraThread::stoppableRun()
             }
         }
 
-        applyEvents(&events);
+        applyEvents(events);
         cv::cvtColor(frame, frame, CV_BGR2RGB);
 
         chunkAttrib.log = new char[log.size()+1];
@@ -136,9 +136,9 @@ void CameraThread::clearEvents()
     mutex.unlock();
 }
 
-void CameraThread::applyEvents(const EventContainer<VideoEvent*> *ev)
+void CameraThread::applyEvents(const EventContainer<VideoEvent*>& ev)
 {
-    for(EventContainer<VideoEvent*>::ConstIterator iter = ev->begin(); iter != ev->end(); iter++)
+    for(EventContainer<VideoEvent*>::ConstIterator iter = ev.begin(); iter != ev.end(); iter++)
     {
         (*iter)->apply(frame);
     }
@@ -241,6 +241,6 @@ void CameraThread::detectMotion(Event *ev)
 void CameraThread::updateBackground()
 {
     cv::Mat mat;
-    *cam >> mat;
+    cam >> mat;
     motionDetector.updateBackground(mat);
 }
