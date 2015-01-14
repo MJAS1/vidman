@@ -24,7 +24,8 @@ class VideoDialog;
 
 /* GLVideoWidget is used as the widget where each frame is drawn using OpenGL. The actual
  * drawing and swapping of the buffers are done in a separate thread (GLThread). This is because
- * when using 60 FPS for buffer swapping, it is enough to stall the UI thread especially with vsync on. */
+ * when using 60 FPS for buffer swapping, it is enough to stall the UI thread and make it
+ * unresponsive especially with vsync on. */
 
 class GLVideoWidget : public QGLWidget
 {
@@ -35,8 +36,6 @@ public:
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);
-
-    GLThread glt;
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -62,6 +61,7 @@ private:
     QVector<QVector2D> textureCoordinates;
 
     QMutex mutex;
+    GLThread glt;
 
 private slots:
     void countFPS();

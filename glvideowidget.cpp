@@ -25,7 +25,7 @@ using namespace std;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPort, LogFile& logFile, VideoDialog* parent)
     : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH),
-       glt(this, mutex, trigPort, logFile)
+       glt(this, mutex, trigPort, logFile, shaderProgram, vertices, textureCoordinates)
 
 {
     setAutoBufferSwap(false);
@@ -55,6 +55,8 @@ GLVideoWidget::~GLVideoWidget()
 
 void GLVideoWidget::initializeGL()
 {
+    mutex.lock();
+
     GLuint  texture;
 
     glEnable(GL_TEXTURE_2D);
@@ -82,6 +84,7 @@ void GLVideoWidget::initializeGL()
 
     glt.start();
 
+    mutex.unlock();
 }
 
 void GLVideoWidget::paintGL()
@@ -99,6 +102,7 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     dispH = int(floor((_w / float(videoWidth)) * VIDEO_HEIGHT));
     dispW = int(floor((_h / float(VIDEO_HEIGHT)) * videoWidth));
 
+    mutex.lock();
     makeCurrent();
 
     if(dispH <= _h)
@@ -116,6 +120,7 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     }
 
     doneCurrent();
+    mutex.unlock();
 }
 
 
@@ -124,33 +129,10 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
-    //makeCurrent();
-
-    shaderProgram.bind();
-
-    shaderProgram.setUniformValue("texture", 0);
-
-    shaderProgram.setAttributeArray("vertex", vertices.constData());
-    shaderProgram.enableAttributeArray("vertex");
-
-    shaderProgram.setAttributeArray("textureCoordinate", textureCoordinates.constData());
-    shaderProgram.enableAttributeArray("textureCoordinate");
-
     doneCurrent();
-
-    glt.swapBuffers(imBuf, chunkAttrib.trigCode, log);
-
-    shaderProgram.disableAttributeArray("vertex");
-    shaderProgram.disableAttributeArray("textureCoordinate");
-
-    shaderProgram.release();
-
+    glt.drawFrame(imBuf, chunkAttrib.trigCode, log);
 
     frames++;
-    //Write to log file. Parent widget must be a VideoDialog.
-    //if(logSize)
-     //   static_cast<VideoDialog*>(parent())->writeToLogFile(log);
-
 }
 
 void GLVideoWidget::countFPS()
