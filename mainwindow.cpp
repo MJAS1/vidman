@@ -152,7 +152,12 @@ void MainWindow::onSerialPort(bool arg)
     {
         ui->actionParallelPort->setChecked(false);
         if(!videoDialog->setOutputDevice(OutputDevice::PORT_SERIAL))
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Cannot open USB port. May be you should run this program as root\n");
+            msgBox.exec();
             ui->actionSerialPort->setChecked(false);
+        }
     }
     else
         videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
@@ -164,7 +169,12 @@ void MainWindow::onParallelPort(bool arg)
     {
         ui->actionSerialPort->setChecked(false);
         if(!videoDialog->setOutputDevice(OutputDevice::PORT_PARALLEL))
+        {
+            QMessageBox msgBox;
+            msgBox.setText("Cannot get the port. May be you should run this program as root\n");
+            msgBox.exec();
             ui->actionParallelPort->setChecked(false);
+        }
     }
     else
         videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
@@ -362,6 +372,5 @@ qint64 MainWindow::getRunningTime() const
 
 const TimerWithPause& MainWindow::getTimer()
 {
-    std::cout << &runningTime << std::endl;
     return runningTime;
 }

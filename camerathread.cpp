@@ -76,6 +76,8 @@ void CameraThread::stoppableRun()
     while (!shouldStop)
     {
 
+        mutex.lock();
+
         cam >> frame;
         if (frame.empty())
         {
@@ -83,14 +85,11 @@ void CameraThread::stoppableRun()
             abort();
         }
 
-        mutex.lock();
-
         motionDetector.updateFrame(frame);
 
         applyEvents(preEvents);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
-
 		msec = timestamp.tv_nsec / 1000000;
 		msec += timestamp.tv_sec * 1000;
 
@@ -113,7 +112,6 @@ void CameraThread::stoppableRun()
         log.clear();
 
         chunkAttrib.trigCode = trigCode;
-
         trigCode = 0;
 
         mutex.unlock();
@@ -240,7 +238,11 @@ void CameraThread::detectMotion(Event *ev)
 
 void CameraThread::updateBackground()
 {
+    mutex.lock();
+
     cv::Mat mat;
     cam >> mat;
     motionDetector.updateBackground(mat);
+
+    mutex.unlock();
 }

@@ -7,6 +7,11 @@ LogFile::LogFile(const TimerWithPause& timer) : active(false), timer(timer)
 {
 }
 
+LogFile::~LogFile()
+{
+    if(file.isOpen())
+        file.close();
+}
 
 void LogFile::setActive(bool on)
 {
@@ -20,7 +25,7 @@ bool LogFile::isActive() const
 bool LogFile::open()
 {
        file.setFileName(QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
-       file.open(QFile::WriteOnly | QFile::Truncate);
+       return file.open(QFile::WriteOnly | QFile::Truncate);
 }
 
 void LogFile::write(const QString& log)

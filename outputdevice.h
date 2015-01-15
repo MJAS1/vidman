@@ -15,7 +15,6 @@ class OutputDevice
 {
 public:
     OutputDevice();
-    ~OutputDevice();
 
     enum PortType {
         PORT_NULL,

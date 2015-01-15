@@ -27,6 +27,7 @@ class CameraThread : public StoppableThread
 public:
     explicit CameraThread(Camera& cam, CycDataBuffer* cycBuf);
 	virtual ~CameraThread();
+
     void clearEvents();
 
     void pause();

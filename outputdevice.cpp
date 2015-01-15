@@ -3,11 +3,7 @@
 #include <iostream>
 #include "outputdevice.h"
 
-OutputDevice::OutputDevice()
-{
-}
-
-OutputDevice::~OutputDevice()
+OutputDevice::OutputDevice() : portType(PORT_NULL)
 {
 }
 
@@ -35,33 +31,27 @@ bool OutputDevice::open(PortType port)
 {
     switch (port)
     {
-        case PORT_PARALLEL:
-            if(ioperm(settings.printerPortAddr, 1, 1))
-            {
-                QMessageBox msgBox;
-                msgBox.setText("Cannot get the port. May be you should run this program as root\n");
-                msgBox.exec();
-                portType = PORT_NULL;
-                return false;
-            }
-            portType = PORT_PARALLEL;
-            break;
+    case PORT_PARALLEL:
+        if(ioperm(settings.printerPortAddr, 1, 1))
+        {
+            portType = PORT_NULL;
+            return false;
+        }
+        portType = PORT_PARALLEL;
+        break;
 
-        case PORT_SERIAL:
-            if((fd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-            {
-                QMessageBox msgBox;
-                msgBox.setText("Cannot open USB port.");
-                msgBox.exec();
-                portType = PORT_NULL;
-                fd = -1;
-                return false;
-            }
-            portType = PORT_SERIAL;
-            break;
+    case PORT_SERIAL:
+        if((fd = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
+        {
+            portType = PORT_NULL;
+            fd = -1;
+            return false;
+        }
+        portType = PORT_SERIAL;
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return true;

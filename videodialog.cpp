@@ -23,15 +23,13 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    int swapInterval = 0;
-    if(settings.vsync)
-        swapInterval = 1;
+    int swapInterval = settings.vsync;
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
     format.setSwapInterval(swapInterval);
-    glVideoWidget = new GLVideoWidget(format, trigPort, logFile, this);
+    glVideoWidget = new GLVideoWidget(format, logFile, this);
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
@@ -100,6 +98,7 @@ VideoDialog::~VideoDialog()
         delete videoCompressorThread;
     }
 
+    delete glVideoWidget;
     delete ui;
 }
 
@@ -254,15 +253,7 @@ void VideoDialog::updateBackground()
 
 bool VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
-    if(portType)
-    {
-        if(!trigPort.open(portType))
-            return false;
-    }
-    else
-        trigPort.close();
-
-    return true;
+        return glVideoWidget->setOutputDevice(portType);
 }
 
 void VideoDialog::onExternTrig(bool on)

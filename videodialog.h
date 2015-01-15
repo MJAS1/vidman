@@ -61,6 +61,8 @@ private slots:
     void getNextEvent();
 
 private:
+    VideoDialog(const VideoDialog&);
+    VideoDialog& operator=(const VideoDialog&);
 
     void closeEvent(QCloseEvent *);
 
@@ -87,7 +89,6 @@ private:
     qint64 time;
 
     Settings settings;
-    OutputDevice trigPort;
     LogFile	logFile;
 };
 

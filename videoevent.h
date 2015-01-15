@@ -25,7 +25,7 @@ public:
 
     explicit FlipEvent(int start, int delay, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 };
 
 
@@ -34,7 +34,7 @@ class FadeInEvent : public VideoEvent
 public:
     explicit FadeInEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
@@ -50,7 +50,7 @@ class FadeOutEvent: public VideoEvent
 public:
     explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
@@ -66,7 +66,7 @@ public:
     explicit ImageEvent(int start, const cv::Point2i& pos,
                const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 private:
 
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
@@ -83,7 +83,7 @@ public:
     explicit TextEvent(int start, const QString& str, cv::Scalar color,
                   const cv::Point2i& pos, int delay, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 
 private:
     cv::Scalar  color;
@@ -97,7 +97,7 @@ class RotateEvent : public VideoEvent
 public:
     explicit RotateEvent(int start, int angle, int delay, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 
 private:
     int angle;
@@ -109,7 +109,7 @@ class FreezeEvent: public VideoEvent
 public:
     explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
 
-    void apply(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 
 private:
     bool    started;

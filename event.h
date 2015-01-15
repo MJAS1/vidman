@@ -12,8 +12,6 @@ Event objects are used to specify the starting time, duration, effects etc.
 of events handled by the program.
   */
 
-
-
 class Event
 {
 public:
@@ -63,10 +61,13 @@ private:
     Event& operator=(const Event& other);
 };
 
+//This class is used to specify what event should be removed
 class RemoveEvent : public Event
 {
 public:
 
+    //Remove event can be initialized to remove either an event with a specific id
+    //or all the events of a given type
     explicit RemoveEvent(int start, int delay, int removeId, int trigCode = 0);
     explicit RemoveEvent(int start, int delay, EventType removeType, int trigCode = 0);
 

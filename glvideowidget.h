@@ -32,10 +32,11 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPort, LogFile& logfile, VideoDialog* parent=0);
+    GLVideoWidget(const QGLFormat& format, LogFile& logfile, VideoDialog* parent=0);
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);
+    bool setOutputDevice(OutputDevice::PortType portType);
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -49,16 +50,16 @@ protected:
     void mousePressEvent(QMouseEvent*);
 
 private:
+    GLVideoWidget(const GLVideoWidget&);
+    GLVideoWidget& operator=(const GLVideoWidget&);
 
-    QTimer      *fpsTimer;
+    QTimer      fpsTimer;
 
     char        *imBuf;
     int         frames;
     int         videoWidth;
 
     QGLShaderProgram shaderProgram;
-    QVector<QVector2D> vertices;
-    QVector<QVector2D> textureCoordinates;
 
     QMutex mutex;
     GLThread glt;

@@ -23,9 +23,9 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPort, LogFile& logFile, VideoDialog* parent)
-    : QGLWidget(format, parent), fpsTimer(new QTimer(this)), frames(0), videoWidth(VIDEO_WIDTH),
-       glt(this, mutex, trigPort, logFile, shaderProgram, vertices, textureCoordinates)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDialog* parent)
+    : QGLWidget(format, parent), frames(0), videoWidth(VIDEO_WIDTH),
+       glt(this, mutex, logFile)
 
 {
     setAutoBufferSwap(false);
@@ -39,8 +39,8 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, const OutputDevice& trigPo
         exit(EXIT_FAILURE);
     }
 
-    connect(fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
-    fpsTimer->start(1000);
+    connect(&fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
+    fpsTimer.start(1000);
 
 
 }
@@ -68,23 +68,10 @@ void GLVideoWidget::initializeGL()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-
-    //glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
-
-    shaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/vertexShader.vsh");
-    shaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/fragmentShader.fsh");
-    shaderProgram.link();
-
-    vertices << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
-             << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
-
-    textureCoordinates << QVector2D(0, 0) << QVector2D(0, 1) << QVector2D(1, 1)
-                       << QVector2D(1, 1) << QVector2D(1, 0) << QVector2D(0, 0);
+    mutex.unlock();
 
     glt.start();
 
-    mutex.unlock();
 }
 
 void GLVideoWidget::paintGL()
@@ -152,7 +139,6 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
     {
         setWindowFlags(Qt::Widget);
         showNormal();
-
     }
     else
     {
@@ -179,4 +165,9 @@ void GLVideoWidget::mousePressEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
     glt.unpause();
+}
+
+bool GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)
+{
+    return glt.setOutputDevice(portType);
 }

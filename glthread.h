@@ -15,8 +15,7 @@ class GLVideoWidget;
 class GLThread : public StoppableThread
 {
 public:
-    GLThread(GLVideoWidget *glw, QMutex& mutex, const OutputDevice& trigPort, LogFile& logfile,
-             QGLShaderProgram&, QVector<QVector2D>&, QVector<QVector2D>&);
+    explicit GLThread(GLVideoWidget *parentGLW, QMutex& mutex, LogFile& logfile);
 
     void drawFrame(unsigned char* imBuf, int trigCode, const QString& log);
 
@@ -25,23 +24,28 @@ public:
     void pause();
     void unpause();
 
+    /*Because ioperm sets port permissions only for the calling thread, it is important
+    that outputDevice.open() is only called in the thread that sets outb*/
+    bool setOutputDevice(OutputDevice::PortType portType);
+
 private:
     void stoppableRun();
 
     bool shouldSwap, isPaused;
 
-    GLVideoWidget *glw;
-    QMutex& mutex;
-    const OutputDevice& trigPort;
-    LogFile& logFile;
-    unsigned char* imBuf;
-    QString log;
+    GLVideoWidget*		glw;
+    QMutex& 			mutex;
+    LogFile& 			logFile;
+    unsigned char* 		imBuf;
+
+    QString 			log;
+    OutputDevice 		trigPort;
 
     int trigCode;
 
-    QGLShaderProgram& shaderProgram;
-    const QVector<QVector2D>& vertices;
-    const QVector<QVector2D>& textureCoordinates;
+    QGLShaderProgram 	shaderProgram;
+    QVector<QVector2D> 	vertices;
+    QVector<QVector2D> 	textureCoordinates;
 
 };
 
