@@ -113,13 +113,15 @@ void GLVideoWidget::resizeGL(int _w, int _h)
 
 void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 {
+
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
     doneCurrent();
-    glt.drawFrame(imBuf, chunkAttrib.trigCode, log);
 
+    glt.drawFrame(imBuf, chunkAttrib.trigCode, log);
     frames++;
+
 }
 
 void GLVideoWidget::countFPS()

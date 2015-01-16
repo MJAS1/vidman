@@ -34,7 +34,10 @@ private:
     bool shouldSwap, isPaused;
 
     GLVideoWidget*		glw;
-    QMutex& 			mutex;
+    //Used to synchronize makeCurrent() and openGL calls
+    QMutex& 			GLMutex;
+    //Used to protect member variables
+    QMutex              localMutex;
     LogFile& 			logFile;
     unsigned char* 		imBuf;
 

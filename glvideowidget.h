@@ -61,6 +61,7 @@ private:
 
     QGLShaderProgram shaderProgram;
 
+    //Used to synchronize makeCurrent() and openGL calls between this widget and GLThread
     QMutex mutex;
     GLThread glt;
 
