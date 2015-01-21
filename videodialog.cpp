@@ -10,6 +10,7 @@
 #include <cerrno>
 #include <stdio.h>
 #include <QGLFormat>
+#include <unistd.h>
 #include "glvideowidget.h"
 #include "mainwindow.h"
 #include "videodialog.h"
@@ -91,6 +92,7 @@ VideoDialog::~VideoDialog()
     if(camera.isInitialized())
     {
         stopThreads();
+        usleep(25000);
         delete cycVideoBufRaw;
         delete cycVideoBufJpeg;
         delete cameraThread;
@@ -251,9 +253,9 @@ void VideoDialog::updateBackground()
     cameraThread->updateBackground();
 }
 
-bool VideoDialog::setOutputDevice(OutputDevice::PortType portType)
+void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
-        return glVideoWidget->setOutputDevice(portType);
+        glVideoWidget->setOutputDevice(portType);
 }
 
 void VideoDialog::onExternTrig(bool on)

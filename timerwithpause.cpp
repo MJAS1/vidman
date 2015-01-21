@@ -1,3 +1,4 @@
+#include <QMutexLocker>
 #include "timerwithpause.h"
 
 TimerWithPause::TimerWithPause() :
@@ -17,8 +18,10 @@ void TimerWithPause::resume()
     paused = false;
 }
 
-qint64 TimerWithPause::nsecsElapsed() const
+qint64 TimerWithPause::nsecsElapsed()
 {
+    //Multiple threads might request time
+    QMutexLocker locker(&mutex);
     if(paused)
         return time;
     else

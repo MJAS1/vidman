@@ -4,8 +4,8 @@
 #include "glvideowidget.h"
 #include "iostream"
 
-GLThread::GLThread(GLVideoWidget *glw, QMutex& mutex, LogFile& logFile) :
-    shouldSwap(false), isPaused(false), glw(glw), GLMutex(mutex), logFile(logFile)
+GLThread::GLThread(GLVideoWidget *glw, LogFile& logFile) :
+    shouldSwap(false), shouldChangePort(false), isPaused(false), glw(glw), logFile(logFile)
 {
     vertices << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
@@ -13,13 +13,22 @@ GLThread::GLThread(GLVideoWidget *glw, QMutex& mutex, LogFile& logFile) :
     textureCoordinates << QVector2D(0, 0) << QVector2D(0, 1) << QVector2D(1, 1)
                        << QVector2D(1, 1) << QVector2D(1, 0) << QVector2D(0, 0);
 
-    GLMutex.lock();
     glw->makeCurrent();
+    GLuint  texture;
+
+    glEnable(GL_TEXTURE_2D);
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
     shaderProgram.addShaderFromSourceFile(QGLShader::Vertex, ":/vertexShader.vsh");
     shaderProgram.addShaderFromSourceFile(QGLShader::Fragment, ":/fragmentShader.fsh");
     shaderProgram.link();
     glw->doneCurrent();
-    GLMutex.unlock();
 }
 
 void GLThread::stoppableRun()
@@ -27,13 +36,24 @@ void GLThread::stoppableRun()
     while(!shouldStop)
     {
 
-        //Local mutex should be unlocked even if shouldSwap is false, so use a mutex locker
-        QMutexLocker locker(&localMutex);
+        QMutexLocker locker(&mutex);
+
+        //trigPort.open() must be called in this thread to make outb work
+        if(shouldChangePort)
+        {
+            if(newPort)
+            {
+                trigPort.open(newPort);
+            }
+            else
+                trigPort.close();
+
+            shouldChangePort = false;
+        }
+
         if(shouldSwap && !isPaused)
         {
             shouldSwap = false;
-
-            GLMutex.lock();
 
             glw->makeCurrent();
             shaderProgram.bind();
@@ -46,7 +66,7 @@ void GLThread::stoppableRun()
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
 
             //Unlock before drawing functions to prevent drawFrame() from stalling
-            locker.unlock();
+            mutex.unlock();
 
             glClear(GL_COLOR_BUFFER_BIT);
             glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -63,49 +83,40 @@ void GLThread::stoppableRun()
                 logFile << log;
 
             glw->doneCurrent();
-
-            GLMutex.unlock();
-
         }
     }
 }
 
 void GLThread::drawFrame(unsigned char* buf, int code, const QString& s)
 {
-    localMutex.lock();
+    mutex.lock();
 
     imBuf = buf;
     trigCode = code;
     log = s;
     shouldSwap = true;
 
-    localMutex.unlock();
+    mutex.unlock();
 }
 
 void GLThread::pause()
 {
-    localMutex.lock();
+    mutex.lock();
     isPaused = true;
-    localMutex.unlock();
+    mutex.unlock();
 }
 
 void GLThread::unpause()
 {
-    localMutex.lock();
+    mutex.lock();
     isPaused = false;
-    localMutex.unlock();
+    mutex.unlock();
 }
 
-bool GLThread::setOutputDevice(OutputDevice::PortType portType)
+void GLThread::setOutputDevice(OutputDevice::PortType portType)
 {
-    QMutexLocker locker(&GLMutex);
-
-    if(portType)
-    {
-        bool ok = trigPort.open(portType);
-        return ok;
-    }
-
-    trigPort.close();
-    return true;
+    mutex.lock();
+    newPort = portType;
+    shouldChangePort = true;
+    mutex.unlock();
 }

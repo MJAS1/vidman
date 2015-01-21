@@ -36,7 +36,7 @@ public:
     virtual ~GLVideoWidget();
 
     void setVideoWidth(int newVal);
-    bool setOutputDevice(OutputDevice::PortType portType);
+    void setOutputDevice(OutputDevice::PortType portType);
 
 public slots:
     void onDrawFrame(unsigned char* _jpegBuf, int );
@@ -59,11 +59,7 @@ private:
     int         frames;
     int         videoWidth;
 
-    QGLShaderProgram shaderProgram;
-
-    //Used to synchronize makeCurrent() and openGL calls between this widget and GLThread
-    QMutex mutex;
-    GLThread glt;
+    GLThread    *glt;
 
 private slots:
     void countFPS();

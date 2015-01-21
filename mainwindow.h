@@ -32,8 +32,8 @@ public:
     void toggleStart(bool);
     void toggleRec(bool);
     void toggleVideoDialogChecked(bool);
-    qint64 getRunningTime() const;
-    const TimerWithPause& getTimer();
+    qint64 getRunningTime();
+    TimerWithPause& getTimer();
     
 private slots:
     void onStart();

@@ -3,7 +3,7 @@
 #include <QTextStream>
 #include "logfile.h"
 
-LogFile::LogFile(const TimerWithPause& timer) : active(false), timer(timer)
+LogFile::LogFile(TimerWithPause& timer) : active(false), timer(timer)
 {
 }
 

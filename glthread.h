@@ -15,7 +15,7 @@ class GLVideoWidget;
 class GLThread : public StoppableThread
 {
 public:
-    explicit GLThread(GLVideoWidget *parentGLW, QMutex& mutex, LogFile& logfile);
+    explicit GLThread(GLVideoWidget *parentGLW, LogFile& logfile);
 
     void drawFrame(unsigned char* imBuf, int trigCode, const QString& log);
 
@@ -25,24 +25,26 @@ public:
     void unpause();
 
     /*Because ioperm sets port permissions only for the calling thread, it is important
-    that outputDevice.open() is only called in the thread that sets outb*/
-    bool setOutputDevice(OutputDevice::PortType portType);
+    that trigPort.open() is called by this thread. This must be done in stoppableRun loop.
+    This function is used notify that trigPort should be set to a given port.*/
+    void setOutputDevice(OutputDevice::PortType portType);
 
 private:
     void stoppableRun();
 
-    bool shouldSwap, isPaused;
+    bool shouldSwap;
+    bool shouldChangePort;
+    bool isPaused;
 
     GLVideoWidget*		glw;
-    //Used to synchronize makeCurrent() and openGL calls
-    QMutex& 			GLMutex;
-    //Used to protect member variables
-    QMutex              localMutex;
+
+    QMutex              mutex;
     LogFile& 			logFile;
     unsigned char* 		imBuf;
 
     QString 			log;
     OutputDevice 		trigPort;
+    OutputDevice::PortType newPort;
 
     int trigCode;
 

@@ -46,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete videoDialog;
     delete ui;
 }
 
@@ -151,13 +152,7 @@ void MainWindow::onSerialPort(bool arg)
     if(arg)
     {
         ui->actionParallelPort->setChecked(false);
-        if(!videoDialog->setOutputDevice(OutputDevice::PORT_SERIAL))
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot open USB port. May be you should run this program as root\n");
-            msgBox.exec();
-            ui->actionSerialPort->setChecked(false);
-        }
+        videoDialog->setOutputDevice(OutputDevice::PORT_SERIAL);
     }
     else
         videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
@@ -168,13 +163,7 @@ void MainWindow::onParallelPort(bool arg)
     if(arg)
     {
         ui->actionSerialPort->setChecked(false);
-        if(!videoDialog->setOutputDevice(OutputDevice::PORT_PARALLEL))
-        {
-            QMessageBox msgBox;
-            msgBox.setText("Cannot get the port. May be you should run this program as root\n");
-            msgBox.exec();
-            ui->actionParallelPort->setChecked(false);
-        }
+        videoDialog->setOutputDevice(OutputDevice::PORT_PARALLEL);
     }
     else
         videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
@@ -364,13 +353,13 @@ void MainWindow::toggleVideoDialogChecked(bool arg)
     ui->viewVideoDialogAction->setChecked(arg);
 }
 
-qint64 MainWindow::getRunningTime() const
+qint64 MainWindow::getRunningTime()
 {
     return runningTime.nsecsElapsed();
 }
 
 
-const TimerWithPause& MainWindow::getTimer()
+TimerWithPause& MainWindow::getTimer()
 {
     return runningTime;
 }

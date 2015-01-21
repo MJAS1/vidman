@@ -2,7 +2,7 @@
 #define TIMER_H
 
 #include <QElapsedTimer>
-
+#include <QMutex>
 
 /* Timer with pause function*/
 
@@ -16,9 +16,11 @@ public:
     void resume();
     void restart();
 
-    qint64 nsecsElapsed() const;
+    qint64 nsecsElapsed();
 
 private:
+
+    QMutex  mutex;
     qint64  time;
     bool    paused;
 };

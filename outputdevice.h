@@ -1,6 +1,7 @@
 #ifndef OUTPUTDEVICE_H
 #define OUTPUTDEVICE_H
 
+#include <QObject>
 #include <sys/ioctl.h>
 #include <sys/io.h>
 #include <fcntl.h>
@@ -22,7 +23,7 @@ public:
         PORT_PARALLEL
     };
 
-    void writeData(int trigSignal) const;
+    void writeData(int trigSignal);
     bool open(PortType port);
     void close();
     bool isEmpty() const;

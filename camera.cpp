@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "camera.h"
 
 Camera::Camera() : initialized(false)

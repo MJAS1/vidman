@@ -25,7 +25,7 @@ using namespace std;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDialog* parent)
     : QGLWidget(format, parent), frames(0), videoWidth(VIDEO_WIDTH),
-       glt(this, mutex, logFile)
+       glt(new GLThread(this, logFile))
 
 {
     setAutoBufferSwap(false);
@@ -42,36 +42,20 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDia
     connect(&fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
     fpsTimer.start(1000);
 
-
+    connect(glt, SIGNAL(finished()), glt, SLOT(deleteLater()));
+    glt->start();
 }
 
 
 GLVideoWidget::~GLVideoWidget()
 {
-    glt.stop();
+    glt->stop();
     free(imBuf);
 }
 
 
 void GLVideoWidget::initializeGL()
 {
-    mutex.lock();
-
-    GLuint  texture;
-
-    glEnable(GL_TEXTURE_2D);
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-    mutex.unlock();
-
-    glt.start();
-
 }
 
 void GLVideoWidget::paintGL()
@@ -89,7 +73,6 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     dispH = int(floor((_w / float(videoWidth)) * VIDEO_HEIGHT));
     dispW = int(floor((_h / float(VIDEO_HEIGHT)) * videoWidth));
 
-    mutex.lock();
     makeCurrent();
 
     if(dispH <= _h)
@@ -107,7 +90,6 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     }
 
     doneCurrent();
-    mutex.unlock();
 }
 
 
@@ -119,7 +101,7 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     doneCurrent();
 
-    glt.drawFrame(imBuf, chunkAttrib.trigCode, log);
+    glt->drawFrame(imBuf, chunkAttrib.trigCode, log);
     frames++;
 
 }
@@ -135,7 +117,8 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
 
-    glt.pause();
+    glt->pause();
+    usleep(5000);
 
     if(isFullScreen())
     {
@@ -147,6 +130,7 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
         setWindowFlags(Qt::Window);
         showFullScreen();
     }
+
 }
 
 void GLVideoWidget::setVideoWidth(int newVal)
@@ -158,7 +142,7 @@ void GLVideoWidget::setVideoWidth(int newVal)
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
     if(e->oldSize().width() > 100)
-        glt.pause();
+        glt->pause();
 
     resizeGL(e->size().width(), e->size().height());
 }
@@ -166,10 +150,10 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
 void GLVideoWidget::mousePressEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
-    glt.unpause();
+    glt->unpause();
 }
 
-bool GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)
+void GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)
 {
-    return glt.setOutputDevice(portType);
+    glt->setOutputDevice(portType);
 }

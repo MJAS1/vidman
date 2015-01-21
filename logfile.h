@@ -8,7 +8,7 @@
 class LogFile
 {
 public:
-    LogFile(const TimerWithPause& timer);
+    LogFile(TimerWithPause& timer);
     ~LogFile();
     void setActive(bool on);
     bool isActive() const;
@@ -23,7 +23,7 @@ private:
 
     bool active;
     QFile file;
-    const TimerWithPause& timer;
+    TimerWithPause& timer;
 };
 
 
