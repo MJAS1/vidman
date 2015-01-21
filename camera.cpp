@@ -14,13 +14,13 @@ Camera::~Camera()
     }
 }
 
-bool Camera::init()
+void Camera::init()
 {
     capCam.open(300);
     if(!capCam.isOpened())
     {
         std::cerr << "No cameras found" << std::endl;
-        return false;
+        return;
     }
 
     dc1394camera_list_t*	camList;
@@ -30,7 +30,7 @@ bool Camera::init()
     if(!dc1394Context)
     {
         std::cerr << "Cannot initialize!" << std::endl;
-        return false;
+        return;
     }
 
     err = dc1394_camera_enumerate(dc1394Context, &camList);
@@ -38,7 +38,7 @@ bool Camera::init()
     {
         std::cerr << "Failed to enumerate cameras" << std::endl;
         free(dc1394Context);
-        return false;
+        return;
     }
 
     dc1394camera = NULL;
@@ -47,7 +47,7 @@ bool Camera::init()
     {
         std::cerr << "No cameras found" << std::endl;
         free(dc1394Context);
-        return false;
+        return;
     }
 
     // use the first camera in the list
@@ -56,13 +56,13 @@ bool Camera::init()
     {
         std::cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << std::endl;
         free(dc1394Context);
-        return false;
+        return;
     }
     std::cout << "Using camera with GUID " << dc1394camera->guid << std::endl;
 
     dc1394_camera_free_list(camList);
 
-    return true;
+    initialized = true;
 }
 
 void Camera::setFPS(int fps)

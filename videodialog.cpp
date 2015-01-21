@@ -34,17 +34,23 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
     ui->verticalLayout->addWidget(glVideoWidget);
     ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
 
-    if(camera.init())
+    cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
+    cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
+    cameraThread = new CameraThread(cycVideoBufRaw);
+    videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
+    videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
+
+    if(cameraThread->getCamera().isInitialized())
     {
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(camera.getShutter() - SHUTTER_OFFSET);
+        ui->shutterSlider->setValue(cameraThread->getCamera().getShutter() - SHUTTER_OFFSET);
 
 
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(camera.getGain() - GAIN_OFFSET);
+        ui->gainSlider->setValue(cameraThread->getCamera().getGain() - GAIN_OFFSET);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
@@ -53,12 +59,6 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         ui->vrSlider->setMaximum(VR_MAX_VAL);
 
         // Set up video recording
-        cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-        cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-        cameraThread = new CameraThread(camera, cycVideoBufRaw);
-        videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
-        videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
-
         connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget, SLOT(onDrawFrame(unsigned char*, int)));
 
         // Start video running
@@ -89,13 +89,13 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
 
 VideoDialog::~VideoDialog()
 {
-    if(camera.isInitialized())
+    stopThreads();
+    delete cycVideoBufRaw;
+    delete cycVideoBufJpeg;
+    delete cameraThread;
+    if(cameraThread->getCamera().isInitialized())
     {
-        stopThreads();
-        usleep(25000);
-        delete cycVideoBufRaw;
-        delete cycVideoBufJpeg;
-        delete cameraThread;
+
         delete videoFileWriter;
         delete videoCompressorThread;
     }
@@ -213,23 +213,23 @@ void VideoDialog::unpause()
 }
 void VideoDialog::onShutterChanged(int newVal)
 {
-        camera.setShutter(newVal);
+        cameraThread->getCamera().setShutter(newVal);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
-        camera.setGain(newVal);
+        cameraThread->getCamera().setGain(newVal);
 }
 
 
 void VideoDialog::onUVChanged(int newVal)
 {
-        camera.setUV(newVal, ui->vrSlider->value());
+        cameraThread->getCamera().setUV(newVal, ui->vrSlider->value());
 }
 
 void VideoDialog::onVRChanged(int newVal)
 {
-        camera.setVR(newVal, ui->uvSlider->value());
+        cameraThread->getCamera().setVR(newVal, ui->uvSlider->value());
 }
 
 void VideoDialog::onWidthChanged(int newVal)
@@ -255,10 +255,10 @@ void VideoDialog::updateBackground()
 
 void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
-        glVideoWidget->setOutputDevice(portType);
+    glVideoWidget->setOutputDevice(portType);
 }
 
 void VideoDialog::onExternTrig(bool on)
 {
-    camera.setExternTrigger(on);
+    cameraThread->getCamera().setExternTrigger(on);
 }

@@ -69,8 +69,6 @@ private:
     Ui::VideoDialog *ui;
     MainWindow*     window;
 
-    Camera                  camera;
-
     CameraThread*       	cameraThread;
     CycDataBuffer*			cycVideoBufRaw;
     CycDataBuffer*			cycVideoBufJpeg;

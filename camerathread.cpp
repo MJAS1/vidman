@@ -17,9 +17,11 @@
 using namespace std;
 
 
-CameraThread::CameraThread(Camera& cam, CycDataBuffer* cycBuf) :
-    cam(cam), trigCode(0), cycBuf(cycBuf)
+CameraThread::CameraThread(CycDataBuffer* cycBuf) :
+    trigCode(0), cycBuf(cycBuf)
 {
+    cam.init();
+
     shouldStop = false;
     detectMotionEvent = NULL;
 
@@ -245,4 +247,9 @@ void CameraThread::updateBackground()
     motionDetector.updateBackground(mat);
 
     mutex.unlock();
+}
+
+Camera& CameraThread::getCamera()
+{
+    return cam;
 }

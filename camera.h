@@ -12,7 +12,7 @@ public:
     Camera();
     ~Camera();
 
-    bool init();
+    void init();
     void setFPS(int fps);
     bool isInitialized() const;
 

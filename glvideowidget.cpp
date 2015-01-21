@@ -42,7 +42,6 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDia
     connect(&fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
     fpsTimer.start(1000);
 
-    connect(glt, SIGNAL(finished()), glt, SLOT(deleteLater()));
     glt->start();
 }
 
@@ -50,6 +49,7 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDia
 GLVideoWidget::~GLVideoWidget()
 {
     glt->stop();
+    delete glt;
     free(imBuf);
 }
 
