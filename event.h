@@ -1,11 +1,10 @@
 #ifndef EVENT_H
 #define EVENT_H
 
+#include <QString>
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
-#include <QTimer>
 #include <common.h>
-#include "timerwithpause.h"
 
 /*!
 Event objects are used to specify the starting time, duration, effects etc.
@@ -31,8 +30,8 @@ public:
         EVENT_DETECT_MOTION
     };
 
-                explicit Event(Event::EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
-                virtual ~Event();
+    explicit Event(Event::EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
+    virtual ~Event();
 
     int         getStart() const;
     int         getDelay() const;
@@ -48,18 +47,20 @@ public:
     virtual void unpause();
 
 protected:
-    EventType   type;
+    EventType   type_;
 
-    int         start, delay, duration;
-    int         id;
-    int         trigCode;
+    int         start_, delay_, duration_;
+    int         id_;
+    int         trigCode_;
 
-    QString     log;
+    QString     log_;
 
 private:
-    Event(const Event& other);
-    Event& operator=(const Event& other);
+    Event(const Event&);
+    Event& operator=(const Event&);
 };
+
+
 
 //This class is used to specify what event should be removed
 class RemoveEvent : public Event
@@ -75,8 +76,8 @@ public:
     int getRemoveId() const;
 
 private:
-    int         removeId;
-    EventType   removeType;
+    int         removeId_;
+    EventType   removeType_;
 
 };
 

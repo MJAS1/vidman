@@ -6,28 +6,28 @@ MotionDetector::MotionDetector()
 
 void MotionDetector::updateBackground(const cv::Mat &frame)
 {
-    back = frame.clone();
+    back_ = frame.clone();
 }
 
 void MotionDetector::updateFrame(const cv::Mat &frame)
 {
-    cv::absdiff(frame, back, fore);
-    cv::cvtColor(fore, fore, CV_BGR2GRAY);
-    cv::threshold(fore, fore, 100, 0xff, CV_THRESH_BINARY);
-    cv::erode(fore,fore,cv::Mat());
-    cv::dilate(fore,fore,cv::Mat());
+    cv::absdiff(frame, back_, fore_);
+    cv::cvtColor(fore_, fore_, CV_BGR2GRAY);
+    cv::threshold(fore_, fore_, 100, 0xff, CV_THRESH_BINARY);
+    cv::erode(fore_,fore_,cv::Mat());
+    cv::dilate(fore_,fore_,cv::Mat());
 }
 
 void MotionDetector::startTracking()
 {
-    centroid = getCentroid(fore);
+    centroid_ = getCentroid(fore_);
 }
 
 bool MotionDetector::movementDetected() const
 {
     //Calculate the distance between the centroids of the current frame and the frame when tracking started
     //If distance is big enough, interpret it as movement
-    double norm = cv::norm(centroid-getCentroid(fore));
+    double norm = cv::norm(centroid_-getCentroid(fore_));
     if(norm > 15)
     {
         return true;

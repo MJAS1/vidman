@@ -26,6 +26,9 @@ public:
     void    append(T event);
     void    prepend(T event);
     bool    empty();
+    void    applyEvents(cv::Mat& frame) const;
+    void    pauseEvents();
+    void    unpauseEvents();
 
     Iterator      begin();
     Iterator      end();
@@ -36,14 +39,13 @@ public:
 
     T operator [](int id) const;
 
-
-
 private:
+    EventContainer(const EventContainer&);
+    EventContainer& operator=(const EventContainer&);
 
-    QList<T> events;
+    QList<T> events_;
 
-    EventContainer(const EventContainer& other);
-    EventContainer& operator=(const EventContainer& other);
+
 };
 
 

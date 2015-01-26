@@ -14,7 +14,6 @@
 #include <QString>
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
-#include "event.h"
 #include "eventcontainer.h"
 #include "settings.h"
 #include "motiondetector.h"
@@ -29,13 +28,11 @@ public:
 	virtual ~CameraThread();
 
     void clearEvents();
-
     void pause();
     void unpause();
-
     void updateBackground();
 
-    Camera& getCamera();
+    Camera& camera();
 
 public slots:
     void addVideoEvent(VideoEvent *ev);
@@ -49,22 +46,21 @@ private:
     CameraThread(const CameraThread&);
     CameraThread& operator=(const CameraThread&);
 
-    Camera                                   cam;
-    cv::Mat                                  frame;
+    CycDataBuffer*                      cycBuf_;
+    Camera                              cam_;
+    cv::Mat                             frame_;
 
-    QMutex                                   mutex;
-    QString                                  log;
+    QMutex                              mutex_;
+    QString                             log_;
 
-    int                                      trigCode;
-    bool                                     isDetectingMotion;
-    Event*                                   detectMotionEvent;
+    int                                 trigCode_;
+    bool                                isDetectingMotion_;
+    bool                                shouldUpdateBg;
 
-    CycDataBuffer*                           cycBuf;
-    EventContainer<VideoEvent*>              events, preEvents;
-    Settings                                 settings;
-    MotionDetector                           motionDetector;
-
-    void                                     applyEvents(const EventContainer<VideoEvent*>& events);
+    Event*                              detectMotionEvent_;
+    EventContainer<VideoEvent*>         events_, preEvents_;
+    Settings                            settings_;
+    MotionDetector                      motionDetector_;
 };
 
 #endif /* CAMERATHREAD_H_ */

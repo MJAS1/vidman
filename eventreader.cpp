@@ -130,7 +130,7 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
                 if((imageId = toInt(split[1], lineNumber, QString("image ID"))) == -1)
                     return false;
 
-                if(!imageContainer.contains(imageId))
+                if(!imageContainer_.contains(imageId))
                 {
                     errorMsg(QString("Couldn't find image object with id %1 in line %2").arg(imageId).arg(lineNumber));
                     return false;
@@ -207,7 +207,7 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
         case Event::EVENT_IMAGE:
             if(imageIdOk)
             {
-                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer[imageId], delay, eventId, trigCode);
+                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer_[imageId], delay, eventId, trigCode);
                 ev->appendLog(QString("Image event added. "));
             }
             else
@@ -279,7 +279,7 @@ bool EventReader::readImageObject(const QString &str, int lineNumber)
         }
     }
 
-    if(!imageContainer.addImage(id, filename))
+    if(!imageContainer_.addImage(id, filename))
     {
         errorMsg(QString("Couldn't load image file '%1'.").arg(filename));
         return false;

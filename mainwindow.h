@@ -78,13 +78,13 @@ private:
     void                pause();
     void                unpause();
 
-    Highlighter*        highlighter;
-    State               programState;
+    Highlighter*        highlighter_;
+    State               programState_;
 
-    VideoDialog*        videoDialog;
-    TimerWithPause      runningTime;
-    QTimer              timeTmr;
-    QString             fileName;
+    VideoDialog*        videoDialog_;
+    TimerWithPause      runningTime_;
+    QTimer              timeTmr_;
+    QString             fileName_;
 };
 
 #endif // MAINWINDOW_H

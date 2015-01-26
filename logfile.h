@@ -3,13 +3,16 @@
 
 #include <iostream>
 #include <QFile>
+#include <QMutex>
 #include "timerwithpause.h"
 
 class LogFile
 {
 public:
-    LogFile(TimerWithPause& timer);
+
+    LogFile(const TimerWithPause& timer);
     ~LogFile();
+
     void setActive(bool on);
     bool isActive() const;
     bool open();
@@ -17,13 +20,16 @@ public:
     void write(const QString& log);
 
     void operator<<(const QString& log);
+
 private:
     LogFile(const LogFile&);
     LogFile& operator=(const LogFile&);
 
-    bool active;
-    QFile file;
-    TimerWithPause& timer;
+    bool active_;
+
+    QFile file_;
+    mutable QMutex mutex_;
+    const TimerWithPause& timer_;
 };
 
 

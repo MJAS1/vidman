@@ -3,6 +3,8 @@
 
 #include <QSyntaxHighlighter>
 
+//Code from Qt examples
+
 class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT

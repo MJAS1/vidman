@@ -30,10 +30,10 @@ public:
     void setFd(int);
 
 private:
-    int fd;
+    int fd_;
 
-    Settings settings;
-    PortType portType;
+    Settings settings_;
+    PortType portType_;
 
 };
 

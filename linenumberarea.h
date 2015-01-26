@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "textedit.h"
 
+//Code from Qt Examples
 class LineNumberArea : public QWidget
 {
     Q_OBJECT

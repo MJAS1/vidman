@@ -33,7 +33,7 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
-    explicit VideoDialog(MainWindow *window, QWidget *parent = 0);
+    explicit VideoDialog(MainWindow *window);
     ~VideoDialog();
 
     bool start(const QString& eventStr);
@@ -44,8 +44,9 @@ public:
     void setFPS(int fps);
     void updateBackground();
 
-public slots:
+    LogFile& logFile();
 
+public slots:
     void setOutputDevice(OutputDevice::PortType portType);
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
@@ -66,28 +67,28 @@ private:
 
     void closeEvent(QCloseEvent *);
 
-    Ui::VideoDialog *ui;
-    MainWindow*     window;
+    int                     eventDuration_;
 
-    CameraThread*       	cameraThread;
-    CycDataBuffer*			cycVideoBufRaw;
-    CycDataBuffer*			cycVideoBufJpeg;
-    VideoFileWriter*		videoFileWriter;
-    VideoCompressorThread*	videoCompressorThread;
+    Ui::VideoDialog         *ui;
+    MainWindow*             window_;
 
-    bool        videoAvailable;
-    int         eventDuration;
+    Settings                settings_;
+    LogFile                 logFile_;
 
-    EventContainer<Event*> events;
-    GLVideoWidget*  glVideoWidget;
+    CycDataBuffer*          cycVideoBufRaw_;
+    CycDataBuffer*          cycVideoBufJpeg_;
+    CameraThread*           cameraThread_;
+    VideoFileWriter*        videoFileWriter_;
+    VideoCompressorThread*  videoCompressorThread_;
 
-    QTimer eventTmr;
-    QElapsedTimer elapsedTimer;
+    EventContainer<Event*>  events_;
+    GLVideoWidget*          glVideoWidget_;
 
-    qint64 time;
+    QTimer                  eventTmr_;
+    QElapsedTimer           elapsedTimer_;
+    qint64                  time_;
 
-    Settings settings;
-    LogFile	logFile;
+    Camera&                 camera_;
 };
 
 #endif // VIDEODIALOG_H

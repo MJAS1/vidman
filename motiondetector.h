@@ -26,8 +26,8 @@ private:
 
     cv::Point getCentroid(const cv::Mat &frame) const;
 
-    cv::Mat   back, fore;
-    cv::Point centroid;
+    cv::Mat   back_, fore_;
+    cv::Point centroid_;
 
 };
 

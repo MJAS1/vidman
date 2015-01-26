@@ -15,33 +15,33 @@ EventContainer<T>::~EventContainer()
 template <typename T>
 void EventContainer<T>::clear()
 {
-    if(!this->empty())
+    if(!empty())
     {
-        for(Iterator iter = events.begin(); iter != events.end(); iter++)
+        for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
             delete *iter;
 
-        events.clear();
+        events_.clear();
     }
 }
 
 template <typename T>
 Event* EventContainer<T>::pop_front()
 {
-    Event *ev = *events.begin();
-    events.erase(events.begin());
+    Event *ev = *events_.begin();
+    events_.erase(events_.begin());
     return ev;
 }
 
 template <typename T>
 void EventContainer<T>::removeId(int id)
 {
-    Iterator iter = events.begin();
-    while(iter != events.end())
+    Iterator iter = events_.begin();
+    while(iter != events_.end())
     {
         if((*iter)->getId() == id)
         {
             delete (*iter);
-            iter = events.erase(iter);
+            iter = events_.erase(iter);
             continue;
         }
         iter++;
@@ -51,13 +51,13 @@ void EventContainer<T>::removeId(int id)
 template <typename T>
 void EventContainer<T>::removeType(Event::EventType type)
 {
-    Iterator iter = events.begin();
-    while(iter != events.end())
+    Iterator iter = events_.begin();
+    while(iter != events_.end())
     {
         if((*iter)->getType() == type)
         {
             delete (*iter);
-            iter = events.erase(iter);
+            iter = events_.erase(iter);
             continue;
         }
         iter++;
@@ -67,49 +67,70 @@ void EventContainer<T>::removeType(Event::EventType type)
 template <typename T>
 bool EventContainer<T>::empty()
 {
-    return events.empty();
+    return events_.empty();
 }
 
 template <typename T>
 T EventContainer<T>::operator [](int id) const
 {
-    return events[id];
+    return events_[id];
 }
 
 template <typename T>
 void EventContainer<T>::append(T event)
 {
-    events.append(event);
+    events_.append(event);
 }
 
 template <typename T>
 void EventContainer<T>::prepend(T event)
 {
-    events.prepend(event);
+    events_.prepend(event);
 }
 
 template <typename T>
 typename EventContainer<T>::Iterator EventContainer<T>::begin()
 {
-    return events.begin();
+    return events_.begin();
 }
 
 template <typename T>
 typename EventContainer<T>::Iterator EventContainer<T>::end()
 {
-    return events.end();
+    return events_.end();
 }
 
 template <typename T>
 typename EventContainer<T>::ConstIterator EventContainer<T>::begin() const
 {
-    return events.begin();
+    return events_.begin();
 }
 
 template <typename T>
 typename EventContainer<T>::ConstIterator EventContainer<T>::end() const
 {
-    return events.end();
+    return events_.end();
+}
+
+template <>
+void EventContainer<VideoEvent*>::applyEvents(cv::Mat &frame) const
+{
+    for(ConstIterator iter = events_.begin(); iter != events_.end(); iter++)
+        (*iter)->apply(frame);
+}
+
+template <>
+void EventContainer<VideoEvent*>::pauseEvents()
+{
+    for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
+        (*iter)->pause();
+}
+
+template <>
+void EventContainer<VideoEvent*>::unpauseEvents()
+{
+    for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
+        (*iter)->unpause();
 }
 
 template class EventContainer<Event*>;

@@ -21,90 +21,90 @@ void FlipEvent::apply(cv::Mat &frame)
 }
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEIN, start, delay, duration, id, trigCode), amount(-255), stopped(false)
+    VideoEvent(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255), stopped_(false)
 {
-    timerWithPause.invalidate();
+    timerWithPause_.invalidate();
 }
 
 void FadeInEvent::apply(cv::Mat &frame)
 {
-    if(!stopped)
+    if(!stopped_)
     {
-        if(!timerWithPause.isValid())
+        if(!timerWithPause_.isValid())
         {
-            timerWithPause.start();
-            interval = duration/255;
+            timerWithPause_.start();
+            interval_ = duration_/255;
         }
-        int msecsElapsed = timerWithPause.nsecsElapsed()/1000000;
-        amount = -255 + msecsElapsed/interval;
-        if(amount >= 0)
+        int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
+        amount_ = -255 + msecsElapsed/interval_;
+        if(amount_ >= 0)
         {
-            amount = 0;
-            stopped = true;
+            amount_ = 0;
+            stopped_ = true;
         }
     }
-    frame += cv::Scalar(amount, amount, amount);
+    frame += cv::Scalar(amount_, amount_, amount_);
 }
 
 void FadeInEvent::pause()
 {
-    stopped = true;
-    timerWithPause.pause();
+    stopped_ = true;
+    timerWithPause_.pause();
 }
 
 void FadeInEvent::unpause()
 {
-    stopped = false;
-    timerWithPause.resume();
+    stopped_ = false;
+    timerWithPause_.resume();
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount(0), stopped(false)
+    VideoEvent(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0), stopped_(false)
 {
-    timerWithPause.invalidate();
+    timerWithPause_.invalidate();
 }
 
 void FadeOutEvent::apply(cv::Mat &frame)
 {
-    if(!stopped)
+    if(!stopped_)
     {
-        if(!timerWithPause.isValid())
+        if(!timerWithPause_.isValid())
         {
-            timerWithPause.start();
-            interval = duration/255;
+            timerWithPause_.start();
+            interval_ = duration_/255;
         }
-        int msecsElapsed = timerWithPause.nsecsElapsed()/1000000;
-        amount = -msecsElapsed/interval;
-        if(amount <= -255)
+        int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
+        amount_ = -msecsElapsed/interval_;
+        if(amount_ <= -255)
         {
-            amount = -255;
-            stopped = true;
+            amount_ = -255;
+            stopped_ = true;
         }
     }
-    frame += cv::Scalar(amount, amount, amount);
+    frame += cv::Scalar(amount_, amount_, amount_);
 }
 
 void FadeOutEvent::pause()
 {
-    stopped = true;
-    timerWithPause.pause();
+    stopped_ = true;
+    timerWithPause_.pause();
 }
 
 void FadeOutEvent::unpause()
 {
-    stopped = false;
-    timerWithPause.resume();
+    stopped_ = false;
+    timerWithPause_.resume();
 }
 
 ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_IMAGE, start, delay, 0, id, trigCode), image(image), pos(pos)
+    VideoEvent(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
 {
 }
 
 void ImageEvent::apply(cv::Mat &frame)
 {
-    if(!frame.empty() && !image.empty())
-        overlayImage(frame, image, frame, pos);
+    if(!frame.empty() && !image_.empty())
+        overlayImage(frame, image_, frame, pos_);
 }
 
 //Code from Jepson's Blog http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
@@ -156,38 +156,38 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
 }
 
 TextEvent::TextEvent(int start, const QString& str, cv::Scalar color, const cv::Point2i& pos, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color(color), pos(pos), str(str)
+    VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color), pos_(pos), str_(str)
 {
 }
 
 void TextEvent::apply(cv::Mat &frame)
 {
-    cv::putText(frame, str.toStdString(), pos, cv::FONT_HERSHEY_DUPLEX, 1, color, 2);
+    cv::putText(frame, str_.toStdString(), pos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
 }
 
 RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
-    : VideoEvent(EVENT_ROTATE, start, delay, 0, id, trigCode), angle(angle)
+    : VideoEvent(EVENT_ROTATE, start, delay, 0, id, trigCode), angle_(angle)
 {
 }
 
 void RotateEvent::apply(cv::Mat &frame)
 {
     cv::Point2f center(frame.cols/2., frame.rows/2.);
-    cv::Mat rotMat = getRotationMatrix2D(center, angle, 1.0);
+    cv::Mat rotMat = getRotationMatrix2D(center, angle_, 1.0);
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
 FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
-                    : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode), started(false)
+        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode), started_(false)
 {
 }
 
 void FreezeEvent::apply(cv::Mat &frame)
 {
-    if(!started)
+    if(!started_)
     {
-        frame.copyTo(freezedFrame);
-        started = true;
+        frame.copyTo(freezedFrame_);
+        started_ = true;
     }
-    freezedFrame.copyTo(frame);
+    freezedFrame_.copyTo(frame);
 }

@@ -16,13 +16,13 @@ public:
     void resume();
     void restart();
 
-    qint64 nsecsElapsed();
+    qint64 nsecsElapsed() const;
 
 private:
 
-    QMutex  mutex;
-    qint64  time;
-    bool    paused;
+    mutable QMutex  mutex_;
+    qint64  time_;
+    bool    paused_;
 };
 
 #endif // TIMER_H

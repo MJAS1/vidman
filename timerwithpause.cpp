@@ -2,35 +2,35 @@
 #include "timerwithpause.h"
 
 TimerWithPause::TimerWithPause() :
-    QElapsedTimer(), time(0), paused(false)
+    QElapsedTimer(), time_(0), paused_(false)
 {
 }
 
 void TimerWithPause::pause()
 {
-    time = nsecsElapsed();
-    paused = true;
+    time_ = nsecsElapsed();
+    paused_ = true;
 }
 
 void TimerWithPause::resume()
 {
     QElapsedTimer::restart();
-    paused = false;
+    paused_ = false;
 }
 
-qint64 TimerWithPause::nsecsElapsed()
+qint64 TimerWithPause::nsecsElapsed() const
 {
     //Multiple threads might request time
-    QMutexLocker locker(&mutex);
-    if(paused)
-        return time;
+    QMutexLocker locker(&mutex_);
+    if(paused_)
+        return time_;
     else
-        return (QElapsedTimer::nsecsElapsed() + time);
+        return (QElapsedTimer::nsecsElapsed() + time_);
 }
 
 void TimerWithPause::restart()
 {
-    time = 0;
-    paused = false;
+    time_ = 0;
+    paused_ = false;
     QElapsedTimer::restart();
 }

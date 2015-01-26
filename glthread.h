@@ -15,7 +15,7 @@ class GLVideoWidget;
 class GLThread : public StoppableThread
 {
 public:
-    explicit GLThread(GLVideoWidget *parentGLW, LogFile& logfile);
+    explicit GLThread(GLVideoWidget *parent);
 
     void drawFrame(unsigned char* imBuf, int trigCode, const QString& log);
 
@@ -30,27 +30,27 @@ public:
     void setOutputDevice(OutputDevice::PortType portType);
 
 private:
-    void stoppableRun();
+    void                stoppableRun();
 
-    bool shouldSwap;
-    bool shouldChangePort;
-    bool isPaused;
+    bool                shouldSwap_;
+    bool                shouldChangePort_;
+    bool                isPaused_;
 
-    GLVideoWidget*		glw;
+    GLVideoWidget*	    glw_;
 
-    QMutex              mutex;
-    LogFile& 			logFile;
-    unsigned char* 		imBuf;
+    QMutex               mutex_;
+    LogFile& 			logFile_;
+    unsigned char* 		imBuf_;
 
-    QString 			log;
-    OutputDevice 		trigPort;
-    OutputDevice::PortType newPort;
+    QString 			    log_;
+    OutputDevice 		trigPort_;
+    OutputDevice::PortType newPort_;
 
-    int trigCode;
+    int trigCode_;
 
-    QGLShaderProgram 	shaderProgram;
-    QVector<QVector2D> 	vertices;
-    QVector<QVector2D> 	textureCoordinates;
+    QGLShaderProgram 	shaderProgram_;
+    QVector<QVector2D> 	vertices_;
+    QVector<QVector2D> 	textureCoordinates_;
 
 };
 

@@ -2,6 +2,7 @@
 #define VIDEOEVENT_H
 
 #include "event.h"
+#include "timerwithpause.h"
 
 /*!
 VideoEvents are used to process a video frame. VideoEvent is an abstract base class
@@ -40,9 +41,9 @@ public:
 
 
 private:
-    TimerWithPause  timerWithPause;
-    int             amount, interval;
-    bool            stopped;
+    TimerWithPause  timerWithPause_;
+    int             amount_, interval_;
+    bool            stopped_;
 };
 
 class FadeOutEvent: public VideoEvent
@@ -55,9 +56,9 @@ public:
     void unpause();
 
 private:
-    TimerWithPause  timerWithPause;
-    int     amount, interval;
-    bool    stopped;
+    TimerWithPause  timerWithPause_;
+    int     amount_, interval_;
+    bool    stopped_;
 };
 
 class ImageEvent : public VideoEvent
@@ -72,8 +73,8 @@ private:
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
                                 cv::Mat &output, const cv::Point2i& location);
 
-    cv::Mat     image;
-    cv::Point2i pos;
+    cv::Mat     image_;
+    cv::Point2i pos_;
 };
 
 
@@ -86,9 +87,9 @@ public:
     virtual void apply(cv::Mat &frame);
 
 private:
-    cv::Scalar  color;
-    cv::Point2i pos;
-    QString     str;
+    cv::Scalar  color_;
+    cv::Point2i pos_;
+    QString     str_;
 };
 
 
@@ -100,7 +101,7 @@ public:
     virtual void apply(cv::Mat &frame);
 
 private:
-    int angle;
+    int angle_;
 };
 
 
@@ -112,9 +113,9 @@ public:
     virtual void apply(cv::Mat &frame);
 
 private:
-    bool    started;
+    bool    started_;
 
-    cv::Mat freezedFrame;
+    cv::Mat freezedFrame_;
 };
 
 

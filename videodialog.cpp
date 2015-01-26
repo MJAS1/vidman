@@ -19,38 +19,38 @@
 #include "config.h"
 #include "videoevent.h"
 
-VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
-    QDialog(parent), ui(new Ui::VideoDialog), window(window), logFile(window->getTimer())
+VideoDialog::VideoDialog(MainWindow *window) :
+    QDialog(window), ui(new Ui::VideoDialog), window_(window), logFile_(window->getTimer()),
+    cycVideoBufRaw_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ)),
+    cycVideoBufJpeg_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ)),
+    cameraThread_(new CameraThread(cycVideoBufRaw_)),
+    videoFileWriter_(new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath)),
+    videoCompressorThread_(new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality)),
+    camera_(cameraThread_->camera())
 {
     ui->setupUi(this);
-
-    int swapInterval = settings.vsync;
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
-    format.setSwapInterval(swapInterval);
-    glVideoWidget = new GLVideoWidget(format, logFile, this);
-    ui->verticalLayout->addWidget(glVideoWidget);
-    ui->verticalLayout->setStretchFactor(glVideoWidget, 10);
+    format.setSwapInterval(settings_.vsync);
+    glVideoWidget_ = new GLVideoWidget(format, this);
+    ui->verticalLayout->addWidget(glVideoWidget_);
+    ui->verticalLayout->setStretchFactor(glVideoWidget_, 10);
 
-    cycVideoBufRaw = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-    cycVideoBufJpeg = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ);
-    cameraThread = new CameraThread(cycVideoBufRaw);
-    videoFileWriter = new VideoFileWriter(cycVideoBufJpeg, settings.storagePath);
-    videoCompressorThread = new VideoCompressorThread(cycVideoBufRaw, cycVideoBufJpeg, settings.jpgQuality);
+    // Set up video recording
+    connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
 
-    if(cameraThread->getCamera().isInitialized())
+    if(camera_.isInitialized())
     {
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(cameraThread->getCamera().getShutter() - SHUTTER_OFFSET);
-
+        ui->shutterSlider->setValue(camera_.getShutter() - SHUTTER_OFFSET);
 
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(cameraThread->getCamera().getGain() - GAIN_OFFSET);
+        ui->gainSlider->setValue(camera_.getGain() - GAIN_OFFSET);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
@@ -58,21 +58,18 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         ui->vrSlider->setMinimum(VR_MIN_VAL);
         ui->vrSlider->setMaximum(VR_MAX_VAL);
 
-        // Set up video recording
-        connect(cycVideoBufRaw, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget, SLOT(onDrawFrame(unsigned char*, int)));
-
         // Start video running
-        videoFileWriter->start();
-        videoCompressorThread->start();
-        cameraThread->start();
+        videoFileWriter_->start();
+        videoCompressorThread_->start();
+        cameraThread_->start();
 
-        eventTmr.setSingleShot(true);
-        connect(&eventTmr, SIGNAL(timeout()), this, SLOT(getNextEvent()));
-
+        //Setup event handling
+        eventTmr_.setSingleShot(true);
+        connect(&eventTmr_, SIGNAL(timeout()), this, SLOT(getNextEvent()));
     }
     else
     {
-        videoAvailable = false;
+        //If camera initializaton didn't work, disable all functionality
         ui->shutterSlider->setEnabled(false);
         ui->gainSlider->setEnabled(false);
         ui->uvSlider->setEnabled(false);
@@ -83,24 +80,17 @@ VideoDialog::VideoDialog(MainWindow *window, QWidget *parent) :
         window->toggleStart(false);
         window->toggleRec(false);
     }
-
-
 }
 
 VideoDialog::~VideoDialog()
 {
     stopThreads();
-    delete cycVideoBufRaw;
-    delete cycVideoBufJpeg;
-    delete cameraThread;
-    if(cameraThread->getCamera().isInitialized())
-    {
-
-        delete videoFileWriter;
-        delete videoCompressorThread;
-    }
-
-    delete glVideoWidget;
+    delete cycVideoBufRaw_;
+    delete cycVideoBufJpeg_;
+    delete cameraThread_;
+    delete videoFileWriter_;
+    delete videoCompressorThread_;
+    delete glVideoWidget_;
     delete ui;
 }
 
@@ -109,137 +99,135 @@ void VideoDialog::stopThreads()
     // The piece of code stopping the threads should execute fast enough,
     // otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
     // order of stopping the threads is important.
-    videoFileWriter->stop();
-    videoCompressorThread->stop();
-    cameraThread->stop();
+    videoFileWriter_->stop();
+    videoCompressorThread_->stop();
+    cameraThread_->stop();
 }
 
 void VideoDialog::setKeepLog(bool arg)
 {
-    logFile.setActive(arg);
+    logFile_.setActive(arg);
 }
 
 void VideoDialog::toggleRecord(bool arg)
 {
-    cycVideoBufJpeg->setIsRec(arg);
+    cycVideoBufJpeg_->setIsRec(arg);
 }
 
 void VideoDialog::getNextEvent()
 {
-    Event *event = events.pop_front();
+    //Get next event and pass it to cameraThread
+    Event *event = events_.pop_front();
 
     switch(event->getType())
     {
-
         case Event::EVENT_DETECT_MOTION:
-            cameraThread->detectMotion(event);
+            cameraThread_->detectMotion(event);
             break;
 
         case Event::EVENT_REMOVE:
-            cameraThread->removeEvent(static_cast<RemoveEvent*>(event));
+            cameraThread_->removeEvent(static_cast<RemoveEvent*>(event));
             break;
 
         default:
-            cameraThread->addVideoEvent(static_cast<VideoEvent*>(event));
+            cameraThread_->addVideoEvent(static_cast<VideoEvent*>(event));
             break;
     }
 
-    if(!events.empty())
+    if(!events_.empty())
     {
-        Event *nextEvent = events[0];
-        eventDuration = (nextEvent->getStart()+event->getDuration()+event->getDelay());
-        eventTmr.start(eventDuration);
-        time=elapsedTimer.nsecsElapsed()/1000000;
+        Event *nextEvent = events_[0];
+        eventDuration_ = (nextEvent->getStart()+event->getDuration()+event->getDelay());
+        eventTmr_.start(eventDuration_);
+        time_ = elapsedTimer_.nsecsElapsed()/1000000;
     }
 }
 
 bool VideoDialog::start(const QString& eventStr)
 {
-    if(logFile.isActive())
+    if(logFile_.isActive() && !logFile_.open())
     {
-        if(!logFile.open())
-        {
-            QMessageBox msgBox;
-            msgBox.setText(QString("Error creating log file."));
-            msgBox.exec();
-            return false;
-        }
+        QMessageBox msgBox;
+        msgBox.setText(QString("Error creating log file."));
+        msgBox.exec();
+        return false;
     }
 
+    //Create a StringList from the texteditor.
     QStringList strList = eventStr.split("\n");
     strList.append("");
 
+    //Read, create and store all the events from strList
     EventReader eventReader;
-    if(eventReader.loadEvents(strList, events))
+    if(eventReader.loadEvents(strList, events_))
     {
-        if(!events.empty())
+        if(!events_.empty())
         {
-            eventTmr.start(events[0]->getStart());
-            time=0;
+            eventTmr_.start(events_[0]->getStart());
+            time_ = 0;
         }
-        elapsedTimer.restart();
+        elapsedTimer_.restart();
 
         return true;
     }
-
     else
         return false;
 }
 
 void VideoDialog::stop()
 {
-    cameraThread->clearEvents();
-    eventTmr.stop();
-    events.clear();
-    logFile.close();
+    cameraThread_->clearEvents();
+    eventTmr_.stop();
+    events_.clear();
+    logFile_.close();
 }
 
 void VideoDialog::pause()
 {
-    eventTmr.stop();
-    cameraThread->pause();
-    time = elapsedTimer.nsecsElapsed()/1000000-time;
+    eventTmr_.stop();
+    cameraThread_->pause();
+    time_ = elapsedTimer_.nsecsElapsed()/1000000-time_;
 }
 
 void VideoDialog::unpause()
 {
-    cameraThread->unpause();
-    if(!events.empty())
+    cameraThread_->unpause();
+    if(!events_.empty())
     {
-        eventDuration = eventDuration - time;
-        eventTmr.start(eventDuration);
+        eventDuration_ = eventDuration_ - time_;
+        eventTmr_.start(eventDuration_);
     }
-    time = elapsedTimer.nsecsElapsed()/1000000;
+    time_ = elapsedTimer_.nsecsElapsed()/1000000;
 }
 void VideoDialog::onShutterChanged(int newVal)
 {
-        cameraThread->getCamera().setShutter(newVal);
+    camera_.setShutter(newVal);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
-        cameraThread->getCamera().setGain(newVal);
+    camera_.setGain(newVal);
 }
 
 
 void VideoDialog::onUVChanged(int newVal)
 {
-        cameraThread->getCamera().setUV(newVal, ui->vrSlider->value());
+    camera_.setUV(newVal, ui->vrSlider->value());
 }
 
 void VideoDialog::onVRChanged(int newVal)
 {
-        cameraThread->getCamera().setVR(newVal, ui->uvSlider->value());
+    camera_.setVR(newVal, ui->uvSlider->value());
 }
 
 void VideoDialog::onWidthChanged(int newVal)
 {
-    glVideoWidget->setVideoWidth(newVal);
+    glVideoWidget_->setVideoWidth(newVal);
 }
 
 void VideoDialog::closeEvent(QCloseEvent *)
 {
-    window->toggleVideoDialogChecked(false);
+    window_->toggleVideoDialogChecked(false);
 }
 
 void VideoDialog::setFPS(int fps)
@@ -247,18 +235,22 @@ void VideoDialog::setFPS(int fps)
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
 
-
 void VideoDialog::updateBackground()
 {
-    cameraThread->updateBackground();
+    cameraThread_->updateBackground();
 }
 
 void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 {
-    glVideoWidget->setOutputDevice(portType);
+    glVideoWidget_->setOutputDevice(portType);
 }
 
 void VideoDialog::onExternTrig(bool on)
 {
-    cameraThread->getCamera().setExternTrigger(on);
+    camera_.setExternTrigger(on);
+}
+
+LogFile& VideoDialog::logFile()
+{
+    return logFile_;
 }

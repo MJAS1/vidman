@@ -23,34 +23,24 @@
 using namespace std;
 
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, LogFile& logFile, VideoDialog* parent)
-    : QGLWidget(format, parent), frames(0), videoWidth(VIDEO_WIDTH),
-       glt(new GLThread(this, logFile))
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
+    : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
+       videoDialog_(parent), glt_(new GLThread(this))
 
 {
     setAutoBufferSwap(false);
 
-    // Allocate memory. Since we do not know whether the image is going to BW
-    // or color, allocate for color since it requires more memory.
-    imBuf = (char*)malloc(VIDEO_HEIGHT*VIDEO_WIDTH*3);
-    if (!imBuf)
-    {
-        cerr << "Error allocating memory" << endl;
-        exit(EXIT_FAILURE);
-    }
+    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(setFPS()));
+    fpsTimer_.start(1000);
 
-    connect(&fpsTimer, SIGNAL(timeout()), this, SLOT(countFPS()));
-    fpsTimer.start(1000);
-
-    glt->start();
+    glt_->start();
 }
 
 
 GLVideoWidget::~GLVideoWidget()
 {
-    glt->stop();
-    delete glt;
-    free(imBuf);
+    glt_->stop();
+    delete glt_;
 }
 
 
@@ -62,7 +52,7 @@ void GLVideoWidget::paintGL()
 {
 }
 
-void GLVideoWidget::resizeGL(int _w, int _h)
+void GLVideoWidget::resizeGL(int w, int h)
 {
     int dispW;
     int dispH;
@@ -70,18 +60,18 @@ void GLVideoWidget::resizeGL(int _w, int _h)
     // Change the viewport to preserve the aspect ratio.
     // Compute new height corresponding to the current width and new width
     // corresponding to the current heigh and see which one fits.
-    dispH = int(floor((_w / float(videoWidth)) * VIDEO_HEIGHT));
-    dispW = int(floor((_h / float(VIDEO_HEIGHT)) * videoWidth));
+    dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
+    dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
 
     makeCurrent();
 
-    if(dispH <= _h)
+    if(dispH <= h)
     {
-        glViewport(0, (_h - dispH) / 2, _w, dispH);
+        glViewport(0, (h - dispH) / 2, w, dispH);
     }
-    else if(dispW <= _w)
+    else if(dispW <= w)
     {
-        glViewport((_w - dispW) / 2, 0, dispW, _h);
+        glViewport((w - dispW) / 2, 0, dispW, h);
     }
     else
     {
@@ -101,24 +91,23 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
     doneCurrent();
 
-    glt->drawFrame(imBuf, chunkAttrib.trigCode, log);
-    frames++;
+    glt_->drawFrame(imBuf, chunkAttrib.trigCode, log);
+    frames_++;
 
 }
 
-void GLVideoWidget::countFPS()
+void GLVideoWidget::setFPS()
 {
-    int fps = frames;
-    frames = 0;
-    static_cast<VideoDialog*>(parent())->setFPS(fps);
+    int fps = frames_;
+    frames_ = 0;
+    videoDialog_->setFPS(fps);
 }
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
 
-    glt->pause();
-    usleep(5000);
+    glt_->pause();
 
     if(isFullScreen())
     {
@@ -135,14 +124,14 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
 void GLVideoWidget::setVideoWidth(int newVal)
 {
-    videoWidth = newVal;
+    videoWidth_ = newVal;
     resizeGL(width(), height());
 }
 
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
     if(e->oldSize().width() > 100)
-        glt->pause();
+        glt_->pause();
 
     resizeGL(e->size().width(), e->size().height());
 }
@@ -150,10 +139,15 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
 void GLVideoWidget::mousePressEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
-    glt->unpause();
+    glt_->unpause();
 }
 
 void GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)
 {
-    glt->setOutputDevice(portType);
+    glt_->setOutputDevice(portType);
+}
+
+VideoDialog* GLVideoWidget::videoDialog()
+{
+    return videoDialog_;
 }

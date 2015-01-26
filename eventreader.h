@@ -27,7 +27,7 @@ private:
     float   toFloat(const QString &str, int line, const QString &param) const;
     int     toInt(const QString &str, int line, const QString &param) const;
 
-    ImageContainer imageContainer;
+    ImageContainer imageContainer_;
 };
 
 #endif // EVENTREADER_H

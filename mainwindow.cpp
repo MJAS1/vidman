@@ -12,12 +12,13 @@
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), programState(STOPPED)
+    QMainWindow(parent), ui(new Ui::MainWindow), programState_(STOPPED),
+    videoDialog_(new VideoDialog(this))
 {
     ui->setupUi(this);
-    videoDialog = new VideoDialog(this);
-    videoDialog->show();
-    connect(&timeTmr, SIGNAL(timeout()), this, SLOT(updateTime()));
+    //videoDialog = new VideoDialog(this);
+    videoDialog_->show();
+    connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
     QMenu *menu = new QMenu(this);
@@ -41,12 +42,12 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBtn->setShortcut(QString("Ctrl+e"));
     ui->toolBar2->addWidget(toolBtn);
 
-    highlighter = new Highlighter(ui->textEdit->document());
+    highlighter_ = new Highlighter(ui->textEdit->document());
 }
 
 MainWindow::~MainWindow()
 {
-    delete videoDialog;
+    delete videoDialog_;
     delete ui;
 }
 
@@ -62,17 +63,17 @@ void MainWindow::toggleRec(bool arg)
 
 void MainWindow::onStart()
 {
-    switch (programState) {
+    switch (programState_) {
 
         case STOPPED:
 
-            if(videoDialog->start(ui->textEdit->toPlainText()))
+            if(videoDialog_->start(ui->textEdit->toPlainText()))
             {
                 ui->stopButton->setEnabled(true);
-                runningTime.restart();
+                runningTime_.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-                programState = PLAYING;
-                timeTmr.start(100);
+                programState_ = PLAYING;
+                timeTmr_.start(100);
             }
             break;
 
@@ -93,58 +94,58 @@ void MainWindow::onStop()
     ui->stopButton->setEnabled(false);
     ui->recButton->setChecked(false);
 
-    videoDialog->toggleRecord(false);
-    videoDialog->stop();
+    videoDialog_->toggleRecord(false);
+    videoDialog_->stop();
 
     QTime time(0, 0);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
-    timeTmr.stop();
+    timeTmr_.stop();
 
-    programState = STOPPED;
+    programState_ = STOPPED;
     ui->startButton->setChecked(false);
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
 }
 
 void MainWindow::onRec(bool arg)
 {
-    videoDialog->toggleRecord(arg);
+    videoDialog_->toggleRecord(arg);
 }
 
 void MainWindow::pause()
 {
-    timeTmr.stop();
-    runningTime.pause();
+    timeTmr_.stop();
+    runningTime_.pause();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    videoDialog->pause();
-    programState = PAUSED;
+    videoDialog_->pause();
+    programState_ = PAUSED;
 }
 
 void MainWindow::unpause()
 {
-    timeTmr.start(100);
-    runningTime.resume();
+    timeTmr_.start(100);
+    runningTime_.resume();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-    videoDialog->unpause();
-    programState = PLAYING;
+    videoDialog_->unpause();
+    programState_ = PLAYING;
 }
 
 void MainWindow::onViewVideoDialog(bool checked)
 {
     if(checked)
-        videoDialog->show();
+        videoDialog_->show();
 
     else
-        videoDialog->close();
+        videoDialog_->close();
 }
 
 void MainWindow::onUpdateBackground()
 {
-    videoDialog->updateBackground();
+    videoDialog_->updateBackground();
 }
 
 void MainWindow::onKeepLog(bool arg)
 {
-    videoDialog->setKeepLog(arg);
+    videoDialog_->setKeepLog(arg);
 }
 
 void MainWindow::onSerialPort(bool arg)
@@ -152,10 +153,10 @@ void MainWindow::onSerialPort(bool arg)
     if(arg)
     {
         ui->actionParallelPort->setChecked(false);
-        videoDialog->setOutputDevice(OutputDevice::PORT_SERIAL);
+        videoDialog_->setOutputDevice(OutputDevice::PORT_SERIAL);
     }
     else
-        videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
+        videoDialog_->setOutputDevice(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::onParallelPort(bool arg)
@@ -163,17 +164,17 @@ void MainWindow::onParallelPort(bool arg)
     if(arg)
     {
         ui->actionSerialPort->setChecked(false);
-        videoDialog->setOutputDevice(OutputDevice::PORT_PARALLEL);
+        videoDialog_->setOutputDevice(OutputDevice::PORT_PARALLEL);
     }
     else
-        videoDialog->setOutputDevice(OutputDevice::PORT_NULL);
+        videoDialog_->setOutputDevice(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::updateTime()
 {
     QTime time;
     time.setHMS(0, 0, 0);
-    qint64 secsElapsed = runningTime.nsecsElapsed()/1000000000;
+    qint64 secsElapsed = runningTime_.nsecsElapsed()/1000000000;
     time = time.addSecs(secsElapsed);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
 }
@@ -209,7 +210,7 @@ bool MainWindow::maybeSave()
 {
     if (!ui->textEdit->document()->isModified())
         return true;
-    if (fileName.startsWith(QLatin1String(":/")))
+    if (fileName_.startsWith(QLatin1String(":/")))
         return true;
     QMessageBox::StandardButton ret;
     ret = QMessageBox::warning(this, "VideoManipulation",
@@ -226,10 +227,10 @@ bool MainWindow::maybeSave()
 
 bool MainWindow::fileSave()
 {
-    if (fileName.isEmpty())
+    if (fileName_.isEmpty())
         return fileSaveAs();
 
-    QTextDocumentWriter writer(fileName);
+    QTextDocumentWriter writer(fileName_);
     writer.setFormat("plaintext");
     bool success = writer.write(ui->textEdit->document());
     if (success)
@@ -254,7 +255,7 @@ bool MainWindow::fileSaveAs()
 
 void MainWindow::setCurrentFileName(const QString &fileName)
 {
-    this->fileName = fileName;
+    fileName_ = fileName;
     ui->textEdit->document()->setModified(false);
 
     QString shownName;
@@ -340,7 +341,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     if (maybeSave())
     {
         e->accept();
-        videoDialog->close();
+        videoDialog_->close();
     }
     else
         e->ignore();
@@ -355,11 +356,11 @@ void MainWindow::toggleVideoDialogChecked(bool arg)
 
 qint64 MainWindow::getRunningTime()
 {
-    return runningTime.nsecsElapsed();
+    return runningTime_.nsecsElapsed();
 }
 
 
 TimerWithPause& MainWindow::getTimer()
 {
-    return runningTime;
+    return runningTime_;
 }
