@@ -12,11 +12,10 @@
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), programState_(STOPPED),
-    videoDialog_(new VideoDialog(this))
+    QMainWindow(parent), ui(new Ui::MainWindow), programState_(STOPPED)
 {
     ui->setupUi(this);
-    //videoDialog = new VideoDialog(this);
+    videoDialog_ = new VideoDialog(this);
     videoDialog_->show();
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
 

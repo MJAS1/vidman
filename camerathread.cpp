@@ -17,8 +17,6 @@ using namespace std;
 CameraThread::CameraThread(CycDataBuffer* cycBuf) :
     cycBuf_(cycBuf), trigCode_(0), shouldUpdateBg(true), detectMotionEvent_(NULL)
 {
-    cam_.setFPS(settings_.fps);
-
     if(settings_.flip)
         preEvents_.append(new FlipEvent(0, 0));
 
@@ -50,6 +48,8 @@ void CameraThread::stoppableRun()
 	struct timespec			timestamp;
     uint64_t			        	msec;
 	ChunkAttrib				chunkAttrib;
+
+    cam_.setFPS(settings_.fps);
 
     /*-----------------------------------------------------------------------
      *  have the camera start sending us data
