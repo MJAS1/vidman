@@ -165,10 +165,11 @@ void Camera::setVR(int newVal, int uvValue)
 
 void Camera::setExternTrigger(bool on)
 {
-    QMutexLocker locker(&mutex_);
+    //mutex_.lock();
     dc1394error_t	err;
 
     err = dc1394_external_trigger_set_power(dc1394camera_, on ? DC1394_ON : DC1394_OFF);
+    //mutex_.unlock();
 
     if (err != DC1394_SUCCESS)
     {
