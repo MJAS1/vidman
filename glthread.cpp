@@ -41,6 +41,10 @@ void GLThread::stoppableRun()
 
         QMutexLocker locker(&mutex_);
 
+        //Mutex has to be unlocked before trigCode_ is used and it might therefore get a
+        //new value before use, so copy it to a local scope variable
+        int trigCode = trigCode_;
+
         //trigPort.open() must be called in this thread to make outb work
         if(shouldChangePort_)
         {
@@ -80,7 +84,7 @@ void GLThread::stoppableRun()
             shaderProgram_.release();
 
             if(!trigPort_.isEmpty())
-                trigPort_.writeData(trigCode_);
+                trigPort_.writeData(trigCode);
 
             if(!log_.isEmpty())
                 logFile_ << log_;

@@ -342,7 +342,7 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& ev
 
                 if(value == "dtr") trigCode = TIOCM_DTR;
                 else if(value == "rts") trigCode = TIOCM_RTS;
-                else
+                else if((trigCode = toInt(split[1], lineNumber, QString("trigcode"))) == -1)
                 {
                     errorMsg(QString("Couldn't understand trigcode '%1' in line %2.").arg(split[1]).arg(lineNumber));
                     return false;

@@ -90,7 +90,6 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
     doneCurrent();
-
     glt_->drawFrame(imBuf, chunkAttrib.trigCode, log);
     frames_++;
 
