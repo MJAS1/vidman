@@ -3,6 +3,7 @@
 
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
+#include "settings.h"
 
 /*This class detects movement between subsequent frames. It stores a frame of the
 background and then detects the hands of the subject by substracting the background from
@@ -29,6 +30,7 @@ private:
     cv::Mat   back_, fore_;
     cv::Point centroid_;
 
+    int       sensitivity_;
 };
 
 #endif // MOTIONDETECTOR_H

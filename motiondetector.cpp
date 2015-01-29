@@ -2,6 +2,8 @@
 
 MotionDetector::MotionDetector()
 {
+    Settings settings;
+    sensitivity_ = settings.movementSensitivity;
 }
 
 void MotionDetector::updateBackground(const cv::Mat &frame)
@@ -28,7 +30,7 @@ bool MotionDetector::movementDetected() const
     //Calculate the distance between the centroids of the current frame and the frame when tracking started
     //If distance is big enough, interpret it as movement
     double norm = cv::norm(centroid_-getCentroid(fore_));
-    if(norm > 15)
+    if(norm > sensitivity_)
     {
         return true;
     }

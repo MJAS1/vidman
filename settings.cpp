@@ -97,6 +97,17 @@ Settings::Settings()
         fps = settings.value("video/fps").toInt();
     }
 
+    //Sensitivity of movement detection
+    if(!settings.contains("video/movementSensitivity"))
+    {
+        settings.setValue("video/movementSensitivity", 15);
+        movementSensitivity = 15;
+    }
+    else
+    {
+        movementSensitivity = settings.value("video/movementSensitivity").toInt();
+    }
+
 	//---------------------------------------------------------------------
 	// Misc settings
 	//
