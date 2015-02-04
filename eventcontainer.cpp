@@ -119,15 +119,15 @@ void EventContainer<VideoEvent*>::applyEvents(cv::Mat &frame) const
         (*iter)->apply(frame);
 }
 
-template <>
-void EventContainer<VideoEvent*>::pauseEvents()
+template <typename T>
+void EventContainer<T>::pauseEvents()
 {
     for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
         (*iter)->pause();
 }
 
-template <>
-void EventContainer<VideoEvent*>::unpauseEvents()
+template <typename T>
+void EventContainer<T>::unpauseEvents()
 {
     for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
         (*iter)->unpause();

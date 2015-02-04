@@ -39,7 +39,6 @@ private:
     GLVideoWidget*	    glw_;
 
     QMutex               mutex_;
-    LogFile& 			logFile_;
     unsigned char* 		imBuf_;
 
     QString 			    log_;

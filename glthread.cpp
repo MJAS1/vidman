@@ -6,8 +6,7 @@
 #include "iostream"
 
 GLThread::GLThread(GLVideoWidget *glw) :
-    shouldSwap_(false), shouldChangePort_(false), isPaused_(false), glw_(glw),//, logFile_(logFile)
-    logFile_(glw_->videoDialog()->logFile())
+    shouldSwap_(false), shouldChangePort_(false), isPaused_(false), glw_(glw)
 {
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
@@ -36,6 +35,8 @@ GLThread::GLThread(GLVideoWidget *glw) :
 
 void GLThread::stoppableRun()
 {
+    LogFile& logFile_ = glw_->videoDialog()->logFile();
+
     while(!shouldStop)
     {
 
