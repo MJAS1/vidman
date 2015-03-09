@@ -35,6 +35,7 @@ private:
 
     ImageContainer imageContainer_;
     QMap<int, std::shared_ptr<QList<cv::Mat>>> videoObjects_;
+    QMap<int, int> videoLengths_;
 
     Settings settings_;
 };

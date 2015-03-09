@@ -176,6 +176,11 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
             {
                 if((scale = toFloat(split[1], lineNumber, QString("scale"))) == -1)
                     return false;
+                else if(scale < 1)
+                {
+                    emit error(QString("Scale must be greater than 1 for zoom event in line %1").arg(lineNumber));
+                    return false;
+                }
             }
             else if(param == "color")
             {
@@ -258,12 +263,17 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
         case Event::EVENT_RECORD:
             if(videoIdOk)
             {
+                if(duration > videoLengths_[videoId])
+                {
+                    emit error(QString("Record event duration too big for video object in line %1").arg(lineNumber));
+                    return false;
+                }
                 ev = new RecordEvent(start, videoObjects_[videoId], delay, duration, eventId, trigCode);
                 ev->appendLog(QString("Record event added"));
             }
             else
             {
-                emit error(QString("Video event declared without object id in line %1").arg(lineNumber));
+                emit error(QString("Record event declared without object id in line %1").arg(lineNumber));
                 return false;
             }
             break;
@@ -365,9 +375,10 @@ bool EventReader::readVideoObject(const QString &str, int lineNumber)
     }
 
     std::shared_ptr<QList<cv::Mat>> frames(new QList<cv::Mat>);
-    frames->reserve(length/1000*settings_.fps);
+    //Reserve enough memory to hold all the frames
+    frames->reserve(length/1000*settings_.fps + 10);
     videoObjects_.insert(id, frames);
-
+    videoLengths_.insert(id, length);
     return true;
 }
 

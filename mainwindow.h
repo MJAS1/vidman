@@ -65,6 +65,10 @@ private slots:
     void addRemoveEventId();
     void addRemoveEventType();
     void addImageObject();
+    void addVideoObject();
+    void addZoomEvent();
+    void addRecordEvent();
+    void addPlaybackEvent();
 
     void updateTime();
 

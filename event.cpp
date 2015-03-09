@@ -14,7 +14,6 @@ int Event::getStart() const
     return start_;
 }
 
-
 int Event::getDelay() const
 {
     return delay_;
