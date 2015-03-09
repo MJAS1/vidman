@@ -11,7 +11,8 @@ Highlighter::Highlighter(QTextDocument *parent) :
     typePatterns << "\\bfade in\\b" << "\\bfadein\\b" << "\\bfadeout\\b"
                     << "\\bfade out\\b" << "\\bflip\\b" << "\\bimage\\b"
                     << "\\btext\\b" << "\\bfreeze\\b" << "\\brotate\\b"
-                    << "\\brts\\b" << "\\bdtr\\b" << "\\bdetectmotion\\b";
+                    << "\\brts\\b" << "\\bdtr\\b" << "\\bdetectmotion\\b"
+                    << "\\brecord\\b" << "\\bplayback\\b";
 
     foreach(const QString& pattern, typePatterns)
     {
@@ -25,7 +26,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
     keywordPatterns << "\\btype\\b" << "\\bstart\\b" << "\\bduration\\b" << "\\bx\\b"
                     << "\\by\\b"<< "\\bfilename\\b" << "\\bid\\b" << "\\bimageid\\b"
                     << "\\bimage id\\b" << "\\bangle\\b" << "\\bdelay\\b" << "\\bcolor\\b"
-                    << "\\btrigcode\\b";
+                    << "\\btrigcode\\b" << "\\blength\\b" << "\\bvideoid\\b";
 
     foreach(const QString& pattern, keywordPatterns)
     {
@@ -37,8 +38,8 @@ Highlighter::Highlighter(QTextDocument *parent) :
     blockFormat.setForeground(Qt::darkRed);
     blockFormat.setFontWeight(QFont::Bold);
     QStringList blockPatterns;
-    blockPatterns << "#event" << "#removeevent" << "#remove event"
-                  << "#imageobject" << "#image object" << "#comments";
+    blockPatterns << "event" << "removeevent" << "remove event"
+                  << "imageobject" << "image object" << "videoobject";
 
     foreach(const QString& pattern, blockPatterns)
     {

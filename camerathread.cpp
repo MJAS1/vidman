@@ -46,7 +46,7 @@ void CameraThread::stoppableRun()
 {
     struct sched_param		sch_param;
 	struct timespec			timestamp;
-    uint64_t			        	msec;
+    uint64_t                msec;
 	ChunkAttrib				chunkAttrib;
 
     cam_.setFPS(settings_.fps);
@@ -159,11 +159,10 @@ void CameraThread::addVideoEvent(VideoEvent *ev)
     trigCode_ = ev->getTrigCode();
     log_.append(ev->getLog());
 
-    //A freeze event needs to be applied first
-    if(ev->getType() == Event::EVENT_FREEZE)
-        events_.prepend(ev);
-    else
-        events_.append(ev);
+    events_.append(ev);
+
+    //Sort the events by priorities
+    qSort(events_.begin(), events_.end(), compareEventPriorities);
 
     mutex_.unlock();
 }

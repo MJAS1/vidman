@@ -1,6 +1,8 @@
 #ifndef VIDEOEVENT_H
 #define VIDEOEVENT_H
 
+#include <memory>
+#include <QList>
 #include "event.h"
 #include "timerwithpause.h"
 
@@ -14,11 +16,21 @@ by subclasses.
 class VideoEvent : public Event
 {
 public:
-    explicit VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode);
+    explicit VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode, int priority = 0);
     virtual     ~VideoEvent();
 
     virtual void apply(cv::Mat &frame) = 0;
+
+    int getPriority() const {return priority_;}
+
+private:
+    int priority_;
 };
+
+inline bool compareEventPriorities(const VideoEvent* left, const VideoEvent* right)
+{
+    return left->getPriority() > right->getPriority();
+}
 
 class FlipEvent : public VideoEvent
 {
@@ -105,10 +117,10 @@ private:
 };
 
 
-class FreezeEvent: public VideoEvent
+class FreezeEvent : public VideoEvent
 {
 public:
-    explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
+    explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0, int priority = 3);
 
     virtual void apply(cv::Mat &frame);
 
@@ -118,5 +130,56 @@ private:
     cv::Mat freezedFrame_;
 };
 
+class ZoomEvent : public VideoEvent
+{
+public:
+    explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0, int id = -1, int trigCode = 0);
+
+    virtual void apply(cv::Mat &frame);
+    void pause();
+    void unpause();
+
+private:
+    TimerWithPause timer_;
+    double scale_;
+    double interval_;
+    double coef_;
+    bool stopped_;
+};
+
+class RecordEvent : public VideoEvent
+{
+public:
+    typedef typename std::shared_ptr<QList<cv::Mat>> FramesPtr;
+
+    explicit RecordEvent(int start, FramesPtr frames, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+
+    virtual void apply(cv::Mat &frame);
+    void pause();
+    void unpause();
+private:
+    TimerWithPause timer_;
+    FramesPtr frames_;
+    bool finished_;
+    bool paused_;
+};
+
+class PlaybackEvent : public VideoEvent
+{
+public:
+    typedef typename std::shared_ptr<QList<cv::Mat>> FramesPtr;
+
+    explicit PlaybackEvent(int start, FramesPtr frames, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+
+    virtual void apply(cv::Mat &frame);
+    void pause();
+    void unpause();
+
+private:
+    FramesPtr frames_;
+    QList<cv::Mat>::Iterator iter_;
+    bool finished_;
+    bool paused_;
+};
 
 #endif // VIDEOEVENT_H

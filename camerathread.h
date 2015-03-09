@@ -27,17 +27,17 @@ public:
     explicit CameraThread(CycDataBuffer* cycBuf);
 	virtual ~CameraThread();
 
-    void clearEvents();
-    void pause();
-    void unpause();
-    void updateBackground();
+    void    clearEvents();
+    void    pause();
+    void    unpause();
+    void    updateBackground();
 
     Camera& camera();
 
 public slots:
-    void addVideoEvent(VideoEvent *ev);
-    void removeEvent(RemoveEvent *ev);
-    void detectMotion(Event *ev);
+    void    addVideoEvent(VideoEvent *ev);
+    void    removeEvent(RemoveEvent *ev);
+    void    detectMotion(Event *ev);
 
 protected:
     virtual void stoppableRun();

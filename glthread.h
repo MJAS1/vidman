@@ -30,26 +30,26 @@ public:
     void setOutputDevice(OutputDevice::PortType portType);
 
 private:
-    void                stoppableRun();
+    void                    stoppableRun();
 
-    bool                shouldSwap_;
-    bool                shouldChangePort_;
-    bool                isPaused_;
+    bool                    shouldSwap_;
+    bool                    shouldChangePort_;
+    bool                    isPaused_;
 
-    GLVideoWidget*	    glw_;
+    GLVideoWidget*          glw_;
 
-    QMutex               mutex_;
-    unsigned char* 		imBuf_;
+    QMutex                  mutex_;
+    unsigned char*          imBuf_;
 
     QString 			    log_;
-    OutputDevice 		trigPort_;
-    OutputDevice::PortType newPort_;
+    OutputDevice            trigPort_;
+    OutputDevice::PortType  newPort_;
 
     int trigCode_;
 
-    QGLShaderProgram 	shaderProgram_;
-    QVector<QVector2D> 	vertices_;
-    QVector<QVector2D> 	textureCoordinates_;
+    QGLShaderProgram        shaderProgram_;
+    QVector<QVector2D>      vertices_;
+    QVector<QVector2D>      textureCoordinates_;
 
 };
 

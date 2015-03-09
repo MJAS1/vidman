@@ -31,9 +31,13 @@ public:
 
     void toggleStart(bool);
     void toggleRec(bool);
-    void toggleVideoDialogChecked(bool);
+    void toggleStop(bool);
+    void toggleVideoDialogChecked(bool);   
     qint64 getRunningTime();
     TimerWithPause& getTimer();
+
+public slots:
+    void setStatus(const QString&);
     
 private slots:
     void onStart();

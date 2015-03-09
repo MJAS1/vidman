@@ -74,11 +74,10 @@ VideoDialog::VideoDialog(MainWindow *window) :
         ui->gainSlider->setEnabled(false);
         ui->uvSlider->setEnabled(false);
         ui->vrSlider->setEnabled(false);
-        QMessageBox msgBox;
-        msgBox.setText("Couldn't initialize video.");
-        msgBox.exec();
-        window->toggleStart(false);
-        window->toggleRec(false);
+        window_->setStatus(QString("Couldn't initialize video."));
+        window_->toggleStart(false);
+        window_->toggleRec(false);
+        window_->toggleStop(false);
     }
 }
 
@@ -137,7 +136,8 @@ void VideoDialog::getNextEvent()
     if(!events_.empty())
     {
         Event *nextEvent = events_[0];
-        eventDuration_ = (nextEvent->getStart()+event->getDuration()+event->getDelay());
+        //eventDuration_ = (nextEvent->getStart()+event->getDuration()+event->getDelay());
+        eventDuration_ = (nextEvent->getStart()+event->getDelay());
         eventTmr_.start(eventDuration_);
         time_ = elapsedTimer_.nsecsElapsed()/1000000;
     }
@@ -159,6 +159,7 @@ bool VideoDialog::start(const QString& eventStr)
 
     //Read, create and store all the events from strList
     EventReader eventReader;
+    connect(&eventReader, SIGNAL(error(const QString&)), window_, SLOT(setStatus(const QString&)));
     if(eventReader.loadEvents(strList, events_))
     {
         if(!events_.empty())
@@ -199,6 +200,7 @@ void VideoDialog::unpause()
     }
     time_ = elapsedTimer_.nsecsElapsed()/1000000;
 }
+
 void VideoDialog::onShutterChanged(int newVal)
 {
     camera_.setShutter(newVal);
@@ -208,7 +210,6 @@ void VideoDialog::onGainChanged(int newVal)
 {
     camera_.setGain(newVal);
 }
-
 
 void VideoDialog::onUVChanged(int newVal)
 {

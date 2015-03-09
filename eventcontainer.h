@@ -25,7 +25,7 @@ public:
     void    removeType(Event::EventType);
     void    append(T event);
     void    prepend(T event);
-    bool    empty();
+    bool    empty() const;
     void    applyEvents(cv::Mat& frame) const;
     void    pauseEvents();
     void    unpauseEvents();

@@ -1,7 +1,8 @@
+#include <QDebug>
 #include "videoevent.h"
 
-VideoEvent::VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode) :
-    Event(type,start, delay, duration, id, trigCode)
+VideoEvent::VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode, int priority) :
+    Event(type,start, delay, duration, id, trigCode), priority_(priority)
 {
 }
 
@@ -177,8 +178,8 @@ void RotateEvent::apply(cv::Mat &frame)
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
-FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
-        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode), started_(false)
+FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode, int priority)
+        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode, priority), started_(false)
 {
 }
 
@@ -190,4 +191,111 @@ void FreezeEvent::apply(cv::Mat &frame)
         started_ = true;
     }
     freezedFrame_.copyTo(frame);
+}
+
+ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id, int trigCode) :
+        VideoEvent(EVENT_ZOOM, start, delay, duration, id, trigCode),
+        scale_(scale), stopped_(false)
+{
+    timer_.invalidate();
+}
+
+void ZoomEvent::apply(cv::Mat &frame)
+{
+    if(!stopped_)
+    {
+        if(!timer_.isValid())
+        {
+            interval_ = (scale_ - 1) / duration_;
+            timer_.start();
+        }
+        int msecsElapsed = timer_.nsecsElapsed()/1000000;
+        coef_ = 1 + interval_*msecsElapsed;
+        if(coef_ >= scale_)
+        {
+            coef_ = scale_;
+            stopped_ = true;
+        }
+    }
+
+    cv::Mat tmp;
+    cv::Size newSize(frame.cols * coef_, frame.rows * coef_);
+    resize(frame, tmp, newSize);
+
+    cv::Point p((tmp.cols - frame.cols) / 2, (tmp.rows - frame.rows) / 2);
+    cv::Rect roi(p, frame.size());
+    frame = tmp(roi).clone();
+}
+
+void ZoomEvent::pause()
+{
+    stopped_ = true;
+    timer_.pause();
+}
+
+void ZoomEvent::unpause()
+{
+    stopped_ = false;
+    timer_.resume();
+}
+
+RecordEvent::RecordEvent(int start, FramesPtr frames, int delay, int duration, int id, int trigCode, int priority) :
+    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), frames_(frames), finished_(false), paused_(false)
+{
+    timer_.invalidate();
+}
+
+void RecordEvent::apply(cv::Mat &frame)
+{
+    if(!finished_ && !paused_)
+    {
+        if(!timer_.isValid())
+            timer_.start();
+
+        if(timer_.nsecsElapsed()/1000000 < duration_)
+            frames_->append(frame.clone());
+        else
+            finished_ = true;
+
+        qDebug() << frames_->size();
+    }
+
+}
+
+void RecordEvent::pause()
+{
+    paused_ = true;
+    timer_.pause();
+}
+
+void RecordEvent::unpause()
+{
+    paused_ = false;
+    timer_.resume();
+}
+
+PlaybackEvent::PlaybackEvent(int start, FramesPtr frames, int delay, int duration, int id, int trigCode, int priority) :
+    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), frames_(frames), finished_(false), paused_(false)
+{
+    iter_ = frames_->begin();
+}
+
+void PlaybackEvent::apply(cv::Mat &frame)
+{
+    if(!finished_ && !paused_)
+    {
+        iter_->copyTo(frame);
+        if(++iter_ == frames_->end())
+            finished_ = true;
+    }
+}
+
+void PlaybackEvent::pause()
+{
+    paused_ = true;
+}
+
+void PlaybackEvent::unpause()
+{
+    paused_ = false;
 }

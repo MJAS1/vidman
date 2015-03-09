@@ -84,6 +84,8 @@ LIBS += -ljpeg
 RESOURCES += \
     resource.qrc
 
+QMAKE_CXXFLAGS += -std=c++11
+
 # remove possible other optimization flags
 QMAKE_CXXFLAGS_RELEASE -= -O
 QMAKE_CXXFLAGS_RELEASE -= -O1

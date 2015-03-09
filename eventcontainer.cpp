@@ -65,7 +65,7 @@ void EventContainer<T>::removeType(Event::EventType type)
 }
 
 template <typename T>
-bool EventContainer<T>::empty()
+bool EventContainer<T>::empty() const
 {
     return events_.empty();
 }

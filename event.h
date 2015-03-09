@@ -27,6 +27,9 @@ public:
         EVENT_REMOVE,
         EVENT_ROTATE,
         EVENT_FREEZE,
+        EVENT_ZOOM,
+        EVENT_RECORD,
+        EVENT_PLAYBACK,
         EVENT_DETECT_MOTION
     };
 
