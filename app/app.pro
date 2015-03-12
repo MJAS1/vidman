@@ -48,6 +48,3 @@ OBJECTS_DIR = ../build/$$BUILD/app
 MOC_DIR = ../build/$$BUILD/app
 RCC_DIR = ../build/$$BUILD/app
 UI_DIR = ../build/$$BUILD/app
-
-
-
