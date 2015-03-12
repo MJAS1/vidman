@@ -1,0 +1,4 @@
+INCLUDEPATH += $$PWD/src
+INCLUDEPATH += $$PWD/img
+
+SRC_DIR = $$PWD
