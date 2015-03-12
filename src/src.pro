@@ -85,9 +85,6 @@ LIBS += -lopencv_legacy
 LIBS += -lopencv_flann
 LIBS += -ljpeg
 
-RESOURCES += \
-    resource.qrc
-
 QMAKE_CXXFLAGS += -std=c++11
 
 # remove possible other optimization flags

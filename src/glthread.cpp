@@ -27,8 +27,8 @@ GLThread::GLThread(GLVideoWidget *glw) :
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    shaderProgram_.addShaderFromSourceFile(QGLShader::Vertex, ":/vertexShader.vsh");
-    shaderProgram_.addShaderFromSourceFile(QGLShader::Fragment, ":/fragmentShader.fsh");
+    shaderProgram_.addShaderFromSourceFile(QGLShader::Vertex, ":/src/vertexShader.vsh");
+    shaderProgram_.addShaderFromSourceFile(QGLShader::Fragment, ":/src/fragmentShader.fsh");
     shaderProgram_.link();
     glw_->doneCurrent();
 }
