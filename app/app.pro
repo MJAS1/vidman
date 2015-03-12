@@ -3,7 +3,6 @@ include(../defaults.pri)
 TEMPLATE = app
 
 QT += opengl
-TARGET = vidman
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -18,8 +17,16 @@ QMAKE_CXXFLAGS_RELEASE *= -O3
 SOURCES += \
     main.cpp
 
+CONFIG(debug, debug|release) {
+    BUILD = debug
+}
+
+CONFIG(release, debug|release) {
+    BUILD = release
+}
+
 INCLUDEPATH += /usr/include/opencv
-LIBS += -L../src -lvidman
+LIBS += -L../lib -lvidman_$$BUILD
 LIBS += -L/usr/share/lib -ldc1394
 LIBS += -lopencv_core
 LIBS += -lopencv_imgproc
@@ -34,6 +41,13 @@ LIBS += -lopencv_legacy
 LIBS += -lopencv_flann
 LIBS += -ljpeg
 
-Release:DESTDIR = release
+TARGET = vidman_$$BUILD
 
-Debug:DESTDIR = debug
+DESTDIR = ../bin
+OBJECTS_DIR = ../build/$$BUILD/app
+MOC_DIR = ../build/$$BUILD/app
+RCC_DIR = ../build/$$BUILD/app
+UI_DIR = ../build/$$BUILD/app
+
+
+

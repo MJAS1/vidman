@@ -7,6 +7,8 @@
 #include <iostream>
 #include <sched.h>
 #include <time.h>
+#include <fstream>
+#include <QDebug>
 
 #include "camerathread.h"
 #include "config.h"

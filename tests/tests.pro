@@ -3,9 +3,16 @@ TEMPLATE = app
 
 CONFIG += qtestlib
 
+CONFIG(debug, debug|release) {
+    BUILD = debug
+}
+
+CONFIG(release, debug|release) {
+    BUILD = release
+}
 
 INCLUDEPATH += /usr/include/opencv
-LIBS += -L../src -lvidman
+LIBS += -L../lib -lvidman_$$BUILD
 LIBS += -L/usr/share/lib -ldc1394
 LIBS += -lopencv_core
 LIBS += -lopencv_imgproc
@@ -22,7 +29,15 @@ LIBS += -lopencv_flann
 QMAKE_CXXFLAGS += -std=c++11
 
 SOURCES += \
-    testeventreader.cpp
+    test.cpp
 
 HEADERS += \
-    testeventreader.h
+    test.h
+
+TARGET = tests_$$BUILD
+
+DESTDIR = ../bin
+OBJECTS_DIR = ../build/$$BUILD/tests
+MOC_DIR = ../build/$$BUILD/tests
+RCC_DIR = ../build/$$BUILD/tests
+UI_DIR = ../build/$$BUILD/tests

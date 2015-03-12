@@ -33,7 +33,6 @@ bool MotionDetector::movementDetected() const
     double norm = cv::norm(centroid_-getCentroid(fore_));
     if(norm > sensitivity_)
     {
-        std::cout << "test" << std::endl;
         return true;
     }
 

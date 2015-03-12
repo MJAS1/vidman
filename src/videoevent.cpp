@@ -256,8 +256,6 @@ void RecordEvent::apply(cv::Mat &frame)
             frames_->append(frame.clone());
         else
             finished_ = true;
-
-        qDebug() << frames_->size();
     }
 
 }

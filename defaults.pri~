@@ -1,0 +1,5 @@
+INCLUDEPATH += $$PWD/src
+INCLUDEPATH += $$PWD/img
+RESOURCES   += $$PWD/
+
+SRC_DIR = $$PWD/resource.qrc

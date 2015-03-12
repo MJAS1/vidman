@@ -14,7 +14,10 @@ bool ImageContainer::addImage(const int id, const QString &filename)
 {
     Iterator iter = find(id);
     if(iter != end())
+    {
         delete iter.value();
+        erase(iter);
+    }
 
     cv::Mat file = cv::imread(filename.toStdString(), CV_LOAD_IMAGE_UNCHANGED);
     if(file.empty())

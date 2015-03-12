@@ -4,15 +4,16 @@
 #include <QtTest>
 #include <QObject>
 
-class TestEventReader : public QObject
+class Test : public QObject
 {
     Q_OBJECT
 public:
-    explicit TestEventReader(QObject *parent = 0);
-    ~TestEventReader();
+    explicit Test(QObject *parent = 0);
+    ~Test();
 
 private slots:
-    void readEvents();
+    void testEventReader();
+    void testMotionDetector();
 };
 
 #endif // TESTEVENTREADER_H

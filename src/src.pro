@@ -8,7 +8,7 @@ include(../defaults.pri)
 
 QT       += core gui
 QT       += opengl
-TARGET = vidman
+
 TEMPLATE = lib
 CONFIG += staticlib
 CONFIG += console
@@ -95,14 +95,18 @@ QMAKE_CXXFLAGS_RELEASE -= -O2
 # add the desired -O3 if not present
 QMAKE_CXXFLAGS_RELEASE *= -O3
 
-Release:DESTDIR = release
-Release:OBJECTS_DIR = release/.obj
-Release:MOC_DIR = release/.moc
-Release:RCC_DIR = release/.rcc
-Release:UI_DIR = release/.ui
+CONFIG(debug, debug|release) {
+    BUILD = debug
+}
 
-Debug:DESTDIR = debug
-Debug:OBJECTS_DIR = debug/.obj
-Debug:MOC_DIR = debug/.moc
-Debug:RCC_DIR = debug/.rcc
-Debug:UI_DIR = debug/.ui
+CONFIG(release, debug|release) {
+    BUILD = release
+}
+
+TARGET = vidman_$$BUILD
+
+DESTDIR = ../lib
+OBJECTS_DIR = ../build/$$BUILD/src
+MOC_DIR = ../build/$$BUILD/src
+RCC_DIR = ../build/$$BUILD/src
+UI_DIR = ../build/$$BUILD/src
