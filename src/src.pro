@@ -10,7 +10,6 @@ QT       += core gui
 QT       += opengl
 
 TEMPLATE = lib
-CONFIG += staticlib
 CONFIG += console
 CONFIG -= app_bundle
 
