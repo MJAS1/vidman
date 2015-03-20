@@ -13,8 +13,7 @@ ImageContainer::~ImageContainer()
 bool ImageContainer::addImage(const int id, const QString &filename)
 {
     Iterator iter = find(id);
-    if(iter != end())
-    {
+    if(iter != end()) {
         delete iter.value();
         erase(iter);
     }

@@ -37,8 +37,7 @@ void GLThread::stoppableRun()
 {
     LogFile& logFile_ = glw_->videoDialog()->logFile();
 
-    while(!shouldStop)
-    {
+    while(!shouldStop) {
 
         QMutexLocker locker(&mutex_);
 
@@ -47,20 +46,16 @@ void GLThread::stoppableRun()
         int trigCode = trigCode_;
 
         //trigPort.open() must be called in this thread to make outb work
-        if(shouldChangePort_)
-        {
+        if(shouldChangePort_) {
             if(newPort_)
-            {
                 trigPort_.open(newPort_);
-            }
             else
                 trigPort_.close();
 
             shouldChangePort_ = false;
         }
 
-        if(shouldSwap_ && !isPaused_)
-        {
+        if(shouldSwap_ && !isPaused_) {
             shouldSwap_ = false;
 
             glw_->makeCurrent();
@@ -73,7 +68,7 @@ void GLThread::stoppableRun()
 
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf_);
 
-            //Unlock before drawing functions to prevent drawFrame() from stalling
+            //Unlock before drawing functions to prevent drawFrame() from stalling the main thread
             locker.unlock();
 
             glClear(GL_COLOR_BUFFER_BIT);

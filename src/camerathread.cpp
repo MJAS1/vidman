@@ -25,8 +25,7 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf) :
     if(settings_.turnAround)
         preEvents_.append(new RotateEvent(0, 180, 0));
 
-    if(settings_.fixPoint)
-    {
+    if(settings_.fixPoint) {
         cv::Mat fixImg = cv::imread("./img/fixPoint.png", CV_LOAD_IMAGE_UNCHANGED);
 
         if(!fixImg.empty())
@@ -65,19 +64,16 @@ void CameraThread::stoppableRun()
     }
 
     // Start the acquisition loop
-    while (!shouldStop)
-    {
+    while (!shouldStop) {
         cam_ >> frame_;
-        if (frame_.empty())
-        {
+        if (frame_.empty()) {
             std::cerr << "Error dequeuing a frame" << std::endl;
             abort();
         }
 
         mutex_.lock();
 
-        if(shouldUpdateBg)
-        {
+        if(shouldUpdateBg) {
             motionDetector_.updateBackground(frame_);
             shouldUpdateBg = false;
         }
@@ -89,10 +85,8 @@ void CameraThread::stoppableRun()
 		msec = timestamp.tv_nsec / 1000000;
 		msec += timestamp.tv_sec * 1000;
 
-        if(detectMotionEvent_)
-        {
-            if(motionDetector_.movementDetected())
-            {
+        if(detectMotionEvent_) {
+            if(motionDetector_.movementDetected()) {
                 trigCode_ = detectMotionEvent_->getTrigCode();
                 delete detectMotionEvent_;
                 detectMotionEvent_ = NULL;
@@ -134,8 +128,7 @@ void CameraThread::addVideoEvent(VideoEvent *ev)
     mutex_.lock();
 
     //Remove duplicate events of certain event types to prevent the program from slowing down
-    switch(ev->getType())
-    {
+    switch(ev->getType()) {
         case Event::EVENT_FLIP:
             events_.removeType(Event::EVENT_FLIP);
             break;

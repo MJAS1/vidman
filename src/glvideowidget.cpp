@@ -66,15 +66,12 @@ void GLVideoWidget::resizeGL(int w, int h)
     makeCurrent();
 
     if(dispH <= h)
-    {
         glViewport(0, (h - dispH) / 2, w, dispH);
-    }
+
     else if(dispW <= w)
-    {
         glViewport((w - dispW) / 2, 0, dispW, h);
-    }
-    else
-    {
+
+    else {
         cerr << "Internal error while computing the viewport size" << endl;
         abort();
     }
@@ -108,13 +105,11 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
     glt_->pause();
 
-    if(isFullScreen())
-    {
+    if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
         showNormal();
     }
-    else
-    {
+    else {
         setWindowFlags(Qt::Window);
         showFullScreen();
     }
@@ -124,15 +119,18 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 void GLVideoWidget::setVideoWidth(int newVal)
 {
     videoWidth_ = newVal;
+    glt_->pause();
     resizeGL(width(), height());
 }
 
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
+
     if(e->oldSize().width() > 100)
         glt_->pause();
 
     resizeGL(e->size().width(), e->size().height());
+    glt_->unpause();
 }
 
 void GLVideoWidget::mousePressEvent(QMouseEvent *e)

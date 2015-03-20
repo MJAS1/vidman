@@ -15,8 +15,7 @@ EventContainer<T>::~EventContainer()
 template <typename T>
 void EventContainer<T>::clear()
 {
-    if(!empty())
-    {
+    if(!empty()) {
         for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
             delete *iter;
 
@@ -36,10 +35,8 @@ template <typename T>
 void EventContainer<T>::removeId(int id)
 {
     Iterator iter = events_.begin();
-    while(iter != events_.end())
-    {
-        if((*iter)->getId() == id)
-        {
+    while(iter != events_.end()) {
+        if((*iter)->getId() == id) {
             delete (*iter);
             iter = events_.erase(iter);
             continue;
@@ -52,10 +49,8 @@ template <typename T>
 void EventContainer<T>::removeType(Event::EventType type)
 {
     Iterator iter = events_.begin();
-    while(iter != events_.end())
-    {
-        if((*iter)->getType() == type)
-        {
+    while(iter != events_.end()) {
+        if((*iter)->getType() == type) {
             delete (*iter);
             iter = events_.erase(iter);
             continue;

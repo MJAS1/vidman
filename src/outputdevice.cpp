@@ -16,8 +16,7 @@ void OutputDevice::writeData(int trigCode)
             break;
 
         case PORT_SERIAL:
-            if(ioctl(fd_, TIOCMSET, &trigCode) == -1)
-            {
+            if(ioctl(fd_, TIOCMSET, &trigCode) == -1) {
                 fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
                 portType_ = PORT_NULL;
             }
@@ -33,8 +32,8 @@ bool OutputDevice::open(PortType port)
     switch (port)
     {
     case PORT_PARALLEL:
-        if(ioperm(settings_.printerPortAddr, 1, 1))
-        {
+        //if(ioperm(settings_.printerPortAddr, 1, 1))
+        if((fd_ = ::open("/dev/lp0", O_RDWR)) < 1) {
             portType_ = PORT_NULL;
             std::cerr << "Cannot get the port. May be you should run this program as root" << std::endl;
         }
@@ -43,8 +42,7 @@ bool OutputDevice::open(PortType port)
         break;
 
     case PORT_SERIAL:
-        if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1)
-        {
+        if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
             portType_ = PORT_NULL;
             fd_ = -1;
             std::cerr << "Cannot open USB port. May be you should run this program as root" << std::endl;

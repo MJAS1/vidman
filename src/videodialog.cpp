@@ -41,8 +41,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
     // Set up video recording
     connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
 
-    if(camera_.isInitialized())
-    {
+    if(camera_.isInitialized()) {
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
@@ -67,8 +66,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
         eventTmr_.setSingleShot(true);
         connect(&eventTmr_, SIGNAL(timeout()), this, SLOT(getNextEvent()));
     }
-    else
-    {
+    else {
         //If camera initializaton didn't work, disable all functionality
         ui->shutterSlider->setEnabled(false);
         ui->gainSlider->setEnabled(false);
@@ -118,8 +116,7 @@ void VideoDialog::getNextEvent()
     //Get next event and pass it to cameraThread
     Event *event = events_.pop_front();
 
-    switch(event->getType())
-    {
+    switch(event->getType()) {
         case Event::EVENT_DETECT_MOTION:
             cameraThread_->detectMotion(event);
             break;
@@ -133,8 +130,7 @@ void VideoDialog::getNextEvent()
             break;
     }
 
-    if(!events_.empty())
-    {
+    if(!events_.empty()) {
         Event *nextEvent = events_[0];
         //eventDuration_ = (nextEvent->getStart()+event->getDuration()+event->getDelay());
         eventDuration_ = (nextEvent->getStart()+event->getDelay());
@@ -145,8 +141,7 @@ void VideoDialog::getNextEvent()
 
 bool VideoDialog::start(const QString& eventStr)
 {
-    if(logFile_.isActive() && !logFile_.open())
-    {
+    if(logFile_.isActive() && !logFile_.open()) {
         QMessageBox msgBox;
         msgBox.setText(QString("Error creating log file."));
         msgBox.exec();
@@ -160,10 +155,8 @@ bool VideoDialog::start(const QString& eventStr)
     //Read, create and store all the events from strList
     EventReader eventReader;
     connect(&eventReader, SIGNAL(error(const QString&)), window_, SLOT(setStatus(const QString&)));
-    if(eventReader.loadEvents(strList, events_))
-    {
-        if(!events_.empty())
-        {
+    if(eventReader.loadEvents(strList, events_)) {
+        if(!events_.empty()) {
             eventTmr_.start(events_[0]->getStart());
             time_ = 0;
         }
@@ -193,8 +186,7 @@ void VideoDialog::pause()
 void VideoDialog::unpause()
 {
     cameraThread_->unpause();
-    if(!events_.empty())
-    {
+    if(!events_.empty()) {
         eventDuration_ = eventDuration_ - time_;
         eventTmr_.start(eventDuration_);
     }

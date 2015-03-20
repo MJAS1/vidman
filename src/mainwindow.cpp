@@ -5,6 +5,7 @@
 #include <QStringList>
 #include <QMenu>
 #include <QCloseEvent>
+#include <QStatusBar>
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include "mainwindow.h"
@@ -18,6 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog_ = new VideoDialog(this);
     videoDialog_->show();
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
+
+    highlighter_ = new Highlighter(ui->textEdit->document());
 
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
     QMenu *menu = new QMenu(this);
@@ -45,7 +48,9 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBtn->setShortcut(QString("Ctrl+e"));
     ui->toolBar2->addWidget(toolBtn);
 
-    highlighter_ = new Highlighter(ui->textEdit->document());
+    //Set status bar
+    status_.setIndent(10);
+    statusBar()->addWidget(&status_, 1);
 }
 
 MainWindow::~MainWindow()
@@ -75,8 +80,7 @@ void MainWindow::onStart()
 
         case STOPPED:
 
-            if(videoDialog_->start(ui->textEdit->toPlainText()))
-            {
+            if(videoDialog_->start(ui->textEdit->toPlainText())) {
                 //ui->stopButton->setEnabled(true);
                 runningTime_.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
@@ -98,8 +102,7 @@ void MainWindow::onStart()
 
 void MainWindow::onStop()
 {
-    if(programState_ == PLAYING || programState_ == PAUSED)
-    {
+    if(programState_ == PLAYING || programState_ == PAUSED) {
         ui->startButton->toggle();
         ui->recButton->setChecked(false);
         videoDialog_->toggleRecord(false);
@@ -114,7 +117,7 @@ void MainWindow::onStop()
     }
 
     videoDialog_->stop();
-    ui->statusLbl->clear();
+    status_.clear();
 }
 
 void MainWindow::onRec(bool arg)
@@ -161,8 +164,7 @@ void MainWindow::onKeepLog(bool arg)
 
 void MainWindow::onSerialPort(bool arg)
 {
-    if(arg)
-    {
+    if(arg) {
         ui->actionParallelPort->setChecked(false);
         videoDialog_->setOutputDevice(OutputDevice::PORT_SERIAL);
     }
@@ -244,8 +246,7 @@ bool MainWindow::fileSave()
     QTextDocumentWriter writer(fileName_);
     writer.setFormat("plaintext");
     bool success = writer.write(ui->textEdit->document());
-    if (success)
-    {
+    if (success) {
         ui->textEdit->document()->setModified(false);
     }
     return success;
@@ -373,13 +374,11 @@ void MainWindow::addPlaybackEvent()
 
 void MainWindow::closeEvent(QCloseEvent *e)
 {
-    if (maybeSave())
-    {
+    if (maybeSave()) {
         e->accept();
         videoDialog_->close();
     }
-    else
-    {
+    else {
         e->ignore();
         return;
     }
@@ -406,5 +405,6 @@ TimerWithPause& MainWindow::getTimer()
 void MainWindow::setStatus(const QString &str)
 {
     //QApplication::beep();
-    ui->statusLbl->setText(str);
+    //ui->statusLbl->setText(str);
+    status_.setText(str);
 }

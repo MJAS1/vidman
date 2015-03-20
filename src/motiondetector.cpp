@@ -32,9 +32,7 @@ bool MotionDetector::movementDetected() const
     //If distance is big enough, interpret it as movement
     double norm = cv::norm(centroid_-getCentroid(fore_));
     if(norm > sensitivity_)
-    {
         return true;
-    }
 
     return false;
 }

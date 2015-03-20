@@ -36,8 +36,7 @@ bool LogFile::open()
 void LogFile::write(const QString& log)
 {
     mutex_.lock();
-    if(active_)
-    {
+    if(active_) {
         qint64 elapsedTime = timer_.nsecsElapsed();
         QTextStream logStream(&file_);
         logStream << "[" << elapsedTime/1000000000 << "s "

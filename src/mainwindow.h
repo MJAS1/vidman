@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QTime>
+#include <QLabel>
 #include "videodialog.h"
 #include "event.h"
 #include "eventreader.h"
@@ -93,6 +94,7 @@ private:
     TimerWithPause      runningTime_;
     QTimer              timeTmr_;
     QString             fileName_;
+    QLabel              status_;
 };
 
 #endif // MAINWINDOW_H

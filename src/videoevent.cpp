@@ -29,17 +29,14 @@ FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCod
 
 void FadeInEvent::apply(cv::Mat &frame)
 {
-    if(!stopped_)
-    {
-        if(!timerWithPause_.isValid())
-        {
+    if(!stopped_) {
+        if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
             interval_ = duration_/255;
         }
         int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
         amount_ = -255 + msecsElapsed/interval_;
-        if(amount_ >= 0)
-        {
+        if(amount_ >= 0) {
             amount_ = 0;
             stopped_ = true;
         }
@@ -67,17 +64,14 @@ FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigC
 
 void FadeOutEvent::apply(cv::Mat &frame)
 {
-    if(!stopped_)
-    {
-        if(!timerWithPause_.isValid())
-        {
+    if(!stopped_) {
+        if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
             interval_ = duration_/255;
         }
         int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
         amount_ = -msecsElapsed/interval_;
-        if(amount_ <= -255)
-        {
+        if(amount_ <= -255) {
             amount_ = -255;
             stopped_ = true;
         }
@@ -116,8 +110,7 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
 
 
   // start at the row indicated by location, or at row 0 if location.y is negative.
-  for(int y = std::max(location.y , 0); y < background.rows; ++y)
-  {
+  for(int y = std::max(location.y , 0); y < background.rows; ++y) {
     int fY = y - location.y; // because of the translation
 
     // we are done of we have processed all rows of the foreground image.
@@ -185,8 +178,7 @@ FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode, int priorit
 
 void FreezeEvent::apply(cv::Mat &frame)
 {
-    if(!started_)
-    {
+    if(!started_) {
         frame.copyTo(freezedFrame_);
         started_ = true;
     }
@@ -202,17 +194,14 @@ ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id, i
 
 void ZoomEvent::apply(cv::Mat &frame)
 {
-    if(!stopped_)
-    {
-        if(!timer_.isValid())
-        {
+    if(!stopped_) {
+        if(!timer_.isValid()) {
             interval_ = (scale_ - 1) / duration_;
             timer_.start();
         }
         int msecsElapsed = timer_.nsecsElapsed()/1000000;
         coef_ = 1 + interval_*msecsElapsed;
-        if(coef_ >= scale_)
-        {
+        if(coef_ >= scale_) {
             coef_ = scale_;
             stopped_ = true;
         }
@@ -247,8 +236,7 @@ RecordEvent::RecordEvent(int start, FramesPtr frames, int delay, int duration, i
 
 void RecordEvent::apply(cv::Mat &frame)
 {
-    if(!finished_ && !paused_)
-    {
+    if(!finished_ && !paused_) {
         if(!timer_.isValid())
             timer_.start();
 
@@ -280,8 +268,7 @@ PlaybackEvent::PlaybackEvent(int start, FramesPtr frames, int delay, int duratio
 
 void PlaybackEvent::apply(cv::Mat &frame)
 {
-    if(!finished_ && !paused_)
-    {
+    if(!finished_ && !paused_) {
         iter_->copyTo(frame);
         if(++iter_ == frames_->end())
             finished_ = true;
