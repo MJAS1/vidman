@@ -19,9 +19,8 @@ void MotionDetector::updateFrame(const cv::Mat &frame)
     cv::threshold(fore_, fore_, 100, 0xff, CV_THRESH_BINARY);
     cv::erode(fore_,fore_,cv::Mat());
     cv::dilate(fore_,fore_,cv::Mat());
-    cv::namedWindow("Test");
-    cv::imshow("Test", fore_);
-    //cv::waitKey(16);
+    //cv::namedWindow("MotionDetector");
+    //cv::imshow("MotionDetector", fore_);
 }
 
 void MotionDetector::startTracking()

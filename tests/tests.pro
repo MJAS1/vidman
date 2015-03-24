@@ -2,6 +2,7 @@ include(../defaults.pri)
 TEMPLATE = app
 
 CONFIG += qtestlib
+CONFIG +=link_pkgconfig
 
 CONFIG(debug, debug|release) {
     BUILD = debug
@@ -11,7 +12,8 @@ CONFIG(release, debug|release) {
     BUILD = release
 }
 
-INCLUDEPATH += /usr/include/opencv
+#INCLUDEPATH += /usr/include/opencv
+PKGCONFIG += opencv
 LIBS += -L../lib -lvidman_$$BUILD
 LIBS += -L/usr/share/lib -ldc1394
 LIBS += -lopencv_core

@@ -10,8 +10,10 @@ QT       += core gui
 QT       += opengl
 
 TEMPLATE = lib
+CONFIG += staticlib
 CONFIG += console
 CONFIG -= app_bundle
+CONFIG +=link_pkgconfig
 
 
 SOURCES += mainwindow.cpp \
@@ -69,19 +71,8 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     videodialog.ui
 
-INCLUDEPATH += /usr/include/opencv
+PKGCONFIG += opencv
 LIBS += -L/usr/share/lib -ldc1394
-LIBS += -lopencv_core
-LIBS += -lopencv_imgproc
-LIBS += -lopencv_highgui
-LIBS += -lopencv_ml
-LIBS += -lopencv_video
-LIBS += -lopencv_features2d
-LIBS += -lopencv_calib3d
-LIBS += -lopencv_objdetect
-LIBS += -lopencv_contrib
-LIBS += -lopencv_legacy
-LIBS += -lopencv_flann
 LIBS += -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11

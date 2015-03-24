@@ -3,6 +3,7 @@ include(../defaults.pri)
 TEMPLATE = app
 
 QT += opengl
+CONFIG += link_pkgconfig
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -25,20 +26,9 @@ CONFIG(release, debug|release) {
     BUILD = release
 }
 
-INCLUDEPATH += /usr/include/opencv
+PKGCONFIG += opencv
 LIBS += -L../lib -lvidman_$$BUILD
 LIBS += -L/usr/share/lib -ldc1394
-LIBS += -lopencv_core
-LIBS += -lopencv_imgproc
-LIBS += -lopencv_highgui
-LIBS += -lopencv_ml
-LIBS += -lopencv_video
-LIBS += -lopencv_features2d
-LIBS += -lopencv_calib3d
-LIBS += -lopencv_objdetect
-LIBS += -lopencv_contrib
-LIBS += -lopencv_legacy
-LIBS += -lopencv_flann
 LIBS += -ljpeg
 
 TARGET = vidman_$$BUILD
