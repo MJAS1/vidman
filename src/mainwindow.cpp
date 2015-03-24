@@ -76,6 +76,7 @@ void MainWindow::toggleStop(bool arg)
 
 void MainWindow::onStart()
 {
+    status_.clear();
     switch (programState_) {
 
         case STOPPED:
@@ -407,4 +408,5 @@ void MainWindow::setStatus(const QString &str)
     //QApplication::beep();
     //ui->statusLbl->setText(str);
     status_.setText(str);
+    std::cerr << str.toStdString() << std::endl;
 }

@@ -19,6 +19,9 @@ void MotionDetector::updateFrame(const cv::Mat &frame)
     cv::threshold(fore_, fore_, 100, 0xff, CV_THRESH_BINARY);
     cv::erode(fore_,fore_,cv::Mat());
     cv::dilate(fore_,fore_,cv::Mat());
+    cv::namedWindow("Test");
+    cv::imshow("Test", fore_);
+    //cv::waitKey(16);
 }
 
 void MotionDetector::startTracking()
@@ -28,6 +31,7 @@ void MotionDetector::startTracking()
 
 bool MotionDetector::movementDetected() const
 {
+
     //Calculate the distance between the centroids of the current frame and the frame when tracking started
     //If distance is big enough, interpret it as movement
     double norm = cv::norm(centroid_-getCentroid(fore_));

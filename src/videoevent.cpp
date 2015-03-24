@@ -108,7 +108,6 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
 {
   background.copyTo(output);
 
-
   // start at the row indicated by location, or at row 0 if location.y is negative.
   for(int y = std::max(location.y , 0); y < background.rows; ++y) {
     int fY = y - location.y; // because of the translation
@@ -208,9 +207,10 @@ void ZoomEvent::apply(cv::Mat &frame)
     }
 
     cv::Mat tmp;
-    cv::Size newSize(frame.cols * coef_, frame.rows * coef_);
-    resize(frame, tmp, newSize);
+    //cv::Size newSize(frame.cols * coef_, frame.rows * coef_);
+    resize(frame, tmp, cv::Size(), coef_, coef_, cv::INTER_LINEAR);
 
+    //Take only the center 640x480 of the resized image
     cv::Point p((tmp.cols - frame.cols) / 2, (tmp.rows - frame.rows) / 2);
     cv::Rect roi(p, frame.size());
     frame = tmp(roi).clone();

@@ -31,28 +31,28 @@ bool OutputDevice::open(PortType port)
 {
     switch (port)
     {
-    case PORT_PARALLEL:
-        //if(ioperm(settings_.printerPortAddr, 1, 1))
-        if((fd_ = ::open("/dev/lp0", O_RDWR)) < 1) {
-            portType_ = PORT_NULL;
-            std::cerr << "Cannot get the port. May be you should run this program as root" << std::endl;
-        }
-        else
-            portType_ = PORT_PARALLEL;
-        break;
+        case PORT_PARALLEL:
+            if(ioperm(settings_.printerPortAddr, 1, 1)) {
+            //if((fd_ = ::open("/dev/lp0", O_RDWR)) < 1) {
+                portType_ = PORT_NULL;
+                std::cerr << "Cannot get the port. May be you should run this program as root" << std::endl;
+            }
+            else
+                portType_ = PORT_PARALLEL;
+            break;
 
-    case PORT_SERIAL:
-        if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
-            portType_ = PORT_NULL;
-            fd_ = -1;
-            std::cerr << "Cannot open USB port. May be you should run this program as root" << std::endl;
-        }
-        else
-            portType_ = PORT_SERIAL;
-        break;
+        case PORT_SERIAL:
+            if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
+                portType_ = PORT_NULL;
+                fd_ = -1;
+                std::cerr << "Cannot open USB port. May be you should run this program as root" << std::endl;
+            }
+            else
+                portType_ = PORT_SERIAL;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     return true;

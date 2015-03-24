@@ -35,8 +35,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
     QGLFormat format;
     format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
-    ui->verticalLayout->addWidget(glVideoWidget_);
-    ui->verticalLayout->setStretchFactor(glVideoWidget_, 10);
+    ui->verticalLayout->addWidget(glVideoWidget_, 1);
 
     // Set up video recording
     connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
