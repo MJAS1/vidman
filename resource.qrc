@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>src/fragmentShader.fsh</file>
         <file>src/vertexShader.vsh</file>
+        <file>img/fixPoint.png</file>
     </qresource>
 </RCC>

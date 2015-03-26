@@ -71,7 +71,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     videodialog.ui
 
-PKGCONFIG += opencv
+#PKGCONFIG += opencv
 LIBS += -L/usr/share/lib -ldc1394
 LIBS += -ljpeg
 

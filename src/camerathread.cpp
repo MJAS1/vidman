@@ -9,6 +9,7 @@
 #include <time.h>
 #include <fstream>
 #include <QDebug>
+#include <QImage>
 
 #include "camerathread.h"
 #include "config.h"
@@ -26,10 +27,13 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf) :
         preEvents_.append(new RotateEvent(0, 180, 0));
 
     if(settings_.fixPoint) {
-        cv::Mat fixImg = cv::imread("./img/fixPoint.png", CV_LOAD_IMAGE_UNCHANGED);
+        //fixPoint.png is stored in qt resource file, so it needs to be loaded to QImage first
+        QImage fixImg(":/img/fixPoint.png");
+        cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4, fixImg.bits(), fixImg.bytesPerLine()).clone();
+        cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
-        if(!fixImg.empty())
-            preEvents_.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixImg.cols)/2, (VIDEO_HEIGHT-fixImg.rows)/2), fixImg, 0));
+        if(!fixMat.empty())
+            preEvents_.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0));
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
