@@ -20,16 +20,20 @@ SOURCES += \
 
 CONFIG(debug, debug|release) {
     BUILD = debug
+#$$BUILD doesn't work for PRE_TARGEDEPS, so it needs to be defined separately for debug and release
+    PRE_TARGETDEPS+=../lib/libvidman_debug.a
 }
 
 CONFIG(release, debug|release) {
     BUILD = release
+    PRE_TARGETDEPS+=../lib/libvidman_release.a
 }
 
 PKGCONFIG += opencv
 LIBS += -L../lib -lvidman_$$BUILD
 LIBS += -L/usr/share/lib -ldc1394
 LIBS += -ljpeg
+
 
 TARGET = vidman_$$BUILD
 

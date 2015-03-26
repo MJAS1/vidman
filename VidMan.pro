@@ -3,7 +3,10 @@ CONFIG += ordered
 SUBDIRS = \
         src \
 	app \
-        tests
 
 app.depends = src
-tests.depends = src
+
+CONFIG(debug, debug|release) {
+    SUBDIRS += tests
+    tests.depends = src
+}
