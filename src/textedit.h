@@ -4,7 +4,7 @@
 #include <QPlainTextEdit>
 
 
-//Code from Qt examples
+//Some code from Qt examples
 class TextEdit : public QPlainTextEdit
 {
     Q_OBJECT

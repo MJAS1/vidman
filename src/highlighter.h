@@ -3,7 +3,7 @@
 
 #include <QSyntaxHighlighter>
 
-//Code from Qt examples
+//Some code from Qt examples
 
 class Highlighter : public QSyntaxHighlighter
 {

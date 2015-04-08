@@ -9,8 +9,7 @@ OutputDevice::OutputDevice() : portType_(PORT_NULL)
 
 void OutputDevice::writeData(int trigCode)
 {
-    switch (portType_)
-    {
+    switch (portType_) {
         case PORT_PARALLEL:
             outb(trigCode, settings_.printerPortAddr);
             break;
@@ -29,8 +28,7 @@ void OutputDevice::writeData(int trigCode)
 
 bool OutputDevice::open(PortType port)
 {
-    switch (port)
-    {
+    switch (port) {
         case PORT_PARALLEL:
             if(ioperm(settings_.printerPortAddr, 1, 1)) {
             //if((fd_ = ::open("/dev/lp0", O_RDWR)) < 1) {
