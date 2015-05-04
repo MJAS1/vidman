@@ -12,10 +12,9 @@ using namespace std;
 
 int StoppableThread::nextId = 0;
 
-StoppableThread::StoppableThread()
+StoppableThread::StoppableThread(QObject *parent) : QThread(parent), shouldStop(false)
 {
 	id = nextId++;
-	shouldStop = false;
 
 	clog << "StoppableThread no. " << id << " is created" << endl;
 }

@@ -87,8 +87,6 @@ private:
     QTimer                  eventTmr_;
     QElapsedTimer           elapsedTimer_;
     qint64                  time_;
-
-    Camera&                 camera_;
 };
 
 #endif // VIDEODIALOG_H

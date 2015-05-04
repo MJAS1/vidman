@@ -47,7 +47,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
         else if(!str.isEmpty()) {
             emit error(QString("Error: couldn't understand line %1.").arg(i+1));
             return false;
-        }
+        };
     }
 
     return true;

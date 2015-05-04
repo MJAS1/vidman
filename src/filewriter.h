@@ -31,7 +31,7 @@
 class FileWriter : public StoppableThread
 {
 protected:
-    FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext);
+    FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, QObject* parent = 0);
 	virtual ~FileWriter();
 	virtual void stoppableRun();
 

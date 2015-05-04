@@ -116,7 +116,7 @@ Settings::Settings()
 	if(!settings.contains("misc/data_storage_path"))
 	{
 		settings.setValue("misc/data_storage_path", "/videodat");
-		sprintf(storagePath, "/videodat");
+        sprintf(storagePath, "../videodat");
 	}
 	else
 	{

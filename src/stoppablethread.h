@@ -29,11 +29,12 @@
 class StoppableThread : public QThread
 {
 public:
-	void stop();
+    explicit StoppableThread(QObject *parent = 0);
+    virtual ~StoppableThread();
+
+    void stop();
 
 protected:
-	StoppableThread();
-	virtual ~StoppableThread();
 	virtual void run();
 	virtual void stoppableRun() = 0;
 	volatile bool shouldStop;

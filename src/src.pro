@@ -6,15 +6,11 @@
 
 include(../defaults.pri)
 
-QT       += core gui
-QT       += opengl
-
 TEMPLATE = lib
-CONFIG += staticlib
-CONFIG += console
-CONFIG -= app_bundle
-CONFIG +=link_pkgconfig
 
+QT += core gui opengl
+
+CONFIG += staticlib link_pkgconfig
 
 SOURCES += mainwindow.cpp \
     videodialog.cpp \
@@ -41,7 +37,7 @@ SOURCES += mainwindow.cpp \
     camera.cpp \
     logfile.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS += mainwindow.h \
     videodialog.h \
     videofilewriter.h \
     videocompressorthread.h \
@@ -68,22 +64,13 @@ HEADERS  += mainwindow.h \
     camera.h \
     logfile.h
 
-FORMS    += mainwindow.ui \
+FORMS += mainwindow.ui \
     videodialog.ui
 
 PKGCONFIG += opencv
-LIBS += -L/usr/share/lib -ldc1394
-LIBS += -ljpeg
+LIBS += -L/usr/share/lib -ldc1394 -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11
-
-# remove possible other optimization flags
-QMAKE_CXXFLAGS_RELEASE -= -O
-QMAKE_CXXFLAGS_RELEASE -= -O1
-QMAKE_CXXFLAGS_RELEASE -= -O2
-
-# add the desired -O3 if not present
-QMAKE_CXXFLAGS_RELEASE *= -O3
 
 CONFIG(debug, debug|release) {
     BUILD = debug
@@ -91,6 +78,12 @@ CONFIG(debug, debug|release) {
 
 CONFIG(release, debug|release) {
     BUILD = release
+
+    # remove possible other optimization flags
+    QMAKE_CXXFLAGS_RELEASE -= -O -O1 -O2
+
+    # add the desired -O3 if not present
+    QMAKE_CXXFLAGS_RELEASE += -O3
 }
 
 TARGET = vidman_$$BUILD

@@ -7,16 +7,15 @@
 #include "eventreader.h"
 #include "eventcontainer.h"
 #include "motiondetector.h"
-
+#include "glthread.h"
+#include "cycdatabuffer.h"
 
 Test::Test(QObject *parent) : QObject(parent)
 {
-
 }
 
 Test::~Test()
 {
-
 }
 
 void Test::testEventReader()

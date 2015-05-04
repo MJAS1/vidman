@@ -15,6 +15,7 @@
 namespace Ui {
 class MainWindow;
 }
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -88,7 +89,7 @@ private:
     void                unpause();
 
     Highlighter*        highlighter_;
-    State               programState_;
+    State               state_;
 
     VideoDialog*        videoDialog_;
     TimerWithPause      runningTime_;

@@ -20,13 +20,7 @@
 #include "videoevent.h"
 
 VideoDialog::VideoDialog(MainWindow *window) :
-    QDialog(window), ui(new Ui::VideoDialog), window_(window), logFile_(window->getTimer()),
-    cycVideoBufRaw_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ)),
-    cycVideoBufJpeg_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ)),
-    cameraThread_(new CameraThread(cycVideoBufRaw_)),
-    videoFileWriter_(new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath)),
-    videoCompressorThread_(new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality)),
-    camera_(cameraThread_->camera())
+    QDialog(window), ui(new Ui::VideoDialog), window_(window), logFile_(window->getTimer())
 {
     ui->setupUi(this);
 
@@ -38,17 +32,22 @@ VideoDialog::VideoDialog(MainWindow *window) :
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
 
     // Set up video recording
+    cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+    cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+    cameraThread_ = new CameraThread(cycVideoBufRaw_, this);
+    videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
+    videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
     connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
 
-    if(camera_.isInitialized()) {
+    if(cameraThread_->camera().isInitialized()) {
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(camera_.getShutter() - SHUTTER_OFFSET);
+        ui->shutterSlider->setValue(cameraThread_->camera().getShutter() - SHUTTER_OFFSET);
 
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(camera_.getGain() - GAIN_OFFSET);
+        ui->gainSlider->setValue(cameraThread_->camera().getGain() - GAIN_OFFSET);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
@@ -81,12 +80,6 @@ VideoDialog::VideoDialog(MainWindow *window) :
 VideoDialog::~VideoDialog()
 {
     stopThreads();
-    delete cycVideoBufRaw_;
-    delete cycVideoBufJpeg_;
-    delete cameraThread_;
-    delete videoFileWriter_;
-    delete videoCompressorThread_;
-    delete glVideoWidget_;
     delete ui;
 }
 
@@ -131,7 +124,6 @@ void VideoDialog::getNextEvent()
 
     if(!events_.empty()) {
         Event *nextEvent = events_[0];
-        //eventDuration_ = (nextEvent->getStart()+event->getDuration()+event->getDelay());
         eventDuration_ = (nextEvent->getStart()+event->getDelay());
         eventTmr_.start(eventDuration_);
         time_ = elapsedTimer_.nsecsElapsed()/1000000;
@@ -194,22 +186,22 @@ void VideoDialog::unpause()
 
 void VideoDialog::onShutterChanged(int newVal)
 {
-    camera_.setShutter(newVal);
+    cameraThread_->camera().setShutter(newVal);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
-    camera_.setGain(newVal);
+    cameraThread_->camera().setGain(newVal);
 }
 
 void VideoDialog::onUVChanged(int newVal)
 {
-    camera_.setUV(newVal, ui->vrSlider->value());
+    cameraThread_->camera().setUV(newVal, ui->vrSlider->value());
 }
 
 void VideoDialog::onVRChanged(int newVal)
 {
-    camera_.setVR(newVal, ui->uvSlider->value());
+    cameraThread_->camera().setVR(newVal, ui->uvSlider->value());
 }
 
 void VideoDialog::onWidthChanged(int newVal)
@@ -239,7 +231,7 @@ void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 
 void VideoDialog::onExternTrig(bool on)
 {
-    camera_.setExternTrigger(on);
+    cameraThread_->camera().setExternTrigger(on);
 }
 
 LogFile& VideoDialog::logFile()

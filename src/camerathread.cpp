@@ -17,8 +17,9 @@
 using namespace std;
 
 
-CameraThread::CameraThread(CycDataBuffer* cycBuf) :
-    cycBuf_(cycBuf), trigCode_(0), shouldUpdateBg(true), detectMotionEvent_(NULL)
+CameraThread::CameraThread(CycDataBuffer* cycBuf, QObject* parent) :
+    StoppableThread(parent), cycBuf_(cycBuf), trigCode_(0), shouldUpdateBg(true),
+    detectMotionEvent_(NULL)
 {
     if(settings_.flip)
         preEvents_.append(new FlipEvent(0, 0));

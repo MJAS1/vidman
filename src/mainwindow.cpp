@@ -13,7 +13,7 @@
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), programState_(STOPPED)
+    QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED)
 {
     ui->setupUi(this);
     videoDialog_ = new VideoDialog(this);
@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete videoDialog_;
     delete ui;
 }
 
@@ -77,15 +76,13 @@ void MainWindow::toggleStop(bool arg)
 void MainWindow::onStart()
 {
     status_.clear();
-    switch (programState_) {
 
+    switch (state_) {
         case STOPPED:
-
             if(videoDialog_->start(ui->textEdit->toPlainText())) {
-                //ui->stopButton->setEnabled(true);
                 runningTime_.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-                programState_ = PLAYING;
+                state_ = PLAYING;
                 timeTmr_.start(100);
             }
             break;
@@ -98,24 +95,22 @@ void MainWindow::onStart()
             unpause();
             break;
     }
-
 }
 
 void MainWindow::onStop()
 {
-    if(programState_ == PLAYING || programState_ == PAUSED) {
-        ui->startButton->toggle();
-        ui->recButton->setChecked(false);
-        videoDialog_->toggleRecord(false);
-
+    if(state_ == PLAYING || state_ == PAUSED) {
         QTime time(0, 0);
         ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
         timeTmr_.stop();
 
-        programState_ = STOPPED;
+        state_ = STOPPED;
         ui->startButton->setChecked(false);
         ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
     }
+
+    ui->recButton->setChecked(false);
+    videoDialog_->toggleRecord(false);
 
     videoDialog_->stop();
     status_.clear();
@@ -132,7 +127,7 @@ void MainWindow::pause()
     runningTime_.pause();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
     videoDialog_->pause();
-    programState_ = PAUSED;
+    state_ = PAUSED;
 }
 
 void MainWindow::unpause()
@@ -141,7 +136,7 @@ void MainWindow::unpause()
     runningTime_.resume();
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
     videoDialog_->unpause();
-    programState_ = PLAYING;
+    state_ = PLAYING;
 }
 
 void MainWindow::onViewVideoDialog(bool checked)
@@ -186,8 +181,7 @@ void MainWindow::onParallelPort(bool arg)
 
 void MainWindow::updateTime()
 {
-    QTime time;
-    time.setHMS(0, 0, 0);
+    QTime time(0, 0);
     qint64 secsElapsed = runningTime_.nsecsElapsed()/1000000000;
     time = time.addSecs(secsElapsed);
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
@@ -215,7 +209,6 @@ bool MainWindow::load(const QString &f)
     ui->textEdit->setPlainText(str);
     ui->textEdit->document()->setModified(false);
     setCurrentFileName(f);
-
 
     return true;
 }
@@ -397,7 +390,6 @@ qint64 MainWindow::getRunningTime()
     return runningTime_.nsecsElapsed();
 }
 
-
 TimerWithPause& MainWindow::getTimer()
 {
     return runningTime_;
@@ -406,7 +398,6 @@ TimerWithPause& MainWindow::getTimer()
 void MainWindow::setStatus(const QString &str)
 {
     //QApplication::beep();
-    //ui->statusLbl->setText(str);
     status_.setText(str);
     std::cerr << str.toStdString() << std::endl;
 }

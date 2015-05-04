@@ -57,7 +57,7 @@ public:
 	 * bytes rather than chunks) buffer size is limited by the size of "int" on
 	 * your platform.
 	 */
-	CycDataBuffer(int _bufSize);
+    CycDataBuffer(int _bufSize, QObject* parent = 0);
 	virtual ~CycDataBuffer();
     void insertChunk(unsigned char* _data, ChunkAttrib &_attrib);
 

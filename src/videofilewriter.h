@@ -13,7 +13,7 @@
 class VideoFileWriter : public FileWriter
 {
 public:
-    VideoFileWriter(CycDataBuffer* cycBuf, const char* path);
+    VideoFileWriter(CycDataBuffer* cycBuf, const char* path, QObject* parent = 0);
 	virtual ~VideoFileWriter();
 
 protected:
