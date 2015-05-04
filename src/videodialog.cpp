@@ -31,23 +31,23 @@ VideoDialog::VideoDialog(MainWindow *window) :
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
 
-    // Set up video recording
-    cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
-    cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
-    cameraThread_ = new CameraThread(cycVideoBufRaw_, this);
-    videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
-    videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
-    connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
+    if(cam_.isInitialized()) {
+        // Set up video recording
+        cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+        cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+        cameraThread_ = new CameraThread(cycVideoBufRaw_, cam_, this);
+        videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
+        videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
 
-    if(cameraThread_->camera().isInitialized()) {
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(cameraThread_->camera().getShutter() - SHUTTER_OFFSET);
+        ui->shutterSlider->setValue(cam_.getShutter() - SHUTTER_OFFSET);
 
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(cameraThread_->camera().getGain() - GAIN_OFFSET);
+        ui->gainSlider->setValue(cam_.getGain() - GAIN_OFFSET);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
@@ -79,7 +79,8 @@ VideoDialog::VideoDialog(MainWindow *window) :
 
 VideoDialog::~VideoDialog()
 {
-    stopThreads();
+    if(cam_.isInitialized())
+        stopThreads();
     delete ui;
 }
 
@@ -186,22 +187,22 @@ void VideoDialog::unpause()
 
 void VideoDialog::onShutterChanged(int newVal)
 {
-    cameraThread_->camera().setShutter(newVal);
+    cam_.setShutter(newVal);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
-    cameraThread_->camera().setGain(newVal);
+    cam_.setGain(newVal);
 }
 
 void VideoDialog::onUVChanged(int newVal)
 {
-    cameraThread_->camera().setUV(newVal, ui->vrSlider->value());
+    cam_.setUV(newVal, ui->vrSlider->value());
 }
 
 void VideoDialog::onVRChanged(int newVal)
 {
-    cameraThread_->camera().setVR(newVal, ui->uvSlider->value());
+    cam_.setVR(newVal, ui->uvSlider->value());
 }
 
 void VideoDialog::onWidthChanged(int newVal)
@@ -231,7 +232,7 @@ void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
 
 void VideoDialog::onExternTrig(bool on)
 {
-    cameraThread_->camera().setExternTrigger(on);
+    cam_.setExternTrigger(on);
 }
 
 LogFile& VideoDialog::logFile()

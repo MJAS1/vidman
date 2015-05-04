@@ -24,15 +24,13 @@
 class CameraThread : public StoppableThread
 {
 public:
-    explicit CameraThread(CycDataBuffer* cycBuf, QObject* parent = 0);
+    explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent = 0);
 	virtual ~CameraThread();
 
     void    clearEvents();
     void    pause();
     void    unpause();
     void    updateBackground();
-
-    Camera& camera();
 
 public slots:
     void    addVideoEvent(VideoEvent *ev);
@@ -47,7 +45,7 @@ private:
     CameraThread& operator=(const CameraThread&);
 
     CycDataBuffer*                      cycBuf_;
-    Camera                              cam_;
+    Camera                              &cam_;
     cv::Mat                             frame_;
 
     QMutex                              mutex_;

@@ -17,8 +17,8 @@
 using namespace std;
 
 
-CameraThread::CameraThread(CycDataBuffer* cycBuf, QObject* parent) :
-    StoppableThread(parent), cycBuf_(cycBuf), trigCode_(0), shouldUpdateBg(true),
+CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
+    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg(true),
     detectMotionEvent_(NULL)
 {
     if(settings_.flip)
@@ -216,9 +216,4 @@ void CameraThread::updateBackground()
     mutex_.lock();
     shouldUpdateBg = true;
     mutex_.unlock();
-}
-
-Camera& CameraThread::camera()
-{
-    return cam_;
 }
