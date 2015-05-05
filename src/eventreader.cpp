@@ -230,7 +230,7 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
 
         case Event::EVENT_RECORD:
             if(videoIdOk) {
-                if(duration > videoLengths_[videoId]) {
+                if(duration > videoObjects_[videoId]->length_) {
                     emit error(QString("Error: record event duration too big for video object in line %1").arg(lineNumber));
                     return false;
                 }
@@ -326,11 +326,14 @@ bool EventReader::readVideoObject(const QString &str, int lineNumber)
         }
     }
 
-    std::shared_ptr<QList<cv::Mat>> frames(new QList<cv::Mat>);
-    //Reserve enough memory to hold all the frames
-    frames->reserve(length/1000*settings_.fps + 10);
-    videoObjects_.insert(id, frames);
-    videoLengths_.insert(id, length);
+    std::shared_ptr<VideoObject> videoObject(new VideoObject);
+    videoObject->length_ = length;
+
+    //Reserve enough memory to hold all the frames. This is necessary to make sure that large blocks
+    //of memory don't need to be reallocated while recording.
+    videoObject->frames_.reserve(length/1000*settings_.fps + 10);
+    videoObjects_.insert(id, videoObject);
+
     return true;
 }
 

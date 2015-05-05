@@ -64,7 +64,7 @@ private:
     GLThread    *glt_;
 
 private slots:
-    void setFPS();
+    void displayFPS();
 };
 
 #endif /* GLVIDEOWIDGET_H_ */

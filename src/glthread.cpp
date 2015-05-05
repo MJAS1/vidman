@@ -45,7 +45,7 @@ void GLThread::stoppableRun()
         //new value before use, so copy it to a local scope variable
         int trigCode = trigCode_;
 
-        //trigPort.open() must be called in this thread to make outb work
+        //trigPort.open() must be called by this thread to make outb() work
         if(shouldChangePort_) {
             if(newPort_)
                 trigPort_.open(newPort_);

@@ -18,9 +18,10 @@ using namespace std;
 
 
 CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
-    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg(true),
+    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg_(true),
     detectMotionEvent_(NULL)
 {
+    //Setup preEvents for default processing each frame before actual manipulation
     if(settings_.flip)
         preEvents_.append(new FlipEvent(0, 0));
 
@@ -64,9 +65,7 @@ void CameraThread::stoppableRun()
     // Set priority
     sch_param.sched_priority = CAM_THREAD_PRIORITY;
     if (sched_setscheduler(0, SCHED_FIFO, &sch_param))
-    {
         std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
-    }
 
     // Start the acquisition loop
     while (!shouldStop) {
@@ -78,9 +77,10 @@ void CameraThread::stoppableRun()
 
         mutex_.lock();
 
-        if(shouldUpdateBg) {
+        //If necessary, update motionDetector background image for substraction
+        if(shouldUpdateBg_) {
             motionDetector_.updateBackground(frame_);
-            shouldUpdateBg = false;
+            shouldUpdateBg_ = false;
         }
 
         motionDetector_.updateFrame(frame_);
@@ -214,6 +214,6 @@ void CameraThread::detectMotion(Event *ev)
 void CameraThread::updateBackground()
 {
     mutex_.lock();
-    shouldUpdateBg = true;
+    shouldUpdateBg_ = true;
     mutex_.unlock();
 }

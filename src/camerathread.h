@@ -53,7 +53,7 @@ private:
 
     int                                 trigCode_;
     bool                                isDetectingMotion_;
-    bool                                shouldUpdateBg;
+    bool                                shouldUpdateBg_;
 
     Event*                              detectMotionEvent_;
     EventContainer<VideoEvent*>         events_, preEvents_;

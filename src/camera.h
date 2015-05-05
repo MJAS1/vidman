@@ -23,6 +23,7 @@ public:
     void        setUV(int newVal, int vrValue);
     void        setVR(int newVal, int uvValue);
 
+    //Allows the camera to be controlled by an external trigger source
     void        setExternTrigger(bool on);
     void        operator>>(cv::Mat& frame);
 

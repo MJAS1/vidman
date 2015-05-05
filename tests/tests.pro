@@ -5,17 +5,14 @@ CONFIG += qtestlib link_pkgconfig
 
 QT += opengl
 
-#INCLUDEPATH += /usr/include/opencv
 PKGCONFIG += opencv
 LIBS += -L../lib -lvidman_debug -L/usr/share/lib -ldc1394
 
 QMAKE_CXXFLAGS += -std=c++11
 
-SOURCES += \
-    test.cpp
+SOURCES += test.cpp
 
-HEADERS += \
-    test.h
+HEADERS += test.h
 
 PRE_TARGETDEPS+=../lib/libvidman_debug.a
 

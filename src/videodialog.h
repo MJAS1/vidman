@@ -41,7 +41,7 @@ public:
     void pause();
     void unpause();
     void setKeepLog(bool);
-    void setFPS(int fps);
+    void displayFPS(int fps);
     void updateBackground();
 
     LogFile& logFile();

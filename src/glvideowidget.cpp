@@ -30,7 +30,7 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 {
     setAutoBufferSwap(false);
 
-    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(setFPS()));
+    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(displayFPS()));
     fpsTimer_.start(1000);
 
     glt_->start();
@@ -92,11 +92,10 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 
 }
 
-void GLVideoWidget::setFPS()
+void GLVideoWidget::displayFPS()
 {
-    int fps = frames_;
+    videoDialog_->displayFPS(frames_);
     frames_ = 0;
-    videoDialog_->setFPS(fps);
 }
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)

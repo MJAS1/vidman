@@ -7,8 +7,8 @@ CONFIG += link_pkgconfig
 
 QMAKE_CXXFLAGS += -std=c++11
 
-SOURCES += \
-    main.cpp
+SOURCES += main.cpp
+
 
 CONFIG(debug, debug|release) {
     BUILD = debug

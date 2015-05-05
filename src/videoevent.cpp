@@ -228,8 +228,8 @@ void ZoomEvent::unpause()
     timer_.resume();
 }
 
-RecordEvent::RecordEvent(int start, FramesPtr frames, int delay, int duration, int id, int trigCode, int priority) :
-    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), frames_(frames), finished_(false), paused_(false)
+RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration, int id, int trigCode, int priority) :
+    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
 {
     timer_.invalidate();
 }
@@ -241,7 +241,7 @@ void RecordEvent::apply(cv::Mat &frame)
             timer_.start();
 
         if(timer_.nsecsElapsed()/1000000 < duration_)
-            frames_->append(frame.clone());
+            video_->frames_.append(frame.clone());
         else
             finished_ = true;
     }
@@ -260,17 +260,17 @@ void RecordEvent::unpause()
     timer_.resume();
 }
 
-PlaybackEvent::PlaybackEvent(int start, FramesPtr frames, int delay, int duration, int id, int trigCode, int priority) :
-    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), frames_(frames), finished_(false), paused_(false)
+PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration, int id, int trigCode, int priority) :
+    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
 {
-    iter_ = frames_->begin();
+    iter_ = video_->frames_.begin();
 }
 
 void PlaybackEvent::apply(cv::Mat &frame)
 {
     if(!finished_ && !paused_) {
         iter_->copyTo(frame);
-        if(++iter_ == frames_->end())
+        if(++iter_ == video_->frames_.end())
             finished_ = true;
     }
 }

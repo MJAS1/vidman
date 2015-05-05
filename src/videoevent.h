@@ -5,6 +5,7 @@
 #include <QList>
 #include "event.h"
 #include "timerwithpause.h"
+#include "eventreader.h"
 
 /*!
 VideoEvents are used to process a video frame. VideoEvent is an abstract base class
@@ -27,6 +28,7 @@ private:
     int priority_;
 };
 
+//Compare function to be used for sorting VideoEvents by priorities
 inline bool compareEventPriorities(const VideoEvent* left, const VideoEvent* right)
 {
     return left->getPriority() > right->getPriority();
@@ -150,16 +152,16 @@ private:
 class RecordEvent : public VideoEvent
 {
 public:
-    typedef typename std::shared_ptr<QList<cv::Mat>> FramesPtr;
+    typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
-    explicit RecordEvent(int start, FramesPtr frames, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+    explicit RecordEvent(int start, VideoPtr video, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
 
     virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 private:
     TimerWithPause timer_;
-    FramesPtr frames_;
+    VideoPtr video_;
     bool finished_;
     bool paused_;
 };
@@ -167,16 +169,16 @@ private:
 class PlaybackEvent : public VideoEvent
 {
 public:
-    typedef typename std::shared_ptr<QList<cv::Mat>> FramesPtr;
+    typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
-    explicit PlaybackEvent(int start, FramesPtr frames, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+    explicit PlaybackEvent(int start, VideoPtr video, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
 
     virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
 private:
-    FramesPtr frames_;
+    VideoPtr video_;
     QList<cv::Mat>::Iterator iter_;
     bool finished_;
     bool paused_;

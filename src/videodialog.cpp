@@ -215,7 +215,7 @@ void VideoDialog::closeEvent(QCloseEvent *)
     window_->toggleVideoDialogChecked(false);
 }
 
-void VideoDialog::setFPS(int fps)
+void VideoDialog::displayFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
