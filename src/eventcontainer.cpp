@@ -128,5 +128,17 @@ void EventContainer<T>::unpauseEvents()
         (*iter)->unpause();
 }
 
+template <typename T>
+int EventContainer<T>::getTotalDuration() const
+{
+    int duration = 0;
+    for(ConstIterator iter = events_.begin(); iter != events_.end(); iter++) {
+        duration += (*iter)->getStart();
+        duration += (*iter)->getDelay();
+    }
+
+    return duration;
+}
+
 template class EventContainer<Event*>;
 template class EventContainer<VideoEvent*>;

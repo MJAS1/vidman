@@ -35,6 +35,7 @@ public:
     void toggleRec(bool);
     void toggleStop(bool);
     void toggleVideoDialogChecked(bool);   
+    
     qint64 getRunningTime();
     TimerWithPause& getTimer();
 
@@ -96,6 +97,7 @@ private:
     QTimer              timeTmr_;
     QString             fileName_;
     QLabel              status_;
+    QTime               eventsDuration_;
 };
 
 #endif // MAINWINDOW_H

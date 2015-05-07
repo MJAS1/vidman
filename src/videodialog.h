@@ -33,10 +33,12 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
+    typedef typename std::shared_ptr<EventContainer<Event*>> EventsPtr;
+
     explicit VideoDialog(MainWindow *window);
     ~VideoDialog();
 
-    bool start(const QString& eventStr);
+    void start(EventsPtr events);
     void stop();
     void pause();
     void unpause();
@@ -62,6 +64,7 @@ private slots:
     void getNextEvent();
 
 private:
+
     VideoDialog(const VideoDialog&);
     VideoDialog& operator=(const VideoDialog&);
 
@@ -81,7 +84,7 @@ private:
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
 
-    EventContainer<Event*>  events_;
+    EventsPtr               events_;
     GLVideoWidget*          glVideoWidget_;
 
     QTimer                  eventTmr_;

@@ -78,30 +78,43 @@ void MainWindow::onStart()
     status_.clear();
 
     switch (state_) {
-        case STOPPED:
-            if(videoDialog_->start(ui->textEdit->toPlainText())) {
+        case STOPPED: {
+            //Create a StringList from the texteditor.
+            QStringList strList = ui->textEdit->toPlainText().split("\n");
+            strList.append("");
+
+            //Read, create and store all the events from strList
+            std::shared_ptr<EventContainer<Event*>> events(new EventContainer<Event*>);
+            EventReader eventReader;
+
+            connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
+
+            if(eventReader.loadEvents(strList, *events)) {
+                eventsDuration_.setHMS(0, 0, 0);
+                eventsDuration_ = eventsDuration_.addMSecs(events->getTotalDuration());
+                videoDialog_->start(events);
                 runningTime_.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
                 state_ = PLAYING;
                 timeTmr_.start(100);
             }
-            break;
+        }
+        break;
 
-        case PLAYING:
-            pause();
-            break;
+    case PLAYING:
+        pause();
+        break;
 
-        case PAUSED:
-            unpause();
-            break;
+    case PAUSED:
+        unpause();
+        break;
     }
 }
 
 void MainWindow::onStop()
 {
     if(state_ == PLAYING || state_ == PAUSED) {
-        QTime time(0, 0);
-        ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
+        ui->timeLbl->setText(QString("00:00/00:00"));
         timeTmr_.stop();
 
         state_ = STOPPED;
@@ -113,6 +126,7 @@ void MainWindow::onStop()
     videoDialog_->toggleRecord(false);
 
     videoDialog_->stop();
+
     status_.clear();
 }
 
@@ -182,9 +196,10 @@ void MainWindow::onParallelPort(bool arg)
 void MainWindow::updateTime()
 {
     QTime time(0, 0);
-    qint64 secsElapsed = runningTime_.nsecsElapsed()/1000000000;
-    time = time.addSecs(secsElapsed);
-    ui->timeLbl->setText(time.toString(QString("hh:mm:ss")));
+    qint64 msecsElapsed = runningTime_.nsecsElapsed()/1000000;
+    time = time.addMSecs(msecsElapsed);
+
+    ui->timeLbl->setText(time.toString(QString("mm:ss"))+"/"+eventsDuration_.toString(QString("mm:ss")));
 }
 
 void MainWindow::fileOpen()
@@ -222,7 +237,7 @@ bool MainWindow::maybeSave()
     QMessageBox::StandardButton ret;
     ret = QMessageBox::warning(this, "VideoManipulation",
                                "The document has been modified.\n"
-                                  "Do you want to save your changes?",
+                               "Do you want to save your changes?",
                                QMessageBox::Save | QMessageBox::Discard
                                | QMessageBox::Cancel);
     if (ret == QMessageBox::Save)

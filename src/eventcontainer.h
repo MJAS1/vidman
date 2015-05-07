@@ -25,10 +25,12 @@ public:
     void    removeType(Event::EventType);
     void    append(T event);
     void    prepend(T event);
-    bool    empty() const;
     void    applyEvents(cv::Mat& frame) const;
     void    pauseEvents();
     void    unpauseEvents();
+
+    bool    empty() const;
+    int     getTotalDuration() const;
 
     Iterator      begin();
     Iterator      end();
@@ -44,8 +46,6 @@ private:
     EventContainer& operator=(const EventContainer&);
 
     QList<T> events_;
-
-
 };
 
 

@@ -107,7 +107,7 @@ void VideoDialog::toggleRecord(bool arg)
 void VideoDialog::getNextEvent()
 {
     //Get next event and pass it to cameraThread
-    Event *event = events_.pop_front();
+    Event *event = events_->pop_front();
 
     switch(event->getType()) {
         case Event::EVENT_DETECT_MOTION:
@@ -123,48 +123,38 @@ void VideoDialog::getNextEvent()
             break;
     }
 
-    if(!events_.empty()) {
-        Event *nextEvent = events_[0];
+    if(!events_->empty()) {
+        Event *nextEvent = (*events_)[0];
         eventDuration_ = (nextEvent->getStart()+event->getDelay());
         eventTmr_.start(eventDuration_);
         time_ = elapsedTimer_.nsecsElapsed()/1000000;
     }
 }
 
-bool VideoDialog::start(const QString& eventStr)
+void VideoDialog::start(EventsPtr events)
 {
+    events_ = events;
+
     if(logFile_.isActive() && !logFile_.open()) {
         QMessageBox msgBox;
         msgBox.setText(QString("Error creating log file."));
         msgBox.exec();
-        return false;
     }
 
-    //Create a StringList from the texteditor.
-    QStringList strList = eventStr.split("\n");
-    strList.append("");
-
-    //Read, create and store all the events from strList
-    EventReader eventReader;
-    connect(&eventReader, SIGNAL(error(const QString&)), window_, SLOT(setStatus(const QString&)));
-    if(eventReader.loadEvents(strList, events_)) {
-        if(!events_.empty()) {
-            eventTmr_.start(events_[0]->getStart());
-            time_ = 0;
-        }
-        elapsedTimer_.restart();
-
-        return true;
+    if(!events->empty()) {
+        eventTmr_.start((*events_)[0]->getStart());
+        time_ = 0;
     }
-    else
-        return false;
+
+    elapsedTimer_.restart();
 }
 
 void VideoDialog::stop()
 {
     cameraThread_->clearEvents();
     eventTmr_.stop();
-    events_.clear();
+    if(events_)
+        events_->clear();
     logFile_.close();
 }
 
@@ -178,7 +168,7 @@ void VideoDialog::pause()
 void VideoDialog::unpause()
 {
     cameraThread_->unpause();
-    if(!events_.empty()) {
+    if(!events_->empty()) {
         eventDuration_ = eventDuration_ - time_;
         eventTmr_.start(eventDuration_);
     }
