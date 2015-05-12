@@ -35,10 +35,8 @@ public:
     void toggleRec(bool);
     void toggleStop(bool);
     void toggleVideoDialogChecked(bool);   
+    void writeToLog(const QString&);
     
-    qint64 getRunningTime();
-    TimerWithPause& getTimer();
-
 public slots:
     void setStatus(const QString&);
     
@@ -94,6 +92,7 @@ private:
 
     VideoDialog*        videoDialog_;
     TimerWithPause      runningTime_;
+    LogFile             logFile_;
     QTimer              timeTmr_;
     QString             fileName_;
     QLabel              status_;

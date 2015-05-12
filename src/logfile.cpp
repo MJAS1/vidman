@@ -4,7 +4,7 @@
 #include <QMutexLocker>
 #include "logfile.h"
 
-LogFile::LogFile(const TimerWithPause& timer) : active_(false), timer_(timer)
+LogFile::LogFile() : active_(false)
 {
 }
 
@@ -29,7 +29,8 @@ bool LogFile::isActive() const
 bool LogFile::open()
 {
     QMutexLocker locker(&mutex_);
-    file_.setFileName(QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
+    file_.setFileName(QString("../logs/") + QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
+    //file_ = QFile()
     return file_.open(QFile::WriteOnly | QFile::Truncate);
 }
 
@@ -37,11 +38,8 @@ void LogFile::write(const QString& log)
 {
     mutex_.lock();
     if(active_) {
-        qint64 elapsedTime = timer_.nsecsElapsed();
         QTextStream logStream(&file_);
-        logStream << "[" << elapsedTime/1000000000 << "s "
-                  << (elapsedTime%1000000000)/1000000 << "ms]"
-                  << log << "\n";
+        logStream << log << "\n";
     }
     mutex_.unlock();
 }

@@ -42,11 +42,10 @@ public:
     void stop();
     void pause();
     void unpause();
-    void setKeepLog(bool);
     void displayFPS(int fps);
     void updateBackground();
 
-    LogFile& logFile();
+    MainWindow* mainWindow() const;
 
 public slots:
     void setOutputDevice(OutputDevice::PortType portType);
@@ -76,7 +75,6 @@ private:
     MainWindow*             window_;
 
     Settings                settings_;
-    LogFile                 logFile_;
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;

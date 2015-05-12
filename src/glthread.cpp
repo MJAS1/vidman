@@ -1,6 +1,7 @@
 #include <QMutexLocker>
 #include <QElapsedTimer>
 #include <videodialog.h>
+#include "mainwindow.h"
 #include "glthread.h"
 #include "glvideowidget.h"
 #include "iostream"
@@ -35,15 +36,14 @@ GLThread::GLThread(GLVideoWidget *glw) :
 
 void GLThread::stoppableRun()
 {
-    LogFile& logFile_ = glw_->videoDialog()->logFile();
-
     while(!shouldStop) {
 
         QMutexLocker locker(&mutex_);
 
-        //Mutex has to be unlocked before trigCode_ is used and it might therefore get a
-        //new value before use, so copy it to a local scope variable
+        //Mutex has to be unlocked before trigCode_ and log_ are used and they might therefore get a
+        //new value before use, so copy them to a local scope variable
         int trigCode = trigCode_;
+        QString log = log_;
 
         //trigPort.open() must be called by this thread to make outb() work
         if(shouldChangePort_) {
@@ -82,8 +82,8 @@ void GLThread::stoppableRun()
             if(!trigPort_.isEmpty())
                 trigPort_.writeData(trigCode);
 
-            if(!log_.isEmpty())
-                logFile_ << log_;
+            if(!log.isEmpty())
+                glw_->videoDialog()->mainWindow()->writeToLog(log);
 
             glw_->doneCurrent();
         }

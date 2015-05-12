@@ -79,6 +79,13 @@ void MainWindow::onStart()
 
     switch (state_) {
         case STOPPED: {
+
+            if(logFile_.isActive() && !logFile_.open()) {
+                QMessageBox msgBox;
+                msgBox.setText(QString("Error creating log file."));
+                msgBox.exec();
+            }
+
             //Create a StringList from the texteditor.
             QStringList strList = ui->textEdit->toPlainText().split("\n");
             strList.append("");
@@ -120,6 +127,8 @@ void MainWindow::onStop()
         state_ = STOPPED;
         ui->startButton->setChecked(false);
         ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
+
+        logFile_.close();
     }
 
     ui->recButton->setChecked(false);
@@ -169,7 +178,7 @@ void MainWindow::onUpdateBackground()
 
 void MainWindow::onKeepLog(bool arg)
 {
-    videoDialog_->setKeepLog(arg);
+    logFile_.setActive(arg);
 }
 
 void MainWindow::onSerialPort(bool arg)
@@ -400,19 +409,18 @@ void MainWindow::toggleVideoDialogChecked(bool arg)
     ui->viewVideoDialogAction->setChecked(arg);
 }
 
-qint64 MainWindow::getRunningTime()
-{
-    return runningTime_.nsecsElapsed();
-}
-
-TimerWithPause& MainWindow::getTimer()
-{
-    return runningTime_;
-}
-
 void MainWindow::setStatus(const QString &str)
 {
     //QApplication::beep();
     status_.setText(str);
     std::cerr << str.toStdString() << std::endl;
+}
+
+void MainWindow::writeToLog(const QString &str)
+{
+    qint64 elapsed = runningTime_.nsecsElapsed();
+    QString log;
+    QTextStream stream(&log);
+    stream << "[" << elapsed/1000000000 << "s " << (elapsed%1000000000)/1000000 << "ms]" << str;
+    logFile_ << log;
 }

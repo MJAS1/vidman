@@ -15,7 +15,8 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
     //Start reading the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
-
+        //The string should be of form "Event: type=.., start=.., etc.."
+        //Split from ':', remove whitespaces and convert to lower case
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
 
@@ -55,6 +56,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
 
 bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
 {
+    //Split the string to get a list of strings of the form param=val e.g. {"type=...", "start=...", etc..}
     QStringList strList = str.split(',');
 
     //Event parameters

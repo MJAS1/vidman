@@ -10,7 +10,7 @@ class LogFile
 {
 public:
 
-    LogFile(const TimerWithPause& timer);
+    LogFile();
     ~LogFile();
 
     void setActive(bool on);
@@ -29,7 +29,6 @@ private:
 
     QFile file_;
     mutable QMutex mutex_;
-    const TimerWithPause& timer_;
 };
 
 

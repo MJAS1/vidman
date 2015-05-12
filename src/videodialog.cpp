@@ -20,7 +20,7 @@
 #include "videoevent.h"
 
 VideoDialog::VideoDialog(MainWindow *window) :
-    QDialog(window), ui(new Ui::VideoDialog), window_(window), logFile_(window->getTimer())
+    QDialog(window), ui(new Ui::VideoDialog), window_(window)
 {
     ui->setupUi(this);
 
@@ -94,11 +94,6 @@ void VideoDialog::stopThreads()
     cameraThread_->stop();
 }
 
-void VideoDialog::setKeepLog(bool arg)
-{
-    logFile_.setActive(arg);
-}
-
 void VideoDialog::toggleRecord(bool arg)
 {
     cycVideoBufJpeg_->setIsRec(arg);
@@ -135,12 +130,6 @@ void VideoDialog::start(EventsPtr events)
 {
     events_ = events;
 
-    if(logFile_.isActive() && !logFile_.open()) {
-        QMessageBox msgBox;
-        msgBox.setText(QString("Error creating log file."));
-        msgBox.exec();
-    }
-
     if(!events->empty()) {
         eventTmr_.start((*events_)[0]->getStart());
         time_ = 0;
@@ -155,7 +144,6 @@ void VideoDialog::stop()
     eventTmr_.stop();
     if(events_)
         events_->clear();
-    logFile_.close();
 }
 
 void VideoDialog::pause()
@@ -225,7 +213,7 @@ void VideoDialog::onExternTrig(bool on)
     cam_.setExternTrigger(on);
 }
 
-LogFile& VideoDialog::logFile()
+MainWindow* VideoDialog::mainWindow() const
 {
-    return logFile_;
+    return window_;
 }
