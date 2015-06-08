@@ -106,10 +106,12 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
+		videoDialog_->show();
         showNormal();
     }
     else {
         setWindowFlags(Qt::Window);
+		videoDialog_->close();
         showFullScreen();
     }
 
