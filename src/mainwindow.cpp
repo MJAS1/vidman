@@ -338,13 +338,13 @@ void MainWindow::addTextEvent()
 
 void MainWindow::addImageObject()
 {
-    QString str("ImageObject: id=0, filename=");
+    QString str("Object: type=image, id=0, filename=");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addVideoObject()
 {
-    QString str("VideoObject: id=0, length=2000");
+    QString str("Object: type=video, id=0, length=2000");
     ui->textEdit->insertPlainText(str);
 }
 
