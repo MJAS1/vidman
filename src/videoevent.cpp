@@ -264,6 +264,8 @@ PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
     VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
+	if(video_->frames_.empty())
+		finished_ = true;
 }
 
 void PlaybackEvent::apply(cv::Mat &frame)

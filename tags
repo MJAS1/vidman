@@ -1,0 +1,529 @@
+APP_NAME	src/config.h	58
+CAMERATHREAD_H_	src/camerathread.h	9
+CAMERA_H	src/camera.h	2
+CAM_THREAD_PRIORITY	src/config.h	52
+CIRC_AUDIO_BUFF_SZ	src/config.h	49
+CIRC_BUF_MARG	src/config.h	34
+CIRC_VIDEO_BUFF_SZ	src/config.h	48
+COMMON_H_	src/common.h	15
+CONFIG_H_	src/config.h	60
+CYCDATABUFFER_H_	src/cycdatabuffer.h	9
+Camera	src/camera.h	10
+Camera::Camera	src/camera.cpp	/^Camera::Camera() : initialized_(false)$/
+Camera::capCam_	src/camera.h	34
+Camera::dc1394Context_	src/camera.h	36
+Camera::dc1394camera_	src/camera.h	35
+Camera::getGain	src/camera.cpp	/^uint32_t Camera::getGain() const$/
+Camera::getShutter	src/camera.cpp	/^uint32_t Camera::getShutter() const$/
+Camera::initialized_	src/camera.h	39
+Camera::isInitialized	src/camera.cpp	/^bool Camera::isInitialized() const$/
+Camera::mutex_	src/camera.h	37
+Camera::operator >>	src/camera.cpp	/^void Camera::operator >>(cv::Mat& frame)$/
+Camera::setExternTrigger	src/camera.cpp	/^void Camera::setExternTrigger(bool on)$/
+Camera::setFPS	src/camera.cpp	/^void Camera::setFPS(int fps)$/
+Camera::setGain	src/camera.cpp	/^void Camera::setGain(int newVal)$/
+Camera::setShutter	src/camera.cpp	/^void Camera::setShutter(int newVal)$/
+Camera::setUV	src/camera.cpp	/^void Camera::setUV(int newVal, int vrValue)$/
+Camera::setVR	src/camera.cpp	/^void Camera::setVR(int newVal, int uvValue)$/
+Camera::~Camera	src/camera.cpp	/^Camera::~Camera()$/
+CameraThread	src/camerathread.h	24
+CameraThread::CameraThread	src/camerathread.cpp	/^CameraThread::CameraThread(CycDataBuffer* cycBuf, /
+CameraThread::addVideoEvent	src/camerathread.cpp	/^void CameraThread::addVideoEvent(VideoEvent *ev)$/
+CameraThread::cam_	src/camerathread.h	48
+CameraThread::clearEvents	src/camerathread.cpp	/^void CameraThread::clearEvents()$/
+CameraThread::cycBuf_	src/camerathread.h	47
+CameraThread::detectMotion	src/camerathread.cpp	/^void CameraThread::detectMotion(Event *ev)$/
+CameraThread::detectMotionEvent_	src/camerathread.h	58
+CameraThread::events_	src/camerathread.h	59
+CameraThread::frame_	src/camerathread.h	49
+CameraThread::isDetectingMotion_	src/camerathread.h	55
+CameraThread::log_	src/camerathread.h	52
+CameraThread::motionDetector_	src/camerathread.h	61
+CameraThread::mutex_	src/camerathread.h	51
+CameraThread::pause	src/camerathread.cpp	/^void CameraThread::pause()$/
+CameraThread::preEvents_	src/camerathread.h	59
+CameraThread::removeEvent	src/camerathread.cpp	/^void CameraThread::removeEvent(RemoveEvent *ev)$/
+CameraThread::settings_	src/camerathread.h	60
+CameraThread::shouldUpdateBg_	src/camerathread.h	56
+CameraThread::stoppableRun	src/camerathread.cpp	/^void CameraThread::stoppableRun()$/
+CameraThread::trigCode_	src/camerathread.h	54
+CameraThread::unpause	src/camerathread.cpp	/^void CameraThread::unpause()$/
+CameraThread::updateBackground	src/camerathread.cpp	/^void CameraThread::updateBackground()$/
+CameraThread::~CameraThread	src/camerathread.cpp	/^CameraThread::~CameraThread()$/
+ChunkAttrib	src/cycdatabuffer.h	26
+CycDataBuffer	src/cycdatabuffer.h	50
+CycDataBuffer::CycDataBuffer	src/cycdatabuffer.cpp	/^CycDataBuffer::CycDataBuffer(int bufSize, QObject*/
+CycDataBuffer::bufSize	src/cycdatabuffer.h	86
+CycDataBuffer::buffSemaphore	src/cycdatabuffer.h	88
+CycDataBuffer::dataBuf	src/cycdatabuffer.h	82
+CycDataBuffer::getChunk	src/cycdatabuffer.cpp	/^unsigned char* CycDataBuffer::getChunk(ChunkAttrib/
+CycDataBuffer::getPtr	src/cycdatabuffer.h	85
+CycDataBuffer::insertChunk	src/cycdatabuffer.cpp	/^void CycDataBuffer::insertChunk(unsigned char* _da/
+CycDataBuffer::insertPtr	src/cycdatabuffer.h	84
+CycDataBuffer::isRec	src/cycdatabuffer.h	80
+CycDataBuffer::setIsRec	src/cycdatabuffer.cpp	/^void CycDataBuffer::setIsRec(bool _isRec)$/
+CycDataBuffer::~CycDataBuffer	src/cycdatabuffer.cpp	/^CycDataBuffer::~CycDataBuffer()$/
+EVENTREADER_H	src/eventreader.h	2
+EVENT_H	src/event.h	2
+Event	src/event.h	14
+Event::Event	src/event.cpp	/^Event::Event(EventType type, int start, int delay,/
+Event::EventType	src/event.h	19
+Event::EventType::EVENT_DETECT_MOTION	src/event.h	33
+Event::EventType::EVENT_FADEIN	src/event.h	23
+Event::EventType::EVENT_FADEOUT	src/event.h	24
+Event::EventType::EVENT_FLIP	src/event.h	22
+Event::EventType::EVENT_FREEZE	src/event.h	29
+Event::EventType::EVENT_IMAGE	src/event.h	25
+Event::EventType::EVENT_NULL	src/event.h	21
+Event::EventType::EVENT_PLAYBACK	src/event.h	32
+Event::EventType::EVENT_RECORD	src/event.h	31
+Event::EventType::EVENT_REMOVE	src/event.h	27
+Event::EventType::EVENT_ROTATE	src/event.h	28
+Event::EventType::EVENT_TEXT	src/event.h	26
+Event::EventType::EVENT_ZOOM	src/event.h	30
+Event::appendLog	src/event.cpp	/^void Event::appendLog(const QString &str)$/
+Event::delay_	src/event.h	55
+Event::duration_	src/event.h	55
+Event::getDelay	src/event.cpp	/^int Event::getDelay() const$/
+Event::getDuration	src/event.cpp	/^int Event::getDuration() const$/
+Event::getId	src/event.cpp	/^int Event::getId() const$/
+Event::getLog	src/event.cpp	/^QString Event::getLog() const$/
+Event::getStart	src/event.cpp	/^int Event::getStart() const$/
+Event::getTrigCode	src/event.cpp	/^int Event::getTrigCode() const$/
+Event::getType	src/event.cpp	/^Event::EventType Event::getType() const$/
+Event::id_	src/event.h	56
+Event::log_	src/event.h	59
+Event::pause	src/event.cpp	/^void Event::pause()$/
+Event::start_	src/event.h	55
+Event::trigCode_	src/event.h	57
+Event::type_	src/event.h	53
+Event::unpause	src/event.cpp	/^void Event::unpause()$/
+Event::~Event	src/event.cpp	/^Event::~Event()$/
+EventContainer	src/eventcontainer.cpp	/^EventContainer<T>::EventContainer()$/
+EventContainer	src/eventcontainer.h	13
+EventContainer::ConstIterator	src/eventcontainer.h	18
+EventContainer::Iterator	src/eventcontainer.h	17
+EventContainer::events_	src/eventcontainer.h	48
+EventContainer_H	src/eventcontainer.h	2
+EventReader	src/eventreader.h	23
+EventReader::EventReader	src/eventreader.cpp	/^EventReader::EventReader()$/
+EventReader::QMap	src/eventreader.h	44
+EventReader::imageContainer_	src/eventreader.h	43
+EventReader::loadEvents	src/eventreader.cpp	/^bool EventReader::loadEvents(const QStringList &st/
+EventReader::readEvent	src/eventreader.cpp	/^bool EventReader::readEvent(const QString &str, Ev/
+EventReader::readImageObject	src/eventreader.cpp	/^bool EventReader::readImageObject(const QString &s/
+EventReader::readRemoveEvent	src/eventreader.cpp	/^bool EventReader::readRemoveEvent(const QString &s/
+EventReader::readVideoObject	src/eventreader.cpp	/^bool EventReader::readVideoObject(const QString &s/
+EventReader::settings_	src/eventreader.h	46
+EventReader::toFloat	src/eventreader.cpp	/^float EventReader::toFloat(const QString &str, int/
+EventReader::toInt	src/eventreader.cpp	/^int EventReader::toInt(const QString &str, int lin/
+EventReader::videoObjects_	src/eventreader.h	44
+FILEWRITER_H_	src/filewriter.h	9
+FadeInEvent	src/videoevent.h	47
+FadeInEvent::FadeInEvent	src/videoevent.cpp	/^FadeInEvent::FadeInEvent(int start, int duration, /
+FadeInEvent::amount_	src/videoevent.h	59
+FadeInEvent::apply	src/videoevent.cpp	/^void FadeInEvent::apply(cv::Mat &frame)$/
+FadeInEvent::interval_	src/videoevent.h	59
+FadeInEvent::pause	src/videoevent.cpp	/^void FadeInEvent::pause()$/
+FadeInEvent::stopped_	src/videoevent.h	60
+FadeInEvent::timerWithPause_	src/videoevent.h	58
+FadeInEvent::unpause	src/videoevent.cpp	/^void FadeInEvent::unpause()$/
+FadeOutEvent	src/videoevent.h	63
+FadeOutEvent::FadeOutEvent	src/videoevent.cpp	/^FadeOutEvent::FadeOutEvent(int start, int duration/
+FadeOutEvent::amount_	src/videoevent.h	74
+FadeOutEvent::apply	src/videoevent.cpp	/^void FadeOutEvent::apply(cv::Mat &frame)$/
+FadeOutEvent::interval_	src/videoevent.h	74
+FadeOutEvent::pause	src/videoevent.cpp	/^void FadeOutEvent::pause()$/
+FadeOutEvent::stopped_	src/videoevent.h	75
+FadeOutEvent::timerWithPause_	src/videoevent.h	73
+FadeOutEvent::unpause	src/videoevent.cpp	/^void FadeOutEvent::unpause()$/
+FileWriter	src/filewriter.h	31
+FileWriter::FileWriter	src/filewriter.cpp	/^FileWriter::FileWriter(CycDataBuffer* cycBuf, cons/
+FileWriter::cycBuf	src/filewriter.h	42
+FileWriter::ext	src/filewriter.h	43
+FileWriter::path	src/filewriter.h	43
+FileWriter::stoppableRun	src/filewriter.cpp	/^void FileWriter::stoppableRun()$/
+FileWriter::streamId	src/filewriter.h	45
+FileWriter::suffix	src/filewriter.h	43
+FileWriter::~FileWriter	src/filewriter.cpp	/^FileWriter::~FileWriter()$/
+FlipEvent	src/videoevent.h	37
+FlipEvent::FlipEvent	src/videoevent.cpp	/^FlipEvent::FlipEvent(int start, int delay, int id,/
+FlipEvent::apply	src/videoevent.cpp	/^void FlipEvent::apply(cv::Mat &frame)$/
+FreezeEvent	src/videoevent.h	122
+FreezeEvent::FreezeEvent	src/videoevent.cpp	/^FreezeEvent::FreezeEvent(int start, int delay, int/
+FreezeEvent::apply	src/videoevent.cpp	/^void FreezeEvent::apply(cv::Mat &frame)$/
+FreezeEvent::freezedFrame_	src/videoevent.h	132
+FreezeEvent::started_	src/videoevent.h	130
+GAIN_ADDR	src/config.h	20
+GAIN_MAX_VAL	src/config.h	22
+GAIN_MIN_VAL	src/config.h	21
+GAIN_OFFSET	src/config.h	23
+GLTHREAD_H	src/glthread.h	2
+GLThread	src/glthread.h	15
+GLThread::GLThread	src/glthread.cpp	/^GLThread::GLThread(GLVideoWidget *glw) :$/
+GLThread::drawFrame	src/glthread.cpp	/^void GLThread::drawFrame(unsigned char* imBuf, int/
+GLThread::glw_	src/glthread.h	39
+GLThread::imBuf_	src/glthread.h	42
+GLThread::isPaused_	src/glthread.h	37
+GLThread::log_	src/glthread.h	44
+GLThread::mutex_	src/glthread.h	41
+GLThread::newPort_	src/glthread.h	46
+GLThread::pause	src/glthread.cpp	/^void GLThread::pause()$/
+GLThread::setOutputDevice	src/glthread.cpp	/^void GLThread::setOutputDevice(OutputDevice::PortT/
+GLThread::shaderProgram_	src/glthread.h	50
+GLThread::shouldChangePort_	src/glthread.h	36
+GLThread::shouldSwap_	src/glthread.h	35
+GLThread::stoppableRun	src/glthread.cpp	/^void GLThread::stoppableRun()$/
+GLThread::textureCoordinates_	src/glthread.h	52
+GLThread::trigCode_	src/glthread.h	48
+GLThread::trigPort_	src/glthread.h	45
+GLThread::unpause	src/glthread.cpp	/^void GLThread::unpause()$/
+GLThread::vertices_	src/glthread.h	51
+GLVIDEOWIDGET_H_	src/glvideowidget.h	9
+GLVideoWidget	src/glvideowidget.h	30
+GLVideoWidget::GLVideoWidget	src/glvideowidget.cpp	/^GLVideoWidget::GLVideoWidget(const QGLFormat& form/
+GLVideoWidget::displayFPS	src/glvideowidget.cpp	/^void GLVideoWidget::displayFPS()$/
+GLVideoWidget::fpsTimer_	src/glvideowidget.h	58
+GLVideoWidget::frames_	src/glvideowidget.h	60
+GLVideoWidget::glt_	src/glvideowidget.h	64
+GLVideoWidget::initializeGL	src/glvideowidget.cpp	/^void GLVideoWidget::initializeGL()$/
+GLVideoWidget::mouseDoubleClickEvent	src/glvideowidget.cpp	/^void GLVideoWidget::mouseDoubleClickEvent(QMouseEv/
+GLVideoWidget::mousePressEvent	src/glvideowidget.cpp	/^void GLVideoWidget::mousePressEvent(QMouseEvent *e/
+GLVideoWidget::onDrawFrame	src/glvideowidget.cpp	/^void GLVideoWidget::onDrawFrame(unsigned char* imB/
+GLVideoWidget::paintGL	src/glvideowidget.cpp	/^void GLVideoWidget::paintGL()$/
+GLVideoWidget::resizeEvent	src/glvideowidget.cpp	/^void GLVideoWidget::resizeEvent(QResizeEvent *e)$/
+GLVideoWidget::resizeGL	src/glvideowidget.cpp	/^void GLVideoWidget::resizeGL(int w, int h)$/
+GLVideoWidget::setOutputDevice	src/glvideowidget.cpp	/^void GLVideoWidget::setOutputDevice(OutputDevice::/
+GLVideoWidget::setVideoWidth	src/glvideowidget.cpp	/^void GLVideoWidget::setVideoWidth(int newVal)$/
+GLVideoWidget::videoDialog	src/glvideowidget.cpp	/^VideoDialog* GLVideoWidget::videoDialog()$/
+GLVideoWidget::videoDialog_	src/glvideowidget.h	63
+GLVideoWidget::videoWidth_	src/glvideowidget.h	61
+GLVideoWidget::~GLVideoWidget	src/glvideowidget.cpp	/^GLVideoWidget::~GLVideoWidget()$/
+HIGHLIGHTER_H	src/highlighter.h	2
+Highlighter	src/highlighter.h	8
+Highlighter::Highlighter	src/highlighter.cpp	/^Highlighter::Highlighter(QTextDocument *parent) :$/
+Highlighter::HighlightingRule	src/highlighter.h	18
+Highlighter::HighlightingRule::format	src/highlighter.h	21
+Highlighter::HighlightingRule::pattern	src/highlighter.h	20
+Highlighter::blockFormat	src/highlighter.h	31
+Highlighter::commentEndExpression	src/highlighter.h	27
+Highlighter::commentFormat	src/highlighter.h	33
+Highlighter::commentStartExpression	src/highlighter.h	26
+Highlighter::highlightBlock	src/highlighter.cpp	/^void Highlighter::highlightBlock(const QString &te/
+Highlighter::highlightingRules	src/highlighter.h	24
+Highlighter::keywordFormat	src/highlighter.h	29
+Highlighter::numFormat	src/highlighter.h	32
+Highlighter::typeFormat	src/highlighter.h	30
+IMAGECONTAINER_H	src/imagecontainer.h	2
+ImageContainer	src/imagecontainer.h	10
+ImageContainer::ImageContainer	src/imagecontainer.cpp	/^ImageContainer::ImageContainer()$/
+ImageContainer::addImage	src/imagecontainer.cpp	/^bool ImageContainer::addImage(const int id, const /
+ImageContainer::operator []	src/imagecontainer.cpp	/^const cv::Mat& ImageContainer::operator [](int id)/
+ImageContainer::~ImageContainer	src/imagecontainer.cpp	/^ImageContainer::~ImageContainer()$/
+ImageEvent	src/videoevent.h	78
+ImageEvent::ImageEvent	src/videoevent.cpp	/^ImageEvent::ImageEvent(int start, const cv::Point2/
+ImageEvent::apply	src/videoevent.cpp	/^void ImageEvent::apply(cv::Mat &frame)$/
+ImageEvent::image_	src/videoevent.h	90
+ImageEvent::overlayImage	src/videoevent.cpp	/^void ImageEvent::overlayImage(const cv::Mat &backg/
+ImageEvent::pos_	src/videoevent.h	91
+LINENUMBERAREA_H	src/linenumberarea.h	2
+LOGFILE_H	src/logfile.h	2
+LineNumberArea	src/linenumberarea.h	8
+LineNumberArea::LineNumberArea	src/linenumberarea.cpp	/^LineNumberArea::LineNumberArea(TextEdit *editor) :/
+LineNumberArea::paintEvent	src/linenumberarea.cpp	/^void LineNumberArea::paintEvent(QPaintEvent *ev)$/
+LineNumberArea::sizeHint	src/linenumberarea.cpp	/^QSize LineNumberArea::sizeHint() const$/
+LineNumberArea::textEdit	src/linenumberarea.h	24
+LogFile	src/logfile.h	9
+LogFile::LogFile	src/logfile.cpp	/^LogFile::LogFile() : active_(false)$/
+LogFile::active_	src/logfile.h	28
+LogFile::close	src/logfile.cpp	/^void LogFile::close()$/
+LogFile::file_	src/logfile.h	30
+LogFile::isActive	src/logfile.cpp	/^bool LogFile::isActive() const$/
+LogFile::mutex_	src/logfile.h	31
+LogFile::open	src/logfile.cpp	/^bool LogFile::open()$/
+LogFile::operator <<	src/logfile.cpp	/^void LogFile::operator <<(const QString& log)$/
+LogFile::setActive	src/logfile.cpp	/^void LogFile::setActive(bool on)$/
+LogFile::write	src/logfile.cpp	/^void LogFile::write(const QString& log)$/
+LogFile::~LogFile	src/logfile.cpp	/^LogFile::~LogFile()$/
+MAGIC_VIDEO_STR	src/common.h	13
+MAINWINDOW_H	src/mainwindow.h	2
+MAX_CHUNK_SIZE	src/config.h	41
+MIC_THREAD_PRIORITY	src/config.h	53
+MOTIONDETECTOR_H	src/motiondetector.h	2
+MainWindow	src/mainwindow.h	19
+MainWindow::MainWindow	src/mainwindow.cpp	/^MainWindow::MainWindow(QWidget *parent) :$/
+MainWindow::State	src/mainwindow.h	25
+MainWindow::State::PAUSED	src/mainwindow.h	28
+MainWindow::State::PLAYING	src/mainwindow.h	27
+MainWindow::State::STOPPED	src/mainwindow.h	26
+MainWindow::addFadeInEvent	src/mainwindow.cpp	/^void MainWindow::addFadeInEvent()$/
+MainWindow::addFadeOutEvent	src/mainwindow.cpp	/^void MainWindow::addFadeOutEvent()$/
+MainWindow::addFlipEvent	src/mainwindow.cpp	/^void MainWindow::addFlipEvent()$/
+MainWindow::addFreezeEvent	src/mainwindow.cpp	/^void MainWindow::addFreezeEvent()$/
+MainWindow::addImageEvent	src/mainwindow.cpp	/^void MainWindow::addImageEvent()$/
+MainWindow::addImageObject	src/mainwindow.cpp	/^void MainWindow::addImageObject()$/
+MainWindow::addPlaybackEvent	src/mainwindow.cpp	/^void MainWindow::addPlaybackEvent()$/
+MainWindow::addRecordEvent	src/mainwindow.cpp	/^void MainWindow::addRecordEvent()$/
+MainWindow::addRemoveEventId	src/mainwindow.cpp	/^void MainWindow::addRemoveEventId()$/
+MainWindow::addRemoveEventType	src/mainwindow.cpp	/^void MainWindow::addRemoveEventType()$/
+MainWindow::addRotateEvent	src/mainwindow.cpp	/^void MainWindow::addRotateEvent()$/
+MainWindow::addTextEvent	src/mainwindow.cpp	/^void MainWindow::addTextEvent()$/
+MainWindow::addVideoObject	src/mainwindow.cpp	/^void MainWindow::addVideoObject()$/
+MainWindow::addZoomEvent	src/mainwindow.cpp	/^void MainWindow::addZoomEvent()$/
+MainWindow::closeEvent	src/mainwindow.cpp	/^void MainWindow::closeEvent(QCloseEvent *e)$/
+MainWindow::elapsedTime_	src/mainwindow.h	96
+MainWindow::eventsDuration_	src/mainwindow.h	101
+MainWindow::fileName_	src/mainwindow.h	99
+MainWindow::fileNew	src/mainwindow.cpp	/^void MainWindow::fileNew()$/
+MainWindow::fileOpen	src/mainwindow.cpp	/^void MainWindow::fileOpen()$/
+MainWindow::fileSave	src/mainwindow.cpp	/^bool MainWindow::fileSave()$/
+MainWindow::fileSaveAs	src/mainwindow.cpp	/^bool MainWindow::fileSaveAs()$/
+MainWindow::getElapsedTime	src/mainwindow.cpp	/^qint64 MainWindow::getElapsedTime()$/
+MainWindow::highlighter_	src/mainwindow.h	92
+MainWindow::load	src/mainwindow.cpp	/^bool MainWindow::load(const QString &f)$/
+MainWindow::logFile_	src/mainwindow.h	97
+MainWindow::maybeSave	src/mainwindow.cpp	/^bool MainWindow::maybeSave()$/
+MainWindow::onKeepLog	src/mainwindow.cpp	/^void MainWindow::onKeepLog(bool arg)$/
+MainWindow::onParallelPort	src/mainwindow.cpp	/^void MainWindow::onParallelPort(bool arg)$/
+MainWindow::onRec	src/mainwindow.cpp	/^void MainWindow::onRec(bool arg)$/
+MainWindow::onSerialPort	src/mainwindow.cpp	/^void MainWindow::onSerialPort(bool arg)$/
+MainWindow::onStart	src/mainwindow.cpp	/^void MainWindow::onStart()$/
+MainWindow::onStop	src/mainwindow.cpp	/^void MainWindow::onStop()$/
+MainWindow::onUpdateBackground	src/mainwindow.cpp	/^void MainWindow::onUpdateBackground()$/
+MainWindow::onViewVideoDialog	src/mainwindow.cpp	/^void MainWindow::onViewVideoDialog(bool checked)$/
+MainWindow::pause	src/mainwindow.cpp	/^void MainWindow::pause()$/
+MainWindow::setCurrentFileName	src/mainwindow.cpp	/^void MainWindow::setCurrentFileName(const QString /
+MainWindow::setStatus	src/mainwindow.cpp	/^void MainWindow::setStatus(const QString &str)$/
+MainWindow::state_	src/mainwindow.h	93
+MainWindow::status_	src/mainwindow.h	100
+MainWindow::timeTmr_	src/mainwindow.h	98
+MainWindow::toggleRec	src/mainwindow.cpp	/^void MainWindow::toggleRec(bool arg)$/
+MainWindow::toggleStart	src/mainwindow.cpp	/^void MainWindow::toggleStart(bool arg)$/
+MainWindow::toggleStop	src/mainwindow.cpp	/^void MainWindow::toggleStop(bool arg)$/
+MainWindow::toggleVideoDialogChecked	src/mainwindow.cpp	/^void MainWindow::toggleVideoDialogChecked(bool arg/
+MainWindow::ui	src/mainwindow.h	84
+MainWindow::unpause	src/mainwindow.cpp	/^void MainWindow::unpause()$/
+MainWindow::updateTime	src/mainwindow.cpp	/^void MainWindow::updateTime()$/
+MainWindow::videoDialog_	src/mainwindow.h	95
+MainWindow::writeToLog	src/mainwindow.cpp	/^void MainWindow::writeToLog(const QString &str)$/
+MainWindow::~MainWindow	src/mainwindow.cpp	/^MainWindow::~MainWindow()$/
+MotionDetector	src/motiondetector.h	15
+MotionDetector::MotionDetector	src/motiondetector.cpp	/^MotionDetector::MotionDetector()$/
+MotionDetector::back_	src/motiondetector.h	30
+MotionDetector::centroid_	src/motiondetector.h	31
+MotionDetector::fore_	src/motiondetector.h	30
+MotionDetector::getCentroid	src/motiondetector.cpp	/^cv::Point MotionDetector::getCentroid(const cv::Ma/
+MotionDetector::movementDetected	src/motiondetector.cpp	/^bool MotionDetector::movementDetected() const$/
+MotionDetector::sensitivity_	src/motiondetector.h	33
+MotionDetector::startTracking	src/motiondetector.cpp	/^void MotionDetector::startTracking()$/
+MotionDetector::updateBackground	src/motiondetector.cpp	/^void MotionDetector::updateBackground(const cv::Ma/
+MotionDetector::updateFrame	src/motiondetector.cpp	/^void MotionDetector::updateFrame(const cv::Mat &fr/
+N_CAMERA_BUFFERS	src/config.h	13
+ORG_NAME	src/config.h	57
+OUTPUTDEVICE_H	src/outputdevice.h	2
+OutputDevice	src/outputdevice.h	15
+OutputDevice::OutputDevice	src/outputdevice.cpp	/^OutputDevice::OutputDevice() : portType_(PORT_NULL/
+OutputDevice::PortType	src/outputdevice.h	20
+OutputDevice::PortType::PORT_NULL	src/outputdevice.h	21
+OutputDevice::PortType::PORT_PARALLEL	src/outputdevice.h	23
+OutputDevice::PortType::PORT_SERIAL	src/outputdevice.h	22
+OutputDevice::close	src/outputdevice.cpp	/^void OutputDevice::close()$/
+OutputDevice::fd_	src/outputdevice.h	33
+OutputDevice::isEmpty	src/outputdevice.cpp	/^bool OutputDevice::isEmpty() const$/
+OutputDevice::open	src/outputdevice.cpp	/^bool OutputDevice::open(PortType port)$/
+OutputDevice::portType_	src/outputdevice.h	36
+OutputDevice::setFd	src/outputdevice.cpp	/^void OutputDevice::setFd(int fileDescription)$/
+OutputDevice::settings_	src/outputdevice.h	35
+OutputDevice::writeData	src/outputdevice.cpp	/^void OutputDevice::writeData(int trigCode)$/
+PlaybackEvent	src/videoevent.h	169
+PlaybackEvent::PlaybackEvent	src/videoevent.cpp	/^PlaybackEvent::PlaybackEvent(int start, VideoPtr v/
+PlaybackEvent::VideoPtr	src/videoevent.h	172
+PlaybackEvent::apply	src/videoevent.cpp	/^void PlaybackEvent::apply(cv::Mat &frame)$/
+PlaybackEvent::finished_	src/videoevent.h	183
+PlaybackEvent::iter_	src/videoevent.h	182
+PlaybackEvent::pause	src/videoevent.cpp	/^void PlaybackEvent::pause()$/
+PlaybackEvent::paused_	src/videoevent.h	184
+PlaybackEvent::unpause	src/videoevent.cpp	/^void PlaybackEvent::unpause()$/
+PlaybackEvent::video_	src/videoevent.h	181
+RecordEvent	src/videoevent.h	152
+RecordEvent::RecordEvent	src/videoevent.cpp	/^RecordEvent::RecordEvent(int start, VideoPtr video/
+RecordEvent::VideoPtr	src/videoevent.h	155
+RecordEvent::apply	src/videoevent.cpp	/^void RecordEvent::apply(cv::Mat &frame)$/
+RecordEvent::finished_	src/videoevent.h	165
+RecordEvent::pause	src/videoevent.cpp	/^void RecordEvent::pause()$/
+RecordEvent::paused_	src/videoevent.h	166
+RecordEvent::timer_	src/videoevent.h	163
+RecordEvent::unpause	src/videoevent.cpp	/^void RecordEvent::unpause()$/
+RecordEvent::video_	src/videoevent.h	164
+RemoveEvent	src/event.h	69
+RemoveEvent::RemoveEvent	src/event.cpp	/^RemoveEvent::RemoveEvent(int start, int delay, int/
+RemoveEvent::RemoveEvent	src/event.cpp	/^RemoveEvent::RemoveEvent(int start, int delay, Eve/
+RemoveEvent::getRemoveId	src/event.cpp	/^int RemoveEvent::getRemoveId() const$/
+RemoveEvent::getRemoveType	src/event.cpp	/^Event::EventType RemoveEvent::getRemoveType() cons/
+RemoveEvent::removeId_	src/event.h	82
+RemoveEvent::removeType_	src/event.h	83
+RotateEvent	src/videoevent.h	110
+RotateEvent::RotateEvent	src/videoevent.cpp	/^RotateEvent::RotateEvent(int start, int angle, int/
+RotateEvent::angle_	src/videoevent.h	118
+RotateEvent::apply	src/videoevent.cpp	/^void RotateEvent::apply(cv::Mat &frame)$/
+SETTINGS_H_	src/settings.h	9
+SHUTTER_ADDR	src/config.h	15
+SHUTTER_MAX_VAL	src/config.h	17
+SHUTTER_MIN_VAL	src/config.h	16
+SHUTTER_OFFSET	src/config.h	18
+SPK_THREAD_PRIORITY	src/config.h	54
+STOPPABLETHREAD_H_	src/stoppablethread.h	9
+Settings	src/settings.h	21
+Settings::Settings	src/settings.cpp	/^Settings::Settings()$/
+Settings::color	src/settings.h	32
+Settings::fixPoint	src/settings.h	36
+Settings::flip	src/settings.h	34
+Settings::fps	src/settings.h	30
+Settings::jpgQuality	src/settings.h	29
+Settings::movementSensitivity	src/settings.h	31
+Settings::printerPortAddr	src/settings.h	40
+Settings::storagePath	src/settings.h	39
+Settings::turnAround	src/settings.h	35
+Settings::vsync	src/settings.h	33
+StoppableThread	src/stoppablethread.h	29
+StoppableThread::StoppableThread	src/stoppablethread.cpp	/^StoppableThread::StoppableThread(QObject *parent) /
+StoppableThread::id	src/stoppablethread.h	44
+StoppableThread::nextId	src/stoppablethread.cpp	13
+StoppableThread::nextId	src/stoppablethread.h	43
+StoppableThread::run	src/stoppablethread.cpp	/^void StoppableThread::run()$/
+StoppableThread::shouldStop	src/stoppablethread.h	40
+StoppableThread::stop	src/stoppablethread.cpp	/^void StoppableThread::stop()$/
+StoppableThread::~StoppableThread	src/stoppablethread.cpp	/^StoppableThread::~StoppableThread()$/
+TEXTEDIT_H	src/textedit.h	2
+TIMER_H	src/timerwithpause.h	2
+TextEdit	src/textedit.h	8
+TextEdit::TextEdit	src/textedit.cpp	/^TextEdit::TextEdit(QWidget *parent) :$/
+TextEdit::highlightCurrentLine	src/textedit.cpp	/^void TextEdit::highlightCurrentLine()$/
+TextEdit::lineNumberArea	src/textedit.h	26
+TextEdit::lineNumberAreaPaintEvent	src/textedit.cpp	/^void TextEdit::lineNumberAreaPaintEvent(QPaintEven/
+TextEdit::lineNumberAreaWidth	src/textedit.cpp	/^int TextEdit::lineNumberAreaWidth()$/
+TextEdit::resizeEvent	src/textedit.cpp	/^void TextEdit::resizeEvent(QResizeEvent *ev)$/
+TextEdit::updateLineNumberArea	src/textedit.cpp	/^void TextEdit::updateLineNumberArea(const QRect &r/
+TextEdit::updateLineNumberAreaWidth	src/textedit.cpp	/^void TextEdit::updateLineNumberAreaWidth()$/
+TextEvent	src/videoevent.h	95
+TextEvent::TextEvent	src/videoevent.cpp	/^TextEvent::TextEvent(int start, const QString& str/
+TextEvent::apply	src/videoevent.cpp	/^void TextEvent::apply(cv::Mat &frame)$/
+TextEvent::color_	src/videoevent.h	104
+TextEvent::pos_	src/videoevent.h	105
+TextEvent::str_	src/videoevent.h	106
+TimerWithPause	src/timerwithpause.h	9
+TimerWithPause::TimerWithPause	src/timerwithpause.cpp	/^TimerWithPause::TimerWithPause() :$/
+TimerWithPause::mutex_	src/timerwithpause.h	23
+TimerWithPause::nsecsElapsed	src/timerwithpause.cpp	/^qint64 TimerWithPause::nsecsElapsed() const$/
+TimerWithPause::pause	src/timerwithpause.cpp	/^void TimerWithPause::pause()$/
+TimerWithPause::paused_	src/timerwithpause.h	25
+TimerWithPause::restart	src/timerwithpause.cpp	/^void TimerWithPause::restart()$/
+TimerWithPause::resume	src/timerwithpause.cpp	/^void TimerWithPause::resume()$/
+TimerWithPause::time_	src/timerwithpause.h	24
+UV_MAX_VAL	src/config.h	28
+UV_MIN_VAL	src/config.h	27
+UV_REG_SHIFT	src/config.h	31
+Ui	src/videodialog.h	27
+VIDEOCOMPRESSORTHREAD_H_	src/videocompressorthread.h	9
+VIDEODIALOG_H	src/videodialog.h	2
+VIDEOEVENT_H	src/videoevent.h	2
+VIDEOFILEWRITER_H_	src/videofilewriter.h	9
+VIDEO_DEV_PATH	src/config.h	12
+VIDEO_FILE_VERSION	src/common.h	11
+VIDEO_HEIGHT	src/common.h	8
+VIDEO_WIDTH	src/common.h	9
+VR_MAX_VAL	src/config.h	30
+VR_MIN_VAL	src/config.h	29
+VideoCompressorThread	src/videocompressorthread.h	14
+VideoCompressorThread::VideoCompressorThread	src/videocompressorthread.cpp	/^VideoCompressorThread::VideoCompressorThread(CycDa/
+VideoCompressorThread::inpBuf	src/videocompressorthread.h	24
+VideoCompressorThread::jpgQuality	src/videocompressorthread.h	26
+VideoCompressorThread::outBuf	src/videocompressorthread.h	25
+VideoCompressorThread::stoppableRun	src/videocompressorthread.cpp	/^void VideoCompressorThread::stoppableRun()$/
+VideoCompressorThread::~VideoCompressorThread	src/videocompressorthread.cpp	/^VideoCompressorThread::~VideoCompressorThread()$/
+VideoDialog	src/videodialog.h	31
+VideoDialog::EventsPtr	src/videodialog.h	36
+VideoDialog::VideoDialog	src/videodialog.cpp	/^VideoDialog::VideoDialog(MainWindow *window) :$/
+VideoDialog::cam_	src/videodialog.h	91
+VideoDialog::cameraThread_	src/videodialog.h	81
+VideoDialog::closeEvent	src/videodialog.cpp	/^void VideoDialog::closeEvent(QCloseEvent *)$/
+VideoDialog::cycVideoBufJpeg_	src/videodialog.h	80
+VideoDialog::cycVideoBufRaw_	src/videodialog.h	79
+VideoDialog::displayFPS	src/videodialog.cpp	/^void VideoDialog::displayFPS(int fps)$/
+VideoDialog::eventDuration_	src/videodialog.h	72
+VideoDialog::eventTmr_	src/videodialog.h	88
+VideoDialog::events_	src/videodialog.h	85
+VideoDialog::getNextEvent	src/videodialog.cpp	/^void VideoDialog::getNextEvent()$/
+VideoDialog::glVideoWidget_	src/videodialog.h	86
+VideoDialog::mainWindow	src/videodialog.cpp	/^MainWindow* VideoDialog::mainWindow() const$/
+VideoDialog::onExternTrig	src/videodialog.cpp	/^void VideoDialog::onExternTrig(bool on)$/
+VideoDialog::onGainChanged	src/videodialog.cpp	/^void VideoDialog::onGainChanged(int newVal)$/
+VideoDialog::onShutterChanged	src/videodialog.cpp	/^void VideoDialog::onShutterChanged(int newVal)$/
+VideoDialog::onUVChanged	src/videodialog.cpp	/^void VideoDialog::onUVChanged(int newVal)$/
+VideoDialog::onVRChanged	src/videodialog.cpp	/^void VideoDialog::onVRChanged(int newVal)$/
+VideoDialog::onWidthChanged	src/videodialog.cpp	/^void VideoDialog::onWidthChanged(int newVal)$/
+VideoDialog::pause	src/videodialog.cpp	/^void VideoDialog::pause()$/
+VideoDialog::setOutputDevice	src/videodialog.cpp	/^void VideoDialog::setOutputDevice(OutputDevice::Po/
+VideoDialog::settings_	src/videodialog.h	77
+VideoDialog::start	src/videodialog.cpp	/^void VideoDialog::start(EventsPtr events)$/
+VideoDialog::stop	src/videodialog.cpp	/^void VideoDialog::stop()$/
+VideoDialog::stopThreads	src/videodialog.cpp	/^void VideoDialog::stopThreads()$/
+VideoDialog::time_	src/videodialog.h	89
+VideoDialog::toggleRecord	src/videodialog.cpp	/^void VideoDialog::toggleRecord(bool arg)$/
+VideoDialog::ui	src/videodialog.h	74
+VideoDialog::unpause	src/videodialog.cpp	/^void VideoDialog::unpause()$/
+VideoDialog::updateBackground	src/videodialog.cpp	/^void VideoDialog::updateBackground()$/
+VideoDialog::videoCompressorThread_	src/videodialog.h	83
+VideoDialog::videoFileWriter_	src/videodialog.h	82
+VideoDialog::window_	src/videodialog.h	75
+VideoDialog::~VideoDialog	src/videodialog.cpp	/^VideoDialog::~VideoDialog()$/
+VideoEvent	src/videoevent.h	17
+VideoEvent::VideoEvent	src/videoevent.cpp	/^VideoEvent::VideoEvent(EventType type, int start, /
+VideoEvent::getPriority	src/videoevent.h	/^    int getPriority() const {return priority_;}$/
+VideoEvent::priority_	src/videoevent.h	28
+VideoEvent::~VideoEvent	src/videoevent.cpp	/^VideoEvent::~VideoEvent()$/
+VideoFileWriter	src/videofilewriter.h	13
+VideoFileWriter::VideoFileWriter	src/videofilewriter.cpp	/^VideoFileWriter::VideoFileWriter(CycDataBuffer* cy/
+VideoFileWriter::buf	src/videofilewriter.h	24
+VideoFileWriter::bufLen	src/videofilewriter.h	23
+VideoFileWriter::getHeader	src/videofilewriter.cpp	/^unsigned char* VideoFileWriter::getHeader(int* _le/
+VideoFileWriter::~VideoFileWriter	src/videofilewriter.cpp	/^VideoFileWriter::~VideoFileWriter()$/
+VideoObject	src/eventreader.h	18
+VideoObject::frames_	src/eventreader.h	19
+VideoObject::length_	src/eventreader.h	20
+WHITEBALANCE_ADDR	src/config.h	25
+WHITEBALANCE_OFFSET	src/config.h	26
+ZoomEvent	src/videoevent.h	135
+ZoomEvent::ZoomEvent	src/videoevent.cpp	/^ZoomEvent::ZoomEvent(int start, double scale, int /
+ZoomEvent::apply	src/videoevent.cpp	/^void ZoomEvent::apply(cv::Mat &frame)$/
+ZoomEvent::coef_	src/videoevent.h	148
+ZoomEvent::interval_	src/videoevent.h	147
+ZoomEvent::pause	src/videoevent.cpp	/^void ZoomEvent::pause()$/
+ZoomEvent::scale_	src/videoevent.h	146
+ZoomEvent::stopped_	src/videoevent.h	149
+ZoomEvent::timer_	src/videoevent.h	145
+ZoomEvent::unpause	src/videoevent.cpp	/^void ZoomEvent::unpause()$/
+append	src/eventcontainer.cpp	/^void EventContainer<T>::append(T event)$/
+applyEvents	src/eventcontainer.cpp	/^void EventContainer<VideoEvent*>::applyEvents(cv::/
+begin	src/eventcontainer.cpp	/^typename EventContainer<T>::Iterator EventContaine/
+begin	src/eventcontainer.cpp	/^typename EventContainer<T>::ConstIterator EventCon/
+chunkSize	src/cycdatabuffer.h	21
+clear	src/eventcontainer.cpp	/^void EventContainer<T>::clear()$/
+compareEventPriorities	src/videoevent.h	/^inline bool compareEventPriorities(const VideoEven/
+empty	src/eventcontainer.cpp	/^bool EventContainer<T>::empty() const$/
+end	src/eventcontainer.cpp	/^typename EventContainer<T>::Iterator EventContaine/
+end	src/eventcontainer.cpp	/^typename EventContainer<T>::ConstIterator EventCon/
+getTotalDuration	src/eventcontainer.cpp	/^int EventContainer<T>::getTotalDuration() const$/
+isRec	src/cycdatabuffer.h	23
+log	src/cycdatabuffer.h	25
+logSize	src/cycdatabuffer.h	20
+operator []	src/eventcontainer.cpp	/^T EventContainer<T>::operator [](int id) const$/
+pauseEvents	src/eventcontainer.cpp	/^void EventContainer<T>::pauseEvents()$/
+pop_front	src/eventcontainer.cpp	/^Event* EventContainer<T>::pop_front()$/
+prepend	src/eventcontainer.cpp	/^void EventContainer<T>::prepend(T event)$/
+removeId	src/eventcontainer.cpp	/^void EventContainer<T>::removeId(int id)$/
+removeType	src/eventcontainer.cpp	/^void EventContainer<T>::removeType(Event::EventTyp/
+timestamp	src/cycdatabuffer.h	22
+trigCode	src/cycdatabuffer.h	24
+unpauseEvents	src/eventcontainer.cpp	/^void EventContainer<T>::unpauseEvents()$/
+~EventContainer	src/eventcontainer.cpp	/^EventContainer<T>::~EventContainer()$/
