@@ -326,7 +326,7 @@ void MainWindow::addFadeOutEvent()
 
 void MainWindow::addImageEvent()
 {
-    QString str("Event: type=image, start=0, x=0, y=0, image id=0");
+    QString str("Event: type=image, start=0, x=0, y=0, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -380,13 +380,13 @@ void MainWindow::addZoomEvent()
 
 void MainWindow::addRecordEvent()
 {
-    QString str("Event: type=record, start=0, duration=2000, videoId=0");
+    QString str("Event: type=record, start=0, duration=2000, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addPlaybackEvent()
 {
-    QString str("Event: type=playback, start=0, duration=2000, videoId=0");
+    QString str("Event: type=playback, start=0, duration=2000, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
