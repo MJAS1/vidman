@@ -261,7 +261,7 @@ void RecordEvent::unpause()
 }
 
 PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration, int id, int trigCode, int priority) :
-    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
+    VideoEvent(EVENT_PLAYBACK, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
 }

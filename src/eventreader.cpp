@@ -352,6 +352,8 @@ bool EventReader::readDelEvent(const QString &str, EventContainer<Event*>& event
                 else if(value == "freeze") type = Event::EVENT_FREEZE;
                 else if(value == "rotate") type = Event::EVENT_ROTATE;
                 else if(value == "zoom") type = Event::EVENT_ZOOM;
+                else if(value == "playback") type = Event::EVENT_PLAYBACK;
+                else if(value == "record") type = Event::EVENT_RECORD;
                 else {
                     emit error(QString("Error: couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
                     return false;
@@ -418,6 +420,12 @@ bool EventReader::readDelEvent(const QString &str, EventContainer<Event*>& event
 
             case Event::EVENT_ZOOM:
                 ev->appendLog(QString("Zoom event removed."));
+                break;
+            case Event::EVENT_PLAYBACK:
+                ev->appendLog(QString("Playback event removed."));
+                break;
+            case Event::EVENT_RECORD:
+                ev->appendLog(QString("Record event removed."));
                 break;
 
             default:
