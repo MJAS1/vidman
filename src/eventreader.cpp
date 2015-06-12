@@ -30,8 +30,8 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
 				if(!readObject(split[1], i+1))
 					return false;
 			}
-            else if(str == "removeevent") {
-                if(!readRemoveEvent(split[1], events, i+1))
+            else if(str == "delete") {
+                if(!readDelEvent(split[1], events, i+1))
                     return false;
             }
             //Ignore comments
@@ -323,7 +323,7 @@ bool EventReader::readObject(const QString &str, int lineNumber)
 	return true;
 }
 
-bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
+bool EventReader::readDelEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -386,12 +386,12 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& ev
         return false;
     }
     else if(id > -1) {
-        Event* ev = new RemoveEvent(start, delay, id, trigCode);
+        Event* ev = new DelEvent(start, delay, id, trigCode);
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
         events.append(ev);
     }
     else {
-        Event* ev = new RemoveEvent(start, delay, type, trigCode);
+        Event* ev = new DelEvent(start, delay, type, trigCode);
 
         switch(type) {
             case Event::EVENT_FLIP:

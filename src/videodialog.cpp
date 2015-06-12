@@ -110,7 +110,7 @@ void VideoDialog::getNextEvent()
             break;
 
         case Event::EVENT_REMOVE:
-            cameraThread_->removeEvent(static_cast<RemoveEvent*>(event));
+            cameraThread_->deleteEvent(static_cast<DelEvent*>(event));
             break;
 
         default:

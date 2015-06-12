@@ -47,8 +47,8 @@ void Test::testEventReader()
     strList.append(QString("Event: type=text, start=0, x=0, y=0, color=black, text=test"));
     strList.append(QString("Event: type=rotate, start=99, angle=90"));
     strList.append(QString("Event: type=freeze, start=0, trigcode=10"));
-    strList.append(QString("RemoveEvent: start=0, id=0, trigcode=3"));
-    strList.append(QString("RemoveEvent: start=0, type=image, trigcode=43"));
+    strList.append(QString("DelEvent: start=0, id=0, trigcode=3"));
+    strList.append(QString("DelEvent: start=0, type=image, trigcode=43"));
     strList.append(QString("Event: type=zoom, start=0, scale=1.5, duration=2000, trigcode=10"));
     QCOMPARE(evReader.loadEvents(strList, events), true);
 

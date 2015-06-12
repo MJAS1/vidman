@@ -21,8 +21,8 @@ public:
     ~EventContainer();
 
     void    clear();
-    void    removeId(int id);
-    void    removeType(Event::EventType);
+    void    deleteId(int id);
+    void    deleteType(Event::EventType);
     void    append(T event);
     void    prepend(T event);
     void    applyEvents(cv::Mat& frame) const;

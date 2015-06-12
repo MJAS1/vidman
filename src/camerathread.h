@@ -34,7 +34,7 @@ public:
 
 public slots:
     void    addVideoEvent(VideoEvent *ev);
-    void    removeEvent(RemoveEvent *ev);
+    void    deleteEvent(DelEvent *ev);
     void    detectMotion(Event *ev);
 
 protected:

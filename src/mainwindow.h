@@ -63,8 +63,8 @@ private slots:
     void addTextEvent();
     void addRotateEvent();
     void addFreezeEvent();
-    void addRemoveEventId();
-    void addRemoveEventType();
+    void addDeleteId();
+    void addDeleteType();
     void addImageObject();
     void addVideoObject();
     void addZoomEvent();

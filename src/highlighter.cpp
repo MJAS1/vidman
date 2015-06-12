@@ -38,8 +38,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
     blockFormat.setForeground(Qt::darkRed);
     blockFormat.setFontWeight(QFont::Bold);
     QStringList blockPatterns;
-    blockPatterns << "event" << "removeevent" << "remove event"
-				  << "\\bobject\\b";
+    blockPatterns << "event" << "delete" << "\\bobject\\b";
 
     foreach(const QString& pattern, blockPatterns)
     {
