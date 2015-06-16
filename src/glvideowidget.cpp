@@ -89,7 +89,6 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
     doneCurrent();
     glt_->drawFrame(imBuf, chunkAttrib.trigCode, log);
     frames_++;
-
 }
 
 void GLVideoWidget::displayFPS()
@@ -114,7 +113,6 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 		videoDialog_->close();
         showFullScreen();
     }
-
 }
 
 void GLVideoWidget::setVideoWidth(int newVal)

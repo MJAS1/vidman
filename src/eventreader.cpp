@@ -26,16 +26,12 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
                 if(!readEvent(split[1], events, i+1))
                     return false;
             }
-            else if(str == "imageobject") {
-                if(!readImageObject(split[1], i+1))
-                    return false;
-            }
-            else if(str == "videoobject") {
-                if(!readVideoObject(split[1], i+1))
-                    return false;
-            }
-            else if(str == "removeevent") {
-                if(!readRemoveEvent(split[1], events, i+1))
+			else if(str == "object") {
+				if(!readObject(split[1], i+1))
+					return false;
+			}
+            else if(str == "delete") {
+                if(!readDelEvent(split[1], events, i+1))
                     return false;
             }
             //Ignore comments
@@ -61,10 +57,9 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
 
     //Event parameters
     int start = 0, duration = 0, delay=0;
-    int x = 0, y = 0, imageId = 0, eventId = -1, angle = 0, trigCode = 0, videoId = 0;
+    int x = 0, y = 0, objectId = 0, eventId = -1, angle = 0, trigCode = 0;
     float scale = 1;
-    bool imageIdOk = false;
-    bool videoIdOk = false;
+    bool objectIdOk = false;
     QString text;
     cv::Scalar color(0, 0, 0);
     Event::EventType type = Event::EVENT_NULL;
@@ -109,25 +104,10 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
                 if((y = toInt(split[1], lineNumber, QString("y-coordinate"))) == -1)
                     return false;
             }
-            else if(param == "imageid") {
-                if((imageId = toInt(split[1], lineNumber, QString("image ID"))) == -1)
+            else if(param == "objectid") {
+                if((objectId = toInt(split[1], lineNumber, QString("objectID"))) == -1)
                     return false;
-
-                if(!imageContainer_.contains(imageId)) {
-                    emit error(QString("Error: couldn't find image object with id %1 in line %2").arg(imageId).arg(lineNumber));
-                    return false;
-                }
-                imageIdOk = true;
-            }
-            else if(param == "videoid") {
-                if((videoId = toInt(split[1], lineNumber, QString("image ID"))) == -1)
-                    return false;
-
-                if(!videoObjects_.contains(videoId)) {
-                    emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(videoId).arg(lineNumber));
-                    return false;
-                }
-                videoIdOk = true;
+               objectIdOk = true;
             }
             else if(param == "text") {
                 text=split[1];
@@ -196,8 +176,12 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
             break;
 
         case Event::EVENT_IMAGE:
-            if(imageIdOk) {
-                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer_[imageId], delay, eventId, trigCode);
+            if(objectIdOk) {
+				if(!imageContainer_.contains(objectId)) {
+                    emit error(QString("Error: couldn't find image object with id %1 in line %2").arg(objectId).arg(lineNumber));
+                    return false;
+                }
+                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer_[objectId], delay, eventId, trigCode);
                 ev->appendLog(QString("Image event added. "));
             }
             else {
@@ -231,12 +215,16 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
             break;
 
         case Event::EVENT_RECORD:
-            if(videoIdOk) {
-                if(duration > videoObjects_[videoId]->length_) {
+            if(objectIdOk) {
+				if(!videoObjects_.contains(objectId)) {
+                    emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId).arg(lineNumber));
+                    return false;
+                }
+                if(duration > videoObjects_[objectId]->length_) {
                     emit error(QString("Error: record event duration too big for video object in line %1").arg(lineNumber));
                     return false;
                 }
-                ev = new RecordEvent(start, videoObjects_[videoId], delay, duration, eventId, trigCode);
+                ev = new RecordEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode);
                 ev->appendLog(QString("Record event added"));
             }
             else {
@@ -246,8 +234,12 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
             break;
 
         case Event::EVENT_PLAYBACK:
-            if(videoIdOk) {
-                ev = new PlaybackEvent(start, videoObjects_[videoId], delay, duration, eventId, trigCode);
+            if(objectIdOk) {
+				if(!videoObjects_.contains(objectId)) {
+                    emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId).arg(lineNumber));
+                    return false;
+                }
+                ev = new PlaybackEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode);
                 ev->appendLog(QString("Playback event added."));
             }
             else {
@@ -266,58 +258,33 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
     return true;
 }
 
-bool EventReader::readImageObject(const QString &str, int lineNumber)
+bool EventReader::readObject(const QString &str, int lineNumber)
 {
-    QStringList strList = str.split(',');
+	QStringList strList = str.split(',');
 
-    QString filename("");
-    int id = 0;
+	QString type, filename("");
+	int id = 0, length = 0;
 
-    for(int i = 0; i < strList.size(); i++) {
-        if(strList[i].contains("=")) {
-            QStringList split = strList[i].split('=');
+	for(int i = 0; i < strList.size(); i++) {
+		if(strList[i].contains("=")) {
+			QStringList split = strList[i].split('=');
             QString param = split[0].toLower().replace(" ", "");
             QString value = split[1];
 
-            if(param == "filename") {
+			if(param == "type") {
+				if(((type = value) != "video") && (type != "image")) {
+					emit error(QString("Error: invalid type '%1' in line %2").arg(type).arg(lineNumber));
+					return false;
+				}
+			}
+            else if(param == "filename") {
                 filename = value;
             }
-
             else if(param == "id") {
                 if((id = toInt(value, lineNumber, "id")) == -1)
                     return false;
             }
-            else {
-                emit error(QString("Error: couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
-                return false;
-            }
-        }
-    }
-
-    if(!imageContainer_.addImage(id, filename)) {
-        emit error(QString("Error: couldn't load image file '%1'.").arg(filename));
-        return false;
-    }
-
-    return true;
-}
-
-bool EventReader::readVideoObject(const QString &str, int lineNumber)
-{
-    QStringList strList = str.split(',');
-
-    int id = 0, length = 0;
-    for(int i = 0; i < strList.size(); i++) {
-        if(strList[i].contains("=")) {
-            QStringList split = strList[i].split('=');
-            QString param = split[0].toLower().replace(" ", "");
-            QString value = split[1];
-
-            if(param == "id") {
-                if((id = toInt(value, lineNumber, "id")) == -1)
-                    return false;
-            }
-            else if(param == "length") {
+			else if(param == "length") {
                 if((length = toInt(value, lineNumber, "length")) == -1)
                     return false;
             }
@@ -325,21 +292,38 @@ bool EventReader::readVideoObject(const QString &str, int lineNumber)
                 emit error(QString("Error: couldn't understand '%1' in line %2.").arg(split[0].simplified()).arg(lineNumber));
                 return false;
             }
-        }
-    }
+		}
 
-    std::shared_ptr<VideoObject> videoObject(new VideoObject);
-    videoObject->length_ = length;
+	}
 
-    //Reserve enough memory to hold all the frames. This is necessary to make sure that large blocks
-    //of memory don't need to be reallocated while recording.
-    videoObject->frames_.reserve(length/1000*settings_.fps + 10);
-    videoObjects_.insert(id, videoObject);
+	if(type == "image") {
+		if(!imageContainer_.addImage(id, filename)) {
+			emit error(QString("Error: couldn't load image file '%1'.").arg(filename));
+			return false;
+		}
+	}
+	else if(type == "video"){
+		std::shared_ptr<VideoObject> videoObject(new VideoObject);
+		videoObject->length_ = length;
 
-    return true;
+		//Reserve enough memory to hold all the frames. This is necessary to make sure that large blocks
+		//of memory don't need to be reallocated while recording.
+		videoObject->frames_.reserve(length/1000*settings_.fps + 10);
+		videoObjects_.insert(id, videoObject);
+
+	}
+	else if(type == "") {
+		emit error(QString("Error: no type declared for object in line %1").arg(lineNumber));
+		return false;
+	}
+	else {
+		emit error(QString("Error: invalid type '%1' for object in line %1").arg(type).arg(lineNumber));
+		return false;
+	}
+	return true;
 }
 
-bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
+bool EventReader::readDelEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -368,6 +352,8 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& ev
                 else if(value == "freeze") type = Event::EVENT_FREEZE;
                 else if(value == "rotate") type = Event::EVENT_ROTATE;
                 else if(value == "zoom") type = Event::EVENT_ZOOM;
+                else if(value == "playback") type = Event::EVENT_PLAYBACK;
+                else if(value == "record") type = Event::EVENT_RECORD;
                 else {
                     emit error(QString("Error: couldn't understand type '%1' in line %2.").arg(split[1]).arg(lineNumber));
                     return false;
@@ -402,12 +388,12 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& ev
         return false;
     }
     else if(id > -1) {
-        Event* ev = new RemoveEvent(start, delay, id, trigCode);
+        Event* ev = new DelEvent(start, delay, id, trigCode);
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
         events.append(ev);
     }
     else {
-        Event* ev = new RemoveEvent(start, delay, type, trigCode);
+        Event* ev = new DelEvent(start, delay, type, trigCode);
 
         switch(type) {
             case Event::EVENT_FLIP:
@@ -434,6 +420,12 @@ bool EventReader::readRemoveEvent(const QString &str, EventContainer<Event*>& ev
 
             case Event::EVENT_ZOOM:
                 ev->appendLog(QString("Zoom event removed."));
+                break;
+            case Event::EVENT_PLAYBACK:
+                ev->appendLog(QString("Playback event removed."));
+                break;
+            case Event::EVENT_RECORD:
+                ev->appendLog(QString("Record event removed."));
                 break;
 
             default:

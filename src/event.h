@@ -65,22 +65,22 @@ private:
 
 
 
-//This class is used to specify what event should be removed
-class RemoveEvent : public Event
+//This class is used to specify what event should be deleted and when
+class DelEvent : public Event
 {
 public:
 
     //Remove event can be initialized to remove either an event with a specific id
     //or all the events of a given type
-    explicit RemoveEvent(int start, int delay, int removeId, int trigCode = 0);
-    explicit RemoveEvent(int start, int delay, EventType removeType, int trigCode = 0);
+    explicit DelEvent(int start, int delay, int delId, int trigCode = 0);
+    explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0);
 
-    EventType getRemoveType() const;
-    int getRemoveId() const;
+    EventType getDelType() const;
+    int getDelId() const;
 
 private:
-    int         removeId_;
-    EventType   removeType_;
+    int         delId_;
+    EventType   delType_;
 
 };
 

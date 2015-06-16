@@ -38,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     menu->addAction(ui->actionAddTextEvent);
     menu->addAction(ui->actionAddZoomEvent);
     menu->addSeparator();
-    menu->addAction(ui->actionRemoveEventId);
-    menu->addAction(ui->actionRemoveEventType);
+    menu->addAction(ui->actionDeleteId);
+    menu->addAction(ui->actionDeleteType);
 
     QToolButton *toolBtn = new QToolButton(this);
     toolBtn->setMenu(menu);
@@ -308,85 +308,85 @@ void MainWindow::fileNew()
 
 void MainWindow::addFlipEvent()
 {
-    QString str("Event: type=flip, start=0");
+    QString str("event: type=flip, start=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeInEvent()
 {
-    QString str("Event: type=fade in, start=0, duration=5000, delay=0");
+    QString str("event: type=fade in, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeOutEvent()
 {
-    QString str("Event: type=fade out, start=0, duration=5000, delay=0");
+    QString str("event: type=fade out, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addImageEvent()
 {
-    QString str("Event: type=image, start=0, x=0, y=0, image id=0");
+    QString str("event: type=image, start=0, x=0, y=0, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addTextEvent()
 {
-    QString str("Event: type=text, start=0, x=0, y=0, color=black, text=");
+    QString str("event: type=text, start=0, x=0, y=0, color=black, text=");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addImageObject()
 {
-    QString str("ImageObject: id=0, filename=");
+    QString str("object: type=image, id=0, filename=");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addVideoObject()
 {
-    QString str("VideoObject: id=0, length=2000");
+    QString str("object: type=video, id=0, length=2000");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addRotateEvent()
 {
-    QString str("Event: type=rotate, start=0, angle=90");
+    QString str("event: type=rotate, start=0, angle=90");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFreezeEvent()
 {
-    QString str("Event: type=freeze, start=0");
+    QString str("event: type=freeze, start=0");
     ui->textEdit->insertPlainText(str);
 }
 
-void MainWindow::addRemoveEventId()
+void MainWindow::addDeleteId()
 {
-    QString str("RemoveEvent: start=0, id=0");
+    QString str("delete: start=0, id=0");
     ui->textEdit->insertPlainText(str);
 }
 
-void MainWindow::addRemoveEventType()
+void MainWindow::addDeleteType()
 {
-    QString str("RemoveEvent: start=0, type=");
+    QString str("delete: start=0, type=");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addZoomEvent()
 {
-    QString str("Event: type=zoom, start=0, scale=1.5, duration=2000");
+    QString str("event: type=zoom, start=0, scale=1.5, duration=2000");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addRecordEvent()
 {
-    QString str("Event: type=record, start=0, duration=2000, videoId=0");
+    QString str("event: type=record, start=0, duration=2000, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addPlaybackEvent()
 {
-    QString str("Event: type=playback, start=0, duration=2000, videoId=0");
+    QString str("event: type=playback, start=0, duration=2000, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 

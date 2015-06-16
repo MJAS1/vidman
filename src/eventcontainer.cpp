@@ -32,7 +32,7 @@ Event* EventContainer<T>::pop_front()
 }
 
 template <typename T>
-void EventContainer<T>::removeId(int id)
+void EventContainer<T>::deleteId(int id)
 {
     Iterator iter = events_.begin();
     while(iter != events_.end()) {
@@ -46,7 +46,7 @@ void EventContainer<T>::removeId(int id)
 }
 
 template <typename T>
-void EventContainer<T>::removeType(Event::EventType type)
+void EventContainer<T>::deleteType(Event::EventType type)
 {
     Iterator iter = events_.begin();
     while(iter != events_.end()) {

@@ -33,9 +33,8 @@ signals:
 
 private:
     bool    readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
-    bool    readImageObject(const QString &str, int lineNumber);
-    bool    readVideoObject(const QString &str, int lineNumber);
-    bool    readRemoveEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
+	bool	readObject(const QString &str, int lineNumber);
+    bool    readDelEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
 
     float   toFloat(const QString &str, int line, const QString &param) const;
     int     toInt(const QString &str, int line, const QString &param) const;

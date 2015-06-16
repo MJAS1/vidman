@@ -57,22 +57,22 @@ void Event::unpause()
 {
 }
 
-RemoveEvent::RemoveEvent(int start, int delay, int removeId, int trigCode) :
-    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeId_(removeId), removeType_(EVENT_NULL)
+DelEvent::DelEvent(int start, int delay, int delId, int trigCode) :
+    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId), delType_(EVENT_NULL)
 {
 }
 
-RemoveEvent::RemoveEvent(int start, int delay, EventType removeType, int trigCode) :
-    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), removeType_(removeType)
+DelEvent::DelEvent(int start, int delay, EventType delType, int trigCode) :
+    Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
 {
 }
 
-Event::EventType RemoveEvent::getRemoveType() const
+Event::EventType DelEvent::getDelType() const
 {
-    return removeType_;
+    return delType_;
 }
 
-int RemoveEvent::getRemoveId() const
+int DelEvent::getDelId() const
 {
-    return removeId_;
+    return delId_;
 }
