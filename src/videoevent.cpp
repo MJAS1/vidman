@@ -170,8 +170,9 @@ void RotateEvent::apply(cv::Mat &frame)
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
-FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode, int priority)
-        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode, priority), started_(false)
+FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
+        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode, FREEZE_PRIORITY),
+          started_(false)
 {
 }
 
@@ -228,8 +229,10 @@ void ZoomEvent::unpause()
     timer_.resume();
 }
 
-RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration, int id, int trigCode, int priority) :
-    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
+RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration,
+                         int id, int trigCode) :
+    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, RECORD_PRIORITY),
+    video_(video), finished_(false), paused_(false)
 {
     timer_.invalidate();
 }
@@ -260,8 +263,10 @@ void RecordEvent::unpause()
     timer_.resume();
 }
 
-PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration, int id, int trigCode, int priority) :
-    VideoEvent(EVENT_PLAYBACK, start, delay, duration, id, trigCode, priority), video_(video), finished_(false), paused_(false)
+PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
+                             int id, int trigCode) :
+    VideoEvent(EVENT_PLAYBACK, start, delay, duration, id, trigCode, PLAYBACK_PRIORITY),
+    video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
 	if(video_->frames_.empty())

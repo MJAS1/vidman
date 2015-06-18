@@ -7,6 +7,11 @@
 #include "timerwithpause.h"
 #include "eventreader.h"
 
+const int DEFAULT_PRIORITY = 0;
+const int FREEZE_PRIORITY = 3;
+const int RECORD_PRIORITY = 4;
+const int PLAYBACK_PRIORITY = 4;
+
 /*!
 VideoEvents are used to process a video frame. VideoEvent is an abstract base class
 that should be inherited by all subclasses. Event has a pure virtual function apply(&frame)
@@ -17,7 +22,8 @@ by subclasses.
 class VideoEvent : public Event
 {
 public:
-    explicit VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode, int priority = 0);
+    explicit VideoEvent(EventType type, int start, int delay, int duration,
+                        int id, int trigCode, int priority = DEFAULT_PRIORITY);
     virtual     ~VideoEvent();
 
     virtual void apply(cv::Mat &frame) = 0;
@@ -47,7 +53,8 @@ public:
 class FadeInEvent : public VideoEvent
 {
 public:
-    explicit FadeInEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
+    explicit FadeInEvent(int start, int duration = 5, int delay=0, int id = -1,
+                         int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     void pause();
@@ -63,7 +70,8 @@ private:
 class FadeOutEvent: public VideoEvent
 {
 public:
-    explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1, int trigCode = 0);
+    explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
+                          int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     void pause();
@@ -122,7 +130,7 @@ private:
 class FreezeEvent : public VideoEvent
 {
 public:
-    explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0, int priority = 3);
+    explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
 
@@ -135,7 +143,8 @@ private:
 class ZoomEvent : public VideoEvent
 {
 public:
-    explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0, int id = -1, int trigCode = 0);
+    explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0,
+                       int id = -1, int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     void pause();
@@ -154,7 +163,8 @@ class RecordEvent : public VideoEvent
 public:
     typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
-    explicit RecordEvent(int start, VideoPtr video, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+    explicit RecordEvent(int start, VideoPtr video, int delay = 0,
+                         int duration = 1000, int id = -1, int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     void pause();
@@ -171,7 +181,8 @@ class PlaybackEvent : public VideoEvent
 public:
     typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
-    explicit PlaybackEvent(int start, VideoPtr video, int delay = 0, int duration = 1000, int id = -1, int trigCode = 0, int priority = 4);
+    explicit PlaybackEvent(int start, VideoPtr video, int delay = 0,
+                           int duration = 1000, int id = -1, int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     void pause();
