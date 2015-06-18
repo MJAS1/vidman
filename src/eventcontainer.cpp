@@ -86,34 +86,48 @@ void EventContainer<T>::prepend(T event)
 template <>
 void EventContainer<VideoEvent*>::insertSorted(VideoEvent *event)
 {
+    auto iter = std::lower_bound(events_.begin(), events_.end(), event, compareEventPriorities);
+    events_.insert(iter, event);
+}
+
+template <>
+void EventContainer<VideoEvent*>::insert(Event *event)
+{
     //Remove duplicate events of certain event types to prevent the program from
     //slowing down because of applying the same event multiple times
-    switch(event->getType()) {
-        case Event::EVENT_FLIP:
-            deleteType(Event::EVENT_FLIP);
-            break;
+    switch (event->getType()) {
+    case Event::EVENT_FLIP:
+        deleteType(Event::EVENT_FLIP);
+        break;
 
-        case Event::EVENT_FADEIN:
-        case Event::EVENT_FADEOUT:
-            deleteType(Event::EVENT_FADEIN);
-            deleteType(Event::EVENT_FADEOUT);
-            break;
+    case Event::EVENT_FADEIN:
+    case Event::EVENT_FADEOUT:
+        deleteType(Event::EVENT_FADEIN);
+        deleteType(Event::EVENT_FADEOUT);
+        break;
 
-        case Event::EVENT_ROTATE:
-            deleteType(Event::EVENT_ROTATE);
-            break;
+    case Event::EVENT_ROTATE:
+        deleteType(Event::EVENT_ROTATE);
+        break;
 
-        case Event::EVENT_FREEZE:
-            deleteType(Event::EVENT_FREEZE);
-            break;
+    case Event::EVENT_FREEZE:
+        deleteType(Event::EVENT_FREEZE);
+        break;
 
-        default:
-            break;
+    case Event::EVENT_REMOVE:
+        if(event->getType())
+            deleteType(static_cast<DelEvent*>(event)->getDelType());
+        else
+            deleteId(static_cast<DelEvent*>(event)->getDelId());
+
+        delete event;
+        return;
+
+    default:
+        break;
     }
 
-    auto iter = std::lower_bound(events_.begin(), events_.end(), event, compareEventPriorities);
-
-    events_.insert(iter, event);
+    insertSorted(static_cast<VideoEvent*>(event));
 }
 
 template <typename T>

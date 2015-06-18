@@ -33,8 +33,7 @@ public:
     void    updateBackground();
 
 public slots:
-    void    addVideoEvent(VideoEvent *ev);
-    void    deleteEvent(DelEvent *ev);
+    void    handleEvent(Event *ev);
     void    detectMotion(Event *ev);
 
 protected:

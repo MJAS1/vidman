@@ -128,34 +128,20 @@ void CameraThread::clearEvents()
     mutex_.unlock();
 }
 
-void CameraThread::addVideoEvent(VideoEvent *ev)
-{
-    mutex_.lock();
-    trigCode_ = ev->getTrigCode();
-    log_.append(ev->getLog());
-
-    events_.insertSorted(ev);
-
-    mutex_.unlock();
-}
-
-void CameraThread::deleteEvent(DelEvent *ev)
+void CameraThread::handleEvent(Event *ev)
 {
     mutex_.lock();
 
-    //Remove all events of given type or id
-    if(ev->getDelType())
-        events_.deleteType(ev->getDelType());
-    else
-        events_.deleteId(ev->getDelId());
-
-    if(!trigCode_)
+    if(ev->getType() == Event::EVENT_DETECT_MOTION) {
+        detectMotionEvent_ = ev;
+        motionDetector_.startTracking();
+    }
+    else {
         trigCode_ = ev->getTrigCode();
+        log_.append(ev->getLog());
 
-    log_.append(ev->getLog());
-
-    delete ev;
-
+        events_.insert(ev);
+    }
     mutex_.unlock();
 }
 
@@ -170,16 +156,6 @@ void CameraThread::unpause()
 {
     mutex_.lock();
     events_.unpauseEvents();
-    mutex_.unlock();
-}
-
-void CameraThread::detectMotion(Event *ev)
-{
-    mutex_.lock();
-
-    detectMotionEvent_ = ev;
-    motionDetector_.startTracking();
-
     mutex_.unlock();
 }
 

@@ -103,21 +103,9 @@ void VideoDialog::getNextEvent()
 {
     //Get next event and pass it to cameraThread
     Event *event = events_->pop_front();
+    cameraThread_->handleEvent(event);
 
-    switch(event->getType()) {
-        case Event::EVENT_DETECT_MOTION:
-            cameraThread_->detectMotion(event);
-            break;
-
-        case Event::EVENT_REMOVE:
-            cameraThread_->deleteEvent(static_cast<DelEvent*>(event));
-            break;
-
-        default:
-            cameraThread_->addVideoEvent(static_cast<VideoEvent*>(event));
-            break;
-    }
-
+    //Calculate the start time of the next event
     if(!events_->empty()) {
         Event *nextEvent = (*events_)[0];
         eventDuration_ = (nextEvent->getStart()+event->getDelay());

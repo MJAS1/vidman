@@ -26,7 +26,7 @@ public:
     void    deleteType(Event::EventType);
     void    append(T event);
     void    prepend(T event);
-    void    insertSorted(VideoEvent* event);
+    void    insert(Event *event);
     void    applyEvents(cv::Mat& frame) const;
     void    pauseEvents();
     void    unpauseEvents();
@@ -46,6 +46,8 @@ public:
 private:
     EventContainer(const EventContainer&);
     EventContainer& operator=(const EventContainer&);
+
+    void    insertSorted(VideoEvent* event);
 
     QList<T> events_;
 };

@@ -10,6 +10,8 @@ EventReader::EventReader()
 
 bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>& events)
 {
+    imageContainer_.clear();
+    videoObjects_.clear();
     events.clear();
 
     //Start reading the events, line by line

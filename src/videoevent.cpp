@@ -1,7 +1,8 @@
 #include <QDebug>
 #include "videoevent.h"
 
-VideoEvent::VideoEvent(EventType type, int start, int delay, int duration, int id, int trigCode, int priority) :
+VideoEvent::VideoEvent(EventType type, int start, int delay, int duration, int id,
+                       int trigCode, int priority) :
     Event(type,start, delay, duration, id, trigCode), priority_(priority)
 {
 }
@@ -22,7 +23,8 @@ void FlipEvent::apply(cv::Mat &frame)
 }
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255), stopped_(false)
+    VideoEvent(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
+    stopped_(false)
 {
     timerWithPause_.invalidate();
 }
@@ -57,7 +59,8 @@ void FadeInEvent::unpause()
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0), stopped_(false)
+    VideoEvent(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0),
+    stopped_(false)
 {
     timerWithPause_.invalidate();
 }
@@ -91,7 +94,8 @@ void FadeOutEvent::unpause()
     timerWithPause_.resume();
 }
 
-ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image, int delay, int id, int trigCode) :
+ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image,
+                       int delay, int id, int trigCode) :
     VideoEvent(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
 {
 }
@@ -148,8 +152,10 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
   }
 }
 
-TextEvent::TextEvent(int start, const QString& str, cv::Scalar color, const cv::Point2i& pos, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color), pos_(pos), str_(str)
+TextEvent::TextEvent(int start, const QString& str, cv::Scalar color,
+                     const cv::Point2i& pos, int delay, int id, int trigCode) :
+    VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color),
+    pos_(pos), str_(str)
 {
 }
 
@@ -185,7 +191,8 @@ void FreezeEvent::apply(cv::Mat &frame)
     freezedFrame_.copyTo(frame);
 }
 
-ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id, int trigCode) :
+ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id,
+                     int trigCode) :
         VideoEvent(EVENT_ZOOM, start, delay, duration, id, trigCode),
         scale_(scale), stopped_(false)
 {
