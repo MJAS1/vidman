@@ -16,7 +16,7 @@ template <typename T>
 void EventContainer<T>::clear()
 {
     if(!empty()) {
-        for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
+        for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
             delete *iter;
 
         events_.clear();
@@ -41,7 +41,7 @@ void EventContainer<T>::deleteId(int id)
             iter = events_.erase(iter);
             continue;
         }
-        iter++;
+        ++iter;
     }
 }
 
@@ -55,7 +55,7 @@ void EventContainer<T>::deleteType(Event::EventType type)
             iter = events_.erase(iter);
             continue;
         }
-        iter++;
+        ++iter;
     }
 }
 
@@ -81,6 +81,39 @@ template <typename T>
 void EventContainer<T>::prepend(T event)
 {
     events_.prepend(event);
+}
+
+template <>
+void EventContainer<VideoEvent*>::insertSorted(VideoEvent *event)
+{
+    //Remove duplicate events of certain event types to prevent the program from
+    //slowing down because of applying the same event multiple times
+    switch(event->getType()) {
+        case Event::EVENT_FLIP:
+            deleteType(Event::EVENT_FLIP);
+            break;
+
+        case Event::EVENT_FADEIN:
+        case Event::EVENT_FADEOUT:
+            deleteType(Event::EVENT_FADEIN);
+            deleteType(Event::EVENT_FADEOUT);
+            break;
+
+        case Event::EVENT_ROTATE:
+            deleteType(Event::EVENT_ROTATE);
+            break;
+
+        case Event::EVENT_FREEZE:
+            deleteType(Event::EVENT_FREEZE);
+            break;
+
+        default:
+            break;
+    }
+
+    auto iter = std::lower_bound(events_.begin(), events_.end(), event, compareEventPriorities);
+
+    events_.insert(iter, event);
 }
 
 template <typename T>
@@ -110,21 +143,21 @@ typename EventContainer<T>::ConstIterator EventContainer<T>::end() const
 template <>
 void EventContainer<VideoEvent*>::applyEvents(cv::Mat &frame) const
 {
-    for(ConstIterator iter = events_.begin(); iter != events_.end(); iter++)
+    for(ConstIterator iter = events_.begin(); iter != events_.end(); ++iter)
         (*iter)->apply(frame);
 }
 
 template <typename T>
 void EventContainer<T>::pauseEvents()
 {
-    for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
+    for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
         (*iter)->pause();
 }
 
 template <typename T>
 void EventContainer<T>::unpauseEvents()
 {
-    for(Iterator iter = events_.begin(); iter != events_.end(); iter++)
+    for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
         (*iter)->unpause();
 }
 
@@ -132,7 +165,7 @@ template <typename T>
 int EventContainer<T>::getTotalDuration() const
 {
     int duration = 0;
-    for(ConstIterator iter = events_.begin(); iter != events_.end(); iter++) {
+    for(ConstIterator iter = events_.begin(); iter != events_.end(); ++iter) {
         duration += (*iter)->getStart();
         duration += (*iter)->getDelay();
     }

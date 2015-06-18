@@ -131,38 +131,10 @@ void CameraThread::clearEvents()
 void CameraThread::addVideoEvent(VideoEvent *ev)
 {
     mutex_.lock();
-
-    //Remove duplicate events of certain event types to prevent the program from slowing down
-    switch(ev->getType()) {
-        case Event::EVENT_FLIP:
-            events_.deleteType(Event::EVENT_FLIP);
-            break;
-
-        case Event::EVENT_FADEIN:
-        case Event::EVENT_FADEOUT:
-            events_.deleteType(Event::EVENT_FADEIN);
-            events_.deleteType(Event::EVENT_FADEOUT);
-            break;
-
-        case Event::EVENT_ROTATE:
-            events_.deleteType(Event::EVENT_ROTATE);
-            break;
-
-        case Event::EVENT_FREEZE:
-            events_.deleteType(Event::EVENT_FREEZE);
-            break;
-
-        default:
-            break;
-    }
-
     trigCode_ = ev->getTrigCode();
     log_.append(ev->getLog());
 
-    events_.append(ev);
-
-    //Sort the events by priorities
-    qSort(events_.begin(), events_.end(), compareEventPriorities);
+    events_.insertSorted(ev);
 
     mutex_.unlock();
 }
