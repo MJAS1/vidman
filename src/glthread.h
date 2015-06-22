@@ -26,7 +26,7 @@ public:
 
     /*Because ioperm sets port permissions only for the calling thread, it is important
     that trigPort.open() is called by this thread. This must be done in stoppableRun loop.
-    This function is used notify that trigPort should be set to a given port.*/
+    This function is used to notify that trigPort should be set to a given port.*/
     void setOutputDevice(OutputDevice::PortType portType);
 
 private:

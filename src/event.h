@@ -34,20 +34,20 @@ public:
     };
 
     explicit Event(Event::EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
-    virtual ~Event();
+    virtual ~Event() {}
 
-    int         getStart() const;
-    int         getDelay() const;
-    int         getDuration() const;
-    int         getId() const;
-    EventType   getType() const;
-    int         getTrigCode() const;
+    int         getStart() const {return start_;}
+    int         getDelay() const {return delay_;}
+    int         getDuration() const {return duration_;}
+    int         getId() const {return id_;}
+    EventType   getType() const {return type_;}
+    int         getTrigCode() const {return trigCode_;}
 
-    void        appendLog(const QString &str);
-    QString     getLog() const;
+    void        appendLog(const QString &str) {log_ = str;}
+    QString     getLog() const {return log_;}
 
-    virtual void pause();
-    virtual void unpause();
+    virtual void pause() {}
+    virtual void unpause() {}
 
 protected:
     EventType   type_;
@@ -75,8 +75,8 @@ public:
     explicit DelEvent(int start, int delay, int delId, int trigCode = 0);
     explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0);
 
-    EventType getDelType() const;
-    int getDelId() const;
+    EventType getDelType() const {return delType_;}
+    int getDelId() const {return delId_;}
 
 private:
     int         delId_;
