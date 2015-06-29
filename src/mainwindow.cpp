@@ -51,6 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //Set status bar
     status_.setIndent(10);
     statusBar()->addWidget(&status_, 1);
+
+    motionDetectorLabel_.setWindowTitle("Motion Detector");
 }
 
 MainWindow::~MainWindow()
@@ -169,6 +171,14 @@ void MainWindow::onViewVideoDialog(bool checked)
 
     else
         videoDialog_->close();
+}
+
+void MainWindow::onViewMotionDetector(bool checked)
+{
+    if(checked)
+        motionDetectorLabel_.show();
+    else
+        motionDetectorLabel_.close();
 }
 
 void MainWindow::onUpdateBackground()
@@ -423,4 +433,11 @@ void MainWindow::writeToLog(const QString &str)
     QTextStream stream(&log);
     stream << "[" << elapsed/1000000000 << "s " << (elapsed%1000000000)/1000000 << "ms]" << str;
     logFile_ << log;
+}
+
+void MainWindow::updateMotionDetectorLabel(const QImage& hands)
+{
+    QPixmap handsPixmap;
+    handsPixmap.convertFromImage(hands.rgbSwapped());
+    motionDetectorLabel_.setPixmap(handsPixmap);
 }

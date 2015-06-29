@@ -1,6 +1,8 @@
 /*
  * This file contains definitions that are shared between video recording and playing software
  */
+#include <QMetaType>
+#include <memory>
 
 #ifndef COMMON_H_
 
@@ -13,6 +15,8 @@
 #define MAGIC_VIDEO_STR		"ELEKTA_VIDEO_FILE"
 
 #define COMMON_H_
+
+
 
 #endif /* COMMON_H_ */
 

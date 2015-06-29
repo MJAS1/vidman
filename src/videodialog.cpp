@@ -18,6 +18,7 @@
 #include "settings.h"
 #include "config.h"
 #include "videoevent.h"
+#include "common.h"
 
 VideoDialog::VideoDialog(MainWindow *window) :
     QDialog(window), ui(new Ui::VideoDialog), window_(window)
@@ -31,6 +32,8 @@ VideoDialog::VideoDialog(MainWindow *window) :
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
 
+
+
     if(cam_.isInitialized()) {
         // Set up video recording
         cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
@@ -38,7 +41,9 @@ VideoDialog::VideoDialog(MainWindow *window) :
         cameraThread_ = new CameraThread(cycVideoBufRaw_, cam_, this);
         videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
+
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
+        connect(cameraThread_, SIGNAL(handsImage(const QImage&)), window_, SLOT(updateMotionDetectorLabel(const QImage&)));
 
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);

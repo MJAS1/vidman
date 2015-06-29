@@ -34,11 +34,12 @@ public:
     void toggleStart(bool);
     void toggleRec(bool);
     void toggleStop(bool);
-    void toggleVideoDialogChecked(bool);   
+    void toggleVideoDialogChecked(bool);
     void writeToLog(const QString&);
     
 public slots:
     void setStatus(const QString&);
+    void updateMotionDetectorLabel(const QImage& hands);
     
 private slots:
     void onStart();
@@ -46,6 +47,7 @@ private slots:
     void onRec(bool);
 
     void onViewVideoDialog(bool);
+    void onViewMotionDetector(bool);
     void onKeepLog(bool);
     void onSerialPort(bool);
     void onParallelPort(bool);
@@ -96,6 +98,7 @@ private:
     QTimer              timeTmr_;
     QString             fileName_;
     QLabel              status_;
+    QLabel              motionDetectorLabel_;
     QTime               eventsDuration_;
 };
 

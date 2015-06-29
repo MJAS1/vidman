@@ -1,10 +1,17 @@
 #include <iostream>
+#include "common.h"
 #include "motiondetector.h"
 
-MotionDetector::MotionDetector()
+MotionDetector::MotionDetector() : isTracking_(false), event_(nullptr)
 {
     Settings settings;
     sensitivity_ = settings.movementSensitivity;
+}
+
+MotionDetector::~MotionDetector()
+{
+    if(event_ != nullptr)
+        delete event_;
 }
 
 void MotionDetector::updateBackground(const cv::Mat &frame)
@@ -19,25 +26,31 @@ void MotionDetector::updateFrame(const cv::Mat &frame)
     cv::threshold(fore_, fore_, 100, 0xff, CV_THRESH_BINARY);
     cv::erode(fore_,fore_,cv::Mat());
     cv::dilate(fore_,fore_,cv::Mat());
-    //cv::namedWindow("MotionDetector");
-    //cv::imshow("MotionDetector", fore_);
+
+    if(isTracking_) {
+        //Calculate the distance between the centroids of the current frame and the frame when tracking started
+        //If distance is big enough, interpret it as movement
+        double norm = cv::norm(centroid_-getCentroid(fore_));
+        if(norm > sensitivity_) {
+            emit movementDetected(event_->getTrigCode());
+            delete event_;
+            event_ = nullptr;
+            isTracking_ = false;
+        }
+    }
 }
 
-void MotionDetector::startTracking()
+const QImage& MotionDetector::handsImage()
+{
+    handsImage_ =  QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
+    return handsImage_;
+}
+
+void MotionDetector::startTracking(Event* ev)
 {
     centroid_ = getCentroid(fore_);
-}
-
-bool MotionDetector::movementDetected() const
-{
-
-    //Calculate the distance between the centroids of the current frame and the frame when tracking started
-    //If distance is big enough, interpret it as movement
-    double norm = cv::norm(centroid_-getCentroid(fore_));
-    if(norm > sensitivity_)
-        return true;
-
-    return false;
+    event_ = ev;
+    isTracking_ = true;
 }
 
 cv::Point MotionDetector::getCentroid(const cv::Mat &frame) const

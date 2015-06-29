@@ -4,6 +4,7 @@
  *  Created on: Jun 6, 2010
  *      Author: andrey
  */
+
 #include <iostream>
 #include <sched.h>
 #include <time.h>
@@ -18,9 +19,11 @@ using namespace std;
 
 
 CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
-    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg_(true),
-    detectMotionEvent_(NULL)
+    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg_(true)
 {
+
+    connect(&motionDetector_, SIGNAL(movementDetected(int)), this, SLOT(setTrigCode(int)));
+
     //Setup preEvents for default processing each frame before actual manipulation
     if(settings_.flip)
         preEvents_.append(new FlipEvent(0, 0));
@@ -39,13 +42,6 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) 
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
-}
-
-
-CameraThread::~CameraThread()
-{
-    if(detectMotionEvent_)
-        delete detectMotionEvent_;
 }
 
 
@@ -82,21 +78,17 @@ void CameraThread::stoppableRun()
             motionDetector_.updateBackground(frame_);
             shouldUpdateBg_ = false;
         }
-
         motionDetector_.updateFrame(frame_);
+
         preEvents_.applyEvents(frame_);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
 		msec = timestamp.tv_nsec / 1000000;
 		msec += timestamp.tv_sec * 1000;
 
-        if(detectMotionEvent_) {
-            if(motionDetector_.movementDetected()) {
-                trigCode_ = detectMotionEvent_->getTrigCode();
-                delete detectMotionEvent_;
-                detectMotionEvent_ = NULL;
-            }
-        }
+        //Emit the background substracted image of the hands to MainWindow for
+        //motionDetector_ label.
+        emit handsImage(motionDetector_.handsImage());
 
         events_.applyEvents(frame_);
         cv::cvtColor(frame_, frame_, CV_BGR2RGB);
@@ -133,13 +125,12 @@ void CameraThread::handleEvent(Event *ev)
     mutex_.lock();
 
     if(ev->getType() == Event::EVENT_DETECT_MOTION) {
-        detectMotionEvent_ = ev;
-        motionDetector_.startTracking();
+        motionDetector_.startTracking(ev);
     }
     else {
-        trigCode_ = ev->getTrigCode();
+        if(!trigCode_)
+            trigCode_ = ev->getTrigCode();
         log_.append(ev->getLog());
-
         events_.insert(ev);
     }
     mutex_.unlock();
@@ -163,5 +154,12 @@ void CameraThread::updateBackground()
 {
     mutex_.lock();
     shouldUpdateBg_ = true;
+    mutex_.unlock();
+}
+
+void CameraThread::setTrigCode(int trigCode)
+{
+    mutex_.lock();
+    trigCode_ = trigCode;
     mutex_.unlock();
 }

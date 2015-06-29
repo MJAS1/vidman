@@ -12,6 +12,7 @@
 #include <opencv/highgui.h>
 #include <QMutex>
 #include <QString>
+#include <memory>
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
 #include "eventcontainer.h"
@@ -23,18 +24,22 @@
 //! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
 class CameraThread : public StoppableThread
 {
+    Q_OBJECT
+
 public:
     explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent = 0);
-	virtual ~CameraThread();
 
     void    clearEvents();
     void    pause();
     void    unpause();
     void    updateBackground();
 
+signals:
+    void    handsImage(const QImage&);
+
 public slots:
     void    handleEvent(Event *ev);
-    void    detectMotion(Event *ev);
+    void    setTrigCode(int trigCode_);
 
 protected:
     virtual void stoppableRun();
@@ -51,10 +56,8 @@ private:
     QString                             log_;
 
     int                                 trigCode_;
-    bool                                isDetectingMotion_;
     bool                                shouldUpdateBg_;
 
-    Event*                              detectMotionEvent_;
     EventContainer<VideoEvent*>         events_, preEvents_;
     Settings                            settings_;
     MotionDetector                      motionDetector_;

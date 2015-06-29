@@ -122,7 +122,7 @@
      <x>0</x>
      <y>0</y>
      <width>706</width>
-     <height>23</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
@@ -142,6 +142,7 @@
      <string>&amp;View</string>
     </property>
     <addaction name="viewVideoDialogAction"/>
+    <addaction name="viewMotionDetectorAction"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -470,6 +471,14 @@
   <action name="actionAddVideoObject">
    <property name="text">
     <string>Add Video Object</string>
+   </property>
+  </action>
+  <action name="viewMotionDetectorAction">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Motion detector</string>
    </property>
   </action>
  </widget>
@@ -1059,6 +1068,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>viewMotionDetectorAction</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onViewMotionDetector(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -1087,5 +1112,6 @@
   <slot>addVideoObject()</slot>
   <slot>addDeleteId()</slot>
   <slot>addDeleteType()</slot>
+  <slot>onViewMotionDetector(bool)</slot>
  </slots>
 </ui>
