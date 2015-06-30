@@ -15,6 +15,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED)
 {
+
+
     ui->setupUi(this);
     videoDialog_ = new VideoDialog(this);
     videoDialog_->show();
@@ -435,9 +437,8 @@ void MainWindow::writeToLog(const QString &str)
     logFile_ << log;
 }
 
-void MainWindow::updateMotionDetectorLabel(const QImage& hands)
+void MainWindow::updateMotionDetectorLabel(std::shared_ptr<QPixmap> hands)
 {
-    QPixmap handsPixmap;
-    handsPixmap.convertFromImage(hands.rgbSwapped());
-    motionDetectorLabel_.setPixmap(handsPixmap);
+    motionDetectorLabel_.setPixmap(*hands);
+    //delete hands;
 }

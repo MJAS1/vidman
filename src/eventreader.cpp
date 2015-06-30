@@ -17,7 +17,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
     //Start reading the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
-        //The string should be of form "Event: type=.., start=.., etc.."
+        //The string should be of the form "Event: type=.., start=.., etc.."
         //Split from ':', remove whitespaces and convert to lower case
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
@@ -214,6 +214,7 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
 
         case Event::EVENT_DETECT_MOTION:
             ev = new Event(Event::EVENT_DETECT_MOTION, start, delay, duration, eventId, trigCode);
+            ev->appendLog(QString("Movement detected"));
             break;
 
         case Event::EVENT_RECORD:
@@ -308,11 +309,11 @@ bool EventReader::readObject(const QString &str, int lineNumber)
 		std::shared_ptr<VideoObject> videoObject(new VideoObject);
 		videoObject->length_ = length;
 
-		//Reserve enough memory to hold all the frames. This is necessary to make sure that large blocks
-		//of memory don't need to be reallocated while recording.
+        //Reserve enough memory to hold all the frames. This is necessary to
+        //make sure that large blocks of memory don't need to be reallocated
+        //while recording.
 		videoObject->frames_.reserve(length/1000*settings_.fps + 10);
 		videoObjects_.insert(id, videoObject);
-
 	}
 	else if(type == "") {
 		emit error(QString("Error: no type declared for object in line %1").arg(lineNumber));

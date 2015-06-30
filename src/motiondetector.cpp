@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QDebug>
 #include "common.h"
 #include "motiondetector.h"
 
@@ -8,18 +9,13 @@ MotionDetector::MotionDetector() : isTracking_(false), event_(nullptr)
     sensitivity_ = settings.movementSensitivity;
 }
 
-MotionDetector::~MotionDetector()
-{
-    if(event_ != nullptr)
-        delete event_;
-}
 
 void MotionDetector::updateBackground(const cv::Mat &frame)
 {
     back_ = frame.clone();
 }
 
-void MotionDetector::updateFrame(const cv::Mat &frame)
+bool MotionDetector::movementDetected(const cv::Mat &frame)
 {
     cv::absdiff(frame, back_, fore_);
     cv::cvtColor(fore_, fore_, CV_BGR2GRAY);
@@ -28,28 +24,31 @@ void MotionDetector::updateFrame(const cv::Mat &frame)
     cv::dilate(fore_,fore_,cv::Mat());
 
     if(isTracking_) {
-        //Calculate the distance between the centroids of the current frame and the frame when tracking started
-        //If distance is big enough, interpret it as movement
+        //Calculate the distance between the centroids of the current frame and
+        //the frame when tracking started. If distance is big enough, interpret
+        //it as movement.
         double norm = cv::norm(centroid_-getCentroid(fore_));
         if(norm > sensitivity_) {
-            emit movementDetected(event_->getTrigCode());
-            delete event_;
-            event_ = nullptr;
             isTracking_ = false;
+            return true;
         }
     }
+
+    return false;
 }
 
-const QImage& MotionDetector::handsImage()
+shared_ptr<QPixmap> MotionDetector::handsPixmap()
 {
-    handsImage_ =  QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
-    return handsImage_;
+    QImage handsImage =  QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
+    shared_ptr<QPixmap> hands(new QPixmap);
+    hands->convertFromImage(handsImage.rgbSwapped());
+    return hands;
 }
 
 void MotionDetector::startTracking(Event* ev)
 {
     centroid_ = getCentroid(fore_);
-    event_ = ev;
+    event_.reset(ev);
     isTracking_ = true;
 }
 
@@ -63,4 +62,20 @@ cv::Point MotionDetector::getCentroid(const cv::Mat &frame) const
     Coord.x = int(moment10 / moment00);
     Coord.y = int(moment01 / moment00);
     return Coord;
+}
+
+int MotionDetector::getEventTrigCode() const
+{
+    if(event_)
+        return event_->getTrigCode();
+
+    return 0;
+}
+
+QString MotionDetector::getEventLog() const
+{
+    if(event_)
+        return event_->getLog();
+
+    return QString();
 }

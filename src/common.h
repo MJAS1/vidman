@@ -16,7 +16,7 @@
 
 #define COMMON_H_
 
-
+Q_DECLARE_METATYPE(std::shared_ptr<QPixmap>)
 
 #endif /* COMMON_H_ */
 

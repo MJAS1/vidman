@@ -16,22 +16,23 @@ a black and white image from which the centroid of the hands can be calculated w
 of the hands starts. By inspecting the location of the centoid, movement can be detected.
 */
 
+using std::shared_ptr;
+using std::unique_ptr;
+
 class MotionDetector : public QObject
 {
     Q_OBJECT
 public:
     MotionDetector();
-    ~MotionDetector();
 
     void            updateBackground(const cv::Mat &frame);
-    void            updateFrame(const cv::Mat &frame);
+    bool            movementDetected(const cv::Mat &frame);
     void            startTracking(Event* ev);
 
-    //bool            movementDetected() const;
-    const QImage&  handsImage();
+    int             getEventTrigCode() const;
+    QString         getEventLog() const;
 
-signals:
-    void movementDetected(int trigcode);
+    shared_ptr<QPixmap>        handsPixmap();
 
 private:
     cv::Point   getCentroid(const cv::Mat &frame) const;
@@ -42,8 +43,7 @@ private:
     int         sensitivity_;
     bool        isTracking_;
 
-    QImage     handsImage_;
-    Event*      event_;
+    unique_ptr<Event>      event_;
 };
 
 #endif // MOTIONDETECTOR_H

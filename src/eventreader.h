@@ -13,8 +13,8 @@ QStringList is created from MainWindow's TextEdit when start is clicked.
 LoadEvents returns false if the input text is incorrectly formatted.
 */
 
-//VideoObject is used to create record and playback events. Contains pointer to
-//the frames belonging to the particular video and length in milliseconds.
+//VideoObject is used to create record and playback events. Contains the frames
+//belonging to the particular video and length in milliseconds.
 struct VideoObject {
     QList<cv::Mat> frames_;
     int length_;

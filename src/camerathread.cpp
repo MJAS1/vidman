@@ -21,9 +21,6 @@ using namespace std;
 CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
     StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg_(true)
 {
-
-    connect(&motionDetector_, SIGNAL(movementDetected(int)), this, SLOT(setTrigCode(int)));
-
     //Setup preEvents for default processing each frame before actual manipulation
     if(settings_.flip)
         preEvents_.append(new FlipEvent(0, 0));
@@ -78,17 +75,16 @@ void CameraThread::stoppableRun()
             motionDetector_.updateBackground(frame_);
             shouldUpdateBg_ = false;
         }
-        motionDetector_.updateFrame(frame_);
+        if(motionDetector_.movementDetected(frame_)) {
+            trigCode_ = motionDetector_.getEventTrigCode();
+            log_.append(motionDetector_.getEventLog());
+        }
 
         preEvents_.applyEvents(frame_);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
 		msec = timestamp.tv_nsec / 1000000;
 		msec += timestamp.tv_sec * 1000;
-
-        //Emit the background substracted image of the hands to MainWindow for
-        //motionDetector_ label.
-        emit handsImage(motionDetector_.handsImage());
 
         events_.applyEvents(frame_);
         cv::cvtColor(frame_, frame_, CV_BGR2RGB);
@@ -101,14 +97,18 @@ void CameraThread::stoppableRun()
         chunkAttrib.trigCode = trigCode_;
         trigCode_ = 0;
 
-        mutex_.unlock();
-
         chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * 3;
         chunkAttrib.timestamp = msec;
 
         cycBuf_->insertChunk(frame_.data, chunkAttrib);
 
         delete []chunkAttrib.log;
+
+        //Emit the background substracted pixmap of the hands to MainWindow for
+        //motionDetector_ label.
+        emit handsPixmap(motionDetector_.handsPixmap());
+
+        mutex_.unlock();
     }
 
 }
@@ -128,8 +128,7 @@ void CameraThread::handleEvent(Event *ev)
         motionDetector_.startTracking(ev);
     }
     else {
-        if(!trigCode_)
-            trigCode_ = ev->getTrigCode();
+        trigCode_ = ev->getTrigCode();
         log_.append(ev->getLog());
         events_.insert(ev);
     }
@@ -154,12 +153,5 @@ void CameraThread::updateBackground()
 {
     mutex_.lock();
     shouldUpdateBg_ = true;
-    mutex_.unlock();
-}
-
-void CameraThread::setTrigCode(int trigCode)
-{
-    mutex_.lock();
-    trigCode_ = trigCode;
     mutex_.unlock();
 }

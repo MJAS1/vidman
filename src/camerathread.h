@@ -35,11 +35,10 @@ public:
     void    updateBackground();
 
 signals:
-    void    handsImage(const QImage&);
+    void    handsPixmap(std::shared_ptr<QPixmap>);
 
 public slots:
     void    handleEvent(Event *ev);
-    void    setTrigCode(int trigCode_);
 
 protected:
     virtual void stoppableRun();
