@@ -106,7 +106,7 @@ void CameraThread::stoppableRun()
 
         //Emit the background substracted pixmap of the hands to MainWindow for
         //motionDetector_ label.
-        emit handsPixmap(motionDetector_.handsPixmap());
+        emit motionDetectorPixmap(motionDetector_.foregroundPixmap());
 
         mutex_.unlock();
     }

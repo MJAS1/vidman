@@ -33,7 +33,7 @@ public:
         EVENT_DETECT_MOTION
     };
 
-    explicit Event(Event::EventType type, int start, int delay=0, int duration=0, int id = -1, int trigCode = 0);
+    explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0, int duration=0, int id = -1, int trigCode = 0);
     virtual ~Event() {}
 
     int         getStart() const {return start_;}

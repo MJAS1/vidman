@@ -17,6 +17,7 @@ void MotionDetector::updateBackground(const cv::Mat &frame)
 
 bool MotionDetector::movementDetected(const cv::Mat &frame)
 {
+    //Create a black and white image of the hands using backgroundsubstraction
     cv::absdiff(frame, back_, fore_);
     cv::cvtColor(fore_, fore_, CV_BGR2GRAY);
     cv::threshold(fore_, fore_, 100, 0xff, CV_THRESH_BINARY);
@@ -37,7 +38,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     return false;
 }
 
-shared_ptr<QPixmap> MotionDetector::handsPixmap()
+shared_ptr<QPixmap> MotionDetector::foregroundPixmap()
 {
     QImage handsImage =  QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
     shared_ptr<QPixmap> hands(new QPixmap);

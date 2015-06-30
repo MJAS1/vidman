@@ -450,7 +450,7 @@
   </action>
   <action name="actionUpdateBackground">
    <property name="text">
-    <string>Update Background</string>
+    <string>Update motion detector background</string>
    </property>
   </action>
   <action name="actionAddZoomEvent">

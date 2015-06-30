@@ -97,7 +97,7 @@ void Test::testEventReader()
 
 void Test::testMotionDetector()
 {
-    /*
+
     cv::Mat bg, hand1, hand2;
 
     bg = cv::imread("../tests/background.ppm");
@@ -109,14 +109,11 @@ void Test::testMotionDetector()
 
     MotionDetector motionDetector;
     motionDetector.updateBackground(bg);
-    motionDetector.updateFrame(hand1);
-    motionDetector.startTracking();
-    motionDetector.updateFrame(hand1);
-    QCOMPARE(motionDetector.movementDetected(), false);
-
-    motionDetector.updateFrame(hand2);
-    QCOMPARE(motionDetector.movementDetected(), true);
-    */
+    motionDetector.movementDetected(hand1);
+    Event* ev = new Event;
+    motionDetector.startTracking(ev);
+    QCOMPARE(motionDetector.movementDetected(hand1), false);
+    QCOMPARE(motionDetector.movementDetected(hand2), true);
 }
 
 QTEST_MAIN(Test)
