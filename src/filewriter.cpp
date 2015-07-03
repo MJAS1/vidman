@@ -48,10 +48,11 @@ void FileWriter::stoppableRun()
                 name = name.arg(path).arg(suffix).arg(ext);
 
                 outData.open(name.toStdString().c_str(), ios_base::out | ios_base::binary | ios_base::trunc);
-				if(outData.fail())
+                if(outData.fail())
 				{
                     cerr << "Error opening the file " << name.toStdString()  << ". " << strerror(errno) << endl;
-					abort();
+                    emit error(QString("Error opening the file %1. %2").arg(name).arg(strerror(errno)));
+                    continue;
 				}
 				header = getHeader(&headerLen);
 				outData.write((const char*)header, headerLen);

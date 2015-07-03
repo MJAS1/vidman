@@ -32,7 +32,8 @@ public:
     ~MainWindow();
 
     void toggleStart(bool);
-    void toggleRec(bool);
+    void toggleRecEnabled(bool);
+    void toggleRecChecked(bool);
     void toggleStop(bool);
     void toggleVideoDialogChecked(bool);
     void writeToLog(const QString&);

@@ -30,6 +30,12 @@
  */
 class FileWriter : public StoppableThread
 {
+
+Q_OBJECT
+
+signals:
+    void error(const QString&) const;
+
 protected:
     FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, QObject* parent = 0);
 	virtual ~FileWriter();

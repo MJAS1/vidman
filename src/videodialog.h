@@ -57,7 +57,9 @@ public slots:
     void onExternTrig(bool on);
 
     void stopThreads();
-    void toggleRecord(bool);
+    void toggleRecEnabledord(bool);
+
+    void fileWriterError(const QString&);
 
 private slots:
     void getNextEvent();

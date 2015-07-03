@@ -40,6 +40,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
         videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
 
+        connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
 
         qRegisterMetaType<std::shared_ptr<QPixmap>>("std::shared_ptr<QPixmap>>");
@@ -77,7 +78,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
         ui->vrSlider->setEnabled(false);
         window_->setStatus(QString("Couldn't initialize video."));
         window_->toggleStart(false);
-        window_->toggleRec(false);
+        window_->toggleRecEnabled(false);
         window_->toggleStop(false);
     }
 }
@@ -99,7 +100,7 @@ void VideoDialog::stopThreads()
     cameraThread_->stop();
 }
 
-void VideoDialog::toggleRecord(bool arg)
+void VideoDialog::toggleRecEnabledord(bool arg)
 {
     cycVideoBufJpeg_->setIsRec(arg);
 }
@@ -209,4 +210,11 @@ void VideoDialog::onExternTrig(bool on)
 MainWindow* VideoDialog::mainWindow() const
 {
     return window_;
+}
+
+void VideoDialog::fileWriterError(const QString &str)
+{
+    cycVideoBufJpeg_->setIsRec(false);
+    window_->toggleRecChecked(false);
+    window_->setStatus(str);
 }

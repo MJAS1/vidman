@@ -65,9 +65,14 @@ void MainWindow::toggleStart(bool arg)
    ui->startButton->setEnabled(arg);
 }
 
-void MainWindow::toggleRec(bool arg)
+void MainWindow::toggleRecEnabled(bool arg)
 {
    ui->recButton->setEnabled(arg);
+}
+
+void MainWindow::toggleRecChecked(bool arg)
+{
+    ui->recButton->setChecked(arg);
 }
 
 void MainWindow::toggleStop(bool arg)
@@ -134,7 +139,7 @@ void MainWindow::onStop()
     }
 
     ui->recButton->setChecked(false);
-    videoDialog_->toggleRecord(false);
+    videoDialog_->toggleRecEnabledord(false);
 
     videoDialog_->stop();
 
@@ -143,7 +148,8 @@ void MainWindow::onStop()
 
 void MainWindow::onRec(bool arg)
 {
-    videoDialog_->toggleRecord(arg);
+    videoDialog_->toggleRecEnabledord(arg);
+    setStatus("Recording...");
 }
 
 void MainWindow::pause()

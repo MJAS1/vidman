@@ -113,14 +113,14 @@ Settings::Settings()
 	//
 
 	// Data storage folder
-	if(!settings.contains("misc/data_storage_path"))
+    if(!settings.contains("misc/data_storage_path"))
 	{
-		settings.setValue("misc/data_storage_path", "/videodat");
-        sprintf(storagePath, "../videodat");
+        settings.setValue("misc/data_storage_path", "../videodat");
+        sprintf(storagePath, "../viddeodat");
 	}
-	else
+    else
 	{
-		sprintf(storagePath, settings.value("misc/data_storage_path").toString().toLocal8Bit().data());
+        sprintf(storagePath, settings.value("misc/data_storage_path").toString().toLocal8Bit().data());
 	}
 
     //Printer port address
