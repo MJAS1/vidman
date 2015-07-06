@@ -7,6 +7,7 @@
 #include <iostream>
 #include <math.h>
 #include <QElapsedTimer>
+#include <QApplication>
 #include <stdio.h>
 #include <errno.h>
 #include <sys/ioctl.h>
@@ -26,7 +27,6 @@ using namespace std;
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
        videoDialog_(parent), glt_(new GLThread(this))
-
 {
     setAutoBufferSwap(false);
 
@@ -36,53 +36,24 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     glt_->start();
 }
 
-
 GLVideoWidget::~GLVideoWidget()
 {
     glt_->stop();
-    delete glt_;
 }
 
-
-void GLVideoWidget::initializeGL()
+void GLVideoWidget::paintEvent(QPaintEvent *e)
 {
+    /*Reimplement an empty paintEvent function. This function is automatically
+    *called by the main thread everytime the window is resized. The default
+    *implementation would in turn call makeCurrent() which will cause a warning
+    *"QGLContext::makeCurrent(): Failed." because the context is active in
+    *GLThread where all the drawing should be done. This reimplementation should
+    *therefore remove the warnings.*/
+    Q_UNUSED(e)
 }
-
-void GLVideoWidget::paintGL()
-{
-}
-
-void GLVideoWidget::resizeGL(int w, int h)
-{
-    int dispW;
-    int dispH;
-
-    // Change the viewport to preserve the aspect ratio.
-    // Compute new height corresponding to the current width and new width
-    // corresponding to the current heigh and see which one fits.
-    dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
-    dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
-
-    makeCurrent();
-
-    if(dispH <= h)
-        glViewport(0, (h - dispH) / 2, w, dispH);
-
-    else if(dispW <= w)
-        glViewport((w - dispW) / 2, 0, dispW, h);
-
-    else {
-        cerr << "Internal error while computing the viewport size" << endl;
-        abort();
-    }
-
-    doneCurrent();
-}
-
 
 void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
 {
-
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
     QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
 
@@ -101,8 +72,6 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 {
     Q_UNUSED(e)
 
-    glt_->pause();
-
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
 		videoDialog_->show();
@@ -117,25 +86,12 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
 
 void GLVideoWidget::setVideoWidth(int newVal)
 {
-    videoWidth_ = newVal;
-    glt_->pause();
-    resizeGL(width(), height());
+    glt_->setVideoWidth(newVal);
 }
 
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
-
-    if(e->oldSize().width() > 100)
-        glt_->pause();
-
-    resizeGL(e->size().width(), e->size().height());
-    glt_->unpause();
-}
-
-void GLVideoWidget::mousePressEvent(QMouseEvent *e)
-{
-    Q_UNUSED(e)
-    glt_->unpause();
+    glt_->resizeGL(e->size().width(), e->size().height());
 }
 
 void GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)

@@ -18,11 +18,8 @@ public:
     explicit GLThread(GLVideoWidget *parent);
 
     void drawFrame(unsigned char* imBuf, int trigCode, const QString& log);
-
-    /*The buffer swap loop needs to be paused when glw is being resized to prevent
-     * a segmentation fault. */
-    void pause();
-    void unpause();
+    void resizeGL(int w, int h);
+    void setVideoWidth(int width);
 
     /*Because ioperm sets port permissions only for the calling thread, it is important
     that trigPort.open() is called by this thread. This must be done in stoppableRun loop.
@@ -34,11 +31,12 @@ private:
 
     bool                    shouldSwap_;
     bool                    shouldChangePort_;
-    bool                    isPaused_;
 
     GLVideoWidget*          glw_;
 
     QMutex                  mutex_;
+    QMutex                  resizeMutex_;
+
     unsigned char*          imBuf_;
 
     QString 			    log_;
@@ -46,11 +44,11 @@ private:
     OutputDevice::PortType  newPort_;
 
     int trigCode_;
+    int videoWidth_;
 
     QGLShaderProgram        shaderProgram_;
     QVector<QVector2D>      vertices_;
     QVector<QVector2D>      textureCoordinates_;
-
 };
 
 #endif // GLTHREAD_H
