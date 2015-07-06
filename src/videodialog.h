@@ -53,7 +53,7 @@ public slots:
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
-    void onWidthChanged(int newVal);
+    void onAspectRatioChanged(int newVal);
     void onExternTrig(bool on);
 
     void stopThreads();

@@ -7,7 +7,8 @@
 #include "iostream"
 
 GLThread::GLThread(GLVideoWidget *glw) :
-    shouldSwap_(false), shouldChangePort_(false), isPaused_(false), glw_(glw)
+    StoppableThread(static_cast<QObject*>(glw)), shouldSwap_(false), shouldChangePort_(false),
+    glw_(glw), videoWidth_(VIDEO_WIDTH)
 {
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
@@ -55,10 +56,12 @@ void GLThread::stoppableRun()
             shouldChangePort_ = false;
         }
 
-        if(shouldSwap_ && !isPaused_) {
+        if(shouldSwap_) {
             shouldSwap_ = false;
 
+            resizeMutex_.lock();
             glw_->makeCurrent();
+
             shaderProgram_.bind();
             shaderProgram_.setUniformValue("texture", 0);
             shaderProgram_.setAttributeArray("vertex", vertices_.constData());
@@ -79,13 +82,14 @@ void GLThread::stoppableRun()
             shaderProgram_.disableAttributeArray("textureCoordinate");
             shaderProgram_.release();
 
+            glw_->doneCurrent();
+            resizeMutex_.unlock();
+
             if(!trigPort_.isEmpty())
                 trigPort_.writeData(trigCode);
 
             if(!log.isEmpty())
                 glw_->videoDialog()->mainWindow()->writeToLog(log);
-
-            glw_->doneCurrent();
         }
     }
 }
@@ -102,24 +106,45 @@ void GLThread::drawFrame(unsigned char* imBuf, int trigCode, const QString& log)
     mutex_.unlock();
 }
 
-void GLThread::pause()
-{
-    mutex_.lock();
-    isPaused_ = true;
-    mutex_.unlock();
-}
-
-void GLThread::unpause()
-{
-    mutex_.lock();
-    isPaused_ = false;
-    mutex_.unlock();
-}
-
 void GLThread::setOutputDevice(OutputDevice::PortType newPort)
 {
     mutex_.lock();
     newPort_ = newPort;
     shouldChangePort_ = true;
     mutex_.unlock();
+}
+
+void GLThread::resizeGL(int w, int h)
+{
+    int dispW;
+    int dispH;
+
+    // Change the viewport to preserve the aspect ratio.
+    // Compute new height corresponding to the current width and new width
+    // corresponding to the current heigh and see which one fits.
+    dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
+    dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
+
+    resizeMutex_.lock();
+    glw_->makeCurrent();
+
+    if(dispH <= h)
+        glViewport(0, (h - dispH) / 2, w, dispH);
+
+    else if(dispW <= w)
+        glViewport((w - dispW) / 2, 0, dispW, h);
+
+    else {
+        std::cerr << "Internal error while computing the viewport size" << std::endl;
+        abort();
+    }
+
+    glw_->doneCurrent();
+    resizeMutex_.unlock();
+}
+
+void GLThread::setVideoWidth(int width)
+{
+    videoWidth_ = width;
+    resizeGL(glw_->width(), glw_->height());
 }

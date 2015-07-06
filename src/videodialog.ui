@@ -109,7 +109,7 @@
       </widget>
      </item>
      <item row="2" column="5">
-      <widget class="QSlider" name="widthSlider">
+      <widget class="QSlider" name="aspectRatioSlider">
        <property name="minimum">
         <number>200</number>
        </property>
@@ -125,7 +125,7 @@
       </widget>
      </item>
      <item row="2" column="4">
-      <widget class="QLabel" name="aspectRatioLAbel">
+      <widget class="QLabel" name="aspectRatioLabel">
        <property name="text">
         <string>Aspect Ratio</string>
        </property>
@@ -209,10 +209,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>widthSlider</sender>
+   <sender>aspectRatioSlider</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>VideoDialog</receiver>
-   <slot>onWidthChanged(int)</slot>
+   <slot>onAspectRatioChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>564</x>
@@ -246,7 +246,8 @@
   <slot>onGainChanged(int)</slot>
   <slot>onUVChanged(int)</slot>
   <slot>onVRChanged(int)</slot>
-  <slot>onWidthChanged(int)</slot>
+  <slot>onAspectRatioChanged(int)</slot>
   <slot>onExternTrig(bool)</slot>
+  <slot>onAspectRatioReleased()</slot>
  </slots>
 </ui>

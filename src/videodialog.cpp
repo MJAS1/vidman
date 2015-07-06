@@ -177,7 +177,7 @@ void VideoDialog::onVRChanged(int newVal)
     cam_.setVR(newVal, ui->uvSlider->value());
 }
 
-void VideoDialog::onWidthChanged(int newVal)
+void VideoDialog::onAspectRatioChanged(int newVal)
 {
     glVideoWidget_->setVideoWidth(newVal);
 }

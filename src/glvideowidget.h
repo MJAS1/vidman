@@ -44,12 +44,9 @@ public slots:
     void onDrawFrame(unsigned char* _imBuf, int logSize);
 
 protected:
-    void initializeGL();
-    void resizeGL(int w, int h);
-    void paintGL();
     void mouseDoubleClickEvent(QMouseEvent *e);
     void resizeEvent(QResizeEvent*);
-    void mousePressEvent(QMouseEvent*);
+    void paintEvent(QPaintEvent*e);
 
 private:
     GLVideoWidget(const GLVideoWidget&);
