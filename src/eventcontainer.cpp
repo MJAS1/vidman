@@ -1,3 +1,4 @@
+#include <numeric>
 #include "eventcontainer.h"
 #include "videoevent.h"
 
@@ -86,7 +87,10 @@ void EventContainer<T>::prepend(T event)
 template <>
 void EventContainer<VideoEvent*>::insertSorted(VideoEvent *event)
 {
-    auto iter = std::lower_bound(events_.begin(), events_.end(), event, compareEventPriorities);
+    auto iter = std::lower_bound(events_.begin(), events_.end(), event,
+                        [](const VideoEvent* l, const VideoEvent* r) {
+                            return l->getPriority() > r->getPriority();
+                        });
     events_.insert(iter, event);
 }
 
@@ -178,13 +182,10 @@ void EventContainer<T>::unpauseEvents()
 template <typename T>
 int EventContainer<T>::getTotalDuration() const
 {
-    int duration = 0;
-    for(ConstIterator iter = events_.begin(); iter != events_.end(); ++iter) {
-        duration += (*iter)->getStart();
-        duration += (*iter)->getDelay();
-    }
-
-    return duration;
+    return std::accumulate(begin(), end(), 0,
+                           [](int x, const T& a) {
+                                return x + a->getStart() + a->getDelay();
+                            });
 }
 
 template class EventContainer<Event*>;

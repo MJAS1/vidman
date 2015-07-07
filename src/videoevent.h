@@ -34,12 +34,6 @@ private:
     int priority_;
 };
 
-//Compare function to be used for sorting VideoEvents by priorities
-inline bool compareEventPriorities(const VideoEvent* left, const VideoEvent* right)
-{
-    return left->getPriority() > right->getPriority();
-}
-
 class FlipEvent : public VideoEvent
 {
 public:
