@@ -35,7 +35,7 @@ private:
     GLVideoWidget*          glw_;
 
     QMutex                  mutex_;
-    QMutex                  resizeMutex_;
+    QMutex                  glMutex_;
 
     unsigned char*          imBuf_;
 

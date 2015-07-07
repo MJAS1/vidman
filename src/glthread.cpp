@@ -59,7 +59,7 @@ void GLThread::stoppableRun()
         if(shouldSwap_) {
             shouldSwap_ = false;
 
-            resizeMutex_.lock();
+            glMutex_.lock();
             glw_->makeCurrent();
 
             shaderProgram_.bind();
@@ -83,7 +83,7 @@ void GLThread::stoppableRun()
             shaderProgram_.release();
 
             glw_->doneCurrent();
-            resizeMutex_.unlock();
+            glMutex_.unlock();
 
             if(!trigPort_.isEmpty())
                 trigPort_.writeData(trigCode);
@@ -125,7 +125,11 @@ void GLThread::resizeGL(int w, int h)
     dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
     dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
 
-    resizeMutex_.lock();
+    /*This function is called by the main GUI thread so the OpenGL context has to
+     * be made current in it with the makeCurrent() call. Call doneCurrent() after
+     * finished. The mutex is used to sync the makeCurrent() calls between the
+     * threads.*/
+    glMutex_.lock();
     glw_->makeCurrent();
 
     if(dispH <= h)
@@ -140,7 +144,7 @@ void GLThread::resizeGL(int w, int h)
     }
 
     glw_->doneCurrent();
-    resizeMutex_.unlock();
+    glMutex_.unlock();
 }
 
 void GLThread::setVideoWidth(int width)

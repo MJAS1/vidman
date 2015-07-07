@@ -276,12 +276,12 @@ PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
     video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
-	if(video_->frames_.empty())
-		finished_ = true;
 }
 
 void PlaybackEvent::apply(cv::Mat &frame)
 {
+    if(video_->frames_.empty())
+        finished_ = true;
     if(!finished_ && !paused_) {
         iter_->copyTo(frame);
         if(++iter_ == video_->frames_.end())
