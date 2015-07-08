@@ -75,7 +75,5 @@ void VideoCompressorThread::stoppableRun()
 		// The output buffer needs to be explicitly freed by the libjpeg client
 		free(jpgBuf);
 		jpeg_destroy_compress(&cinfo);
-
-        delete []chunkAttrib.log;
 	}
 }

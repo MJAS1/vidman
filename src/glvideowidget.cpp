@@ -52,13 +52,10 @@ void GLVideoWidget::paintEvent(QPaintEvent *e)
     Q_UNUSED(e)
 }
 
-void GLVideoWidget::onDrawFrame(unsigned char* imBuf, int logSize)
+void GLVideoWidget::onDrawFrame(unsigned char* imBuf)
 {
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)-logSize-1));
-    QString log = QString::fromLatin1((char*)(imBuf - logSize-1));
-
-    doneCurrent();
-    glt_->drawFrame(imBuf, chunkAttrib.trigCode, log);
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)));
+    glt_->drawFrame(imBuf, chunkAttrib);
     frames_++;
 }
 

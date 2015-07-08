@@ -89,9 +89,8 @@ void CameraThread::stoppableRun()
         events_.applyEvents(frame_);
         cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
-        chunkAttrib.log = new char[log_.size()+1];
-        strcpy(chunkAttrib.log, log_.toStdString().c_str());
-        chunkAttrib.logSize = log_.size();
+        strncpy(chunkAttrib.log, log_.toStdString().c_str(), MAXLOG);
+        chunkAttrib.log[MAXLOG-1] = '\0';
         log_.clear();
 
         chunkAttrib.trigCode = trigCode_;
@@ -101,8 +100,6 @@ void CameraThread::stoppableRun()
         chunkAttrib.timestamp = msec;
 
         cycBuf_->insertChunk(frame_.data, chunkAttrib);
-
-        delete []chunkAttrib.log;
 
         //Emit the background substracted pixmap of the hands to MainWindow for
         //motionDetector_ label.

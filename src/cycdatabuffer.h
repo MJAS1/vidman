@@ -14,15 +14,16 @@
 #include <QString>
 #include <common.h>
 
+const int MAXLOG = 50;
+
 //! Attributes associated with each data chunk.
 typedef struct
 {
-    int         logSize;
 	int			chunkSize;
 	uint64_t	timestamp;
 	bool		isRec;
     int         trigCode;
-    char*       log;
+    char        log[MAXLOG];
 } ChunkAttrib;
 
 
@@ -74,7 +75,7 @@ signals:
 	 * buffer. _data points to the chunk's data. The corresponding ChunkAttrib
 	 * structure is placed immediately before _data.
 	 */
-    void chunkReady(unsigned char* _data, int logSize);
+    void chunkReady(unsigned char* _data);
 
 private:
 	volatile bool	isRec;

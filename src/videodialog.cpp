@@ -41,7 +41,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
 
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
-        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*, int)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*, int)));
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*)));
 
         qRegisterMetaType<std::shared_ptr<QPixmap>>("std::shared_ptr<QPixmap>>");
         connect(cameraThread_, SIGNAL(motionDetectorPixmap(std::shared_ptr<QPixmap>)), window_, SLOT(updateMotionDetectorLabel(std::shared_ptr<QPixmap>)));

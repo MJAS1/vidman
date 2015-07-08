@@ -30,7 +30,6 @@ bool LogFile::open()
 {
     QMutexLocker locker(&mutex_);
     file_.setFileName(QString("../logs/") + QDateTime::currentDateTime().toString(QString("yyyy-MM-dd--hh:mm:ss.log")));
-    //file_ = QFile()
     return file_.open(QFile::WriteOnly | QFile::Truncate);
 }
 

@@ -4,6 +4,7 @@
 #include <QMutex>
 #include <QGLShaderProgram>
 #include "stoppablethread.h"
+#include "cycdatabuffer.h"
 #include "outputdevice.h"
 #include "logfile.h"
 
@@ -17,7 +18,7 @@ class GLThread : public StoppableThread
 public:
     explicit GLThread(GLVideoWidget *parent);
 
-    void drawFrame(unsigned char* imBuf, int trigCode, const QString& log);
+    void drawFrame(unsigned char* imBuf, ChunkAttrib& attrib);
     void resizeGL(int w, int h);
     void setVideoWidth(int width);
 

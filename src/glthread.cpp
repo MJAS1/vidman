@@ -94,13 +94,13 @@ void GLThread::stoppableRun()
     }
 }
 
-void GLThread::drawFrame(unsigned char* imBuf, int trigCode, const QString& log)
+void GLThread::drawFrame(unsigned char* imBuf, ChunkAttrib& attrib)
 {
     mutex_.lock();
 
     imBuf_ = imBuf;
-    trigCode_ = trigCode;
-    log_ = log;
+    trigCode_ = attrib.trigCode;
+    log_ = QString::fromLatin1(attrib.log);
     shouldSwap_ = true;
 
     mutex_.unlock();

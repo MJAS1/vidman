@@ -73,8 +73,6 @@ void FileWriter::stoppableRun()
 
 		prevIsRec = chunkAttrib.isRec;
 
-        delete[]chunkAttrib.log;
-
 		if(shouldStop)
 		{
 			if(prevIsRec)
