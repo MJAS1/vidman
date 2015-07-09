@@ -98,7 +98,7 @@ void MainWindow::onStart()
             strList.append("");
 
             //Read, create and store all the events from strList
-            std::shared_ptr<EventContainer<Event*>> events(new EventContainer<Event*>);
+            unique_ptr<EventContainer<Event*>> events(new EventContainer<Event*>);
             EventReader eventReader;
 
             connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
@@ -106,7 +106,7 @@ void MainWindow::onStart()
             if(eventReader.loadEvents(strList, *events)) {
                 eventsDuration_.setHMS(0, 0, 0);
                 eventsDuration_ = eventsDuration_.addMSecs(events->getTotalDuration());
-                videoDialog_->start(events);
+                videoDialog_->start(std::move(events));
                 runningTime_.restart();
                 ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
                 state_ = PLAYING;

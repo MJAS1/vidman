@@ -33,7 +33,7 @@ class VideoDialog : public QDialog
     Q_OBJECT
     
 public:
-    typedef typename std::shared_ptr<EventContainer<Event*>> EventsPtr;
+    typedef typename std::unique_ptr<EventContainer<Event*>> EventsPtr;
 
     explicit VideoDialog(MainWindow *window);
     ~VideoDialog();

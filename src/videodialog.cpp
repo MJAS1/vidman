@@ -122,9 +122,9 @@ void VideoDialog::getNextEvent()
 
 void VideoDialog::start(EventsPtr events)
 {
-    events_ = events;
+    events_ = std::move(events);
 
-    if(!events->empty()) {
+    if(!events_->empty()) {
         eventTmr_.start((*events_)[0]->getStart());
         time_ = 0;
     }

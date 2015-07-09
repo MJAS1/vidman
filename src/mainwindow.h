@@ -12,6 +12,9 @@
 #include "timerwithpause.h"
 #include "outputdevice.h"
 
+using std::shared_ptr;
+using std::unique_ptr;
+
 namespace Ui {
 class MainWindow;
 }
@@ -40,7 +43,7 @@ public:
     
 public slots:
     void setStatus(const QString&);
-    void updateMotionDetectorLabel(std::shared_ptr<QPixmap>);
+    void updateMotionDetectorLabel(shared_ptr<QPixmap>);
     
 private slots:
     void onStart();
