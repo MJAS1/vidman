@@ -32,7 +32,7 @@ public:
     int             getEventTrigCode() const;
     QString         getEventLog() const;
 
-    shared_ptr<QPixmap>        foregroundPixmap();
+    QPixmap         foregroundPixmap() const;
 
 private:
     cv::Point   getCentroid(const cv::Mat &frame) const;

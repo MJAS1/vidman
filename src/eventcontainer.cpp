@@ -1,4 +1,5 @@
 #include <numeric>
+#include <algorithm>
 #include "eventcontainer.h"
 #include "videoevent.h"
 
@@ -16,12 +17,8 @@ EventContainer<T>::~EventContainer()
 template <typename T>
 void EventContainer<T>::clear()
 {
-    if(!empty()) {
-        for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
-            delete *iter;
-
-        events_.clear();
-    }
+    qDeleteAll(events_);
+    events_.clear();
 }
 
 template <typename T>
@@ -119,8 +116,11 @@ void EventContainer<VideoEvent*>::insert(Event *event)
         break;
 
     case Event::EVENT_REMOVE:
-        if(event->getType())
-            deleteType(static_cast<DelEvent*>(event)->getDelType());
+        //If the event has a DelType other than EVENT_NULL, we should remove all
+        //the events of the given type. Otherwise the DelEvent is defined to
+        //delete an event with a given id.
+        if(Event::EventType t = static_cast<DelEvent*>(event)->getDelType())
+            deleteType(t);
         else
             deleteId(static_cast<DelEvent*>(event)->getDelId());
 

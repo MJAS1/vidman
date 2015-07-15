@@ -35,7 +35,7 @@ public:
     void    updateBackground();
 
 signals:
-    void    motionDetectorPixmap(std::shared_ptr<QPixmap>);
+    void    motionDetectorPixmap(const QPixmap&);
 
 public slots:
     void    handleEvent(Event *ev);

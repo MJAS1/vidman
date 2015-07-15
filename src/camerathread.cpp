@@ -107,7 +107,6 @@ void CameraThread::stoppableRun()
 
         mutex_.unlock();
     }
-
 }
 
 void CameraThread::clearEvents()

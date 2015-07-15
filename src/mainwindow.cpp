@@ -441,7 +441,7 @@ void MainWindow::writeToLog(const QString &str)
     logFile_ << log;
 }
 
-void MainWindow::updateMotionDetectorLabel(std::shared_ptr<QPixmap> img)
+void MainWindow::updateMotionDetectorLabel(const QPixmap& pixmap)
 {
-    motionDetectorLabel_.setPixmap(*img);
+    motionDetectorLabel_.setPixmap(pixmap);
 }

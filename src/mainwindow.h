@@ -43,7 +43,7 @@ public:
     
 public slots:
     void setStatus(const QString&);
-    void updateMotionDetectorLabel(shared_ptr<QPixmap>);
+    void updateMotionDetectorLabel(const QPixmap&);
     
 private slots:
     void onStart();

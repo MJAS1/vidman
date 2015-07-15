@@ -38,12 +38,12 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     return false;
 }
 
-shared_ptr<QPixmap> MotionDetector::foregroundPixmap()
+QPixmap MotionDetector::foregroundPixmap() const
 {
-    QImage handsImage =  QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
-    shared_ptr<QPixmap> hands(new QPixmap);
-    hands->convertFromImage(handsImage.rgbSwapped());
-    return hands;
+    QImage img = QImage(fore_.data, fore_.cols, fore_.rows, fore_.step, QImage::Format_Indexed8);
+    QPixmap pixmap;
+    pixmap.convertFromImage(img.rgbSwapped());
+    return pixmap;
 }
 
 void MotionDetector::startTracking(Event* ev)

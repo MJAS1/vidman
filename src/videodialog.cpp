@@ -3,11 +3,6 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <time.h>
-#include <sys/ioctl.h>
-#include <sys/io.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <cerrno>
 #include <stdio.h>
 #include <QGLFormat>
 #include <unistd.h>
@@ -43,8 +38,7 @@ VideoDialog::VideoDialog(MainWindow *window) :
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*)));
 
-        qRegisterMetaType<std::shared_ptr<QPixmap>>("std::shared_ptr<QPixmap>>");
-        connect(cameraThread_, SIGNAL(motionDetectorPixmap(std::shared_ptr<QPixmap>)), window_, SLOT(updateMotionDetectorLabel(std::shared_ptr<QPixmap>)));
+        connect(cameraThread_, SIGNAL(motionDetectorPixmap(const QPixmap&)), window_, SLOT(updateMotionDetectorLabel(const QPixmap&)));
 
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
