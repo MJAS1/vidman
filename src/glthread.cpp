@@ -7,7 +7,7 @@
 #include "iostream"
 
 GLThread::GLThread(GLVideoWidget *glw) :
-    StoppableThread(static_cast<QObject*>(glw)), shouldSwap_(false), shouldChangePort_(false),
+    StoppableThread(glw), shouldSwap_(false), shouldChangePort_(false),
     glw_(glw), videoWidth_(VIDEO_WIDTH)
 {
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
