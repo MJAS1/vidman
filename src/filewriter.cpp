@@ -6,12 +6,11 @@
  */
 #include <iostream>
 #include <fstream>
-#include <stdlib.h>
-#include <stdio.h>
 #include <cerrno>
 #include <QDateTime>
 
 #include "filewriter.h"
+#include "cycdatabuffer.h"
 
 using namespace std;
 

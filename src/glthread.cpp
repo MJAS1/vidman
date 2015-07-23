@@ -1,10 +1,8 @@
 #include <QMutexLocker>
-#include <QElapsedTimer>
 #include <videodialog.h>
 #include "mainwindow.h"
 #include "glthread.h"
 #include "glvideowidget.h"
-#include "iostream"
 
 GLThread::GLThread(GLVideoWidget *glw) :
     StoppableThread(glw), shouldSwap_(false), shouldChangePort_(false),

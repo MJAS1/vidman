@@ -2,9 +2,6 @@
 #define EVENT_H
 
 #include <QString>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <common.h>
 
 /*!
 Event objects are used to specify the starting time, duration, effects etc.
@@ -33,7 +30,11 @@ public:
         EVENT_DETECT_MOTION
     };
 
-    explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0, int duration=0, int id = -1, int trigCode = 0);
+    explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
+                   int duration=0, int id = -1, int trigCode = 0) :
+        type_(type), start_(start), delay_(delay),
+        duration_(duration), id_(id), trigCode_(trigCode) {}
+
     virtual ~Event() {}
 
     int         getStart() const {return start_;}
@@ -72,8 +73,12 @@ public:
 
     //Remove event can be initialized to remove either an event with a specific id
     //or all the events of a given type
-    explicit DelEvent(int start, int delay, int delId, int trigCode = 0);
-    explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0);
+    explicit DelEvent(int start, int delay, int delId, int trigCode = 0) :
+        Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
+        delType_(EVENT_NULL) {}
+
+    explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0):
+        Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType) {}
 
     EventType getDelType() const {return delType_;}
     int getDelId() const {return delId_;}

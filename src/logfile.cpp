@@ -1,4 +1,3 @@
-#include <iostream>
 #include <QDateTime>
 #include <QTextStream>
 #include <QMutexLocker>

@@ -1,10 +1,8 @@
 #ifndef LOGFILE_H
 #define LOGFILE_H
 
-#include <iostream>
 #include <QFile>
 #include <QMutex>
-#include "timerwithpause.h"
 
 class LogFile
 {

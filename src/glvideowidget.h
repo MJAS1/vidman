@@ -9,18 +9,11 @@
 #define GLVIDEOWIDGET_H_
 
 #include <QGLWidget>
-#include <QGLShaderProgram>
-#include <QMutex>
-#include <QWaitCondition>
-#include <jpeglib.h>
 #include <QTimer>
-#include "stoppablethread.h"
-#include "common.h"
 #include "outputdevice.h"
-#include "glthread.h"
-#include "logfile.h"
 
 class VideoDialog;
+class GLThread;
 
 /* GLVideoWidget is used as the widget where each frame is drawn using OpenGL. The actual
  * drawing and swapping of the buffers are done in a separate thread (GLThread). This is because

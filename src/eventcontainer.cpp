@@ -1,5 +1,6 @@
 #include <numeric>
 #include <algorithm>
+#include <opencv2/opencv.hpp>
 #include "eventcontainer.h"
 #include "videoevent.h"
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#include <QMessageBox>
+#include <QStringList>
 #include <sys/ioctl.h>
 #include "eventreader.h"
 #include "videoevent.h"

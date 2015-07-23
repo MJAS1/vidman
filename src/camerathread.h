@@ -8,18 +8,19 @@
 #ifndef CAMERATHREAD_H_
 #define CAMERATHREAD_H_
 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
 #include <QMutex>
-#include <QString>
-#include <memory>
+#include <opencv2/opencv.hpp>
 #include "stoppablethread.h"
-#include "cycdatabuffer.h"
 #include "eventcontainer.h"
 #include "settings.h"
 #include "motiondetector.h"
-#include "videoevent.h"
-#include "camera.h"
+
+class QMutex;
+
+class Camera;
+class VideoEvent;
+class CycDataBuffer;
+class Event;
 
 //! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
 class CameraThread : public StoppableThread

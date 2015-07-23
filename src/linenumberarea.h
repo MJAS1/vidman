@@ -2,7 +2,8 @@
 #define LINENUMBERAREA_H
 
 #include <QWidget>
-#include "textedit.h"
+
+class TextEdit;
 
 //Code from Qt Examples
 class LineNumberArea : public QWidget

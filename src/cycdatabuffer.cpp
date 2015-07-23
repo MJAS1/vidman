@@ -5,6 +5,7 @@
  *      Author: andrey
  */
 
+#include <QSemaphore>
 #include <stdlib.h>
 #include <iostream>
 #include "config.h"

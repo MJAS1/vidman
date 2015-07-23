@@ -10,7 +10,8 @@
 
 #include <QString>
 #include "stoppablethread.h"
-#include "cycdatabuffer.h"
+
+class CycDataBuffer;
 
 //! Base class for audio/video stream writers
 /*!

@@ -2,10 +2,11 @@
 #define IMAGECONTAINER_H
 
 #include <QMap>
-#include <QString>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
 
+class QString;
+namespace cv {
+    class Mat;
+}
 
 class ImageContainer : public QMap<int, cv::Mat*>
 {

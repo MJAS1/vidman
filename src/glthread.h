@@ -6,7 +6,6 @@
 #include "stoppablethread.h"
 #include "cycdatabuffer.h"
 #include "outputdevice.h"
-#include "logfile.h"
 
 class GLVideoWidget;
 

@@ -1,5 +1,4 @@
 #include "highlighter.h"
-#include <iostream>
 
 Highlighter::Highlighter(QTextDocument *parent) :
     QSyntaxHighlighter(parent)

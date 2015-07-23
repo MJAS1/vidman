@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <QList>
+#include <opencv2/opencv.hpp>
 #include "event.h"
 #include "timerwithpause.h"
 #include "eventreader.h"

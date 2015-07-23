@@ -1,18 +1,15 @@
-#include <QTimer>
 #include <QMessageBox>
 #include <QTextStream>
 #include <QDateTime>
-#include <time.h>
-#include <stdio.h>
 #include <QGLFormat>
-#include <unistd.h>
+#include "camerathread.h"
 #include "glvideowidget.h"
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
-#include "settings.h"
 #include "config.h"
-#include "videoevent.h"
+#include "videofilewriter.h"
+#include "videocompressorthread.h"
 #include "common.h"
 
 VideoDialog::VideoDialog(MainWindow *window) :

@@ -1,10 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <dc1394/dc1394.h>
 #include <QMutex>
+#include <opencv2/opencv.hpp>
+#include <dc1394/dc1394.h>
 #include "config.h"
 
 class Camera

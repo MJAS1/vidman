@@ -5,15 +5,11 @@
 #include <QTimer>
 #include <QTime>
 #include <QLabel>
-#include "videodialog.h"
-#include "event.h"
-#include "eventreader.h"
-#include "highlighter.h"
+#include "logfile.h"
 #include "timerwithpause.h"
-#include "outputdevice.h"
 
-using std::shared_ptr;
-using std::unique_ptr;
+class VideoDialog;
+class Highlighter;
 
 namespace Ui {
 class MainWindow;

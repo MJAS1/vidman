@@ -4,9 +4,7 @@
  *  Created on: Mar 7, 2011
  *      Author: andrey
  */
-#include <stdio.h>
 #include <QSettings>
-#include <iostream>
 
 #include "settings.h"
 #include "config.h"

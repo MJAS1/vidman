@@ -4,22 +4,11 @@
  *  Created on: Jun 6, 2010
  *      Author: andrey
  */
-#include <iostream>
-#include <math.h>
-#include <QElapsedTimer>
-#include <QApplication>
-#include <stdio.h>
-#include <errno.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <QMessageBox>
 #include <QResizeEvent>
-#include <unistd.h>
 #include "videodialog.h"
-#include "config.h"
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"
+#include "glthread.h"
 
 using namespace std;
 

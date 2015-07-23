@@ -1,10 +1,9 @@
 #ifndef MOTIONDETECTOR_H
 #define MOTIONDETECTOR_H
 
-#include <QDialog>
-#include <QLabel>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <QObject>
+#include <QPixmap>
+#include <opencv2/opencv.hpp>
 #include <memory>
 #include "event.h"
 #include "settings.h"
@@ -16,7 +15,6 @@ a black and white image from which the centroid of the hands can be calculated w
 of the hands starts. By inspecting the location of the centoid, movement can be detected.
 */
 
-using std::shared_ptr;
 using std::unique_ptr;
 
 class MotionDetector : public QObject

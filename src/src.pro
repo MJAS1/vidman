@@ -21,7 +21,6 @@ SOURCES += mainwindow.cpp \
     filewriter.cpp \
     cycdatabuffer.cpp \
     camerathread.cpp \
-    event.cpp \
     eventcontainer.cpp \
     eventreader.cpp \
     imagecontainer.cpp \

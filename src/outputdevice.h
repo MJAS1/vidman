@@ -1,13 +1,6 @@
 #ifndef OUTPUTDEVICE_H
 #define OUTPUTDEVICE_H
 
-#include <QObject>
-#include <sys/ioctl.h>
-#include <sys/io.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <cerrno>
-#include <stdio.h>
 #include "settings.h"
 
 //Output device is used to control parallel or serial port for trigger signals.

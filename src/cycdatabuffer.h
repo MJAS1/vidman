@@ -8,11 +8,9 @@
 #ifndef CYCDATABUFFER_H_
 #define CYCDATABUFFER_H_
 
-#include <stdint.h>
 #include <QObject>
-#include <QSemaphore>
-#include <QString>
-#include <common.h>
+
+class QSemaphore;
 
 const int MAXLOG = 50;
 

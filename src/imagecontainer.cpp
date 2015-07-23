@@ -1,3 +1,6 @@
+#include <QString>
+#include <opencv2/opencv.hpp>
+
 #include "imagecontainer.h"
 
 ImageContainer::ImageContainer()

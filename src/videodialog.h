@@ -2,27 +2,20 @@
 #define VIDEODIALOG_H
 
 #include <QDialog>
+#include <QTimer>
 #include <QElapsedTimer>
-#include <QFile>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <jpeglib.h>
-#include <dc1394/dc1394.h>
-#include <QMainWindow>
-#include "glvideowidget.h"
-#include "cycdatabuffer.h"
-#include "videofilewriter.h"
-#include "camerathread.h"
-#include "videocompressorthread.h"
-#include "event.h"
+#include <memory>
 #include "eventcontainer.h"
-#include "eventreader.h"
 #include "settings.h"
 #include "outputdevice.h"
 #include "camera.h"
-#include "logfile.h"
 
 class MainWindow;
+class GLVideoWidget;
+class CycDataBuffer;
+class CameraThread;
+class VideoFileWriter;
+class VideoCompressorThread;
 
 namespace Ui {
 class VideoDialog;

@@ -1,7 +1,13 @@
-#include <QMessageBox>
+#include <sys/ioctl.h>
+#include <sys/io.h>
+#include <fcntl.h>
+#include <termios.h>
 #include <cerrno>
 #include <iostream>
+#include <string.h>
 #include "outputdevice.h"
+
+using namespace std;
 
 OutputDevice::OutputDevice() : portType_(PORT_NULL)
 {
@@ -16,7 +22,8 @@ void OutputDevice::writeData(int trigCode)
 
         case PORT_SERIAL:
             if(ioctl(fd_, TIOCMSET, &trigCode) == -1) {
-                fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
+                cerr << "Cannot open port: " <<  strerror(errno) << endl;
+                //fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
                 portType_ = PORT_NULL;
             }
             break;
@@ -31,9 +38,8 @@ bool OutputDevice::open(PortType port)
     switch (port) {
         case PORT_PARALLEL:
             if(ioperm(settings_.printerPortAddr, 1, 1)) {
-            //if((fd_ = ::open("/dev/lp0", O_RDWR)) < 1) {
                 portType_ = PORT_NULL;
-                std::cerr << "Cannot get the port. May be you should run this program as root" << std::endl;
+                cerr << "Cannot get the port. May be you should run this program as root" << endl;
             }
             else
                 portType_ = PORT_PARALLEL;
@@ -64,9 +70,9 @@ bool OutputDevice::isEmpty() const
     return false;
 }
 
-void OutputDevice::setFd(int fileDescription)
+void OutputDevice::setFd(int fd)
 {
-    fd_ = fileDescription;
+    fd_ = fd;
 }
 
 void OutputDevice::close()

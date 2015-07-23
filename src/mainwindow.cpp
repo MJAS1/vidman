@@ -1,6 +1,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextDocumentWriter>
+#include <QTextStream>
 #include <QToolButton>
 #include <QStringList>
 #include <QMenu>
@@ -8,9 +9,17 @@
 #include <QStatusBar>
 #include <sys/ioctl.h>
 #include <fcntl.h>
+#include <memory>
+#include "eventreader.h"
+#include "videodialog.h"
+#include "highlighter.h"
+#include "eventcontainer.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timerwithpause.h"
+
+using std::shared_ptr;
+using std::unique_ptr;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED)

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <QDebug>
 #include "common.h"
 #include "motiondetector.h"
 

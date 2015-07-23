@@ -1,4 +1,5 @@
 #include "linenumberarea.h"
+#include "textedit.h"
 
 LineNumberArea::LineNumberArea(TextEdit *editor) :
     QWidget(editor)

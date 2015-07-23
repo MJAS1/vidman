@@ -9,10 +9,12 @@
 #include <sched.h>
 #include <time.h>
 #include <fstream>
-#include <QDebug>
-#include <QImage>
+#include <QPixmap>
 
 #include "camerathread.h"
+#include "camera.h"
+#include "videoevent.h"
+#include "cycdatabuffer.h"
 #include "config.h"
 
 using namespace std;

@@ -3,12 +3,16 @@
 
 #include <QList>
 #include "event.h"
+
 /*!
 Custom template class for storing events. Should only store pointers to
 Event class or subclass objects. Handles memory deallocation.
   */
 
 class VideoEvent;
+namespace cv {
+    class Mat;
+}
 
 template <typename T>
 class EventContainer

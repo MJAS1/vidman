@@ -1,9 +1,6 @@
 /*
  * This file contains definitions that are shared between video recording and playing software
  */
-#include <QMetaType>
-#include <memory>
-
 #ifndef COMMON_H_
 
 // Camera configuration
