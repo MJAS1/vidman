@@ -23,7 +23,6 @@ SOURCES += mainwindow.cpp \
     camerathread.cpp \
     eventcontainer.cpp \
     eventreader.cpp \
-    imagecontainer.cpp \
     linenumberarea.cpp \
     textedit.cpp \
     highlighter.cpp \
@@ -50,7 +49,6 @@ HEADERS += mainwindow.h \
     event.h \
     eventcontainer.h \
     eventreader.h \
-    imagecontainer.h \
     linenumberarea.h \
     textedit.h \
     highlighter.h \

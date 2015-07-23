@@ -1,6 +1,7 @@
 #include <QMessageBox>
 #include <QTextStream>
 #include <QDateTime>
+#include <QDebug>
 #include <QGLFormat>
 #include "camerathread.h"
 #include "glvideowidget.h"
@@ -100,14 +101,15 @@ void VideoDialog::getNextEvent()
 {
     //Get next event and pass it to cameraThread
     Event *event = events_->pop_front();
+    int delay = event->getDelay();
     cameraThread_->handleEvent(event);
 
     //Calculate the start time of the next event
-    if(!events_->empty()) {
-        Event *nextEvent = (*events_)[0];
-        eventDuration_ = (nextEvent->getStart()+event->getDelay());
-        eventTmr_.start(eventDuration_);
+    if(!events_->empty()) {        
         time_ = elapsedTimer_.nsecsElapsed()/1000000;
+        Event *nextEvent = (*events_)[0];
+        eventDuration_ = (nextEvent->getStart()+delay);
+        eventTmr_.start(eventDuration_);
     }
 }
 

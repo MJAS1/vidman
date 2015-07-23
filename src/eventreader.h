@@ -3,15 +3,18 @@
 
 #include <memory>
 #include <QObject>
-#include "imagecontainer.h"
+#include <QMap>
+#include <opencv2/opencv.hpp>
 #include "eventcontainer.h"
 #include "settings.h"
 
 
 /*! Reads events from a QStringList and stores them in an eventcontainer. The
 QStringList is created from MainWindow's TextEdit when start is clicked.
-LoadEvents returns false if the input text is incorrectly formatted.
+LoadEvents returns false if the input text is incorrectly forcv::Matted.
 */
+
+using std::shared_ptr;
 
 //VideoObject is used to create record and playback events. Contains the frames
 //belonging to the particular video and length in milliseconds.
@@ -39,8 +42,9 @@ private:
     float   toFloat(const QString &str, int line, const QString &param) const;
     int     toInt(const QString &str, int line, const QString &param) const;
 
-    ImageContainer imageContainer_;
-    QMap<int, std::shared_ptr<VideoObject>> videoObjects_;
+    //VideoObjects shared between a RecordEvent and a PlaybackEvent
+    QMap<int, shared_ptr<VideoObject>> videoObjects_;
+    QMap<int, cv::Mat> imageObjects_;
 
     Settings settings_;
 };

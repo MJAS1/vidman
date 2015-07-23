@@ -10,7 +10,7 @@ EventReader::EventReader()
 
 bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>& events)
 {
-    imageContainer_.clear();
+    imageObjects_.clear();
     videoObjects_.clear();
     events.clear();
 
@@ -179,11 +179,11 @@ bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, 
 
         case Event::EVENT_IMAGE:
             if(objectIdOk) {
-				if(!imageContainer_.contains(objectId)) {
+                if(!imageObjects_.contains(objectId)) {
                     emit error(QString("Error: couldn't find image object with id %1 in line %2").arg(objectId).arg(lineNumber));
                     return false;
                 }
-                ev = new ImageEvent(start, cv::Point2i(x, y), imageContainer_[objectId], delay, eventId, trigCode);
+                ev = new ImageEvent(start, cv::Point2i(x, y), imageObjects_[objectId], delay, eventId, trigCode);
                 ev->appendLog(QString("Image event added. "));
             }
             else {
@@ -300,13 +300,15 @@ bool EventReader::readObject(const QString &str, int lineNumber)
 	}
 
 	if(type == "image") {
-		if(!imageContainer_.addImage(id, filename)) {
+        cv::Mat file(cv::imread(filename.toStdString(), CV_LOAD_IMAGE_UNCHANGED));
+        if(file.empty()) {
 			emit error(QString("Error: couldn't load image file '%1'.").arg(filename));
 			return false;
 		}
+        imageObjects_[id] = file;
 	}
 	else if(type == "video"){
-		std::shared_ptr<VideoObject> videoObject(new VideoObject);
+        shared_ptr<VideoObject> videoObject(new VideoObject);
 		videoObject->length_ = length;
 
         //Reserve enough memory to hold all the frames. This is necessary to

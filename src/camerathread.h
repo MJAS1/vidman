@@ -16,7 +16,6 @@
 #include "motiondetector.h"
 
 class QMutex;
-
 class Camera;
 class VideoEvent;
 class CycDataBuffer;

@@ -137,7 +137,7 @@ void MainWindow::onStart()
 void MainWindow::onStop()
 {
     if(state_ == PLAYING || state_ == PAUSED) {
-        ui->timeLbl->setText(QString("00:00/00:00"));
+        ui->timeLbl->setText(QString("00:00:00/00:00:00"));
         timeTmr_.stop();
 
         state_ = STOPPED;
@@ -233,7 +233,7 @@ void MainWindow::updateTime()
     qint64 msecsElapsed = runningTime_.nsecsElapsed()/1000000;
     time = time.addMSecs(msecsElapsed);
 
-    ui->timeLbl->setText(time.toString(QString("mm:ss"))+"/"+eventsDuration_.toString(QString("mm:ss")));
+    ui->timeLbl->setText(time.toString(QString("hh:mm:ss"))+"/"+eventsDuration_.toString(QString("hh:mm:ss")));
 }
 
 void MainWindow::fileOpen()
