@@ -16,39 +16,14 @@
   <property name="windowTitle">
    <string>Video Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
-      <widget class="QLabel" name="gainLabel">
-       <property name="text">
-        <string>Gain:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="wbLabel">
-       <property name="text">
-        <string>White balance =&gt; </string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QSlider" name="uvSlider">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QLabel" name="vrLabel">
-       <property name="text">
-        <string>VR:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QSlider" name="gainSlider">
+     <item row="0" column="1">
+      <widget class="QSlider" name="shutterSlider">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -61,37 +36,24 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="5">
-      <widget class="QSlider" name="vrSlider">
+     <item row="1" column="1">
+      <widget class="QSlider" name="gainSlider">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QSlider" name="shutterSlider">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="shutterLabel">
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="trigCheckBox">
        <property name="text">
-        <string>Shutter:</string>
+        <string>Use extern triggers</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QLabel" name="vrLabel">
+       <property name="text">
+        <string>VR:</string>
        </property>
       </widget>
      </item>
@@ -124,6 +86,33 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="5">
+      <widget class="QSlider" name="uvSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QLabel" name="wbLabel">
+       <property name="text">
+        <string>White balance =&gt; </string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="4">
       <widget class="QLabel" name="aspectRatioLabel">
        <property name="text">
@@ -131,10 +120,24 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QCheckBox" name="trigCheckBox">
+     <item row="1" column="5">
+      <widget class="QSlider" name="vrSlider">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="shutterLabel">
        <property name="text">
-        <string>Use extern triggers</string>
+        <string>Shutter:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="gainLabel">
+       <property name="text">
+        <string>Gain:</string>
        </property>
       </widget>
      </item>
@@ -145,14 +148,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>shutterSlider</sender>
+   <sender>vrSlider</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>VideoDialog</receiver>
-   <slot>onShutterChanged(int)</slot>
+   <slot>onVRChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>159</x>
-     <y>555</y>
+     <x>528</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
@@ -177,13 +180,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>uvSlider</sender>
+   <sender>shutterSlider</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>VideoDialog</receiver>
-   <slot>onUVChanged(int)</slot>
+   <slot>onShutterChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
+     <x>159</x>
      <y>555</y>
     </hint>
     <hint type="destinationlabel">
@@ -193,18 +196,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>vrSlider</sender>
-   <signal>sliderMoved(int)</signal>
+   <sender>trigCheckBox</sender>
+   <signal>clicked(bool)</signal>
    <receiver>VideoDialog</receiver>
-   <slot>onVRChanged(int)</slot>
+   <slot>onExternTrig(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>528</x>
-     <y>590</y>
+     <x>151</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
-     <y>304</y>
+     <y>351</y>
     </hint>
    </hints>
   </connection>
@@ -225,18 +228,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>trigCheckBox</sender>
-   <signal>clicked(bool)</signal>
+   <sender>uvSlider</sender>
+   <signal>sliderMoved(int)</signal>
    <receiver>VideoDialog</receiver>
-   <slot>onExternTrig(bool)</slot>
+   <slot>onUVChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>151</x>
-     <y>531</y>
+     <x>528</x>
+     <y>555</y>
     </hint>
     <hint type="destinationlabel">
      <x>319</x>
-     <y>351</y>
+     <y>304</y>
     </hint>
    </hints>
   </connection>

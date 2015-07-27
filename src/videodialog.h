@@ -57,6 +57,9 @@ public slots:
 private slots:
     void getNextEvent();
 
+protected:
+    void paintEvent(QPaintEvent*);
+
 private:
 
     VideoDialog(const VideoDialog&);

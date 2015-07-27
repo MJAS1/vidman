@@ -55,7 +55,8 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBtn->setIcon(QIcon::fromTheme("insert-object"));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
     toolBtn->setShortcut(QString("Ctrl+e"));
-    ui->toolBar2->addWidget(toolBtn);
+
+    ui->toolBar->addWidget(toolBtn);
 
     //Set status bar
     status_.setIndent(10);
