@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Set status bar
     status_.setIndent(10);
+    status_.setStyleSheet("QLabel { color: red;}");
     statusBar()->addWidget(&status_, 1);
 
     motionDetectorLabel_.setWindowTitle("Motion Detector");
@@ -91,16 +92,15 @@ void MainWindow::toggleStop(bool arg)
 
 void MainWindow::onStart()
 {
-    status_.clear();
+    if(status_.text() != "Recording...")
+        status_.clear();
 
     switch (state_) {
         case STOPPED: {
 
-            if(logFile_.isActive() && !logFile_.open()) {
-                QMessageBox msgBox;
-                msgBox.setText(QString("Error creating log file."));
-                msgBox.exec();
-            }
+            if(logFile_.isActive() && !logFile_.open())
+                setStatus(QString("Error creating log file " +
+                                  logFile_.fileName() + ". " + logFile_.errorString()));
 
             //Create a StringList from the texteditor.
             QStringList strList = ui->textEdit->toPlainText().split("\n");
@@ -158,7 +158,10 @@ void MainWindow::onStop()
 void MainWindow::onRec(bool arg)
 {
     videoDialog_->toggleRecEnabledord(arg);
-    setStatus("Recording...");
+    if(arg)
+        setStatus("Recording...");
+    else
+        status_.clear();
 }
 
 void MainWindow::pause()

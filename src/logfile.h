@@ -17,6 +17,9 @@ public:
     void close();
     void write(const QString& log);
 
+    QString errorString() const;
+    QString fileName() const;
+
     void operator<<(const QString& log);
 
 private:

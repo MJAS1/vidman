@@ -53,3 +53,13 @@ void LogFile::operator <<(const QString& log)
 {
     write(log);
 }
+
+QString LogFile::errorString() const
+{
+    return file_.errorString();
+}
+
+QString LogFile::fileName() const
+{
+    return file_.fileName();
+}
