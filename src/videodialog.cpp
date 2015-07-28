@@ -13,6 +13,8 @@
 #include "videocompressorthread.h"
 #include "common.h"
 
+using namespace std;
+
 VideoDialog::VideoDialog(MainWindow *window) :
     QDialog(window), ui(new Ui::VideoDialog), window_(window)
 {
@@ -22,6 +24,9 @@ VideoDialog::VideoDialog(MainWindow *window) :
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
+    if(!format.hasOpenGL())
+        cerr << "OpenGL not supported by window system. Cannot use vsync." << endl;
+
     format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
@@ -196,11 +201,6 @@ void VideoDialog::closeEvent(QCloseEvent *)
 void VideoDialog::displayFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
-}
-
-void VideoDialog::updateBackground()
-{
-    cameraThread_->updateBackground();
 }
 
 void VideoDialog::setOutputDevice(OutputDevice::PortType portType)

@@ -32,7 +32,6 @@ public:
     void    clearEvents();
     void    pause();
     void    unpause();
-    void    updateBackground();
 
 signals:
     void    motionDetectorPixmap(const QPixmap&);
@@ -55,7 +54,6 @@ private:
     QString                             log_;
 
     int                                 trigCode_;
-    bool                                shouldUpdateBg_;
 
     EventContainer<VideoEvent*>         events_, preEvents_;
     Settings                            settings_;

@@ -36,7 +36,6 @@ public:
     void pause();
     void unpause();
     void displayFPS(int fps);
-    void updateBackground();
 
     MainWindow* mainWindow() const;
 

@@ -200,11 +200,6 @@ void MainWindow::onViewMotionDetector(bool checked)
         motionDetectorLabel_.close();
 }
 
-void MainWindow::onUpdateBackground()
-{
-    videoDialog_->updateBackground();
-}
-
 void MainWindow::onKeepLog(bool arg)
 {
     logFile_.setActive(arg);

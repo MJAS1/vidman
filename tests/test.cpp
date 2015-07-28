@@ -1,8 +1,7 @@
 #include <QStringList>
 #include <iostream>
 #include <fstream>
-#include <cv.h>
-#include <highgui.h>
+#include <opencv2/opencv.hpp>
 #include "test.h"
 #include "eventreader.h"
 #include "eventcontainer.h"
@@ -98,17 +97,14 @@ void Test::testEventReader()
 void Test::testMotionDetector()
 {
 
-    cv::Mat bg, hand1, hand2;
+    cv::Mat hand1, hand2;
 
-    bg = cv::imread("../tests/background.ppm");
     hand1 = cv::imread("../tests/hand1.ppm");
     hand2 = cv::imread("../tests/hand2.ppm");
-    QCOMPARE(bg.empty(), false);
     QCOMPARE(hand1.empty(), false);
     QCOMPARE(hand2.empty(), false);
 
     MotionDetector motionDetector;
-    motionDetector.updateBackground(bg);
     motionDetector.movementDetected(hand1);
     Event* ev = new Event;
     motionDetector.startTracking(ev);

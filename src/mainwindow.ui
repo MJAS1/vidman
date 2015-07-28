@@ -25,8 +25,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QMenuBar {
-    background-color: rgb(170, 170, 170);
-	border: 1px solid rgb(80, 80, 80);
+	background: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(170, 170, 170, 255), stop:0.9 rgba(150, 150, 150, 255), stop:1 rgba(255, 255, 255, 255));
+    /*background-color: rgb(170, 170, 170);*/
+	border: 1px solid rgb(150, 150, 150);
+	border-bottom: 1px solid rgb(80, 80, 80);
 }
 
 QMenuBar:item {
@@ -34,12 +36,9 @@ QMenuBar:item {
 }
 
 QToolBar {
-	background : qlineargradient(spread:pad, x1:0, y1:0, x2:0, 		y2:1, stop:0.00904977 rgba(150, 150, 150, 255), stop:0.977376 rgba(80, 80, 80, 255));
-	border: none
+	background : qlineargradient(spread:pad, x1:0, y1:0, x2:0, 		y2:1, stop0: rgb(255, 255, 255), stop:0.1 rgba(150, 150, 150, 255), stop:0.95 rgba(80, 80, 80, 255), stop:1 rgb(255, 255, 255));
+	border-bottom: 1px solid rgb(80, 80, 80);
 }
-
-
-
 
 QPushButton {
 	border : none;
@@ -47,8 +46,15 @@ QPushButton {
 }
 
 QPushButton:hover {
-	background-color : rgb(240, 240, 240)
-}</string>
+	background: rgb(240, 240, 240);
+}
+
+QPushButton:checked {
+	border: 1px inset rgb(120, 120, 120);
+	background: rgb(170, 170, 170);
+	padding: 3px;
+}
+</string>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
@@ -187,6 +193,7 @@ QPushButton:hover {
       </property>
       <property name="font">
        <font>
+        <family>FreeSans</family>
         <pointsize>12</pointsize>
        </font>
       </property>
@@ -266,8 +273,6 @@ QPushButton:hover {
     <addaction name="separator"/>
     <addaction name="actionSerialPort"/>
     <addaction name="actionParallelPort"/>
-    <addaction name="separator"/>
-    <addaction name="actionUpdateBackground"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Edit"/>
@@ -556,11 +561,6 @@ QPushButton:hover {
    </property>
    <property name="text">
     <string>Use parallel Port</string>
-   </property>
-  </action>
-  <action name="actionUpdateBackground">
-   <property name="text">
-    <string>Update motion detector background</string>
    </property>
   </action>
   <action name="actionAddZoomEvent">
@@ -1071,22 +1071,6 @@ QPushButton:hover {
    <signal>triggered(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>onSerialPort(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>352</x>
-     <y>243</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionUpdateBackground</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>onUpdateBackground()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

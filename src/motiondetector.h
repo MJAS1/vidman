@@ -23,7 +23,6 @@ class MotionDetector : public QObject
 public:
     MotionDetector();
 
-    void            updateBackground(const cv::Mat &frame);
     bool            movementDetected(const cv::Mat &frame);
     void            startTracking(Event* ev);
 
@@ -33,12 +32,9 @@ public:
     QPixmap         foregroundPixmap() const;
 
 private:
-    cv::Point   getCentroid(const cv::Mat &frame) const;
-
-    cv::Mat     back_, fore_;
+    cv::Mat     prev_, current_, next_, result_;
     cv::Point   centroid_;
 
-    int         sensitivity_;
     bool        isTracking_;
 
     unique_ptr<Event>      event_;

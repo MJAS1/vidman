@@ -51,7 +51,6 @@ private slots:
     void onKeepLog(bool);
     void onSerialPort(bool);
     void onParallelPort(bool);
-    void onUpdateBackground();
 
     void fileNew();
     void fileOpen();

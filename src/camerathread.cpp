@@ -21,7 +21,7 @@ using namespace std;
 
 
 CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
-    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldUpdateBg_(true)
+    StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0)
 {
     //Setup preEvents for default processing each frame before actual manipulation
     if(settings_.flip)
@@ -72,11 +72,6 @@ void CameraThread::stoppableRun()
 
         mutex_.lock();
 
-        //If necessary, update motionDetector background image for substraction
-        if(shouldUpdateBg_) {
-            motionDetector_.updateBackground(frame_);
-            shouldUpdateBg_ = false;
-        }
         if(motionDetector_.movementDetected(frame_)) {
             trigCode_ = motionDetector_.getEventTrigCode();
             log_.append(motionDetector_.getEventLog());
@@ -144,12 +139,5 @@ void CameraThread::unpause()
 {
     mutex_.lock();
     events_.unpauseEvents();
-    mutex_.unlock();
-}
-
-void CameraThread::updateBackground()
-{
-    mutex_.lock();
-    shouldUpdateBg_ = true;
     mutex_.unlock();
 }
