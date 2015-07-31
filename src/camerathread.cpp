@@ -13,7 +13,6 @@
 
 #include "camerathread.h"
 #include "camera.h"
-#include "videoevent.h"
 #include "cycdatabuffer.h"
 #include "config.h"
 
@@ -123,6 +122,7 @@ void CameraThread::handleEvent(Event *ev)
     else {
         trigCode_ = ev->getTrigCode();
         log_.append(ev->getLog());
+        ev->applyContainer(events_);
         events_.insert(ev);
     }
     mutex_.unlock();

@@ -2,13 +2,13 @@
 #include <QStringList>
 #include <sys/ioctl.h>
 #include "eventreader.h"
-#include "videoevent.h"
+#include "event.h"
 
 EventReader::EventReader()
 {
 }
 
-bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>& events)
+bool EventReader::loadEvents(const QStringList &strList, EventContainer& events)
 {
     imageObjects_.clear();
     videoObjects_.clear();
@@ -52,7 +52,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer<Event*>&
     return true;
 }
 
-bool EventReader::readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
+bool EventReader::readEvent(const QString &str, EventContainer& events, int lineNumber)
 {
     //Split the string to get a list of strings of the form param=val e.g. {"type=...", "start=...", etc..}
     QStringList strList = str.split(',');
@@ -328,7 +328,7 @@ bool EventReader::readObject(const QString &str, int lineNumber)
 	return true;
 }
 
-bool EventReader::readDelEvent(const QString &str, EventContainer<Event*>& events, int lineNumber)
+bool EventReader::readDelEvent(const QString &str, EventContainer& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 

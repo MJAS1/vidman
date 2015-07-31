@@ -108,7 +108,7 @@ void MainWindow::onStart()
             strList.append("");
 
             //Read, create and store all the events from strList
-            unique_ptr<EventContainer<Event*>> events(new EventContainer<Event*>);
+            unique_ptr<EventContainer> events(new EventContainer);
             EventReader eventReader;
 
             connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));

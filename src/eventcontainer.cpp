@@ -2,38 +2,33 @@
 #include <algorithm>
 #include <opencv2/opencv.hpp>
 #include "eventcontainer.h"
-#include "videoevent.h"
+#include "event.h"
 
-template <typename T>
-EventContainer<T>::EventContainer()
+EventContainer::EventContainer()
 {
 }
 
-template <typename T>
-EventContainer<T>::~EventContainer()
+EventContainer::~EventContainer()
 {
     clear();
 }
 
-template <typename T>
-void EventContainer<T>::clear()
+void EventContainer::clear()
 {
     qDeleteAll(events_);
     events_.clear();
 }
 
-template <typename T>
-Event* EventContainer<T>::pop_front()
+Event* EventContainer::pop_front()
 {
     Event *ev = *events_.begin();
     events_.erase(events_.begin());
     return ev;
 }
 
-template <typename T>
-void EventContainer<T>::deleteId(int id)
+void EventContainer::deleteId(int id)
 {
-    Iterator iter = events_.begin();
+    auto iter = events_.begin();
     while(iter != events_.end()) {
         if((*iter)->getId() == id) {
             delete (*iter);
@@ -44,10 +39,9 @@ void EventContainer<T>::deleteId(int id)
     }
 }
 
-template <typename T>
-void EventContainer<T>::deleteType(Event::EventType type)
+void EventContainer::deleteType(int type)
 {
-    Iterator iter = events_.begin();
+    auto iter = events_.begin();
     while(iter != events_.end()) {
         if((*iter)->getType() == type) {
             delete (*iter);
@@ -58,136 +52,85 @@ void EventContainer<T>::deleteType(Event::EventType type)
     }
 }
 
-template <typename T>
-bool EventContainer<T>::empty() const
+bool EventContainer::empty() const
 {
     return events_.empty();
 }
 
-template <typename T>
-T EventContainer<T>::operator [](int id) const
+Event* EventContainer::operator [](int id) const
 {
     return events_[id];
 }
 
-template <typename T>
-void EventContainer<T>::append(T event)
+void EventContainer::append(Event* event)
 {
     events_.append(event);
 }
 
-template <typename T>
-void EventContainer<T>::prepend(T event)
+void EventContainer::prepend(Event* event)
 {
     events_.prepend(event);
 }
 
-template <>
-void EventContainer<VideoEvent*>::insertSorted(VideoEvent *event)
+void EventContainer::insertSorted(Event* event)
 {
     auto iter = std::lower_bound(events_.begin(), events_.end(), event,
-                        [](const VideoEvent* l, const VideoEvent* r) {
+                        [](const Event* l, const Event* r) {
                             return l->getPriority() > r->getPriority();
                         });
     events_.insert(iter, event);
 }
 
-template <>
-void EventContainer<VideoEvent*>::insert(Event *event)
+void EventContainer::insert(Event* event)
 {
-    //Remove duplicate events of certain event types to prevent the program from
-    //slowing down because of applying the same event multiple times
-    switch (event->getType()) {
-    case Event::EVENT_FLIP:
-        deleteType(Event::EVENT_FLIP);
-        break;
-
-    case Event::EVENT_FADEIN:
-    case Event::EVENT_FADEOUT:
-        deleteType(Event::EVENT_FADEIN);
-        deleteType(Event::EVENT_FADEOUT);
-        break;
-
-    case Event::EVENT_ROTATE:
-        deleteType(Event::EVENT_ROTATE);
-        break;
-
-    case Event::EVENT_FREEZE:
-        deleteType(Event::EVENT_FREEZE);
-        break;
-
-    case Event::EVENT_REMOVE:
-        //If the event has a DelType other than EVENT_NULL, we should remove all
-        //the events of the given type. Otherwise the DelEvent is defined to
-        //delete an event with a given id.
-        if(Event::EventType t = static_cast<DelEvent*>(event)->getDelType())
-            deleteType(t);
-        else
-            deleteId(static_cast<DelEvent*>(event)->getDelId());
-
+    if(event->isReady())
         delete event;
-        return;
-
-    default:
-        break;
-    }
-
-    insertSorted(static_cast<VideoEvent*>(event));
+    else
+        insertSorted(event);
 }
 
-template <typename T>
-typename EventContainer<T>::Iterator EventContainer<T>::begin()
+typename EventContainer::Iterator EventContainer::begin()
 {
     return events_.begin();
 }
 
-template <typename T>
-typename EventContainer<T>::Iterator EventContainer<T>::end()
+typename EventContainer::Iterator EventContainer::end()
 {
     return events_.end();
 }
 
-template <typename T>
-typename EventContainer<T>::ConstIterator EventContainer<T>::begin() const
+typename EventContainer::ConstIterator EventContainer::begin() const
 {
     return events_.begin();
 }
 
-template <typename T>
-typename EventContainer<T>::ConstIterator EventContainer<T>::end() const
+typename EventContainer::ConstIterator EventContainer::end() const
 {
     return events_.end();
 }
 
-template <>
-void EventContainer<VideoEvent*>::applyEvents(cv::Mat &frame) const
+void EventContainer::applyEvents(cv::Mat &frame) const
 {
-    for(ConstIterator iter = events_.begin(); iter != events_.end(); ++iter)
-        (*iter)->apply(frame);
+    for(auto iter = events_.begin(); iter != events_.end(); ++iter)
+        (*iter)->applyFrame(frame);
 }
 
-template <typename T>
-void EventContainer<T>::pauseEvents()
+void EventContainer::pauseEvents()
 {
-    for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
+    for(auto iter = events_.begin(); iter != events_.end(); ++iter)
         (*iter)->pause();
 }
 
-template <typename T>
-void EventContainer<T>::unpauseEvents()
+void EventContainer::unpauseEvents()
 {
-    for(Iterator iter = events_.begin(); iter != events_.end(); ++iter)
+    for(auto iter = events_.begin(); iter != events_.end(); ++iter)
         (*iter)->unpause();
 }
 
-template <typename T>
-int EventContainer<T>::getTotalDuration() const
+int EventContainer::getTotalDuration() const
 {
     return std::accumulate(begin(), end(), 0,
-                           [](int x, const T& a) {
+                           [](int x, const Event* a) {
                                 return x + a->getStart() + a->getDelay();
                             });
 }
-
-template class EventContainer<Event*>;
-template class EventContainer<VideoEvent*>;

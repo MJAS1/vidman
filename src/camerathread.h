@@ -55,7 +55,7 @@ private:
 
     int                                 trigCode_;
 
-    EventContainer<VideoEvent*>         events_, preEvents_;
+    EventContainer         events_, preEvents_;
     Settings                            settings_;
     MotionDetector                      motionDetector_;
 };

@@ -29,15 +29,15 @@ class EventReader : public QObject
 public:
     EventReader();
 
-    bool loadEvents(const QStringList &strList, EventContainer<Event*>& events);
+    bool loadEvents(const QStringList &strList, EventContainer& events);
 
 signals:
     void error(const QString&) const;
 
 private:
-    bool    readEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
+    bool    readEvent(const QString &str, EventContainer& events, int lineNumber);
 	bool	readObject(const QString &str, int lineNumber);
-    bool    readDelEvent(const QString &str, EventContainer<Event*>& events, int lineNumber);
+    bool    readDelEvent(const QString &str, EventContainer& events, int lineNumber);
 
     float   toFloat(const QString &str, int line, const QString &param) const;
     int     toInt(const QString &str, int line, const QString &param) const;

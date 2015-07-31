@@ -20,7 +20,7 @@ Test::~Test()
 void Test::testEventReader()
 {
     EventReader evReader;
-    EventContainer<Event*> events;
+    EventContainer events;
 
     QStringList strList;
     strList.append(QString("Event: type=d"));

@@ -29,11 +29,11 @@ SOURCES += mainwindow.cpp \
     glvideowidget.cpp \
     timerwithpause.cpp \
     motiondetector.cpp \
-    videoevent.cpp \
     outputdevice.cpp \
     glthread.cpp \
     camera.cpp \
-    logfile.cpp
+    logfile.cpp \
+    event.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -55,7 +55,6 @@ HEADERS += mainwindow.h \
     glvideowidget.h \
     timerwithpause.h \
     motiondetector.h \
-    videoevent.h \
     outputdevice.h \
     glthread.h \
     camera.h \

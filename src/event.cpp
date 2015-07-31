@@ -1,35 +1,38 @@
-#include <QDebug>
-#include "videoevent.h"
+#include "event.h"
 
-VideoEvent::VideoEvent(EventType type, int start, int delay, int duration, int id,
-                       int trigCode, int priority) :
-    Event(type,start, delay, duration, id, trigCode), priority_(priority)
+void DelEvent::applyContainer(EventContainer &events)
 {
-}
+    if(delType_)
+        events.deleteType(delType_);
+    else
+        events.deleteId(delId_);
 
-VideoEvent::~VideoEvent()
-{
+    ready_ = true;
 }
-
 
 FlipEvent::FlipEvent(int start, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FLIP, start, delay, 0, id, trigCode)
+    Event(EVENT_FLIP, start, delay, 0, id, trigCode)
 {
 }
 
-void FlipEvent::apply(cv::Mat &frame)
+void FlipEvent::applyFrame(cv::Mat &frame)
 {
     cv::flip(frame, frame, 1);
 }
 
+void FlipEvent::applyContainer(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_FLIP);
+}
+
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
+    Event(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
     stopped_(false)
 {
     timerWithPause_.invalidate();
 }
 
-void FadeInEvent::apply(cv::Mat &frame)
+void FadeInEvent::applyFrame(cv::Mat &frame)
 {
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
@@ -46,6 +49,12 @@ void FadeInEvent::apply(cv::Mat &frame)
     frame += cv::Scalar(amount_, amount_, amount_);
 }
 
+void FadeInEvent::applyContainer(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_FADEIN);
+    events.deleteType(Event::EVENT_FADEOUT);
+}
+
 void FadeInEvent::pause()
 {
     stopped_ = true;
@@ -59,13 +68,13 @@ void FadeInEvent::unpause()
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0),
+    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0),
     stopped_(false)
 {
     timerWithPause_.invalidate();
 }
 
-void FadeOutEvent::apply(cv::Mat &frame)
+void FadeOutEvent::applyFrame(cv::Mat &frame)
 {
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
@@ -82,6 +91,12 @@ void FadeOutEvent::apply(cv::Mat &frame)
     frame += cv::Scalar(amount_, amount_, amount_);
 }
 
+void FadeOutEvent::applyContainer(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_FADEIN);
+    events.deleteType(Event::EVENT_FADEOUT);
+}
+
 void FadeOutEvent::pause()
 {
     stopped_ = true;
@@ -96,11 +111,11 @@ void FadeOutEvent::unpause()
 
 ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image,
                        int delay, int id, int trigCode) :
-    VideoEvent(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
+    Event(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
 {
 }
 
-void ImageEvent::apply(cv::Mat &frame)
+void ImageEvent::applyFrame(cv::Mat &frame)
 {
     if(!frame.empty() && !image_.empty())
         overlayImage(frame, image_, frame, pos_);
@@ -154,35 +169,40 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
 
 TextEvent::TextEvent(int start, const QString& str, cv::Scalar color,
                      const cv::Point2i& pos, int delay, int id, int trigCode) :
-    VideoEvent(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color),
+    Event(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color),
     pos_(pos), str_(str)
 {
 }
 
-void TextEvent::apply(cv::Mat &frame)
+void TextEvent::applyFrame(cv::Mat &frame)
 {
     cv::putText(frame, str_.toStdString(), pos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
 }
 
 RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
-    : VideoEvent(EVENT_ROTATE, start, delay, 0, id, trigCode), angle_(angle)
+    : Event(EVENT_ROTATE, start, delay, 0, id, trigCode), angle_(angle)
 {
 }
 
-void RotateEvent::apply(cv::Mat &frame)
+void RotateEvent::applyFrame(cv::Mat &frame)
 {
     cv::Point2f center(frame.cols/2., frame.rows/2.);
     cv::Mat rotMat = getRotationMatrix2D(center, angle_, 1.0);
     cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
+void RotateEvent::applyContainer(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_ROTATE);
+}
+
 FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
-        : VideoEvent(EVENT_FREEZE, start, delay, 0, id, trigCode, FREEZE_PRIORITY),
+        : Event(EVENT_FREEZE, start, delay, 0, id, trigCode, FREEZE_PRIORITY),
           started_(false)
 {
 }
 
-void FreezeEvent::apply(cv::Mat &frame)
+void FreezeEvent::applyFrame(cv::Mat &frame)
 {
     if(!started_) {
         frame.copyTo(freezedFrame_);
@@ -191,15 +211,20 @@ void FreezeEvent::apply(cv::Mat &frame)
     freezedFrame_.copyTo(frame);
 }
 
+void FreezeEvent::applyContainer(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_FREEZE);
+}
+
 ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id,
                      int trigCode) :
-        VideoEvent(EVENT_ZOOM, start, delay, duration, id, trigCode),
+        Event(EVENT_ZOOM, start, delay, duration, id, trigCode),
         scale_(scale), stopped_(false)
 {
     timer_.invalidate();
 }
 
-void ZoomEvent::apply(cv::Mat &frame)
+void ZoomEvent::applyFrame(cv::Mat &frame)
 {
     if(!stopped_) {
         if(!timer_.isValid()) {
@@ -238,13 +263,13 @@ void ZoomEvent::unpause()
 
 RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration,
                          int id, int trigCode) :
-    VideoEvent(EVENT_RECORD, start, delay, duration, id, trigCode, RECORD_PRIORITY),
+    Event(EVENT_RECORD, start, delay, duration, id, trigCode, RECORD_PRIORITY),
     video_(video), finished_(false), paused_(false)
 {
     timer_.invalidate();
 }
 
-void RecordEvent::apply(cv::Mat &frame)
+void RecordEvent::applyFrame(cv::Mat &frame)
 {
     if(!finished_ && !paused_) {
         if(!timer_.isValid())
@@ -272,13 +297,13 @@ void RecordEvent::unpause()
 
 PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
                              int id, int trigCode) :
-    VideoEvent(EVENT_PLAYBACK, start, delay, duration, id, trigCode, PLAYBACK_PRIORITY),
+    Event(EVENT_PLAYBACK, start, delay, duration, id, trigCode, PLAYBACK_PRIORITY),
     video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
 }
 
-void PlaybackEvent::apply(cv::Mat &frame)
+void PlaybackEvent::applyFrame(cv::Mat &frame)
 {
     if(video_->frames_.empty())
         finished_ = true;
