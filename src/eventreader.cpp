@@ -2,7 +2,10 @@
 #include <QStringList>
 #include <sys/ioctl.h>
 #include "eventreader.h"
+#include "eventcontainer.h"
 #include "event.h"
+
+using std::move;
 
 EventReader::EventReader()
 {
@@ -160,20 +163,20 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
     }
 
     //Create the new event with acquired parameters
-    Event* ev;
+    EventPtr ev;
     switch(type) {
         case Event::EVENT_FLIP:
-            ev = new FlipEvent(start, delay, eventId, trigCode);
+            ev.reset(new FlipEvent(start, delay, eventId, trigCode));
             ev->appendLog(QString("Flip event added."));
             break;
 
         case Event::EVENT_FADEIN:
-            ev = new FadeInEvent(start, duration, delay, eventId, trigCode);
+            ev.reset(new FadeInEvent(start, duration, delay, eventId, trigCode));
             ev->appendLog(QString("Fade in event added. "));
             break;
 
         case Event::EVENT_FADEOUT:
-            ev = new FadeOutEvent(start, duration, delay, eventId, trigCode);
+            ev.reset(new FadeOutEvent(start, duration, delay, eventId, trigCode));
             ev->appendLog(QString("Fade out event added. "));
             break;
 
@@ -183,7 +186,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
                     emit error(QString("Error: couldn't find image object with id %1 in line %2").arg(objectId).arg(lineNumber));
                     return false;
                 }
-                ev = new ImageEvent(start, cv::Point2i(x, y), imageObjects_[objectId], delay, eventId, trigCode);
+                ev.reset(new ImageEvent(start, cv::Point2i(x, y), imageObjects_[objectId], delay, eventId, trigCode));
                 ev->appendLog(QString("Image event added. "));
             }
             else {
@@ -193,27 +196,27 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
             break;
 
         case Event::EVENT_TEXT:
-            ev = new TextEvent(start, text, color, cv::Point2i(x, y), delay, eventId, trigCode);
+            ev.reset(new TextEvent(start, text, color, cv::Point2i(x, y), delay, eventId, trigCode));
             ev->appendLog(QString("Text event added. "));
             break;
 
         case Event::EVENT_FREEZE:
-            ev = new FreezeEvent(start, delay, eventId, trigCode);
+            ev.reset(new FreezeEvent(start, delay, eventId, trigCode));
             ev->appendLog(QString("Freeze event added. "));
             break;
 
         case Event::EVENT_ROTATE:
-            ev = new RotateEvent(start, angle, delay, eventId, trigCode);
+            ev.reset(new RotateEvent(start, angle, delay, eventId, trigCode));
             ev->appendLog(QString("Rotate event added. "));
             break;
 
         case Event::EVENT_ZOOM:
-            ev = new ZoomEvent(start, scale, duration, delay, eventId, trigCode);
+            ev.reset(new ZoomEvent(start, scale, duration, delay, eventId, trigCode));
             ev->appendLog(QString("Zoom event added"));
             break;
 
         case Event::EVENT_DETECT_MOTION:
-            ev = new Event(Event::EVENT_DETECT_MOTION, start, delay, duration, eventId, trigCode);
+            ev.reset(new Event(Event::EVENT_DETECT_MOTION, start, delay, duration, eventId, trigCode));
             ev->appendLog(QString("Movement detected"));
             break;
 
@@ -227,7 +230,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
                     emit error(QString("Error: record event duration too big for video object in line %1").arg(lineNumber));
                     return false;
                 }
-                ev = new RecordEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode);
+                ev.reset(new RecordEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode));
                 ev->appendLog(QString("Record event added"));
             }
             else {
@@ -242,7 +245,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
                     emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId).arg(lineNumber));
                     return false;
                 }
-                ev = new PlaybackEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode);
+                ev.reset(new PlaybackEvent(start, videoObjects_[objectId], delay, duration, eventId, trigCode));
                 ev->appendLog(QString("Playback event added."));
             }
             else {
@@ -256,7 +259,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
             return false;
 
     }
-    events.append(ev);
+    events.append(move(ev));
 
     return true;
 }
@@ -393,12 +396,12 @@ bool EventReader::readDelEvent(const QString &str, EventContainer& events, int l
         return false;
     }
     else if(id > -1) {
-        Event* ev = new DelEvent(start, delay, id, trigCode);
+        EventPtr ev(new DelEvent(start, delay, id, trigCode));
         ev->appendLog(QString("Event ID %1 removed. ").arg(id));
-        events.append(ev);
+        events.append(move(ev));
     }
     else {
-        Event* ev = new DelEvent(start, delay, type, trigCode);
+        EventPtr ev(new DelEvent(start, delay, type, trigCode));
 
         switch(type) {
             case Event::EVENT_FLIP:
@@ -435,11 +438,10 @@ bool EventReader::readDelEvent(const QString &str, EventContainer& events, int l
 
             default:
                 emit error(QString("Error: remove event declared without id or type in line %1").arg(lineNumber));
-                delete ev;
                 return false;
         }
 
-        events.append(ev);
+        events.append(move(ev));
     }
 
 

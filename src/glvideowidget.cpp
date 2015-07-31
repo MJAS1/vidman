@@ -19,7 +19,7 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 {
     setAutoBufferSwap(false);
 
-    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(displayFPS()));
+    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
     fpsTimer_.start(1000);
 
     glt_->start();
@@ -48,9 +48,9 @@ void GLVideoWidget::onDrawFrame(unsigned char* imBuf)
     frames_++;
 }
 
-void GLVideoWidget::displayFPS()
+void GLVideoWidget::updateFPS()
 {
-    videoDialog_->displayFPS(frames_);
+    videoDialog_->updateFPS(frames_);
     frames_ = 0;
 }
 

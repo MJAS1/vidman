@@ -10,6 +10,7 @@
 #include <time.h>
 #include <fstream>
 #include <QPixmap>
+#include <memory>
 
 #include "camerathread.h"
 #include "camera.h"
@@ -24,10 +25,10 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) 
 {
     //Setup preEvents for default processing each frame before actual manipulation
     if(settings_.flip)
-        preEvents_.append(new FlipEvent(0, 0));
+        preEvents_.append(EventPtr(new FlipEvent(0, 0)));
 
     if(settings_.turnAround)
-        preEvents_.append(new RotateEvent(0, 180, 0));
+        preEvents_.append(EventPtr(new RotateEvent(0, 180, 0)));
 
     if(settings_.fixPoint) {
         //fixPoint.png is stored in qt resource file, so it needs to be loaded to QImage first
@@ -36,7 +37,7 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) 
         cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
         if(!fixMat.empty())
-            preEvents_.append(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0));
+            preEvents_.append(EventPtr(new ImageEvent(0, cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0)));
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
@@ -46,9 +47,9 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) 
 void CameraThread::stoppableRun()
 {
     struct sched_param		sch_param;
-	struct timespec			timestamp;
+    struct timespec			timestamp;
     uint64_t                msec;
-	ChunkAttrib				chunkAttrib;
+    ChunkAttrib				chunkAttrib;
 
     cam_.setFPS(settings_.fps);
 
@@ -59,7 +60,9 @@ void CameraThread::stoppableRun()
     // Set priority
     sch_param.sched_priority = CAM_THREAD_PRIORITY;
     if (sched_setscheduler(0, SCHED_FIFO, &sch_param))
-        std::cerr << "Cannot set camera thread priority. Continuing nevertheless, but don't blame me if you experience any strange problems." << std::endl;
+        std::cerr << "Cannot set camera thread priority. Continuing "
+                     "nevertheless, but don't blame me if you experience"
+                     "any strange problems." << std::endl;
 
     // Start the acquisition loop
     while (!shouldStop) {
@@ -79,8 +82,8 @@ void CameraThread::stoppableRun()
         preEvents_.applyEvents(frame_);
 
         clock_gettime(CLOCK_REALTIME, &timestamp);
-		msec = timestamp.tv_nsec / 1000000;
-		msec += timestamp.tv_sec * 1000;
+        msec = timestamp.tv_nsec / 1000000;
+        msec += timestamp.tv_sec * 1000;
 
         events_.applyEvents(frame_);
         cv::cvtColor(frame_, frame_, CV_BGR2RGB);
@@ -112,18 +115,19 @@ void CameraThread::clearEvents()
     mutex_.unlock();
 }
 
-void CameraThread::handleEvent(Event *ev)
+void CameraThread::handleEvent(EventPtr ev)
 {
     mutex_.lock();
 
     if(ev->getType() == Event::EVENT_DETECT_MOTION) {
-        motionDetector_.startTracking(ev);
+        motionDetector_.startTracking(std::move(ev));
     }
     else {
         trigCode_ = ev->getTrigCode();
         log_.append(ev->getLog());
-        ev->applyContainer(events_);
-        events_.insert(ev);
+        ev->apply(events_);
+        if(!ev->isReady())
+            events_.insertSorted(std::move(ev));
     }
     mutex_.unlock();
 }

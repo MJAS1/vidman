@@ -75,9 +75,9 @@ QPixmap MotionDetector::foregroundPixmap() const
     return pixmap;
 }
 
-void MotionDetector::startTracking(Event* ev)
+void MotionDetector::startTracking(EventPtr ev)
 {
-    event_.reset(ev);
+    event_ = std::move(ev);
     isTracking_ = true;
 }
 

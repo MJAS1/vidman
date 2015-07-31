@@ -1,59 +1,47 @@
 #ifndef EventContainer_H
 #define EventContainer_H
 
-#include <QList>
+#include <vector>
+#include <memory>
+#include "event.h"
 
 /*!
-Custom template class for storing events. Should only store pointers to
-Event class or subclass objects. Handles memory deallocation.
+Custom container class for storing events.
   */
 
-class VideoEvent;
-class Event;
 namespace cv {
-    class Mat;
+class Mat;
 }
+
+class EventContainer;
+typedef typename std::unique_ptr<EventContainer> EventContainerPtr;
 
 class EventContainer
 {
 public:
 
-    typedef typename QList<Event*>::Iterator Iterator;
-    typedef typename QList<Event*>::ConstIterator ConstIterator;
-
     EventContainer();
-    ~EventContainer();
 
-    void    clear();
-    void    deleteId(int id);
-    void    deleteType(int);
-    void    append(Event* event);
-    void    prepend(Event* event);
-    void    insert(Event* event);
-    void    applyEvents(cv::Mat& frame) const;
-    void    pauseEvents();
-    void    unpauseEvents();
+    void            clear();
+    void            deleteId(int id);
+    void            deleteType(int);
+    void            append(EventPtr event);
+    void            insertSorted(EventPtr event);
+    void            applyEvents(cv::Mat& frame);
+    void            pauseEvents();
+    void            unpauseEvents();
 
-    bool    empty() const;
-    int     getTotalDuration() const;
+    bool            empty() const;
+    int             getTotalDuration() const;
 
-    Iterator      begin();
-    Iterator      end();
-    ConstIterator begin() const;
-    ConstIterator end() const;
-
-    Event*  pop_front();
-
-    Event* operator [](int id) const;
+    EventPtr        pop_front();
+    const EventPtr& operator[](int id) const;
 
 private:
     EventContainer(const EventContainer&);
     EventContainer& operator=(const EventContainer&);
 
-    void    insertSorted(Event* event);
-
-    QList<Event*> events_;
+    std::vector<EventPtr> events_;
 };
-
 
 #endif // EventContainer_H

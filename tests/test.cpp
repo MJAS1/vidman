@@ -106,8 +106,7 @@ void Test::testMotionDetector()
 
     MotionDetector motionDetector;
     motionDetector.movementDetected(hand1);
-    Event* ev = new Event;
-    motionDetector.startTracking(ev);
+    motionDetector.startTracking(EventPtr(new Event));
     QCOMPARE(motionDetector.movementDetected(hand1), false);
     QCOMPARE(motionDetector.movementDetected(hand2), true);
 }

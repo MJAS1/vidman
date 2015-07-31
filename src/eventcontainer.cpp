@@ -1,55 +1,37 @@
 #include <numeric>
 #include <algorithm>
-#include <opencv2/opencv.hpp>
 #include "eventcontainer.h"
-#include "event.h"
+
+using std::move;
 
 EventContainer::EventContainer()
 {
 }
 
-EventContainer::~EventContainer()
-{
-    clear();
-}
-
 void EventContainer::clear()
 {
-    qDeleteAll(events_);
     events_.clear();
 }
 
-Event* EventContainer::pop_front()
+EventPtr EventContainer::pop_front()
 {
-    Event *ev = *events_.begin();
+    EventPtr ev = move(*events_.begin());
     events_.erase(events_.begin());
-    return ev;
+    return move(ev);
 }
 
 void EventContainer::deleteId(int id)
 {
-    auto iter = events_.begin();
-    while(iter != events_.end()) {
-        if((*iter)->getId() == id) {
-            delete (*iter);
-            iter = events_.erase(iter);
-            continue;
-        }
-        ++iter;
-    }
+    auto end = std::remove_if(events_.begin(), events_.end(),
+                        [&](const EventPtr& ev){return ev->getId() == id;});
+    events_.erase(end, events_.end());
 }
 
 void EventContainer::deleteType(int type)
 {
-    auto iter = events_.begin();
-    while(iter != events_.end()) {
-        if((*iter)->getType() == type) {
-            delete (*iter);
-            iter = events_.erase(iter);
-            continue;
-        }
-        ++iter;
-    }
+    auto end = std::remove_if(events_.begin(), events_.end(),
+                        [&](const EventPtr& ev){return ev->getType() == type;});
+    events_.erase(end, events_.end());
 }
 
 bool EventContainer::empty() const
@@ -57,62 +39,35 @@ bool EventContainer::empty() const
     return events_.empty();
 }
 
-Event* EventContainer::operator [](int id) const
+const EventPtr& EventContainer::operator [](int id) const
 {
     return events_[id];
 }
 
-void EventContainer::append(Event* event)
+void EventContainer::append(EventPtr event)
 {
-    events_.append(event);
+    events_.push_back(move(event));
 }
 
-void EventContainer::prepend(Event* event)
-{
-    events_.prepend(event);
-}
-
-void EventContainer::insertSorted(Event* event)
+void EventContainer::insertSorted(EventPtr event)
 {
     auto iter = std::lower_bound(events_.begin(), events_.end(), event,
-                        [](const Event* l, const Event* r) {
-                            return l->getPriority() > r->getPriority();
-                        });
-    events_.insert(iter, event);
+                                 [](const EventPtr& l, const EventPtr& r) {
+        return l->getPriority() > r->getPriority();
+    });
+    events_.insert(iter, move(event));
 }
 
-void EventContainer::insert(Event* event)
+void EventContainer::applyEvents(cv::Mat &frame)
 {
-    if(event->isReady())
-        delete event;
-    else
-        insertSorted(event);
-}
-
-typename EventContainer::Iterator EventContainer::begin()
-{
-    return events_.begin();
-}
-
-typename EventContainer::Iterator EventContainer::end()
-{
-    return events_.end();
-}
-
-typename EventContainer::ConstIterator EventContainer::begin() const
-{
-    return events_.begin();
-}
-
-typename EventContainer::ConstIterator EventContainer::end() const
-{
-    return events_.end();
-}
-
-void EventContainer::applyEvents(cv::Mat &frame) const
-{
-    for(auto iter = events_.begin(); iter != events_.end(); ++iter)
-        (*iter)->applyFrame(frame);
+    for(auto iter = events_.begin(); iter != events_.end();)
+    {
+        (*iter)->apply(frame);
+        if((*iter)->isReady())
+            iter = events_.erase(iter);
+        else
+            iter++;
+    }
 }
 
 void EventContainer::pauseEvents()
@@ -129,8 +84,8 @@ void EventContainer::unpauseEvents()
 
 int EventContainer::getTotalDuration() const
 {
-    return std::accumulate(begin(), end(), 0,
-                           [](int x, const Event* a) {
-                                return x + a->getStart() + a->getDelay();
-                            });
+    return std::accumulate(events_.begin(), events_.end(), 0,
+                           [](int x, const EventPtr& a) {
+        return x + a->getStart() + a->getDelay();
+    });
 }

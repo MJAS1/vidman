@@ -10,6 +10,7 @@
 
 #include <QMutex>
 #include <opencv2/opencv.hpp>
+#include "event.h"
 #include "stoppablethread.h"
 #include "eventcontainer.h"
 #include "settings.h"
@@ -19,7 +20,6 @@ class QMutex;
 class Camera;
 class VideoEvent;
 class CycDataBuffer;
-class Event;
 
 //! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
 class CameraThread : public StoppableThread
@@ -33,11 +33,10 @@ public:
     void    pause();
     void    unpause();
 
+    void    handleEvent(EventPtr ev);
+
 signals:
     void    motionDetectorPixmap(const QPixmap&);
-
-public slots:
-    void    handleEvent(Event *ev);
 
 protected:
     virtual void stoppableRun();
@@ -55,7 +54,7 @@ private:
 
     int                                 trigCode_;
 
-    EventContainer         events_, preEvents_;
+    EventContainer                      events_, preEvents_;
     Settings                            settings_;
     MotionDetector                      motionDetector_;
 };

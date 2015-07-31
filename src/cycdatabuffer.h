@@ -17,9 +17,9 @@ const int MAXLOG = 50;
 //! Attributes associated with each data chunk.
 typedef struct
 {
-	int			chunkSize;
-	uint64_t	timestamp;
-	bool		isRec;
+    int			chunkSize;
+    uint64_t	timestamp;
+    bool		isRec;
     int         trigCode;
     char        log[MAXLOG];
 } ChunkAttrib;
@@ -48,41 +48,41 @@ typedef struct
  */
 class CycDataBuffer : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	/*!
-	 * Buffer size is in bytes. Due to implementation details (semaphore counts
-	 * bytes rather than chunks) buffer size is limited by the size of "int" on
-	 * your platform.
-	 */
+    /*!
+     * Buffer size is in bytes. Due to implementation details (semaphore counts
+     * bytes rather than chunks) buffer size is limited by the size of "int" on
+     * your platform.
+     */
     CycDataBuffer(int _bufSize, QObject* parent = 0);
-	virtual ~CycDataBuffer();
+    virtual ~CycDataBuffer();
     void insertChunk(unsigned char* _data, ChunkAttrib &_attrib);
 
-	/*!
-	 * Acquire a chunk and return a pointer to it. The chunk is implicitly
-	 * released next time getChunk is called.
-	 */
-	unsigned char* getChunk(ChunkAttrib* _attrib);
-	void setIsRec(bool _isRec);
+    /*!
+     * Acquire a chunk and return a pointer to it. The chunk is implicitly
+     * released next time getChunk is called.
+     */
+    unsigned char* getChunk(ChunkAttrib* _attrib);
+    void setIsRec(bool _isRec);
 
 signals:
-	/*!
-	 * This signal is raised when a new chunk of data has been copied to the
-	 * buffer. _data points to the chunk's data. The corresponding ChunkAttrib
-	 * structure is placed immediately before _data.
-	 */
+    /*!
+     * This signal is raised when a new chunk of data has been copied to the
+     * buffer. _data points to the chunk's data. The corresponding ChunkAttrib
+     * structure is placed immediately before _data.
+     */
     void chunkReady(unsigned char* _data);
 
 private:
-	volatile bool	isRec;
+    volatile bool	isRec;
 
     unsigned char*	dataBuf;
 
-	int				insertPtr;
-	int				getPtr;
-	int				bufSize;
+    int				insertPtr;
+    int				getPtr;
+    int				bufSize;
 
     QSemaphore*		buffSemaphore;	// counts number of bytes available for reading
 };

@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QGLFormat>
+#include <memory>
 #include "camerathread.h"
 #include "glvideowidget.h"
 #include "mainwindow.h"
@@ -90,6 +91,7 @@ VideoDialog::~VideoDialog()
 
 void VideoDialog::paintEvent(QPaintEvent *)
 {
+    //Paint the area under sliders and labels
     QPainter painter(this);
     painter.setPen(QColor(80, 80, 80));
     QLinearGradient gradient(QPoint(0, 0), QPoint(0, glVideoWidget_->pos().y()));
@@ -118,20 +120,20 @@ void VideoDialog::toggleRecEnabledord(bool arg)
 void VideoDialog::getNextEvent()
 {
     //Get next event and pass it to cameraThread
-    Event *event = events_->pop_front();
+    EventPtr event(events_->pop_front());
     int delay = event->getDelay();
-    cameraThread_->handleEvent(event);
+    cameraThread_->handleEvent(std::move(event));
 
     //Calculate the start time of the next event
     if(!events_->empty()) {        
         time_ = elapsedTimer_.nsecsElapsed()/1000000;
-        Event *nextEvent = (*events_)[0];
+        const EventPtr& nextEvent = (*events_)[0];
         eventDuration_ = (nextEvent->getStart()+delay);
         eventTmr_.start(eventDuration_);
     }
 }
 
-void VideoDialog::start(EventsPtr events)
+void VideoDialog::start(EventContainerPtr events)
 {
     events_ = std::move(events);
 
@@ -198,7 +200,7 @@ void VideoDialog::closeEvent(QCloseEvent *)
     window_->toggleVideoDialogChecked(false);
 }
 
-void VideoDialog::displayFPS(int fps)
+void VideoDialog::updateFPS(int fps)
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }

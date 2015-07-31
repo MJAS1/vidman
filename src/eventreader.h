@@ -5,7 +5,6 @@
 #include <QObject>
 #include <QMap>
 #include <opencv2/opencv.hpp>
-#include "eventcontainer.h"
 #include "settings.h"
 
 
@@ -15,6 +14,7 @@ LoadEvents returns false if the input text is incorrectly forcv::Matted.
 */
 
 using std::shared_ptr;
+class EventContainer;
 
 //VideoObject is used to create record and playback events. Contains the frames
 //belonging to the particular video and length in milliseconds.
@@ -36,7 +36,7 @@ signals:
 
 private:
     bool    readEvent(const QString &str, EventContainer& events, int lineNumber);
-	bool	readObject(const QString &str, int lineNumber);
+    bool	readObject(const QString &str, int lineNumber);
     bool    readDelEvent(const QString &str, EventContainer& events, int lineNumber);
 
     float   toFloat(const QString &str, int line, const QString &param) const;

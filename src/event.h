@@ -2,21 +2,29 @@
 #define EVENT_H
 
 #include <QString>
-#include "eventcontainer.h"
-#include "eventreader.h"
+#include <QList>
+#include <memory>
+#include <opencv2/opencv.hpp>
 #include "timerwithpause.h"
 
-class VideoEvent;
+class EventContainer;
 
 const int DEFAULT_PRIORITY = 0;
 const int FREEZE_PRIORITY = 3;
 const int RECORD_PRIORITY = 4;
 const int PLAYBACK_PRIORITY = 4;
 
+struct VideoObject;
+
 /*!
 Event objects are used to specify the starting time, duration, effects etc.
-of events handled by the program.
+of events handled by the program. Each event can modify a OpenCv Mat video frame
+or a EventContainer holding other events. These modifications should be
+specified by a subclass by impelementing the virtual apply functions
   */
+
+class Event;
+typedef typename std::unique_ptr<Event> EventPtr;
 
 class Event
 {
@@ -47,8 +55,8 @@ public:
 
     virtual ~Event() {}
 
-    virtual void applyFrame(cv::Mat &) {}
-    virtual void applyContainer(EventContainer&) {}
+    virtual void apply(cv::Mat &) {}
+    virtual void apply(EventContainer&) {}
     virtual void pause() {}
     virtual void unpause() {}
 
@@ -60,10 +68,10 @@ public:
     int         getTrigCode() const {return trigCode_;}
     int         getPriority() const {return priority_;}
 
-    bool        isReady() {return ready_;}
+    bool        isReady() const {return ready_;}
 
     void        appendLog(const QString &str) {log_ = str;}
-    QString     getLog() const {return log_;} 
+    QString     getLog() const {return log_;}
 
 protected:
     EventType   type_;
@@ -94,9 +102,9 @@ public:
 
     explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0):
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
-        {}
+    {}
 
-    void applyContainer(EventContainer &);
+    void apply(EventContainer &);
 
 private:
     int         delId_;
@@ -110,8 +118,8 @@ public:
 
     explicit FlipEvent(int start, int delay, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
-    virtual void applyContainer(EventContainer&);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
 };
 
 class FadeInEvent : public Event
@@ -120,8 +128,8 @@ public:
     explicit FadeInEvent(int start, int duration = 5, int delay=0, int id = -1,
                          int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
-    virtual void applyContainer(EventContainer&);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
     void pause();
     void unpause();
 
@@ -138,8 +146,8 @@ public:
     explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
                           int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
-    virtual void applyContainer(EventContainer&);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
     void pause();
     void unpause();
 
@@ -153,13 +161,13 @@ class ImageEvent : public Event
 {
 public:
     explicit ImageEvent(int start, const cv::Point2i& pos,
-               const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
+                        const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 private:
 
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
-                                cv::Mat &output, const cv::Point2i& location);
+                      cv::Mat &output, const cv::Point2i& location);
 
     cv::Mat     image_;
     cv::Point2i pos_;
@@ -170,9 +178,9 @@ class TextEvent : public Event
 {
 public:
     explicit TextEvent(int start, const QString& str, cv::Scalar color,
-                  const cv::Point2i& pos, int delay, int id = -1, int trigCode = 0);
+                       const cv::Point2i& pos, int delay, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
 
 private:
     cv::Scalar  color_;
@@ -186,8 +194,8 @@ class RotateEvent : public Event
 public:
     explicit RotateEvent(int start, int angle, int delay, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
-    virtual void applyContainer(EventContainer&);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
 
 private:
     int angle_;
@@ -199,13 +207,13 @@ class FreezeEvent : public Event
 public:
     explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
-    virtual void applyContainer(EventContainer&);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
 
 private:
     bool    started_;
 
-    cv::Mat freezedFrame_;
+    cv::Mat frame_;
 };
 
 class ZoomEvent : public Event
@@ -214,7 +222,7 @@ public:
     explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0,
                        int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
@@ -234,7 +242,7 @@ public:
     explicit RecordEvent(int start, VideoPtr video, int delay = 0,
                          int duration = 1000, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 private:
@@ -252,7 +260,7 @@ public:
     explicit PlaybackEvent(int start, VideoPtr video, int delay = 0,
                            int duration = 1000, int id = -1, int trigCode = 0);
 
-    virtual void applyFrame(cv::Mat &frame);
+    virtual void apply(cv::Mat &frame);
     void pause();
     void unpause();
 

@@ -24,7 +24,7 @@ public:
     MotionDetector();
 
     bool            movementDetected(const cv::Mat &frame);
-    void            startTracking(Event* ev);
+    void            startTracking(EventPtr ev);
 
     int             getEventTrigCode() const;
     QString         getEventLog() const;
