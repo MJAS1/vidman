@@ -5,10 +5,17 @@
 #include <QTimer>
 #include <QTime>
 #include <QLabel>
+#include "camera.h"
+#include "settings.h"
 #include "logfile.h"
+#include "eventcontainer.h"
 #include "timerwithpause.h"
 
 class VideoDialog;
+class CycDataBuffer;
+class CameraThread;
+class VideoFileWriter;
+class VideoCompressorThread;
 class MotionDialog;
 class Highlighter;
 
@@ -31,25 +38,17 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void toggleStart(bool);
-    void toggleRecEnabled(bool);
-    void toggleRecChecked(bool);
-    void toggleStop(bool);
     void toggleVideoDialogChecked(bool);
     void writeToLog(const QString&);
     
 public slots:
     void setStatus(const QString&);
-    void updateMotionDetectorLabel(const QPixmap&);
-    void motionDialogButtonClicked(bool);
-
-signals:
-    void changeMotionDialogColors(bool);
+    void fileWriterError(const QString&);
     
 private slots:
-    void onStart();
-    void onStop();
-    void onRec(bool);
+    void onStartButton();
+    void onStopButton();
+    void onRecButton(bool);
 
     void onViewVideoDialog(bool);
     void onViewMotionDetector(bool);
@@ -78,33 +77,55 @@ private slots:
     void addPlaybackEvent();
 
     void updateTime();
+    void getNextEvent();
 
     void closeEvent(QCloseEvent *e);
+    void stopThreads();
 
 private:
     MainWindow(const MainWindow& other);
     MainWindow& operator=(const MainWindow& other);
 
-    Ui::MainWindow*     ui;
+    Ui::MainWindow*         ui;
 
-    bool                load(const QString &f);
-    bool                maybeSave();
-    void                setCurrentFileName(const QString &fileName);
-    void                pause();
-    void                unpause();
+    void                    initToolButton();
+    void                    initVideo();
 
-    Highlighter*        highlighter_;
-    State               state_;
+    bool                    load(const QString &f);
+    bool                    maybeSave();
+    void                    setCurrentFileName(const QString &fileName);
 
-    VideoDialog*        videoDialog_;
-    MotionDialog*       motionDialog_;
-    TimerWithPause      runningTime_;
-    LogFile             logFile_;
-    QTimer              timeTmr_;
-    QString             fileName_;
-    QLabel              status_;
-    QLabel              motionDetectorLabel_;
-    QTime               eventsDuration_;
+    void                    start();
+    void                    pause();
+    void                    unpause();
+
+    int                     currentEventDuration_;
+
+    Highlighter*            highlighter_;
+    State                   state_;
+
+    VideoDialog*            videoDialog_;
+    MotionDialog*           motionDialog_;
+    LogFile                 logFile_;
+    QString                 fileName_;
+    QLabel                  status_;
+    QLabel                  motionDetectorLabel_;
+    QTime                   eventsDuration_;
+    Camera                  cam_;
+    Settings                settings_;
+
+    CycDataBuffer*          cycVideoBufRaw_;
+    CycDataBuffer*          cycVideoBufJpeg_;
+    CameraThread*           cameraThread_;
+    VideoFileWriter*        videoFileWriter_;
+    VideoCompressorThread*  videoCompressorThread_;
+
+    QTimer                  eventTmr_;
+    QTimer                  timeTmr_;
+    TimerWithPause          runningTime_;
+
+    EventContainer          events_;
+    qint64                  time_;
 };
 
 #endif // MAINWINDOW_H

@@ -22,7 +22,7 @@
 using namespace std;
 
 
-CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, VideoDialog* parent) :
+CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
     StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0)
 {
     //Setup preEvents for default processing each frame before actual manipulation
@@ -103,7 +103,7 @@ void CameraThread::stoppableRun()
         cycBuf_->insertChunk(frame_.data, chunkAttrib);
 
         //Emit the background substracted pixmap of the hands to MainWindow for
-        //motionDetector_ label.
+        //MotionDialog.
         emit motionDetectorPixmap(motionDetector_.movementPixmap());
 
         mutex_.unlock();
@@ -148,7 +148,7 @@ void CameraThread::unpause()
     mutex_.unlock();
 }
 
-void CameraThread::changeMovementFrame(bool color)
+void CameraThread::changeMovementFrameColor(bool color)
 {
-    motionDetector_.changeMovementFrame(color);
+    motionDetector_.changeMovementFrameColor(color);
 }

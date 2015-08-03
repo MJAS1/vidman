@@ -9,6 +9,7 @@
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"
 #include "glthread.h"
+#include "common.h"
 
 using namespace std;
 

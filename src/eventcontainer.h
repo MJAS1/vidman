@@ -2,7 +2,6 @@
 #define EventContainer_H
 
 #include <vector>
-#include <memory>
 #include "event.h"
 
 /*!
@@ -12,9 +11,6 @@ Custom container class for storing events.
 namespace cv {
 class Mat;
 }
-
-class EventContainer;
-typedef typename std::unique_ptr<EventContainer> EventContainerPtr;
 
 class EventContainer
 {

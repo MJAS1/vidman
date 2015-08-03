@@ -1,6 +1,7 @@
 #include <QMutexLocker>
 #include <QDateTime>
 #include <videodialog.h>
+#include "config.h"
 #include "mainwindow.h"
 #include "glthread.h"
 #include "glvideowidget.h"
@@ -68,9 +69,7 @@ void GLThread::stoppableRun()
             shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
             shaderProgram_.enableAttributeArray("textureCoordinate");
 
-            //qDebug() << "GLThread: " << "data address: " << static_cast<void*>(imBuf_)  << "time: " << QDateTime::currentMSecsSinceEpoch();
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf_);
-            //qDebug() << "GLThread finished";
 
             //Unlock before drawing functions to prevent drawFrame() from stalling the main thread
             locker.unlock();

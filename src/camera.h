@@ -4,7 +4,6 @@
 #include <QMutex>
 #include <opencv2/opencv.hpp>
 #include <dc1394/dc1394.h>
-#include "config.h"
 
 class Camera
 {
@@ -13,7 +12,7 @@ public:
     ~Camera();
 
     void        setFPS(int fps);
-    bool        isInitialized() const;
+    bool        empty() const;
 
     uint32_t    getShutter() const;
     uint32_t    getGain() const;

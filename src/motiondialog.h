@@ -2,6 +2,9 @@
 #define MOTIONDIALOG_H
 
 #include <QDialog>
+#include <opencv2/opencv.hpp>
+#include "event.h"
+#include "eventcontainer.h"
 
 class MainWindow;
 
@@ -17,10 +20,12 @@ public:
     explicit MotionDialog(MainWindow *parent = 0);
     ~MotionDialog();
 
-    void setPixmap(const QPixmap&);
-
 public slots:
+    void setPixmap(const QPixmap&);
     void onColorButtonToggled(bool);
+
+signals:
+    void changeColors(bool);
 
 private:
     Ui::MotionDialog *ui;

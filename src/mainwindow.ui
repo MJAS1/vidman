@@ -654,7 +654,7 @@ QPushButton:checked {
    <sender>stopButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>onStop()</slot>
+   <slot>onStopButton()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>352</x>
@@ -670,7 +670,7 @@ QPushButton:checked {
    <sender>recButton</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>onRec(bool)</slot>
+   <slot>onRecButton(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>584</x>
@@ -814,7 +814,7 @@ QPushButton:checked {
    <sender>startButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>onStart()</slot>
+   <slot>onStartButton()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>121</x>
@@ -1183,9 +1183,9 @@ QPushButton:checked {
   <slot>fileSave()</slot>
   <slot>fileOpen()</slot>
   <slot>fileSaveAs()</slot>
-  <slot>onStart()</slot>
-  <slot>onStop()</slot>
-  <slot>onRec(bool)</slot>
+  <slot>onStartButton()</slot>
+  <slot>onStopButton()</slot>
+  <slot>onRecButton(bool)</slot>
   <slot>fileNew()</slot>
   <slot>onViewVideoDialog(bool)</slot>
   <slot>addFadeInEvent()</slot>

@@ -7,32 +7,60 @@
 #include <QMenu>
 #include <QCloseEvent>
 #include <QStatusBar>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <memory>
+#include "config.h"
+#include "cycdatabuffer.h"
+#include "camerathread.h"
+#include "videocompressorthread.h"
 #include "motiondialog.h"
 #include "eventreader.h"
 #include "videodialog.h"
+#include "videofilewriter.h"
 #include "highlighter.h"
 #include "eventcontainer.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "timerwithpause.h"
 
-using std::shared_ptr;
-using std::unique_ptr;
-
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED)
+    QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED), time_(0)
 {
     ui->setupUi(this);
-    videoDialog_ = new VideoDialog(this);
+    videoDialog_ = new VideoDialog(this, cam_);
     videoDialog_->show();
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     highlighter_ = new Highlighter(ui->textEdit->document());
 
+    initToolButton();
+    initVideo();
+
+    //Set status bar
+    status_.setIndent(10);
+    status_.setStyleSheet("QLabel { color: red;}");
+    statusBar()->addWidget(&status_, 1);
+}
+
+MainWindow::~MainWindow()
+{
+    if(!cam_.empty())
+        stopThreads();
+    delete ui;
+}
+
+void MainWindow::stopThreads()
+{
+    // The piece of code stopping the threads should execute fast enough,
+    // otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
+    // order of stopping the threads is important.
+    videoFileWriter_->stop();
+    videoCompressorThread_->stop();
+    cameraThread_->stop();
+}
+
+
+void MainWindow::initToolButton()
+{
     //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionAddImageObject);
@@ -54,77 +82,66 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QToolButton *toolBtn = new QToolButton(this);
     toolBtn->setMenu(menu);
-    toolBtn->setIcon(QIcon::fromTheme("insert-object"));
+    toolBtn->setIcon(QIcon(":/img/insertText.png"));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
     toolBtn->setShortcut(QString("Ctrl+e"));
 
     ui->toolBar->addWidget(toolBtn);
-
-    //Set status bar
-    status_.setIndent(10);
-    status_.setStyleSheet("QLabel { color: red;}");
-    statusBar()->addWidget(&status_, 1);
-
-    motionDetectorLabel_.setWindowTitle("Motion Detector");
 }
 
-MainWindow::~MainWindow()
+void MainWindow::initVideo()
 {
-    delete ui;
+    if(!cam_.empty()) {
+        // Set up video recording
+        cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+        cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
+        cameraThread_ = new CameraThread(cycVideoBufRaw_, cam_, this);
+        videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
+        videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
+
+        connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SLOT(onDrawFrame(unsigned char*)));
+        connect(cameraThread_, SIGNAL(motionDetectorPixmap(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
+        connect(motionDialog_, SIGNAL(changeColors(bool)), cameraThread_, SLOT(changeMovementFrameColor(bool)));
+
+        // Start video running
+        videoFileWriter_->start();
+        videoCompressorThread_->start();
+        cameraThread_->start();
+
+        //Setup event handling
+        eventTmr_.setSingleShot(true);
+        connect(&eventTmr_, SIGNAL(timeout()), this, SLOT(getNextEvent()));
+    }
+    else {
+        setStatus(QString("Couldn't initialize video."));
+        ui->startButton->setEnabled(false);
+        ui->recButton->setEnabled(false);
+        ui->stopButton->setEnabled(false);
+    }
 }
 
-void MainWindow::toggleStart(bool arg)
+void MainWindow::getNextEvent()
 {
-   ui->startButton->setEnabled(arg);
+    int delay = events_[0]->getDelay();
+    cameraThread_->handleEvent(std::move(events_.pop_front()));
+
+    //Calculate the start time of the next event
+    if(!events_.empty()) {
+        time_ = runningTime_.msecsElapsed();
+        currentEventDuration_ = (events_[0]->getStart()+delay);
+        eventTmr_.start(currentEventDuration_);
+    }
 }
 
-void MainWindow::toggleRecEnabled(bool arg)
-{
-   ui->recButton->setEnabled(arg);
-}
-
-void MainWindow::toggleRecChecked(bool arg)
-{
-    ui->recButton->setChecked(arg);
-}
-
-void MainWindow::toggleStop(bool arg)
-{
-    ui->stopButton->setEnabled(arg);
-}
-
-void MainWindow::onStart()
+void MainWindow::onStartButton()
 {
     if(!ui->recButton->isChecked())
         status_.clear();
 
     switch (state_) {
-        case STOPPED: {
-
-            if(logFile_.isActive() && !logFile_.open())
-                setStatus(QString("Error creating log file " +
-                                  logFile_.fileName() + ". " + logFile_.errorString()));
-
-            //Create a StringList from the texteditor.
-            QStringList strList = ui->textEdit->toPlainText().split("\n");
-            strList.append("");
-
-            //Read, create and store all the events from strList
-            EventContainerPtr events(new EventContainer);
-            EventReader eventReader;
-
-            connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
-
-            if(eventReader.loadEvents(strList, *events)) {
-                eventsDuration_.setHMS(0, 0, 0);
-                eventsDuration_ = eventsDuration_.addMSecs(events->getTotalDuration());
-                videoDialog_->start(std::move(events));
-                runningTime_.restart();
-                ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-                state_ = PLAYING;
-                timeTmr_.start(100);
-            }
-        }
+    case STOPPED:
+        start();
         break;
 
     case PLAYING:
@@ -137,7 +154,7 @@ void MainWindow::onStart()
     }
 }
 
-void MainWindow::onStop()
+void MainWindow::onStopButton()
 {
     if(state_ == PLAYING || state_ == PAUSED) {
         ui->timeLbl->setText(QString("00:00:00/00:00:00"));
@@ -151,28 +168,62 @@ void MainWindow::onStop()
     }
 
     ui->recButton->setChecked(false);
-    videoDialog_->toggleRecEnabledord(false);
-
-    videoDialog_->stop();
+    cycVideoBufJpeg_->setIsRec(false);
+    cameraThread_->clearEvents();
+    eventTmr_.stop();
+    events_.clear();
 
     status_.clear();
 }
 
-void MainWindow::onRec(bool arg)
+void MainWindow::onRecButton(bool arg)
 {
-    videoDialog_->toggleRecEnabledord(arg);
+    cycVideoBufJpeg_->setIsRec(arg);
     if(arg)
         setStatus("Recording...");
     else
         status_.clear();
 }
 
+void MainWindow::start()
+{
+    if(logFile_.isActive() && !logFile_.open())
+        setStatus(QString("Error creating log file " +
+                          logFile_.fileName() + ". " + logFile_.errorString()));
+
+    //Create a StringList from the texteditor.
+    QStringList strList = ui->textEdit->toPlainText().split("\n");
+    strList.append("");
+
+    //Read, create and store all the events from strList
+    EventReader eventReader;
+    connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
+
+    if(eventReader.loadEvents(strList, events_)) {
+        eventsDuration_.setHMS(0, 0, 0);
+        eventsDuration_ = eventsDuration_.addMSecs(events_.getTotalDuration());
+
+        ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+        state_ = PLAYING;
+        if(!events_.empty()) {
+            eventTmr_.start(events_[0]->getStart());
+            time_ = 0;
+        }
+
+        runningTime_.restart();
+        timeTmr_.start(100);
+    }
+}
+
 void MainWindow::pause()
 {
     timeTmr_.stop();
+    eventTmr_.stop();
     runningTime_.pause();
+    cameraThread_->pause();
+    time_ = runningTime_.msecsElapsed()-time_;
+
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
-    videoDialog_->pause();
     state_ = PAUSED;
 }
 
@@ -180,8 +231,14 @@ void MainWindow::unpause()
 {
     timeTmr_.start(100);
     runningTime_.resume();
+    if(!events_.empty()) {
+        currentEventDuration_ = currentEventDuration_ - time_;
+        eventTmr_.start(currentEventDuration_);
+    }
+    time_ = runningTime_.msecsElapsed();
+    cameraThread_->unpause();
+
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
-    videoDialog_->unpause();
     state_ = PLAYING;
 }
 
@@ -197,11 +254,9 @@ void MainWindow::onViewVideoDialog(bool checked)
 void MainWindow::onViewMotionDetector(bool checked)
 {
     if(checked)
-        //motionDetectorLabel_.show();
         motionDialog_->show();
     else
         motionDialog_->hide();
-        //motionDetectorLabel_.close();
 }
 
 void MainWindow::onKeepLog(bool arg)
@@ -233,7 +288,7 @@ void MainWindow::onParallelPort(bool arg)
 void MainWindow::updateTime()
 {
     QTime time(0, 0);
-    qint64 msecsElapsed = runningTime_.nsecsElapsed()/1000000;
+    qint64 msecsElapsed = runningTime_.msecsElapsed();
     time = time.addMSecs(msecsElapsed);
 
     ui->timeLbl->setText(time.toString(QString("hh:mm:ss"))+"/"+eventsDuration_.toString(QString("hh:mm:ss")));
@@ -446,19 +501,16 @@ void MainWindow::setStatus(const QString &str)
 
 void MainWindow::writeToLog(const QString &str)
 {
-    qint64 elapsed = runningTime_.nsecsElapsed();
+    qint64 elapsed = runningTime_.msecsElapsed();
     QString log;
     QTextStream stream(&log);
-    stream << "[" << elapsed/1000000000 << "s " << (elapsed%1000000000)/1000000 << "ms]" << str;
+    stream << "[" << elapsed/1000 << "s " << (elapsed%1000) << "ms]" << str;
     logFile_ << log;
 }
 
-void MainWindow::updateMotionDetectorLabel(const QPixmap& pixmap)
+void MainWindow::fileWriterError(const QString &str)
 {
-    motionDialog_->setPixmap(pixmap);
-}
-
-void MainWindow::motionDialogButtonClicked(bool color)
-{
-    emit changeMotionDialogColors(color);
+    cycVideoBufJpeg_->setIsRec(false);
+    ui->recButton->setEnabled(false);
+    setStatus(str);
 }

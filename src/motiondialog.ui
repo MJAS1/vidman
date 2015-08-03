@@ -48,8 +48,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../../file-video-icon.png</normaloff>../../file-video-icon.png</iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/img/videoIconColors.png</normaloff>:/img/videoIconColors.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -80,8 +80,8 @@
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../../file-video-icon-bw.png</normaloff>../../file-video-icon-bw.png</iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/img/videoIconBW.png</normaloff>:/img/videoIconBW.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -97,7 +97,11 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+  <include location="../resource.qrc"/>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>colorButton</sender>

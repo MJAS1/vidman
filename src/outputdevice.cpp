@@ -23,7 +23,6 @@ void OutputDevice::writeData(int trigCode)
         case PORT_SERIAL:
             if(ioctl(fd_, TIOCMSET, &trigCode) == -1) {
                 cerr << "Cannot open port: " <<  strerror(errno) << endl;
-                //fprintf(stderr, "Cannot open port: %s\n", strerror(errno));
                 portType_ = PORT_NULL;
             }
             break;
@@ -49,7 +48,7 @@ bool OutputDevice::open(PortType port)
             if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
                 portType_ = PORT_NULL;
                 fd_ = -1;
-                std::cerr << "Cannot open USB port. May be you should run this program as root" << std::endl;
+                cerr << "Cannot open USB port. May be you should run this program as root" << endl;
             }
             else
                 portType_ = PORT_SERIAL;

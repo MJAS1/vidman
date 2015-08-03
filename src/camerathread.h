@@ -28,7 +28,7 @@ class CameraThread : public StoppableThread
     Q_OBJECT
 
 public:
-    explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, VideoDialog* parent = 0);
+    explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent = 0);
 
     void    clearEvents();
     void    pause();
@@ -37,7 +37,7 @@ public:
     void    handleEvent(EventPtr ev);
 
 public slots:
-    void    changeMovementFrame(bool);
+    void    changeMovementFrameColor(bool);
 
 signals:
     void    motionDetectorPixmap(const QPixmap&);

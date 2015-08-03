@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include "config.h"
 #include "camera.h"
 
 using namespace std;
@@ -74,9 +75,9 @@ void Camera::operator >>(cv::Mat& frame)
     mutex_.unlock();
 }
 
-bool Camera::isInitialized() const
+bool Camera::empty() const
 {
-    return initialized_;
+    return !initialized_;
 }
 
 uint32_t Camera::getShutter() const

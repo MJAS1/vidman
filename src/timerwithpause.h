@@ -17,6 +17,7 @@ public:
     void restart();
 
     qint64 nsecsElapsed() const;
+    qint64 msecsElapsed() const;
 
 private:
 

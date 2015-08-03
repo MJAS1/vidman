@@ -3,5 +3,8 @@
         <file>src/fragmentShader.fsh</file>
         <file>src/vertexShader.vsh</file>
         <file>img/fixPoint.png</file>
+        <file>img/videoIconColors.png</file>
+        <file>img/videoIconBW.png</file>
+        <file>img/insertText.png</file>
     </qresource>
 </RCC>

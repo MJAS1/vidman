@@ -112,7 +112,7 @@ QString MotionDetector::getEventLog() const
     return QString();
 }
 
-void MotionDetector::changeMovementFrame(bool color)
+void MotionDetector::changeMovementFrameColor(bool color)
 {
     color_ = color;
 }

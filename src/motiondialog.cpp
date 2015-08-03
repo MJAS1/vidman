@@ -7,6 +7,7 @@ MotionDialog::MotionDialog(MainWindow *parent) :
     ui(new Ui::MotionDialog), mainWindow_(parent)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::Window);
 }
 
 MotionDialog::~MotionDialog()
@@ -21,5 +22,5 @@ void MotionDialog::setPixmap(const QPixmap &p)
 
 void MotionDialog::onColorButtonToggled(bool arg)
 {
-    mainWindow_->motionDialogButtonClicked(arg);
+    emit changeColors(arg);
 }
