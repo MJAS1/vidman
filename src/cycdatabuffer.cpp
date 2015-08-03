@@ -26,13 +26,11 @@ CycDataBuffer::CycDataBuffer(int bufSize, QObject* parent) :
     }
 }
 
-
 CycDataBuffer::~CycDataBuffer()
 {
     delete []dataBuf;
     delete buffSemaphore;
 }
-
 
 void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
 {
@@ -73,7 +71,6 @@ void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
     }
 }
 
-
 unsigned char* CycDataBuffer::getChunk(ChunkAttrib* _attrib)
 {
     unsigned char* res;
@@ -93,7 +90,6 @@ unsigned char* CycDataBuffer::getChunk(ChunkAttrib* _attrib)
 
     return(res);
 }
-
 
 void CycDataBuffer::setIsRec(bool _isRec)
 {

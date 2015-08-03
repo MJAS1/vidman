@@ -1,9 +1,16 @@
 #include <iostream>
+#include "settings.h"
 #include "common.h"
 #include "motiondetector.h"
 
-MotionDetector::MotionDetector() : isTracking_(false), event_(nullptr)
+MotionDetector::MotionDetector() : isTracking_(false), color_(true), event_(nullptr)
 {
+    Settings settings;
+    if(settings.flip)
+        events_.append(EventPtr(new FlipEvent(0, 0)));
+
+    if(settings.turnAround)
+        events_.append(EventPtr(new RotateEvent(0, 180, 0)));
 }
 
 bool MotionDetector::movementDetected(const cv::Mat &frame)
@@ -19,7 +26,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
         next_ = frame.clone();
     }
 
-    cv::Mat d1, d2;
+    cv::Mat d1, d2, result;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
     cv::bitwise_and(d1, d2, result_);
@@ -46,18 +53,18 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
         }
     }
 
-    cv::cvtColor(result_, result_, CV_GRAY2BGR);
+    movement_ = next_.clone();
     if(nChanges) {
-
         if(min_x-10 > 0) min_x -= 10;
         if(min_y-10 > 0) min_y -= 10;
         if(max_x+10 < result_.cols-1) max_x += 10;
         if(max_y+10 < result_.rows-1) max_y += 10;
         // draw rectangle round the changed pixel
+
         cv::Point x(min_x,min_y);
         cv::Point y(max_x,max_y);
         cv::Rect rect(x,y);
-        cv::rectangle(result_,rect,cv::Scalar(0, 0, 255),1);
+        cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
         if(isTracking_) {
             isTracking_ = false;
             return true;
@@ -67,9 +74,17 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     return false;
 }
 
-QPixmap MotionDetector::foregroundPixmap() const
+QPixmap MotionDetector::movementPixmap()
 {
-    QImage img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_RGB888);
+    QImage img;
+    if(color_) {
+        events_.applyEvents(movement_);
+        img = QImage(movement_.data, movement_.cols, movement_.rows, movement_.step, QImage::Format_RGB888);
+    }
+    else {
+        events_.applyEvents(result_);
+        img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
+    }
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
     return pixmap;
@@ -95,4 +110,9 @@ QString MotionDetector::getEventLog() const
         return event_->getLog();
 
     return QString();
+}
+
+void MotionDetector::changeMovementFrame(bool color)
+{
+    color_ = color;
 }

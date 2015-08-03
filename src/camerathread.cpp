@@ -12,6 +12,8 @@
 #include <QPixmap>
 #include <memory>
 
+#include "mainwindow.h"
+#include "videodialog.h"
 #include "camerathread.h"
 #include "camera.h"
 #include "cycdatabuffer.h"
@@ -20,7 +22,7 @@
 using namespace std;
 
 
-CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) :
+CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, VideoDialog* parent) :
     StoppableThread(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0)
 {
     //Setup preEvents for default processing each frame before actual manipulation
@@ -102,7 +104,7 @@ void CameraThread::stoppableRun()
 
         //Emit the background substracted pixmap of the hands to MainWindow for
         //motionDetector_ label.
-        emit motionDetectorPixmap(motionDetector_.foregroundPixmap());
+        emit motionDetectorPixmap(motionDetector_.movementPixmap());
 
         mutex_.unlock();
     }
@@ -144,4 +146,9 @@ void CameraThread::unpause()
     mutex_.lock();
     events_.unpauseEvents();
     mutex_.unlock();
+}
+
+void CameraThread::changeMovementFrame(bool color)
+{
+    motionDetector_.changeMovementFrame(color);
 }

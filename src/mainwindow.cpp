@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <fcntl.h>
 #include <memory>
+#include "motiondialog.h"
 #include "eventreader.h"
 #include "videodialog.h"
 #include "highlighter.h"
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     videoDialog_ = new VideoDialog(this);
     videoDialog_->show();
+    motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
 
     highlighter_ = new Highlighter(ui->textEdit->document());
@@ -195,9 +197,11 @@ void MainWindow::onViewVideoDialog(bool checked)
 void MainWindow::onViewMotionDetector(bool checked)
 {
     if(checked)
-        motionDetectorLabel_.show();
+        //motionDetectorLabel_.show();
+        motionDialog_->show();
     else
-        motionDetectorLabel_.close();
+        motionDialog_->hide();
+        //motionDetectorLabel_.close();
 }
 
 void MainWindow::onKeepLog(bool arg)
@@ -451,5 +455,10 @@ void MainWindow::writeToLog(const QString &str)
 
 void MainWindow::updateMotionDetectorLabel(const QPixmap& pixmap)
 {
-    motionDetectorLabel_.setPixmap(pixmap);
+    motionDialog_->setPixmap(pixmap);
+}
+
+void MainWindow::motionDialogButtonClicked(bool color)
+{
+    emit changeMotionDialogColors(color);
 }

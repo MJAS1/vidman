@@ -37,9 +37,10 @@ public slots:
     void onDrawFrame(unsigned char* _imBuf);
 
 protected:
-    void mouseDoubleClickEvent(QMouseEvent *e);
-    void resizeEvent(QResizeEvent*);
-    void paintEvent(QPaintEvent*e);
+    void    mouseDoubleClickEvent(QMouseEvent *e);
+    void    resizeEvent(QResizeEvent*);
+    void    paintEvent(QPaintEvent*e);
+    QSize   sizeHint() const {return QSize(640, 480);}
 
 private:
     GLVideoWidget(const GLVideoWidget&);

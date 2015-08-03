@@ -190,7 +190,8 @@ void RotateEvent::apply(cv::Mat &frame)
 {
     cv::Point2f center(frame.cols/2., frame.rows/2.);
     cv::Mat rotMat = getRotationMatrix2D(center, angle_, 1.0);
-    cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
+    if(!frame.empty())
+        cv::warpAffine(frame, frame, rotMat, cv::Size(frame.cols, frame.rows+1));
 }
 
 void RotateEvent::apply(EventContainer &events)

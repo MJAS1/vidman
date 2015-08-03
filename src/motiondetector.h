@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
 #include <memory>
+#include "eventcontainer.h"
 #include "event.h"
 #include "settings.h"
 
@@ -15,8 +16,6 @@ a black and white image from which the centroid of the hands can be calculated w
 of the hands starts. By inspecting the location of the centoid, movement can be detected.
 */
 
-using std::unique_ptr;
-
 class MotionDetector : public QObject
 {
     Q_OBJECT
@@ -25,19 +24,22 @@ public:
 
     bool            movementDetected(const cv::Mat &frame);
     void            startTracking(EventPtr ev);
+    void            changeMovementFrame(bool);
 
     int             getEventTrigCode() const;
     QString         getEventLog() const;
 
-    QPixmap         foregroundPixmap() const;
+    QPixmap         movementPixmap();
 
 private:
-    cv::Mat     prev_, current_, next_, result_;
-    cv::Point   centroid_;
+    cv::Mat         prev_, current_, next_, result_, movement_;
+    cv::Point       centroid_;
 
-    bool        isTracking_;
+    bool            isTracking_;
+    bool            color_;
 
-    unique_ptr<Event>      event_;
+    EventPtr        event_;
+    EventContainer  events_;
 };
 
 #endif // MOTIONDETECTOR_H

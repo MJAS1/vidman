@@ -33,7 +33,8 @@ SOURCES += mainwindow.cpp \
     glthread.cpp \
     camera.cpp \
     logfile.cpp \
-    event.cpp
+    event.cpp \
+    motiondialog.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -58,10 +59,12 @@ HEADERS += mainwindow.h \
     outputdevice.h \
     glthread.h \
     camera.h \
-    logfile.h
+    logfile.h \
+    motiondialog.h
 
 FORMS += mainwindow.ui \
-    videodialog.ui
+    videodialog.ui \
+    motiondialog.ui
 
 PKGCONFIG += opencv
 LIBS += -L/usr/share/lib -ldc1394 -ljpeg

@@ -9,6 +9,7 @@
 #include "timerwithpause.h"
 
 class VideoDialog;
+class MotionDialog;
 class Highlighter;
 
 namespace Ui {
@@ -40,6 +41,10 @@ public:
 public slots:
     void setStatus(const QString&);
     void updateMotionDetectorLabel(const QPixmap&);
+    void motionDialogButtonClicked(bool);
+
+signals:
+    void changeMotionDialogColors(bool);
     
 private slots:
     void onStart();
@@ -92,6 +97,7 @@ private:
     State               state_;
 
     VideoDialog*        videoDialog_;
+    MotionDialog*       motionDialog_;
     TimerWithPause      runningTime_;
     LogFile             logFile_;
     QTimer              timeTmr_;

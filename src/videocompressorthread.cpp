@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <jpeglib.h>
+#include <QDebug>
+#include <QDateTime>
 
 #include "config.h"
 #include "videocompressorthread.h"
@@ -58,11 +60,13 @@ void VideoCompressorThread::stoppableRun()
 		jpeg_start_compress(&cinfo, TRUE);
 
 		// write one row at a time
+        //qDebug() << "VideoCompressorThread: " << "data address: " << static_cast<void*>(data) << "time: " << QDateTime::currentMSecsSinceEpoch();
 		while(cinfo.next_scanline < cinfo.image_height)
 		{
             row_pointer = (data + (cinfo.next_scanline * cinfo.image_width * 3));
 			jpeg_write_scanlines(&cinfo, &row_pointer, 1);
 		}
+        //qDebug() << "VideoCompressorThread finished";
 
 		// clean up after we're done compressing
 		jpeg_finish_compress(&cinfo);

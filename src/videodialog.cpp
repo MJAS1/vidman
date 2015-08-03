@@ -19,7 +19,7 @@ using namespace std;
 VideoDialog::VideoDialog(MainWindow *window) :
     QDialog(window), ui(new Ui::VideoDialog), window_(window)
 {
-
+    setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
@@ -42,8 +42,8 @@ VideoDialog::VideoDialog(MainWindow *window) :
 
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), glVideoWidget_, SLOT(onDrawFrame(unsigned char*)));
-
         connect(cameraThread_, SIGNAL(motionDetectorPixmap(const QPixmap&)), window_, SLOT(updateMotionDetectorLabel(const QPixmap&)));
+        connect(window_, SIGNAL(changeMotionDialogColors(bool)), cameraThread_, SLOT(changeMovementFrame(bool)));
 
         // Setup gain/shutter sliders
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);

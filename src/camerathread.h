@@ -19,6 +19,7 @@
 class QMutex;
 class Camera;
 class VideoEvent;
+class VideoDialog;
 class CycDataBuffer;
 
 //! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
@@ -27,13 +28,16 @@ class CameraThread : public StoppableThread
     Q_OBJECT
 
 public:
-    explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent = 0);
+    explicit CameraThread(CycDataBuffer* cycBuf, Camera &cam, VideoDialog* parent = 0);
 
     void    clearEvents();
     void    pause();
     void    unpause();
 
     void    handleEvent(EventPtr ev);
+
+public slots:
+    void    changeMovementFrame(bool);
 
 signals:
     void    motionDetectorPixmap(const QPixmap&);
@@ -57,6 +61,7 @@ private:
     EventContainer                      events_, preEvents_;
     Settings                            settings_;
     MotionDetector                      motionDetector_;
+
 };
 
 #endif /* CAMERATHREAD_H_ */
