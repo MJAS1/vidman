@@ -26,7 +26,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
         next_ = frame.clone();
     }
 
-    cv::Mat d1, d2, result;
+    cv::Mat d1, d2;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
     cv::bitwise_and(d1, d2, result_);

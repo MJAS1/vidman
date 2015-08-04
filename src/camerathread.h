@@ -22,7 +22,7 @@ class VideoEvent;
 class VideoDialog;
 class CycDataBuffer;
 
-//! This thread acquires, timestamps and manipulates frames for a single openCV video camera.
+//! This thread acquires, timestamps and processes frames for a single Camera.
 class CameraThread : public StoppableThread
 {
     Q_OBJECT

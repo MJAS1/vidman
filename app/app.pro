@@ -13,7 +13,7 @@ SOURCES += main.cpp
 CONFIG(debug, debug|release) {
     BUILD = debug
 
-    #$$BUILD doesn't work for PRE_TARGEDEPS, so it needs to be defined separately for debug and release
+    #$$BUILD doesn't work for PRE_TARGETDEPS, so it needs to be defined separately for debug and release
     PRE_TARGETDEPS+=../lib/libvidman_debug.a
 }
 

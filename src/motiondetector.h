@@ -9,11 +9,13 @@
 #include "event.h"
 #include "settings.h"
 
-/*This class detects movement between subsequent frames. It stores a frame of the
-background and then detects the hands of the subject by substracting the background from
-the frame with hands included. The frame with the background substracted is converted to
-a black and white image from which the centroid of the hands can be calculated when tracking
-of the hands starts. By inspecting the location of the centoid, movement can be detected.
+/*This class detects movement between subsequent frames. It stores three frames:
+ * previous, current and next, and detects motion using "differential images"
+ * method https://blog.cedric.ws/opencv-simple-motion-detection. This class can
+ * also emit a QPixmpap of either the original image with the movement
+ * highlighted with a red rectangle, or a black-and-white image with the
+ * movement shown as white pixels. The emitted pixmap can then be drawn to
+ * MotionDialog.
 */
 
 class MotionDetector : public QObject

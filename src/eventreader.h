@@ -8,9 +8,9 @@
 #include "settings.h"
 
 
-/*! Reads events from a QStringList and stores them in an eventcontainer. The
+/*! Reads events from a QStringList and stores them in an EventContainer. The
 QStringList is created from MainWindow's TextEdit when start is clicked.
-LoadEvents returns false if the input text is incorrectly forcv::Matted.
+LoadEvents returns false if the input text is incorrectly formatted.
 */
 
 using std::shared_ptr;
