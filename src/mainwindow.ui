@@ -40,16 +40,16 @@ QToolBar {
 	border-bottom: 1px solid rgb(80, 80, 80);
 }
 
-QPushButton {
+#startButton, #stopButton, #recButton {
 	border : none;
 	outline : none;
 }
 
-QPushButton:hover {
+#startButton:hover, #stopButton:hover, #recButton:hover {
 	background: rgb(240, 240, 240);
 }
 
-QPushButton:checked {
+#startButton:checked, #stopButton:checked, #recButton:checked {
 	border: 1px inset rgb(120, 120, 120);
 	background: rgb(170, 170, 170);
 	padding: 3px;

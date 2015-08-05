@@ -27,7 +27,7 @@ void EventContainer::deleteId(int id)
     events_.erase(end, events_.end());
 }
 
-void EventContainer::deleteType(int type)
+void EventContainer::deleteType(Event::EventType type)
 {
     auto end = std::remove_if(events_.begin(), events_.end(),
                         [&](const EventPtr& ev){return ev->getType() == type;});

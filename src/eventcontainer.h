@@ -20,7 +20,7 @@ public:
 
     void            clear();
     void            deleteId(int id);
-    void            deleteType(int);
+    void            deleteType(Event::EventType);
     void            append(EventPtr event);
     void            insertSorted(EventPtr event);
     void            applyEvents(cv::Mat& frame);

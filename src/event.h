@@ -19,7 +19,7 @@ struct VideoObject;
 /*!
 Event objects are used to specify the starting time, duration, effects etc.
 of events handled by the program. Each event can modify an OpenCV Mat video frame
-or a EventContainer holding other events by using the apply virtual functions.
+or an EventContainer holding other events by using the apply virtual functions.
 apply(EventContainer&) is used to remove other events from the container for
 example by DelEvents and other events for which only one event of the type
 should exist in the container.

@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QMap>
 #include <opencv2/opencv.hpp>
+#include "event.h"
 #include "settings.h"
 
 
@@ -35,18 +36,33 @@ signals:
     void error(const QString&) const;
 
 private:
-    bool    readEvent(const QString &str, EventContainer& events, int lineNumber);
-    bool	readObject(const QString &str, int lineNumber);
-    bool    readDelEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                readEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                readObject(const QString &str, int lineNumber);
+    bool                readDelEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                readEventParam(const QString &param, const QString &value, int lineNumber);
+    bool                readObjectParam(const QString &param, const QString &value, int lineNumber);
 
-    float   toFloat(const QString &str, int line, const QString &param) const;
-    int     toInt(const QString &str, int line, const QString &param) const;
+    bool                createEvent(EventPtr&, int lineNumber);
+
+    float               toFloat(const QString &str, int line, const QString &param) const;
+    int                 toInt(const QString &str, int line, const QString &param) const;
+
+    Settings            settings_;
+
+    int                 start_, duration_, delay_;
+    int                 x_, y_, objectId_, eventId_;
+    int                 angle_, trigCode_, length_;
+
+    float               scale_;
+    bool                objectIdOk_;
+
+    QString             text_, fileName_, objectType_;
+    cv::Scalar          color_;
+    Event::EventType    type_;
 
     //VideoObjects shared between a RecordEvent and a PlaybackEvent
-    QMap<int, shared_ptr<VideoObject>> videoObjects_;
-    QMap<int, cv::Mat> imageObjects_;
-
-    Settings settings_;
+    QMap<int, shared_ptr<VideoObject>>  videoObjects_;
+    QMap<int, cv::Mat>                  imageObjects_;
 };
 
 #endif // EVENTREADER_H
