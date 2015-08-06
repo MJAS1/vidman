@@ -31,7 +31,7 @@ qint64 TimerWithPause::msecsElapsed() const
 {
     QMutexLocker locker(&mutex_);
     if(paused_)
-        return time_;
+        return time_/1000000;
     else
         return ((QElapsedTimer::nsecsElapsed() + time_)/1000000);
 }
