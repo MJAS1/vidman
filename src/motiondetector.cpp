@@ -54,7 +54,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     }
 
     movement_ = next_.clone();
-    if(nChanges) {
+    if(nChanges > 1000) {
         if(min_x-10 > 0) min_x -= 10;
         if(min_y-10 > 0) min_y -= 10;
         if(max_x+10 < result_.cols-1) max_x += 10;
