@@ -84,14 +84,13 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="media-playback-start">
-          <normaloff/>
-         </iconset>
+         <iconset resource="../resource.qrc">
+          <normaloff>:/img/media-playback-start.svg</normaloff>:/img/media-playback-start.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>15</width>
-          <height>15</height>
+          <width>22</width>
+          <height>22</height>
          </size>
         </property>
         <property name="shortcut">
@@ -123,14 +122,13 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="media-playback-stop">
-          <normaloff/>
-         </iconset>
+         <iconset resource="../resource.qrc">
+          <normaloff>:/img/media-playback-stop.svg</normaloff>:/img/media-playback-stop.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>15</width>
-          <height>15</height>
+          <width>22</width>
+          <height>22</height>
          </size>
         </property>
         <property name="shortcut">
@@ -159,14 +157,13 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset theme="media-record">
-          <normaloff/>
-         </iconset>
+         <iconset resource="../resource.qrc">
+          <normaloff>:/img/record.png</normaloff>:/img/record.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>15</width>
-          <height>15</height>
+          <width>25</width>
+          <height>25</height>
          </size>
         </property>
         <property name="checkable">
@@ -321,9 +318,8 @@ QToolBar {
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset theme="document-open">
-     <normaloff/>
-    </iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/img/document-open.svg</normaloff>:/img/document-open.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;Open </string>
@@ -337,9 +333,8 @@ QToolBar {
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset theme="document-save">
-     <normaloff/>
-    </iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/img/document-save.svg</normaloff>:/img/document-save.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;Save</string>
@@ -361,9 +356,8 @@ QToolBar {
   </action>
   <action name="actionNew">
    <property name="icon">
-    <iconset theme="document-new">
-     <normaloff/>
-    </iconset>
+    <iconset resource="../resource.qrc">
+     <normaloff>:/img/document-new.svg</normaloff>:/img/document-new.svg</iconset>
    </property>
    <property name="text">
     <string>&amp;New</string>
@@ -600,7 +594,11 @@ QToolBar {
    <header>textedit.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+  <include location="../resource.qrc"/>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionSave</sender>

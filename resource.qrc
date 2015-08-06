@@ -5,6 +5,13 @@
         <file>img/fixPoint.png</file>
         <file>img/videoIconColors.png</file>
         <file>img/videoIconBW.png</file>
-        <file>img/insertText.png</file>
+        <file>img/add.svg</file>
+        <file>img/media-playback-stop.svg</file>
+        <file>img/media-playback-start.svg</file>
+        <file>img/media-playback-pause.svg</file>
+        <file>img/record.png</file>
+        <file>img/document-new.svg</file>
+        <file>img/document-open.svg</file>
+        <file>img/document-save.svg</file>
     </qresource>
 </RCC>

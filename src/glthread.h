@@ -43,8 +43,8 @@ private:
     OutputDevice            trigPort_;
     OutputDevice::PortType  newPort_;
 
-    int trigCode_;
-    int videoWidth_;
+    int                     trigCode_;
+    int                     videoWidth_;
 
     QGLShaderProgram        shaderProgram_;
     QVector<QVector2D>      vertices_;

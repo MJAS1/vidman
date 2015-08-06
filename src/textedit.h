@@ -11,16 +11,16 @@ class TextEdit : public QPlainTextEdit
 public:
     explicit TextEdit(QWidget *parent = 0);
     
-    void lineNumberAreaPaintEvent(QPaintEvent *ev);
-    int lineNumberAreaWidth();
+    void    lineNumberAreaPaintEvent(QPaintEvent *ev);
+    int     lineNumberAreaWidth();
     
 protected:
-    void resizeEvent(QResizeEvent *ev);
+    void    resizeEvent(QResizeEvent *ev);
 
 private slots:
-    void updateLineNumberAreaWidth();
-    void highlightCurrentLine();
-    void updateLineNumberArea(const QRect&, int);
+    void    updateLineNumberAreaWidth();
+    void    highlightCurrentLine();
+    void    updateLineNumberArea(const QRect&, int);
 
 private:
     QWidget *lineNumberArea;

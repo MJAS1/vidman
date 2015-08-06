@@ -82,7 +82,7 @@ void MainWindow::initToolButton()
 
     QToolButton *toolBtn = new QToolButton(this);
     toolBtn->setMenu(menu);
-    toolBtn->setIcon(QIcon(":/img/insertText.png"));
+    toolBtn->setIcon(QIcon(":/img/add.svg"));
     toolBtn->setPopupMode(QToolButton::InstantPopup);
     toolBtn->setShortcut(QString("Ctrl+e"));
 
@@ -162,7 +162,7 @@ void MainWindow::onStopButton()
 
         state_ = STOPPED;
         ui->startButton->setChecked(false);
-        ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
+        ui->startButton->setIcon(QIcon(":/img/media-playback-start.svg"));
 
         logFile_.close();
     }
@@ -203,7 +203,7 @@ void MainWindow::start()
         eventsDuration_.setHMS(0, 0, 0);
         eventsDuration_ = eventsDuration_.addMSecs(events_.getTotalDuration());
 
-        ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+        ui->startButton->setIcon(QIcon(":/img/media-playback-pause.svg"));
         state_ = PLAYING;
         if(!events_.empty()) {
             eventTmr_.start(events_[0]->getStart());
@@ -223,7 +223,7 @@ void MainWindow::pause()
     cameraThread_->pause();
     time_ = runningTime_.msecsElapsed()-time_;
 
-    ui->startButton->setIcon(QIcon::fromTheme("media-playback-start"));
+    ui->startButton->setIcon(QIcon(":/img/media-playback-start.svg"));
     state_ = PAUSED;
 }
 
