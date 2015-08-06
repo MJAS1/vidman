@@ -41,7 +41,7 @@ void FadeInEvent::apply(cv::Mat &frame)
             timerWithPause_.start();
             interval_ = duration_/255;
         }
-        int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
+        int msecsElapsed = timerWithPause_.msecsElapsed();
         amount_ = -255 + msecsElapsed/interval_;
         if(amount_ >= 0) {
             amount_ = 0;
@@ -83,7 +83,7 @@ void FadeOutEvent::apply(cv::Mat &frame)
             timerWithPause_.start();
             interval_ = duration_/255;
         }
-        int msecsElapsed = timerWithPause_.nsecsElapsed()/1000000;
+        int msecsElapsed = timerWithPause_.msecsElapsed();
         amount_ = -msecsElapsed/interval_;
         if(amount_ <= -255) {
             amount_ = -255;
@@ -234,7 +234,7 @@ void ZoomEvent::apply(cv::Mat &frame)
             interval_ = (scale_ - 1) / duration_;
             timer_.start();
         }
-        int msecsElapsed = timer_.nsecsElapsed()/1000000;
+        int msecsElapsed = timer_.msecsElapsed();
         coef_ = 1 + interval_*msecsElapsed;
         if(coef_ >= scale_) {
             coef_ = scale_;
@@ -278,7 +278,7 @@ void RecordEvent::apply(cv::Mat &frame)
         if(!timer_.isValid())
             timer_.start();
 
-        if(timer_.nsecsElapsed()/1000000 < duration_)
+        if(timer_.msecsElapsed() < duration_)
             video_->frames_.append(frame.clone());
         else
             finished_ = true;

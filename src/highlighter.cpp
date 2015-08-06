@@ -52,9 +52,8 @@ Highlighter::Highlighter(QTextDocument *parent) :
     highlightingRules.append(rule);
 
     commentFormat.setForeground(Qt::darkGreen);
-    commentStartExpression = QRegExp("^#comment", Qt::CaseInsensitive);
-    commentEndExpression = QRegExp("#endcomment|#end comment", Qt::CaseInsensitive);
-
+    commentStartExpression = QRegExp("^#");
+    commentEndExpression = QRegExp("$");
 }
 
 void Highlighter::highlightBlock(const QString &text)
