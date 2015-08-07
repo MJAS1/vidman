@@ -11,6 +11,8 @@ MotionDetector::MotionDetector() : isTracking_(false), color_(true), event_(null
 
     if(settings.turnAround)
         events_.append(EventPtr(new RotateEvent(0, 180, 0)));
+
+    sensitivity_ = settings.movementSensitivity;
 }
 
 bool MotionDetector::movementDetected(const cv::Mat &frame)
@@ -54,7 +56,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     }
 
     movement_ = next_.clone();
-    if(nChanges > 1000) {
+    if(nChanges > sensitivity_) {
         if(min_x-10 > 0) min_x -= 10;
         if(min_y-10 > 0) min_y -= 10;
         if(max_x+10 < result_.cols-1) max_x += 10;

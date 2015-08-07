@@ -13,10 +13,6 @@ public:
     explicit LineNumberArea(TextEdit *editor = 0);
 
     QSize sizeHint() const;
-    
-signals:
-    
-public slots:
 
 protected:
     void paintEvent(QPaintEvent * ev);

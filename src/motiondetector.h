@@ -39,6 +39,7 @@ private:
 
     bool            isTracking_;
     bool            color_;
+    int             sensitivity_;
 
     EventPtr        event_;
     EventContainer  events_;

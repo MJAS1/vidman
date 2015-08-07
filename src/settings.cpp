@@ -98,8 +98,8 @@ Settings::Settings()
     //Sensitivity of movement detection
     if(!settings.contains("video/movementSensitivity"))
     {
-        settings.setValue("video/movementSensitivity", 15);
-        movementSensitivity = 15;
+        settings.setValue("video/movementSensitivity", 10);
+        movementSensitivity = 10;
     }
     else
     {
