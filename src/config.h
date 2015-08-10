@@ -55,7 +55,7 @@
 
 // Used for storing application settings
 #define ORG_NAME "BECS"
-#define APP_NAME "VideoManipulation"
+#define APP_NAME "VidMan"
 
 #define CONFIG_H_
 

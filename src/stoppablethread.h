@@ -35,13 +35,13 @@ public:
     void stop();
 
 protected:
-	virtual void run();
-	virtual void stoppableRun() = 0;
-	volatile bool shouldStop;
+    virtual void run();
+    virtual void stoppableRun() = 0;
+    volatile bool shouldStop;
 
 private:
-	static int nextId;
-	int id;
+    static int nextId;
+    int id;
 };
 
 #endif /* STOPPABLETHREAD_H_ */

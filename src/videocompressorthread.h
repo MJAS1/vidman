@@ -15,15 +15,15 @@ class VideoCompressorThread : public StoppableThread
 {
 public:
     VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, int _jpgQuality, QObject* parent = 0);
-	virtual ~VideoCompressorThread();
+    virtual ~VideoCompressorThread();
 
 protected:
-	virtual void stoppableRun();
+    virtual void stoppableRun();
 
 private:
-	CycDataBuffer*	inpBuf;
-	CycDataBuffer*	outBuf;
-	int				jpgQuality;
+    CycDataBuffer*	inpBuf;
+    CycDataBuffer*	outBuf;
+    int				jpgQuality;
 };
 
 #endif /* VIDEOCOMPRESSORTHREAD_H_ */

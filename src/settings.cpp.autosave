@@ -43,8 +43,8 @@ Settings::Settings()
     //Use vsync
     if(!settings.contains("video/vsync"))
     {
-        settings.setValue("video/vsync", false);
-        vsync = false;
+        settings.setValue("video/vsync", true);
+        vsync = true;
     }
     else
     {

@@ -14,14 +14,14 @@ class VideoFileWriter : public FileWriter
 {
 public:
     VideoFileWriter(CycDataBuffer* cycBuf, const char* path, QObject* parent = 0);
-	virtual ~VideoFileWriter();
+    virtual ~VideoFileWriter();
 
 protected:
-	virtual unsigned char* getHeader(int* _len);
+    virtual unsigned char* getHeader(int* _len);
 
 private:
-	int				bufLen;
-	unsigned char*	buf;
+    int				bufLen;
+    unsigned char*	buf;
 };
 
 #endif /* VIDEOFILEWRITER_H_ */

@@ -19,24 +19,24 @@
  * thread-safe (CURRENTLY IT IS NOT).
  */
 class Settings {
-	// TODO: make member variables immutable as much as possible
-	// TODO: make the class thread-safe
-	// TODO: implement singleton pattern?
+    // TODO: make member variables immutable as much as possible
+    // TODO: make the class thread-safe
+    // TODO: implement singleton pattern?
 public:
-	Settings();
+    Settings();
 
-	// video
-	int				jpgQuality;
+    // video
+    int				jpgQuality;
     int             fps;
     int             movementSensitivity;
-	bool			color;
+    bool			color;
     bool            vsync;
     bool            flip;
     bool            turnAround;
     bool            fixPoint;
 
-	// misc
-	char			storagePath[500];
+    // misc
+    char			storagePath[500];
     int             printerPortAddr;
 };
 
