@@ -28,6 +28,12 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 
     fpsTimer_.start(1000);
 
+    /*QGLContext::moveToThread() was introduced in Qt5 and is necessary to
+     * enable OpenGL in a different thread.
+     * */
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+    context()->moveToThread(&glthread_);
+#endif
     glworker_.moveToThread(&glthread_);
     glthread_.start();
 }

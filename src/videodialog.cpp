@@ -29,6 +29,8 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
     format.setSwapInterval(settings.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
+
+    initUI();
 }
 
 void VideoDialog::initUI()
