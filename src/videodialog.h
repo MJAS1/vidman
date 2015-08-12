@@ -28,21 +28,22 @@ public:
     MainWindow* mainWindow() const;
 
 public slots:
-    void setOutputDevice(OutputDevice::PortType portType);
-
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
-    void onAspectRatioChanged(int newVal);
     void onExternTrig(bool on);
 
-    void onDrawFrame(unsigned char*);
+signals:
+    void drawFrame(unsigned char*);
+    void aspectRatioChanged(int newVal);
+    void outputDeviceChanged(OutputDevice::PortType);
 
 protected:
     void paintEvent(QPaintEvent*);
 
 private:
+    void initUI();
 
     VideoDialog(const VideoDialog&);
     VideoDialog& operator=(const VideoDialog&);

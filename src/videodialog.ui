@@ -212,22 +212,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>aspectRatioSlider</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>VideoDialog</receiver>
-   <slot>onAspectRatioChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>564</x>
-     <y>529</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>351</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>uvSlider</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>VideoDialog</receiver>
@@ -245,6 +229,7 @@
   </connection>
  </connections>
  <slots>
+  <signal>aspectRatioChanged(int)</signal>
   <slot>onShutterChanged(int)</slot>
   <slot>onGainChanged(int)</slot>
   <slot>onUVChanged(int)</slot>

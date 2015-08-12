@@ -12,25 +12,27 @@
 #include "config.h"
 #include "common.h"
 
-using namespace std;
-
 VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
     QDialog(window), ui(new Ui::VideoDialog), window_(window), cam_(cam)
 {
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
+    connect(ui->aspectRatioSlider, SIGNAL(sliderMoved(int)), this, SIGNAL(aspectRatioChanged(int)));
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
     if(!format.hasOpenGL())
-        cerr << "OpenGL not supported by window system. Cannot use vsync." << endl;
+        std::cerr << "OpenGL not supported by window system. Cannot use vsync." << std::endl;
 
     Settings settings;
     format.setSwapInterval(settings.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
+}
 
+void VideoDialog::initUI()
+{
     // Setup gain/shutter sliders
     if(!cam_.empty()) {
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
@@ -93,12 +95,6 @@ void VideoDialog::onVRChanged(int newVal)
     cam_.setVR(newVal, ui->uvSlider->value());
 }
 
-void VideoDialog::onAspectRatioChanged(int newVal)
-{
-    glVideoWidget_->setVideoWidth(newVal);
-}
-
-
 void VideoDialog::closeEvent(QCloseEvent *)
 {
     window_->toggleVideoDialogChecked(false);
@@ -109,11 +105,6 @@ void VideoDialog::updateFPS(int fps)
     ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
 }
 
-void VideoDialog::setOutputDevice(OutputDevice::PortType portType)
-{
-    glVideoWidget_->setOutputDevice(portType);
-}
-
 void VideoDialog::onExternTrig(bool on)
 {
     cam_.setExternTrigger(on);
@@ -122,9 +113,4 @@ void VideoDialog::onExternTrig(bool on)
 MainWindow* VideoDialog::mainWindow() const
 {
     return window_;
-}
-
-void VideoDialog::onDrawFrame(unsigned char *buf)
-{
-    glVideoWidget_->onDrawFrame(buf);
 }

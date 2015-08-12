@@ -6,6 +6,7 @@
 #include <QTime>
 #include <QLabel>
 #include "camera.h"
+#include "outputdevice.h"
 #include "settings.h"
 #include "logfile.h"
 #include "eventcontainer.h"
@@ -40,6 +41,9 @@ public:
 
     void toggleVideoDialogChecked(bool);
     void writeToLog(const QString&);
+
+signals:
+    void outputDeviceChanged(OutputDevice::PortType);
     
 public slots:
     void setStatus(const QString&);

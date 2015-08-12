@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog_->show();
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));
 
     highlighter_ = new Highlighter(ui->textEdit->document());
 
@@ -100,7 +101,7 @@ void MainWindow::initVideo()
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
 
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
-        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SLOT(onDrawFrame(unsigned char*)));
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SIGNAL(drawFrame(unsigned char*)));
         connect(cameraThread_, SIGNAL(motionDetectorPixmap(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
         connect(motionDialog_, SIGNAL(changeColors(bool)), cameraThread_, SLOT(changeMovementFrameColor(bool)));
 
@@ -268,10 +269,10 @@ void MainWindow::onSerialPort(bool arg)
 {
     if(arg) {
         ui->actionParallelPort->setChecked(false);
-        videoDialog_->setOutputDevice(OutputDevice::PORT_SERIAL);
+        emit outputDeviceChanged(OutputDevice::PORT_SERIAL);
     }
     else
-        videoDialog_->setOutputDevice(OutputDevice::PORT_NULL);
+        emit outputDeviceChanged(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::onParallelPort(bool arg)
@@ -279,10 +280,10 @@ void MainWindow::onParallelPort(bool arg)
     if(arg)
     {
         ui->actionSerialPort->setChecked(false);
-        videoDialog_->setOutputDevice(OutputDevice::PORT_PARALLEL);
+        emit outputDeviceChanged(OutputDevice::PORT_PARALLEL);
     }
     else
-        videoDialog_->setOutputDevice(OutputDevice::PORT_NULL);
+        emit outputDeviceChanged(OutputDevice::PORT_NULL);
 }
 
 void MainWindow::updateTime()

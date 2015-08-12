@@ -8,7 +8,6 @@
 #include "videodialog.h"
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"
-#include "glthread.h"
 #include "common.h"
 
 using namespace std;
@@ -16,22 +15,30 @@ using namespace std;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
-       videoDialog_(parent), glt_(new GLThread(this))
+       videoDialog_(parent), glworker_(this)
 {
     setAutoBufferSwap(false);
 
     connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
+    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_, SLOT(onDrawFrame(unsigned char*)));
+    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this, SLOT(onDrawFrame()));
+    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_, SLOT(onAspectRatioChanged(int)));
+    connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
+    connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
+
     fpsTimer_.start(1000);
 
-    glt_->start();
+    glworker_.moveToThread(&glthread_);
+    glthread_.start();
 }
 
 GLVideoWidget::~GLVideoWidget()
 {
-    glt_->stop();
+    glthread_.quit();
+    glthread_.wait();
 }
 
-void GLVideoWidget::paintEvent(QPaintEvent *e)
+void GLVideoWidget::paintEvent(QPaintEvent *)
 {
     /*Reimplement an empty paintEvent function. This function is automatically
     *called by the main thread everytime the window is resized. The default
@@ -39,13 +46,10 @@ void GLVideoWidget::paintEvent(QPaintEvent *e)
     *"QGLContext::makeCurrent(): Failed." because the context is active in
     *GLThread where all the drawing should be done. This reimplementation should
     *therefore remove the warnings.*/
-    Q_UNUSED(e)
 }
 
-void GLVideoWidget::onDrawFrame(unsigned char* imBuf)
+void GLVideoWidget::onDrawFrame()
 {
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)));
-    glt_->drawFrame(imBuf, chunkAttrib);
     frames_++;
 }
 
@@ -55,10 +59,8 @@ void GLVideoWidget::updateFPS()
     frames_ = 0;
 }
 
-void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
+void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-    Q_UNUSED(e)
-
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
 		videoDialog_->show();
@@ -71,19 +73,9 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *e)
     }
 }
 
-void GLVideoWidget::setVideoWidth(int newVal)
-{
-    glt_->setVideoWidth(newVal);
-}
-
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
-    glt_->resizeGL(e->size().width(), e->size().height());
-}
-
-void GLVideoWidget::setOutputDevice(OutputDevice::PortType portType)
-{
-    glt_->setOutputDevice(portType);
+    emit resize(e->size().width(), e->size().height());
 }
 
 VideoDialog* GLVideoWidget::videoDialog()
