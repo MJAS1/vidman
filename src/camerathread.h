@@ -36,11 +36,9 @@ public:
 
     void    handleEvent(EventPtr ev);
 
-public slots:
-    void    changeMovementFrameColor(bool);
-
 signals:
-    void    motionDetectorPixmap(const QPixmap&);
+    void    motionPixmapReady(const QPixmap&);
+    void    motionDialogColorChanged(bool);
 
 protected:
     virtual void stoppableRun();

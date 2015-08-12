@@ -26,20 +26,27 @@ public:
 
     bool            movementDetected(const cv::Mat &frame);
     void            startTracking(EventPtr ev);
-    void            changeMovementFrameColor(bool);
 
     int             getEventTrigCode() const;
     QString         getEventLog() const;
 
-    QPixmap         movementPixmap();
+    void            movementPixmap();
+
+public slots:
+    void            changeMovementFrameColor(bool);
+
+signals:
+    void            pixmapReady(const QPixmap&);
 
 private:
+    int             nChanges();
     cv::Mat         prev_, current_, next_, result_, movement_;
     cv::Point       centroid_;
 
     bool            isTracking_;
     bool            color_;
     int             sensitivity_;
+    int             min_x, max_x, min_y, max_y;
 
     EventPtr        event_;
     EventContainer  events_;

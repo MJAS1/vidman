@@ -43,6 +43,9 @@ CameraThread::CameraThread(CycDataBuffer* cycBuf, Camera &cam, QObject* parent) 
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
+
+    connect(&motionDetector_, SIGNAL(pixmapReady(const QPixmap&)), this, SIGNAL(motionPixmapReady(const QPixmap&)));
+    connect(this, SIGNAL(motionDialogColorChanged(bool)), &motionDetector_, SLOT(changeMovementFrameColor(bool)));
 }
 
 
@@ -102,10 +105,6 @@ void CameraThread::stoppableRun()
 
         cycBuf_->insertChunk(frame_.data, chunkAttrib);
 
-        //Emit the background substracted pixmap of the hands to MainWindow for
-        //MotionDialog.
-        emit motionDetectorPixmap(motionDetector_.movementPixmap());
-
         mutex_.unlock();
     }
 }
@@ -146,9 +145,4 @@ void CameraThread::unpause()
     mutex_.lock();
     events_.unpauseEvents();
     mutex_.unlock();
-}
-
-void CameraThread::changeMovementFrameColor(bool color)
-{
-    motionDetector_.changeMovementFrameColor(color);
 }

@@ -28,6 +28,33 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
         next_ = frame.clone();
     }
 
+    int changes = nChanges();
+
+    movement_ = next_.clone();
+    if(changes > sensitivity_) {
+        if(min_x-10 > 0) min_x -= 10;
+        if(min_y-10 > 0) min_y -= 10;
+        if(max_x+10 < result_.cols-1) max_x += 10;
+        if(max_y+10 < result_.rows-1) max_y += 10;
+
+        // draw rectangle round the changed pixel
+        cv::Point x(min_x,min_y);
+        cv::Point y(max_x,max_y);
+        cv::Rect rect(x,y);
+        cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
+        if(isTracking_) {
+            movementPixmap();
+            isTracking_ = false;
+            return true;
+        }
+    }
+
+    movementPixmap();
+    return false;
+}
+
+int MotionDetector::nChanges()
+{
     cv::Mat d1, d2;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
@@ -37,8 +64,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     cv::erode(result_,result_,cv::Mat());
     cv::dilate(result_,result_,cv::Mat());
 
-    int nChanges = 0;
-    int min_x, max_x, min_y, max_y;
+    int changes = 0;
     min_x = result_.cols; min_y = result_.rows;
     max_x = 0;
     max_y = 0;
@@ -46,7 +72,7 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
     for(int i = 0; i < VIDEO_WIDTH; i++) {
         for(int j = 0; j < VIDEO_HEIGHT; j++) {
             if(static_cast<int>(result_.at<uchar>(j, i)) == 255) {
-                nChanges++;
+                changes++;
                 if(min_x>i) min_x = i;
                 if(max_x<i) max_x = i;
                 if(min_y>j) min_y = j;
@@ -55,28 +81,10 @@ bool MotionDetector::movementDetected(const cv::Mat &frame)
         }
     }
 
-    movement_ = next_.clone();
-    if(nChanges > sensitivity_) {
-        if(min_x-10 > 0) min_x -= 10;
-        if(min_y-10 > 0) min_y -= 10;
-        if(max_x+10 < result_.cols-1) max_x += 10;
-        if(max_y+10 < result_.rows-1) max_y += 10;
-        // draw rectangle round the changed pixel
-
-        cv::Point x(min_x,min_y);
-        cv::Point y(max_x,max_y);
-        cv::Rect rect(x,y);
-        cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
-        if(isTracking_) {
-            isTracking_ = false;
-            return true;
-        }
-    }
-
-    return false;
+    return changes;
 }
 
-QPixmap MotionDetector::movementPixmap()
+void MotionDetector::movementPixmap()
 {
     QImage img;
     if(color_) {
@@ -89,7 +97,7 @@ QPixmap MotionDetector::movementPixmap()
     }
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
-    return pixmap;
+    emit pixmapReady(pixmap);
 }
 
 void MotionDetector::startTracking(EventPtr ev)

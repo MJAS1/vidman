@@ -102,8 +102,8 @@ void MainWindow::initVideo()
 
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SIGNAL(drawFrame(unsigned char*)));
-        connect(cameraThread_, SIGNAL(motionDetectorPixmap(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
-        connect(motionDialog_, SIGNAL(changeColors(bool)), cameraThread_, SLOT(changeMovementFrameColor(bool)));
+        connect(cameraThread_, SIGNAL(motionPixmapReady(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
+        connect(motionDialog_, SIGNAL(changeColors(bool)), cameraThread_, SIGNAL(motionDialogColorChanged(bool)));
 
         // Start video running
         videoFileWriter_->start();

@@ -35,11 +35,11 @@ public:
     VideoDialog* videoDialog();
 
 public slots:
-    void onDrawFrame();
+    void    onDrawFrame();
 
 signals:
-    void drawFrame(unsigned char* imBuf);
-    void resize(int w, int h);
+    void    drawFrame(unsigned char* imBuf);
+    void    resize(int w, int h);
 
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *e);
