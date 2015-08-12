@@ -9,7 +9,6 @@
 #include <QStatusBar>
 #include "config.h"
 #include "cycdatabuffer.h"
-#include "camerathread.h"
 #include "videocompressorthread.h"
 #include "motiondialog.h"
 #include "eventreader.h"
@@ -29,7 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog_->show();
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));
+    connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
+            videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));
 
     highlighter_ = new Highlighter(ui->textEdit->document());
 
@@ -56,7 +56,10 @@ void MainWindow::stopThreads()
     // order of stopping the threads is important.
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
-    cameraThread_->stop();
+    QMetaObject::invokeMethod(cameraWorker_, "stop", Qt::BlockingQueuedConnection);
+    cameraThread_->quit();
+    cameraThread_->wait();
+    delete cameraWorker_;
 }
 
 
@@ -96,19 +99,23 @@ void MainWindow::initVideo()
         // Set up video recording
         cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
         cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
-        cameraThread_ = new CameraThread(cycVideoBufRaw_, cam_, this);
+        cameraThread_ = new QThread(this);
+        cameraWorker_ = new CameraWorker(cycVideoBufRaw_, cam_);
         videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
 
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SIGNAL(drawFrame(unsigned char*)));
-        connect(cameraThread_, SIGNAL(motionPixmapReady(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
-        connect(motionDialog_, SIGNAL(changeColors(bool)), cameraThread_, SIGNAL(motionDialogColorChanged(bool)));
+        connect(cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
+        connect(motionDialog_, SIGNAL(changeColors(bool)), cameraWorker_, SIGNAL(motionDialogColorChanged(bool)));
 
         // Start video running
         videoFileWriter_->start();
         videoCompressorThread_->start();
+
+        cameraWorker_->moveToThread(cameraThread_);
         cameraThread_->start();
+        QMetaObject::invokeMethod(cameraWorker_, "start", Qt::QueuedConnection);
 
         //Setup event handling
         eventTmr_.setSingleShot(true);
@@ -125,7 +132,7 @@ void MainWindow::initVideo()
 void MainWindow::getNextEvent()
 {
     int delay = events_[0]->getDelay();
-    cameraThread_->handleEvent(std::move(events_.pop_front()));
+    cameraWorker_->handleEvent(std::move(events_.pop_front()));
 
     //Calculate the start time of the next event
     if(!events_.empty()) {
@@ -170,7 +177,7 @@ void MainWindow::onStopButton()
 
     ui->recButton->setChecked(false);
     cycVideoBufJpeg_->setIsRec(false);
-    cameraThread_->clearEvents();
+    cameraWorker_->clearEvents();
     eventTmr_.stop();
     events_.clear();
 
@@ -221,7 +228,7 @@ void MainWindow::pause()
     timeTmr_.stop();
     eventTmr_.stop();
     runningTime_.pause();
-    cameraThread_->pause();
+    cameraWorker_->pause();
     time_ = runningTime_.msecsElapsed()-time_;
 
     ui->startButton->setIcon(QIcon(":/img/media-playback-start.svg"));
@@ -237,7 +244,7 @@ void MainWindow::unpause()
         eventTmr_.start(currentEventDuration_);
     }
     time_ = runningTime_.msecsElapsed();
-    cameraThread_->unpause();
+    cameraWorker_->unpause();
 
     ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
     state_ = PLAYING;

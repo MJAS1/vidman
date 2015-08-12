@@ -62,8 +62,6 @@ void GLWorker::onDrawFrame(unsigned char *imBuf)
     shaderProgram_.disableAttributeArray("textureCoordinate");
     shaderProgram_.release();
 
-    glw_->doneCurrent();
-
     if(!trigPort_.isEmpty())
         trigPort_.writeData(chunkAttrib.trigCode);
 
@@ -82,10 +80,6 @@ void GLWorker::resizeGL(int w, int h)
     dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
     dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
 
-    /*This function is called by the main GUI thread so the OpenGL context has to
-     * be made current in it with the makeCurrent() call. Call doneCurrent() after
-     * finished. The mutex is used to sync the makeCurrent() calls between the
-     * threads.*/
     glw_->makeCurrent();
 
     if(dispH <= h)
@@ -98,8 +92,6 @@ void GLWorker::resizeGL(int w, int h)
         std::cerr << "Internal error while computing the viewport size" << std::endl;
         abort();
     }
-
-    glw_->doneCurrent();
 }
 
 void GLWorker::onAspectRatioChanged(int w)

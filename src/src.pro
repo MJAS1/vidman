@@ -20,7 +20,6 @@ SOURCES += mainwindow.cpp \
     settings.cpp \
     filewriter.cpp \
     cycdatabuffer.cpp \
-    camerathread.cpp \
     eventcontainer.cpp \
     eventreader.cpp \
     linenumberarea.cpp \
@@ -28,13 +27,13 @@ SOURCES += mainwindow.cpp \
     highlighter.cpp \
     glvideowidget.cpp \
     timerwithpause.cpp \
-    motiondetector.cpp \
     outputdevice.cpp \
     camera.cpp \
     logfile.cpp \
     event.cpp \
     motiondialog.cpp \
-    glworker.cpp
+    glworker.cpp \
+    cameraworker.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -46,7 +45,6 @@ HEADERS += mainwindow.h \
     cycdatabuffer.h \
     config.h \
     common.h \
-    camerathread.h \
     event.h \
     eventcontainer.h \
     eventreader.h \
@@ -55,12 +53,12 @@ HEADERS += mainwindow.h \
     highlighter.h \
     glvideowidget.h \
     timerwithpause.h \
-    motiondetector.h \
     outputdevice.h \
     camera.h \
     logfile.h \
     motiondialog.h \
-    glworker.h
+    glworker.h \
+    cameraworker.h
 
 FORMS += mainwindow.ui \
     videodialog.ui \

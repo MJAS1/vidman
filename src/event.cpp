@@ -1,9 +1,22 @@
+#include <QImage>
+#include <QPixmap>
+#include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
 #include "eventreader.h"
+#include "settings.h"
+
+void Event::apply(cv::Mat &)
+{
+    if(first_) {
+        emit triggered(trigCode_, log_);
+        first_ = false;
+    }
+}
 
 void DelEvent::apply(EventContainer &events)
 {
+    emit triggered(trigCode_, log_);
     if(delType_)
         events.deleteType(delType_);
     else
@@ -18,7 +31,8 @@ FlipEvent::FlipEvent(int start, int delay, int id, int trigCode) :
 }
 
 void FlipEvent::apply(cv::Mat &frame)
-{
+{    
+    Event::apply(frame);
     cv::flip(frame, frame, 1);
 }
 
@@ -29,13 +43,14 @@ void FlipEvent::apply(EventContainer &events)
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
     Event(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
-    stopped_(false)
+    stopped_(false), first_(true)
 {
     timerWithPause_.invalidate();
 }
 
 void FadeInEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
@@ -78,6 +93,7 @@ FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigC
 
 void FadeOutEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
@@ -119,6 +135,7 @@ ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image,
 
 void ImageEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!frame.empty() && !image_.empty())
         overlayImage(frame, image_, frame, pos_);
 }
@@ -178,6 +195,7 @@ TextEvent::TextEvent(int start, const QString& str, cv::Scalar color,
 
 void TextEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     cv::putText(frame, str_.toStdString(), pos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
 }
 
@@ -188,6 +206,7 @@ RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
 
 void RotateEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     cv::Point2f center(frame.cols/2., frame.rows/2.);
     cv::Mat rotMat = getRotationMatrix2D(center, angle_, 1.0);
     if(!frame.empty())
@@ -207,6 +226,7 @@ FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
 
 void FreezeEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!started_) {
         frame.copyTo(frame_);
         started_ = true;
@@ -229,6 +249,7 @@ ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id,
 
 void ZoomEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!stopped_) {
         if(!timer_.isValid()) {
             interval_ = (scale_ - 1) / duration_;
@@ -274,6 +295,7 @@ RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration,
 
 void RecordEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(!finished_ && !paused_) {
         if(!timer_.isValid())
             timer_.start();
@@ -308,6 +330,7 @@ PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
 
 void PlaybackEvent::apply(cv::Mat &frame)
 {
+    Event::apply(frame);
     if(video_->frames_.empty())
         finished_ = true;
     if(!finished_ && !paused_) {
@@ -325,4 +348,106 @@ void PlaybackEvent::pause()
 void PlaybackEvent::unpause()
 {
     paused_ = false;
+}
+
+MotionDetectorEvent::MotionDetectorEvent(int start, int delay, int id, int trigCode) :
+    Event(EVENT_DETECT_MOTION, start, delay, id, trigCode, MOTION_DETECTOR_PRIORITY),
+    color_(true)
+{
+    Settings settings;
+    sensitivity_ = settings.movementSensitivity;
+
+    isTracking_ = true;
+}
+
+void MotionDetectorEvent::apply(cv::Mat &frame)
+{
+    if(next_.empty()) {
+        next_ = frame.clone();
+        current_ = next_;
+        prev_ = next_;
+    }
+    else {
+        prev_ = current_;
+        current_ = next_;
+        next_ = frame.clone();
+    }
+
+    movement_ = next_.clone();
+    if(nChanges() > sensitivity_) {
+        if(min_x-10 > 0) min_x -= 10;
+        if(min_y-10 > 0) min_y -= 10;
+        if(max_x+10 < result_.cols-1) max_x += 10;
+        if(max_y+10 < result_.rows-1) max_y += 10;
+
+        // draw rectangle round the changed pixel
+        cv::Point x(min_x,min_y);
+        cv::Point y(max_x,max_y);
+        cv::Rect rect(x,y);
+        cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
+        if(isTracking_) {
+            isTracking_ = false;
+            emit triggered(trigCode_, log_);
+        }
+    }
+
+    createMotionPixmap();
+}
+
+int MotionDetectorEvent::nChanges()
+{
+    cv::Mat d1, d2;
+    cv::absdiff(prev_, next_, d1);
+    cv::absdiff(current_, next_, d2);
+    cv::bitwise_and(d1, d2, result_);
+    cv::cvtColor(result_, result_, CV_BGR2GRAY);
+    cv::threshold(result_, result_, 5, 255, CV_THRESH_BINARY);
+    cv::erode(result_,result_,cv::Mat());
+    cv::dilate(result_,result_,cv::Mat());
+
+    int changes = 0;
+    min_x = result_.cols; min_y = result_.rows;
+    max_x = 0;
+    max_y = 0;
+
+    for(int i = 0; i < VIDEO_WIDTH; i += 2) {
+        for(int j = 0; j < VIDEO_HEIGHT; j += 2) {
+            if(static_cast<int>(result_.at<uchar>(j, i)) == 255) {
+                changes++;
+                if(min_x>i) min_x = i;
+                if(max_x<i) max_x = i;
+                if(min_y>j) min_y = j;
+                if(max_y<j) max_y = j;
+            }
+        }
+    }
+
+    return changes;
+}
+
+void MotionDetectorEvent::apply(EventContainer &events)
+{
+    events.deleteType(Event::EVENT_DETECT_MOTION);
+}
+
+void MotionDetectorEvent::createMotionPixmap()
+{
+    QImage img;
+    if(color_) {
+        //events_.applyEvents(movement_);
+        img = QImage(movement_.data, movement_.cols, movement_.rows, movement_.step, QImage::Format_RGB888);
+    }
+    else {
+        //events_.applyEvents(result_);
+        img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
+    }
+    QPixmap pixmap;
+    pixmap.convertFromImage(img.rgbSwapped());
+    emit pixmapReady(pixmap);
+}
+
+
+void MotionDetectorEvent::changeMovementFrameColor(bool color)
+{
+    color_ = color;
 }

@@ -381,7 +381,7 @@ bool EventReader::createEvent(EventPtr &ev, int lineNumber)
         break;
 
     case Event::EVENT_DETECT_MOTION:
-        ev.reset(new Event(Event::EVENT_DETECT_MOTION, start_, delay_, duration_, eventId_, trigCode_));
+        ev.reset(new MotionDetectorEvent(start_, delay_, eventId_, trigCode_));
         ev->appendLog(QString("Movement detected"));
         break;
 

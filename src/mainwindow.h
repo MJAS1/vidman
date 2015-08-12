@@ -11,6 +11,7 @@
 #include "logfile.h"
 #include "eventcontainer.h"
 #include "timerwithpause.h"
+#include "cameraworker.h"
 
 class VideoDialog;
 class CycDataBuffer;
@@ -44,6 +45,7 @@ public:
 
 signals:
     void outputDeviceChanged(OutputDevice::PortType);
+    void stopCameraWorker();
     
 public slots:
     void setStatus(const QString&);
@@ -120,7 +122,8 @@ private:
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
-    CameraThread*           cameraThread_;
+    QThread*                cameraThread_;
+    CameraWorker*           cameraWorker_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
 

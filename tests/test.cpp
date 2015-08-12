@@ -5,7 +5,6 @@
 #include "test.h"
 #include "eventreader.h"
 #include "eventcontainer.h"
-#include "motiondetector.h"
 #include "cycdatabuffer.h"
 
 Test::Test(QObject *parent) : QObject(parent)
@@ -93,6 +92,7 @@ void Test::testEventReader()
     QCOMPARE(evReader.loadEvents(strList, events), false);
 }
 
+/*
 void Test::testMotionDetector()
 {
 
@@ -109,5 +109,5 @@ void Test::testMotionDetector()
     QCOMPARE(motionDetector.movementDetected(hand1), false);
     QCOMPARE(motionDetector.movementDetected(hand2), true);
 }
-
+*/
 QTEST_MAIN(Test)

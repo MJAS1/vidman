@@ -2,6 +2,7 @@
 #define EVENT_H
 
 #include <QString>
+#include <QObject>
 #include <QList>
 #include <memory>
 #include <opencv2/opencv.hpp>
@@ -13,6 +14,7 @@ const int DEFAULT_PRIORITY = 0;
 const int FREEZE_PRIORITY = 3;
 const int RECORD_PRIORITY = 4;
 const int PLAYBACK_PRIORITY = 4;
+const int MOTION_DETECTOR_PRIORITY = 5;
 
 struct VideoObject;
 
@@ -28,8 +30,9 @@ should exist in the container.
 class Event;
 typedef typename std::unique_ptr<Event> EventPtr;
 
-class Event
+class Event : public QObject
 {
+    Q_OBJECT
 public:
 
     //All possible events
@@ -53,11 +56,12 @@ public:
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
                    int duration=0, int id = -1, int trigCode = 0, int priority = DEFAULT_PRIORITY) :
         type_(type), start_(start), delay_(delay),
-        duration_(duration), id_(id), trigCode_(trigCode), priority_(priority), ready_(false) {}
+        duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
+        ready_(false), first_(true) {}
 
     virtual ~Event() {}
 
-    virtual void apply(cv::Mat &) {}
+    virtual void apply(cv::Mat &);
     virtual void apply(EventContainer&) {}
     virtual void pause() {}
     virtual void unpause() {}
@@ -67,13 +71,14 @@ public:
     int         getDuration() const {return duration_;}
     int         getId() const {return id_;}
     EventType   getType() const {return type_;}
-    int         getTrigCode() const {return trigCode_;}
     int         getPriority() const {return priority_;}
 
     bool        isReady() const {return ready_;}
 
     void        appendLog(const QString &str) {log_ = str;}
-    QString     getLog() const {return log_;}
+
+signals:
+    void        triggered(int trigCode_, const QString& log);
 
 protected:
     EventType   type_;
@@ -83,6 +88,7 @@ protected:
     int         trigCode_;
     int         priority_;
     bool        ready_;
+    bool        first_;
 
     QString     log_;
 
@@ -122,6 +128,9 @@ public:
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
+
+private:
+    bool first_;
 };
 
 class FadeInEvent : public Event
@@ -140,6 +149,7 @@ private:
     TimerWithPause  timerWithPause_;
     int             amount_, interval_;
     bool            stopped_;
+    bool            first_;
 };
 
 class FadeOutEvent: public Event
@@ -271,6 +281,42 @@ private:
     QList<cv::Mat>::Iterator iter_;
     bool finished_;
     bool paused_;
+};
+
+/*This class detects movement between subsequent frames. It stores three frames:
+ * previous, current and next, and detects motion using "differential images"
+ * method https://blog.cedric.ws/opencv-simple-motion-detection. This class can
+ * also emit a QPixmpap of either the original image with the movement
+ * highlighted with a red rectangle, or a black-and-white image with the
+ * movement shown as white pixels. The emitted pixmap can then be drawn to
+ * MotionDialog.
+*/
+class MotionDetectorEvent : public Event
+{
+    Q_OBJECT
+public:
+    explicit MotionDetectorEvent(int start, int delay, int id,
+                                 int trigCode);
+    virtual void apply(cv::Mat &frame);
+    virtual void apply(EventContainer&);
+
+public slots:
+    void            changeMovementFrameColor(bool);
+
+signals:
+    void            pixmapReady(const QPixmap&);
+
+private:
+    void            createMotionPixmap();
+
+    int             nChanges();
+    cv::Mat         prev_, current_, next_, result_, movement_;
+    cv::Point       centroid_;
+
+    bool            isTracking_;
+    bool            color_;
+    int             sensitivity_;
+    int             min_x, max_x, min_y, max_y;
 };
 
 #endif // EVENT_H

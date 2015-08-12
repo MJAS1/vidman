@@ -13,7 +13,7 @@ public:
 
 private slots:
     void testEventReader();
-    void testMotionDetector();
+    //void testMotionDetector();
 };
 
 #endif // TESTEVENTREADER_H
