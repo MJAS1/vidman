@@ -122,7 +122,7 @@ private:
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
-    QThread*                cameraThread_;
+    QThread*                 cameraThread_;
     CameraWorker*           cameraWorker_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;

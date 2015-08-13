@@ -56,7 +56,7 @@ void MainWindow::stopThreads()
     // order of stopping the threads is important.
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
-    QMetaObject::invokeMethod(cameraWorker_, "stop", Qt::BlockingQueuedConnection);
+    cameraWorker_->stop();
     cameraThread_->quit();
     cameraThread_->wait();
     delete cameraWorker_;
@@ -115,7 +115,7 @@ void MainWindow::initVideo()
 
         cameraWorker_->moveToThread(cameraThread_);
         cameraThread_->start();
-        QMetaObject::invokeMethod(cameraWorker_, "start", Qt::QueuedConnection);
+        cameraWorker_->start();
 
         //Setup event handling
         eventTmr_.setSingleShot(true);

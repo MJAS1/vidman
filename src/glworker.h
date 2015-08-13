@@ -19,8 +19,11 @@ class GLWorker : public QObject
 
 public:
     explicit GLWorker(GLVideoWidget *glw);
+    void start();
+    void stop();
 
 public slots:
+
     void onDrawFrame(unsigned char* imBuf);
     void onAspectRatioChanged(int w);
     void resizeGL(int w, int h);
@@ -31,12 +34,19 @@ public slots:
      */
     void setOutputDevice(OutputDevice::PortType portType);
 
+private slots:
+    void startLoop();
+    void stopLoop();
+
 private:
     void                    initializeGL();
 
     GLVideoWidget*          glw_;
 
     int                     videoWidth_;
+    bool                    shouldSwap_;
+    bool                    shouldStop_;
+    unsigned char*          buf_;
 
     OutputDevice            trigPort_;
 

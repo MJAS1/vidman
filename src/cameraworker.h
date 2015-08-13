@@ -21,6 +21,9 @@ class CameraWorker : public QObject
 public:
     explicit CameraWorker(CycDataBuffer* cycBuf, Camera &cam);
 
+    void start();
+    void stop();
+
     void clearEvents();
     void pause();
     void unpause();
@@ -28,15 +31,14 @@ public:
     void handleEvent(EventPtr ev);
 
 public slots:
-    void start();
-    void stop();
 
 signals:
     void motionPixmapReady(const QPixmap&);
     void motionDialogColorChanged(bool);
 
 private slots:
-    void grabFrame();
+    void startLoop();
+    void stopLoop();
     void onEventTriggered(int trigCode, const QString&);
 
 

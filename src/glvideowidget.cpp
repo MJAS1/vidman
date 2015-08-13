@@ -22,7 +22,8 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
     connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_, SLOT(onDrawFrame(unsigned char*)));
     connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this, SLOT(onDrawFrame()));
-    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_, SLOT(onAspectRatioChanged(int)));
+    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_, SLOT(onAspectRatioChanged(int)));  
+    qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
     connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
     connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
 
@@ -36,10 +37,12 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 #endif
     glworker_.moveToThread(&glthread_);
     glthread_.start();
+    glworker_.start();
 }
 
 GLVideoWidget::~GLVideoWidget()
 {
+    glworker_.stop();
     glthread_.quit();
     glthread_.wait();
 }
