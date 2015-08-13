@@ -10,6 +10,7 @@
 GLWorker::GLWorker(GLVideoWidget *glw) : QObject(), glw_(glw),
     videoWidth_(VIDEO_WIDTH)
 {
+    qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
 

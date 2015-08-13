@@ -55,7 +55,7 @@ private:
     int             trigCode_;
     bool            shouldStop_;
 
-    QMutex          mutex;
+    QMutex          mutex_;
 };
 
 #endif // CAMERAWORKER_H

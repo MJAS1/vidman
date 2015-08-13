@@ -60,9 +60,9 @@ void CameraWorker::start()
 
 void CameraWorker::stop()
 {
-    mutex.lock();
+    mutex_.lock();
     timer_->stop();
-    mutex.unlock();
+    mutex_.unlock();
 }
 
 void CameraWorker::grabFrame()
@@ -70,7 +70,7 @@ void CameraWorker::grabFrame()
     /*-----------------------------------------------------------------------
      *  have the camera start sending us data
      *-----------------------------------------------------------------------*/
-    mutex.lock();
+
 
     cam_ >> frame_;
     if (frame_.empty()) {
@@ -86,7 +86,11 @@ void CameraWorker::grabFrame()
     msec += timestamp.tv_sec * 1000;
 
     preEvents_.applyEvents(frame_);
+
+    mutex_.lock();
     events_.applyEvents(frame_);
+    mutex_.unlock();
+
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
     ChunkAttrib chunkAttrib;
@@ -101,41 +105,39 @@ void CameraWorker::grabFrame()
     chunkAttrib.timestamp = msec;
 
     cycBuf_->insertChunk(frame_.data, chunkAttrib);
-
-    mutex.unlock();
 }
 
 void CameraWorker::clearEvents()
 {
-    mutex.lock();
+    mutex_.lock();
     events_.clear();
-    mutex.unlock();
+    mutex_.unlock();
 }
 
 void CameraWorker::pause()
 {
-    mutex.lock();
+    mutex_.lock();
     events_.pauseEvents();
-    mutex.unlock();
+    mutex_.unlock();
 }
 
 void CameraWorker::unpause()
 {
-    mutex.lock();
+    mutex_.lock();
     events_.unpauseEvents();
-    mutex.unlock();
+    mutex_.unlock();
 }
 
 void CameraWorker::handleEvent(EventPtr ev)
 {
-    mutex.lock();
     connect(ev.get(), SIGNAL(triggered(int, const QString&)), this,
             SLOT(onEventTriggered(int, const QString&)));
 
+    mutex_.lock();
     ev->apply(events_);
     if(!ev->isReady())
         events_.insertSorted(std::move(ev));
-    mutex.unlock();
+    mutex_.unlock();
 }
 
 void CameraWorker::onEventTriggered(int trigCode, const QString& log)

@@ -1,9 +1,15 @@
 include(../defaults.pri)
 TEMPLATE = app
 
-CONFIG += qtestlib link_pkgconfig
-
+CONFIG += link_pkgconfig
 QT += opengl
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += testlib
+}
+else {
+    CONFIG+=qtestlib
+}
 
 PKGCONFIG += opencv
 LIBS += -L../lib -lvidman_debug -L/usr/share/lib -ldc1394

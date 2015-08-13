@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QList>
 #include <memory>
+#include <QPixmap>
 #include <opencv2/opencv.hpp>
 #include "timerwithpause.h"
 
