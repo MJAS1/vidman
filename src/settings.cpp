@@ -43,7 +43,7 @@ Settings::Settings()
     //Use vsync
     if(!settings.contains("video/vsync"))
     {
-        settings.setValue("video/vsync", false);
+        settings.setValue("video/vsync", true);
         vsync = false;
     }
     else
@@ -87,7 +87,7 @@ Settings::Settings()
     //Frames per second
     if(!settings.contains("video/fps"))
     {
-        settings.setValue("video/fps", 30);
+        settings.setValue("video/fps", 60);
         fps = 30;
     }
     else

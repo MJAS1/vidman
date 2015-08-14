@@ -166,7 +166,7 @@ bool EventReader::readObject(const QString &str, int lineNumber)
     objectType_.clear();
     fileName_.clear();
 
-    objectId_ = length_ = 0;
+    objectId_ = duration_ = 0;
 
     for(int i = 0; i < strList.size(); i++) {
         if(strList[i].contains("=")) {
@@ -189,12 +189,12 @@ bool EventReader::readObject(const QString &str, int lineNumber)
     }
     else if(objectType_ == "video"){
         shared_ptr<VideoObject> videoObject(new VideoObject);
-        videoObject->length_ = length_;
+        videoObject->duration_ = duration_;
 
         //Reserve enough memory to hold all the frames. This is necessary to
         //make sure that large blocks of memory don't need to be reallocated
         //while recording.
-        videoObject->frames_.reserve(length_/1000*settings_.fps + 10);
+        videoObject->frames_.reserve(duration_/1000*settings_.fps + 10);
         videoObjects_.insert(objectId_, videoObject);
     }
     else if(objectType_ == "") {
@@ -251,8 +251,8 @@ bool EventReader::readEventParam(const QString &p, const QString &v, int lineNum
             return false;
         objectIdOk_ = true;
     }
-    else if(param == "text") {
-        text_=v;
+    else if(param == "string") {
+        string_=v;
     }
     else if(param == "angle") {
         if((angle_ = toInt(v, lineNumber, QString("angle"))) == -1)
@@ -315,8 +315,8 @@ bool EventReader::readObjectParam(const QString &p, const QString &v, int lineNu
         if((objectId_ = toInt(v, lineNumber, "id")) == -1)
             return false;
     }
-    else if(param == "length") {
-        if((length_ = toInt(v, lineNumber, "length")) == -1)
+    else if(param == "duration") {
+        if((duration_ = toInt(v, lineNumber, "duration")) == -1)
             return false;
     }
     else {
@@ -361,7 +361,7 @@ bool EventReader::createEvent(EventPtr &ev, int lineNumber)
         break;
 
     case Event::EVENT_TEXT:
-        ev.reset(new TextEvent(start_, text_, color_, cv::Point2i(x_, y_), delay_, eventId_, trigCode_));
+        ev.reset(new TextEvent(start_, string_, color_, cv::Point2i(x_, y_), delay_, eventId_, trigCode_));
         ev->appendLog(QString("Text event added. "));
         break;
 
@@ -391,7 +391,7 @@ bool EventReader::createEvent(EventPtr &ev, int lineNumber)
                 emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId_).arg(lineNumber));
                 return false;
             }
-            if(duration_ > videoObjects_[objectId_]->length_) {
+            if(duration_ > videoObjects_[objectId_]->duration_) {
                 emit error(QString("Error: record event duration too big for video object in line %1").arg(lineNumber));
                 return false;
             }

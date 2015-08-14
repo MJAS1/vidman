@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QStyleFactory>
+#include <QElapsedTimer>
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])

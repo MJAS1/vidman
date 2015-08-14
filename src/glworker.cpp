@@ -39,88 +39,54 @@ void GLWorker::initializeGL()
     glw_->doneCurrent();
 }
 
-void GLWorker::start()
-{
-    QMetaObject::invokeMethod(this, "startLoop", Qt::QueuedConnection);
-}
-
-void GLWorker::stop()
-{
-    QMetaObject::invokeMethod(this, "stopLoop", Qt::BlockingQueuedConnection);
-}
-
-void GLWorker::startLoop()
+void GLWorker::onDrawFrame(unsigned char *imBuf)
 {
     glw_->makeCurrent();
 
-    while(!shouldStop_) {
-        if(shouldSwap_) {
-            shouldSwap_ = false;
-            unsigned char* imBuf = buf_;
-            ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)));
+    shaderProgram_.bind();
+    shaderProgram_.setUniformValue("texture", 0);
+    shaderProgram_.setAttributeArray("vertex", vertices_.constData());
+    shaderProgram_.enableAttributeArray("vertex");
+    shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
+    shaderProgram_.enableAttributeArray("textureCoordinate");
 
-            shaderProgram_.bind();
-            shaderProgram_.setUniformValue("texture", 0);
-            shaderProgram_.setAttributeArray("vertex", vertices_.constData());
-            shaderProgram_.enableAttributeArray("vertex");
-            shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
-            shaderProgram_.enableAttributeArray("textureCoordinate");
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glw_->swapBuffers();
+    shaderProgram_.disableAttributeArray("vertex");
+    shaderProgram_.disableAttributeArray("textureCoordinate");
+    shaderProgram_.release();
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
-
-            glClear(GL_COLOR_BUFFER_BIT);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            glw_->swapBuffers();
-
-            shaderProgram_.disableAttributeArray("vertex");
-            shaderProgram_.disableAttributeArray("textureCoordinate");
-            shaderProgram_.release();
-
-            if(!trigPort_.isEmpty())
-                trigPort_.writeData(chunkAttrib.trigCode);
-
-            if(strlen(chunkAttrib.log))
-                glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
-        }
-        QCoreApplication::processEvents();
-    }
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)));
+    if(!trigPort_.isEmpty())
+        trigPort_.writeData(chunkAttrib.trigCode);
+    if(strlen(chunkAttrib.log))
+        glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
 
     glw_->doneCurrent();
 }
 
-
-void GLWorker::stopLoop()
-{
-    shouldStop_ = true;
-}
-
-void GLWorker::onDrawFrame(unsigned char *imBuf)
-{
-    buf_ = imBuf;
-    shouldSwap_ = true;
-}
-
 void GLWorker::resizeGL(int w, int h)
 {
-    int dispW;
-    int dispH;
+    glw_->makeCurrent();
 
     // Change the viewport to preserve the aspect ratio.
     // Compute new height corresponding to the current width and new width
     // corresponding to the current heigh and see which one fits.
-    dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));
-    dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));
+    int dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));;
+    int dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));;
 
     if(dispH <= h)
         glViewport(0, (h - dispH) / 2, w, dispH);
-
     else if(dispW <= w)
         glViewport((w - dispW) / 2, 0, dispW, h);
-
     else {
         std::cerr << "Internal error while computing the viewport size" << std::endl;
         abort();
     }
+
+    glw_->doneCurrent();
 }
 
 void GLWorker::onAspectRatioChanged(int w)

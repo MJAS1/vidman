@@ -246,7 +246,7 @@ void MainWindow::unpause()
     time_ = runningTime_.msecsElapsed();
     cameraWorker_->unpause();
 
-    ui->startButton->setIcon(QIcon::fromTheme("media-playback-pause"));
+    ui->startButton->setIcon(QIcon::fromTheme(":/img/media-playback-pause.svg"));
     state_ = PLAYING;
 }
 
@@ -423,7 +423,7 @@ void MainWindow::addImageEvent()
 
 void MainWindow::addTextEvent()
 {
-    QString str("event: type=text, start=0, x=0, y=0, color=black, text=");
+    QString str("event: type=text, start=0, x=0, y=0, color=black, string=");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -435,7 +435,7 @@ void MainWindow::addImageObject()
 
 void MainWindow::addVideoObject()
 {
-    QString str("object: type=video, id=0, length=2000");
+    QString str("object: type=video, id=0, duration=2000");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -471,7 +471,7 @@ void MainWindow::addZoomEvent()
 
 void MainWindow::addRecordEvent()
 {
-    QString str("event: type=record, start=0, duration=2000, objectId=0");
+    QString str("event: type=record, start=0, duration=2000, delay=2000, objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 

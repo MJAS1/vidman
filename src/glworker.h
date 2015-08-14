@@ -19,11 +19,8 @@ class GLWorker : public QObject
 
 public:
     explicit GLWorker(GLVideoWidget *glw);
-    void start();
-    void stop();
 
 public slots:
-
     void onDrawFrame(unsigned char* imBuf);
     void onAspectRatioChanged(int w);
     void resizeGL(int w, int h);
@@ -33,10 +30,6 @@ public slots:
      * GLWorker.This function is used to set trigPort to a given port
      */
     void setOutputDevice(OutputDevice::PortType portType);
-
-private slots:
-    void startLoop();
-    void stopLoop();
 
 private:
     void                    initializeGL();

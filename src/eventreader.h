@@ -21,7 +21,7 @@ class EventContainer;
 //belonging to the particular video and length in milliseconds.
 struct VideoObject {
     QList<cv::Mat> frames_;
-    int length_;
+    int duration_;
 };
 
 class EventReader : public QObject
@@ -56,7 +56,7 @@ private:
     float               scale_;
     bool                objectIdOk_;
 
-    QString             text_, fileName_, objectType_;
+    QString             string_, fileName_, objectType_;
     cv::Scalar          color_;
     Event::EventType    type_;
 

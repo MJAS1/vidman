@@ -12,7 +12,6 @@
 
 using namespace std;
 
-
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
        videoDialog_(parent), glworker_(this)
@@ -37,12 +36,10 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 #endif
     glworker_.moveToThread(&glthread_);
     glthread_.start();
-    glworker_.start();
 }
 
 GLVideoWidget::~GLVideoWidget()
 {
-    glworker_.stop();
     glthread_.quit();
     glthread_.wait();
 }

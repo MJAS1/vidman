@@ -46,7 +46,7 @@ QToolBar {
 }
 
 #startButton:hover, #stopButton:hover, #recButton:hover {
-	background: rgb(240, 240, 240);
+	background: rgb(255, 255, 255);
 }
 
 #startButton:checked, #stopButton:checked, #recButton:checked {
@@ -582,7 +582,7 @@ QToolBar {
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Motion detector</string>
+    <string>Motion dialog</string>
    </property>
   </action>
  </widget>
