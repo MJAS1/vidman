@@ -129,9 +129,6 @@ public:
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
-
-private:
-    bool first_;
 };
 
 class FadeInEvent : public Event
@@ -150,7 +147,6 @@ private:
     TimerWithPause  timerWithPause_;
     int             amount_, interval_;
     bool            stopped_;
-    bool            first_;
 };
 
 class FadeOutEvent: public Event
@@ -314,8 +310,8 @@ private:
     cv::Mat         prev_, current_, next_, result_, movement_;
     cv::Point       centroid_;
 
-    bool            isTracking_;
     bool            color_;
+    bool            isTracking_;
     int             sensitivity_;
     int             min_x, max_x, min_y, max_y;
 };

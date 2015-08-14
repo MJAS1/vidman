@@ -51,11 +51,14 @@ void EventContainer::append(EventPtr event)
 
 void EventContainer::insertSorted(EventPtr event)
 {
-    auto iter = std::lower_bound(events_.begin(), events_.end(), event,
-                                 [](const EventPtr& l, const EventPtr& r) {
-        return l->getPriority() > r->getPriority();
-    });
-    events_.insert(iter, move(event));
+    event->apply(*this);
+    if(!event->isReady()) {
+        auto iter = std::lower_bound(events_.begin(), events_.end(), event,
+                                     [](const EventPtr& l, const EventPtr& r) {
+            return l->getPriority() > r->getPriority();
+        });
+        events_.insert(iter, move(event));
+    }
 }
 
 void EventContainer::applyEvents(cv::Mat &frame)

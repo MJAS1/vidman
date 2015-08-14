@@ -16,6 +16,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
     Settings settings;
 
     //Setup preEvents for default processing each frame before actual manipulation
+    //This MovementDetectorEvent is used to send QPixmaps to MotionDialog.
     EventPtr movement(new MotionDetectorEvent(0, 0, 0, 0));
     connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
             SIGNAL(motionPixmapReady(const QPixmap&)));
@@ -44,6 +45,10 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
     cam_.setFPS(settings.fps);
 }
 
+/* start() and stop() are called by the main thread. However, the loop is
+ * supposed to be working in a different thread. invokeMethod() makes sure that
+ * the call for startLoop() and  stopLoop is placed in the thread's event queue.
+ */
 void CameraWorker::start()
 {
     QMetaObject::invokeMethod(this, "startLoop", Qt::QueuedConnection);
@@ -141,9 +146,7 @@ void CameraWorker::handleEvent(EventPtr ev)
             SLOT(onEventTriggered(int, const QString&)));
 
     mutex_.lock();
-    ev->apply(events_);
-    if(!ev->isReady())
-        events_.insertSorted(std::move(ev));
+    events_.insertSorted(std::move(ev));
     mutex_.unlock();
 }
 

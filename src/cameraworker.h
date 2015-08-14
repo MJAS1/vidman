@@ -2,7 +2,6 @@
 #define CAMERAWORKER_H
 
 #include <QObject>
-#include <QTimer>
 #include <opencv2/opencv.hpp>
 #include "eventcontainer.h"
 #include "event.h"
@@ -30,8 +29,6 @@ public:
 
     void handleEvent(EventPtr ev);
 
-public slots:
-
 signals:
     void motionPixmapReady(const QPixmap&);
     void motionDialogColorChanged(bool);
@@ -41,23 +38,18 @@ private slots:
     void stopLoop();
     void onEventTriggered(int trigCode, const QString&);
 
-
 private:
     CycDataBuffer*  cycBuf_;
-
-    QTimer          *timer_;
     Camera&         cam_;
+    EventContainer  events_;
+    EventContainer  preEvents_;
 
-    cv::Mat         frame_;
-
-    EventContainer  events_, preEvents_;
-
+    QMutex          mutex_;
     QString         log_;
+    cv::Mat         frame_;
 
     int             trigCode_;
     bool            shouldStop_;
-
-    QMutex          mutex_;
 };
 
 #endif // CAMERAWORKER_H

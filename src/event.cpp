@@ -43,7 +43,7 @@ void FlipEvent::apply(EventContainer &events)
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
     Event(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
-    stopped_(false), first_(true)
+    stopped_(false)
 {
     timerWithPause_.invalidate();
 }
@@ -352,12 +352,10 @@ void PlaybackEvent::unpause()
 
 MotionDetectorEvent::MotionDetectorEvent(int start, int delay, int id, int trigCode) :
     Event(EVENT_DETECT_MOTION, start, delay, id, trigCode, MOTION_DETECTOR_PRIORITY),
-    color_(true)
+    color_(true), isTracking_(true)
 {
     Settings settings;
     sensitivity_ = settings.movementSensitivity;
-
-    isTracking_ = true;
 }
 
 void MotionDetectorEvent::apply(cv::Mat &frame)
@@ -386,8 +384,8 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         cv::Rect rect(x,y);
         cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
         if(isTracking_) {
-            isTracking_ = false;
             emit triggered(trigCode_, log_);
+            isTracking_ = false;
         }
     }
 
@@ -433,14 +431,10 @@ void MotionDetectorEvent::apply(EventContainer &events)
 void MotionDetectorEvent::createMotionPixmap()
 {
     QImage img;
-    if(color_) {
-        //events_.applyEvents(movement_);
+    if(color_)
         img = QImage(movement_.data, movement_.cols, movement_.rows, movement_.step, QImage::Format_RGB888);
-    }
-    else {
-        //events_.applyEvents(result_);
+    else
         img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
-    }
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
     emit pixmapReady(pixmap);
