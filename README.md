@@ -94,7 +94,7 @@ use the following syntax:
 
 and for record and playback:
 
-
+	object: type=video, id=0, duration=2000 
 
 Duration is the maximum duration in milliseconds of the video clip recorded by a
 record event. This clip can then be played with a playback event, e.g.:
