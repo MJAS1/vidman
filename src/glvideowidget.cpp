@@ -5,12 +5,16 @@
  *      Author: andrey
  */
 #include <QResizeEvent>
+#include <QWindow>
+#include <mainwindow.h>
 #include "videodialog.h"
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"
 #include "common.h"
 
 using namespace std;
+
+//class QWindow;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
@@ -36,10 +40,12 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
 #endif
     glworker_.moveToThread(&glthread_);
     glthread_.start();
+    glworker_.start();
 }
 
 GLVideoWidget::~GLVideoWidget()
 {
+    glworker_.stop();
     glthread_.quit();
     glthread_.wait();
 }

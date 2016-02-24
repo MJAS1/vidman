@@ -39,38 +39,26 @@ void GLWorker::initializeGL()
     glw_->doneCurrent();
 }
 
+void GLWorker::start()
+{
+    QMetaObject::invokeMethod(this, "startLoop", Qt::QueuedConnection);
+}
+
+void GLWorker::stop()
+{
+    QMetaObject::invokeMethod(this, "stopLoop", Qt::BlockingQueuedConnection);
+}
+
 void GLWorker::onDrawFrame(unsigned char *imBuf)
 {
-    glw_->makeCurrent();
-
-    shaderProgram_.bind();
-    shaderProgram_.setUniformValue("texture", 0);
-    shaderProgram_.setAttributeArray("vertex", vertices_.constData());
-    shaderProgram_.enableAttributeArray("vertex");
-    shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
-    shaderProgram_.enableAttributeArray("textureCoordinate");
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)imBuf);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glw_->swapBuffers();
-    shaderProgram_.disableAttributeArray("vertex");
-    shaderProgram_.disableAttributeArray("textureCoordinate");
-    shaderProgram_.release();
-
-    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(imBuf-sizeof(ChunkAttrib)));
-    if(!trigPort_.isEmpty())
-        trigPort_.writeData(chunkAttrib.trigCode);
-    if(strlen(chunkAttrib.log))
-        glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
-
-    glw_->doneCurrent();
+    mutex_.lock();
+    buf_ = imBuf;
+    shouldSwap_ = true;
+    mutex_.unlock();
 }
 
 void GLWorker::resizeGL(int w, int h)
 {
-    glw_->makeCurrent();
-
     // Change the viewport to preserve the aspect ratio.
     // Compute new height corresponding to the current width and new width
     // corresponding to the current heigh and see which one fits.
@@ -85,8 +73,6 @@ void GLWorker::resizeGL(int w, int h)
         std::cerr << "Internal error while computing the viewport size" << std::endl;
         abort();
     }
-
-    glw_->doneCurrent();
 }
 
 void GLWorker::onAspectRatioChanged(int w)
@@ -101,4 +87,48 @@ void GLWorker::setOutputDevice(OutputDevice::PortType portType)
         trigPort_.open(portType);
     else
         trigPort_.close();
+}
+
+void GLWorker::startLoop()
+{
+    glw_->makeCurrent();
+
+    while(!shouldStop_)
+    {
+        if(shouldSwap_) {
+            mutex_.lock();
+
+            shaderProgram_.bind();
+            shaderProgram_.setUniformValue("texture", 0);
+            shaderProgram_.setAttributeArray("vertex", vertices_.constData());
+            shaderProgram_.enableAttributeArray("vertex");
+            shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
+            shaderProgram_.enableAttributeArray("textureCoordinate");
+
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
+            glClear(GL_COLOR_BUFFER_BIT);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            glw_->swapBuffers();
+            shaderProgram_.disableAttributeArray("vertex");
+            shaderProgram_.disableAttributeArray("textureCoordinate");
+            shaderProgram_.release();
+
+            ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
+            if(!trigPort_.isEmpty())
+                trigPort_.writeData(chunkAttrib.trigCode);
+            if(strlen(chunkAttrib.log))
+                glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
+
+            shouldSwap_ = false;
+
+            mutex_.unlock();
+        }
+
+        QCoreApplication::processEvents();
+    }
+}
+
+void GLWorker::stopLoop()
+{
+    shouldStop_ = true;
 }
