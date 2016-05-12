@@ -33,6 +33,9 @@ signals:
     void motionPixmapReady(const QPixmap&);
     void motionDialogColorChanged(bool);
 
+public slots:
+    void motionDialogToggled(bool);
+
 private slots:
     void startLoop();
     void stopLoop();

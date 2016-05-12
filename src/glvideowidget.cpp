@@ -6,7 +6,7 @@
  */
 #include <QResizeEvent>
 #include <QWindow>
-#include <mainwindow.h>
+#include "mainwindow.h"
 #include "videodialog.h"
 #include "glvideowidget.h"
 #include "cycdatabuffer.h"

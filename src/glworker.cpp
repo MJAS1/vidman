@@ -51,10 +51,8 @@ void GLWorker::stop()
 
 void GLWorker::onDrawFrame(unsigned char *imBuf)
 {
-    mutex_.lock();
     buf_ = imBuf;
     shouldSwap_ = true;
-    mutex_.unlock();
 }
 
 void GLWorker::resizeGL(int w, int h)
@@ -96,8 +94,6 @@ void GLWorker::startLoop()
     while(!shouldStop_)
     {
         if(shouldSwap_) {
-            mutex_.lock();
-
             shaderProgram_.bind();
             shaderProgram_.setUniformValue("texture", 0);
             shaderProgram_.setAttributeArray("vertex", vertices_.constData());
@@ -120,8 +116,6 @@ void GLWorker::startLoop()
                 glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
 
             shouldSwap_ = false;
-
-            mutex_.unlock();
         }
 
         QCoreApplication::processEvents();

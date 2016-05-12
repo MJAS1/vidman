@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QGLShaderProgram>
-#include <QMutex>
 #include "outputdevice.h"
 #include "cycdatabuffer.h"
 
@@ -50,8 +49,6 @@ private:
     QGLShaderProgram        shaderProgram_;
     QVector<QVector2D>      vertices_;
     QVector<QVector2D>      textureCoordinates_;
-
-    QMutex                  mutex_;
 
 private slots:
     void startLoop();

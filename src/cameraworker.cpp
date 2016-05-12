@@ -15,15 +15,6 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
 {
     Settings settings;
 
-    //Setup preEvents for default processing each frame before actual manipulation
-    //This MovementDetectorEvent is used to send QPixmaps to MotionDialog.
-    EventPtr movement(new MotionDetectorEvent(0, 0, 0, 0));
-    connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
-            SIGNAL(motionPixmapReady(const QPixmap&)));
-    connect(this, SIGNAL(motionDialogColorChanged(bool)), movement.get(),
-            SLOT(changeMovementFrameColor(bool)));
-    preEvents_.insertSorted(std::move(movement));
-
     if(settings.flip)
         preEvents_.insertSorted(EventPtr(new FlipEvent(0, 0)));
 
@@ -154,4 +145,19 @@ void CameraWorker::onEventTriggered(int trigCode, const QString& log)
 {
     trigCode_ = trigCode;
     log_ = log;
+}
+
+void CameraWorker::motionDialogToggled(bool on)
+{
+    if(on) {
+        EventPtr movement(new MotionDetectorEvent(0, 0, 0, 0));
+        connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
+                SIGNAL(motionPixmapReady(const QPixmap&)));
+        connect(this, SIGNAL(motionDialogColorChanged(bool)), movement.get(),
+                SLOT(changeMovementFrameColor(bool)));
+        preEvents_.insertSorted(std::move(movement));
+    }
+    else {
+        preEvents_.deleteType(Event::EVENT_DETECT_MOTION);
+    }
 }

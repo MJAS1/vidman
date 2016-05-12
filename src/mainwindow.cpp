@@ -29,12 +29,14 @@ MainWindow::MainWindow(QWidget *parent) :
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
-            videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));
+            videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));    
 
     highlighter_ = new Highlighter(ui->textEdit->document());
 
     initToolButton();
     initVideo();
+
+    connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)), cameraWorker_, SLOT(motionDialogToggled(bool)));
 
     //Set status bar
     status_.setIndent(10);
@@ -498,6 +500,12 @@ void MainWindow::closeEvent(QCloseEvent *e)
 void MainWindow::toggleVideoDialogChecked(bool arg)
 {
     ui->viewVideoDialogAction->setChecked(arg);
+}
+
+void MainWindow::toggleMotionDialogChecked(bool arg)
+{
+    ui->viewMotionDetectorAction->setChecked(arg);
+    emit ui->viewMotionDetectorAction->triggered(arg);
 }
 
 void MainWindow::setStatus(const QString &str)

@@ -84,7 +84,7 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resource.qrc">
+         <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
           <normaloff>:/img/media-playback-start.svg</normaloff>:/img/media-playback-start.svg</iconset>
         </property>
         <property name="iconSize">
@@ -122,7 +122,7 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resource.qrc">
+         <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
           <normaloff>:/img/media-playback-stop.svg</normaloff>:/img/media-playback-stop.svg</iconset>
         </property>
         <property name="iconSize">
@@ -157,7 +157,7 @@ QToolBar {
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../resource.qrc">
+         <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
           <normaloff>:/img/record.png</normaloff>:/img/record.png</iconset>
         </property>
         <property name="iconSize">
@@ -229,7 +229,7 @@ QToolBar {
      <x>0</x>
      <y>0</y>
      <width>706</width>
-     <height>29</height>
+     <height>27</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -318,7 +318,7 @@ QToolBar {
   </widget>
   <action name="actionOpen">
    <property name="icon">
-    <iconset resource="../resource.qrc">
+    <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
      <normaloff>:/img/document-open.svg</normaloff>:/img/document-open.svg</iconset>
    </property>
    <property name="text">
@@ -333,7 +333,7 @@ QToolBar {
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource.qrc">
+    <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
      <normaloff>:/img/document-save.svg</normaloff>:/img/document-save.svg</iconset>
    </property>
    <property name="text">
@@ -356,7 +356,7 @@ QToolBar {
   </action>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="../resource.qrc">
+    <iconset resource="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc">
      <normaloff>:/img/document-new.svg</normaloff>:/img/document-new.svg</iconset>
    </property>
    <property name="text">
@@ -374,8 +374,7 @@ QToolBar {
   <action name="actionNewEvent">
    <property name="icon">
     <iconset theme="insert-object">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>newEvent</string>
@@ -420,8 +419,7 @@ QToolBar {
    </property>
    <property name="icon">
     <iconset theme="edit-undo">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Undo</string>
@@ -436,8 +434,7 @@ QToolBar {
    </property>
    <property name="icon">
     <iconset theme="edit-redo">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>&amp;Redo</string>
@@ -452,8 +449,7 @@ QToolBar {
    </property>
    <property name="icon">
     <iconset theme="edit-cut">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Cut</string>
@@ -468,8 +464,7 @@ QToolBar {
    </property>
    <property name="icon">
     <iconset theme="edit-copy">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Copy</string>
@@ -484,8 +479,7 @@ QToolBar {
    </property>
    <property name="icon">
     <iconset theme="edit-paste">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Paste</string>
@@ -534,8 +528,7 @@ QToolBar {
   <action name="actionExit">
    <property name="icon">
     <iconset theme="application-exit">
-     <normaloff/>
-    </iconset>
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>E&amp;xit</string>
@@ -595,9 +588,9 @@ QToolBar {
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resource.qrc"/>
-  <include location="../resource.qrc"/>
-  <include location="../resource.qrc"/>
+  <include location="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc"/>
+  <include location="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc"/>
+  <include location="../../../../../../m/home/home1/14/sutelam1/unix/vidman/resource.qrc"/>
  </resources>
  <connections>
   <connection>

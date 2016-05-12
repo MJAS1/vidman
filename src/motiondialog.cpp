@@ -5,7 +5,7 @@
 
 MotionDialog::MotionDialog(MainWindow *parent) :
     QDialog(parent),
-    ui(new Ui::MotionDialog), mainWindow_(parent)
+    ui(new Ui::MotionDialog), window_(parent)
 {
     ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -24,4 +24,9 @@ void MotionDialog::setPixmap(const QPixmap &p)
 void MotionDialog::onColorButtonToggled(bool arg)
 {
     emit changeColors(arg);
+}
+
+void MotionDialog::closeEvent(QCloseEvent *)
+{
+    window_->toggleMotionDialogChecked(false);
 }

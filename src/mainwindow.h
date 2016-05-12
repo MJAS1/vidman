@@ -41,6 +41,7 @@ public:
     ~MainWindow();
 
     void toggleVideoDialogChecked(bool);
+    void toggleMotionDialogChecked(bool);
     void writeToLog(const QString&);
 
 signals:
@@ -122,7 +123,7 @@ private:
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
-    QThread*                 cameraThread_;
+    QThread*                cameraThread_;
     CameraWorker*           cameraWorker_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;

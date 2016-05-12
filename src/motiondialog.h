@@ -28,8 +28,10 @@ signals:
     void changeColors(bool);
 
 private:
+    void closeEvent(QCloseEvent*);
+
     Ui::MotionDialog *ui;
-    MainWindow* mainWindow_;
+    MainWindow* window_;
 };
 
 #endif // MOTIONDIALOG_H
