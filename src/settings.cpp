@@ -63,14 +63,14 @@ Settings::Settings()
     }
 
     //Turn the video image upside down on default
-    if(!settings.contains("video/turn_video_around"))
+    if(!settings.contains("video/rotate"))
     {
-        settings.setValue("video/turn_video_around", true);
+        settings.setValue("video/rotate", true);
         turnAround = true;
     }
     else
     {
-        turnAround = settings.value("video/turn_video_around").toBool();
+        turnAround = settings.value("video/rotate").toBool();
     }
 
     //Add a fixation point to the video
@@ -121,15 +121,15 @@ Settings::Settings()
         sprintf(storagePath, settings.value("misc/data_storage_path").toString().toLocal8Bit().data());
     }
 
-    //Printer port address
-    if(!settings.contains("misc/printer_port_address"))
+    //Parallel port address
+    if(!settings.contains("misc/parallel_port_address"))
     {
-        settings.setValue("misc/printer_port_address", 0x3010);
+        settings.setValue("misc/parallel_port_address", 0x3010);
         printerPortAddr = 0x3010;
     }
     else
     {
-        printerPortAddr = settings.value("misc/printer_port_address").toInt();
+        printerPortAddr = settings.value("misc/parallel_port_address").toInt();
     }
 }
 
