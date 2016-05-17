@@ -40,7 +40,6 @@ private:
     GLVideoWidget*          glw_;
 
     int                     videoWidth_;
-    bool                    shouldSwap_;
     bool                    shouldStop_;
     unsigned char*          buf_;
 

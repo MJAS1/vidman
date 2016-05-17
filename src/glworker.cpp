@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <QCoreApplication>
+#include <QWindow>
 #include "videodialog.h"
 #include "mainwindow.h"
 #include "common.h"
@@ -8,8 +9,9 @@
 #include "glvideowidget.h"
 
 GLWorker::GLWorker(GLVideoWidget *glw) : QObject(), glw_(glw),
-    videoWidth_(VIDEO_WIDTH), shouldSwap_(false), shouldStop_(false)
+    videoWidth_(VIDEO_WIDTH), shouldStop_(false)
 {
+    buf_ = NULL;
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
 
@@ -52,7 +54,6 @@ void GLWorker::stop()
 void GLWorker::onDrawFrame(unsigned char *imBuf)
 {
     buf_ = imBuf;
-    shouldSwap_ = true;
 }
 
 void GLWorker::resizeGL(int w, int h)
@@ -91,35 +92,36 @@ void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
+    //Wait until the first frame is ready and window is exposed
+    while(!(buf_ && glw_->windowHandle()->isExposed()))
+        QCoreApplication::processEvents();
+
+    shaderProgram_.bind();
+    shaderProgram_.setUniformValue("texture", 0);
+    shaderProgram_.setAttributeArray("vertex", vertices_.constData());
+    shaderProgram_.enableAttributeArray("vertex");
+    shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
+    shaderProgram_.enableAttributeArray("textureCoordinate");
+
     while(!shouldStop_)
     {
-        if(shouldSwap_) {
-            shaderProgram_.bind();
-            shaderProgram_.setUniformValue("texture", 0);
-            shaderProgram_.setAttributeArray("vertex", vertices_.constData());
-            shaderProgram_.enableAttributeArray("vertex");
-            shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
-            shaderProgram_.enableAttributeArray("textureCoordinate");
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glw_->swapBuffers();
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
-            glClear(GL_COLOR_BUFFER_BIT);
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            glw_->swapBuffers();
-            shaderProgram_.disableAttributeArray("vertex");
-            shaderProgram_.disableAttributeArray("textureCoordinate");
-            shaderProgram_.release();
-
-            ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
-            if(!trigPort_.isEmpty())
-                trigPort_.writeData(chunkAttrib.trigCode);
-            if(strlen(chunkAttrib.log))
-                glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
-
-            shouldSwap_ = false;
-        }
+        ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
+        if(!trigPort_.isEmpty())
+            trigPort_.writeData(chunkAttrib.trigCode);
+        if(strlen(chunkAttrib.log))
+            glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
 
         QCoreApplication::processEvents();
     }
+
+    shaderProgram_.disableAttributeArray("vertex");
+    shaderProgram_.disableAttributeArray("textureCoordinate");
+    shaderProgram_.release();
 }
 
 void GLWorker::stopLoop()
