@@ -15,9 +15,10 @@ Test::~Test()
 {
 }
 
-void Test::testEventReader()
+void Test::testEventReader() const
 {
     EventReader evReader;
+    connect(&evReader, SIGNAL(error(const QString&)), this, SLOT(errorMsg(const QString&)));
     EventContainer events;
 
     QStringList strList;
@@ -41,7 +42,7 @@ void Test::testEventReader()
     strList.append(QString("Event: type=flip, start=0, trigcode=10"));
     strList.append(QString("Event: type=fade in, start=1000, duration=5000, delay=0, trigcode=10"));
     strList.append(QString("Event: type=fade out, start=0, duration=5000, delay=0, trigcode=10"));
-    strList.append(QString("Event: type=text, start=0, x=0, y=0, color=black, text=test"));
+    strList.append(QString("Event: type=text, start=0, x=0, y=0, color=black, string=test"));
     strList.append(QString("Event: type=rotate, start=99, angle=90"));
     strList.append(QString("Event: type=freeze, start=0, trigcode=10"));
     strList.append(QString("Delete: start=0, id=0, trigcode=3"));
@@ -49,8 +50,9 @@ void Test::testEventReader()
     strList.append(QString("Event: type=zoom, start=0, scale=1.5, duration=2000, trigcode=10"));
     QCOMPARE(evReader.loadEvents(strList, events), true);
 
+
     strList.clear();
-    strList.append(QString("Object: type=video, id=0, length=2000"));
+    strList.append(QString("Object: type=video, id=0, duration=2000"));
     strList.append(QString("Event: type=record, start=0, duration=2000, objectId=0"));
     strList.append(QString("Event: type=playback, start=0, duration=2000, objectId=0"));
     QCOMPARE(evReader.loadEvents(strList, events), true);
@@ -110,4 +112,9 @@ void Test::testMotionDetector()
     QCOMPARE(motionDetector.movementDetected(hand2), true);
 }
 */
+void Test::errorMsg(const QString &s) const
+{
+    qDebug() << s;
+}
+
 QTEST_MAIN(Test)

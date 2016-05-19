@@ -264,7 +264,6 @@ void ZoomEvent::apply(cv::Mat &frame)
     }
 
     cv::Mat tmp;
-    //cv::Size newSize(frame.cols * coef_, frame.rows * coef_);
     resize(frame, tmp, cv::Size(), coef_, coef_, cv::INTER_LINEAR);
 
     //Take only the center 640x480 of the resized image

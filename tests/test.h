@@ -12,7 +12,8 @@ public:
     ~Test();
 
 private slots:
-    void testEventReader();
+    void testEventReader() const;
+    void errorMsg(const QString&) const;
     //void testMotionDetector();
 };
 
