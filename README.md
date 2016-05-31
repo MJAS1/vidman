@@ -90,7 +90,7 @@ port or use parallel port.
 To use image, record and playback events an object needs to declared. For image
 use the following syntax:
 
-	object: type=image, id=0, filename=../imag/button.png
+	object: type=image, id=0, filename=../img/button.png
 
 and for record and playback:
 
