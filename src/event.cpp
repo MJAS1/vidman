@@ -3,7 +3,7 @@
 #include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
-#include "eventreader.h"
+#include "eventparser.h"
 #include "settings.h"
 
 void Event::apply(cv::Mat &)
@@ -350,11 +350,11 @@ void PlaybackEvent::unpause()
 }
 
 MotionDetectorEvent::MotionDetectorEvent(int start, int delay, int id, int trigCode) :
-    Event(EVENT_DETECT_MOTION, start, delay, id, trigCode, MOTION_DETECTOR_PRIORITY),
+    Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode, MOTION_DETECTOR_PRIORITY),
     color_(true), isTracking_(true)
 {
     Settings settings;
-    sensitivity_ = settings.movementSensitivity;
+    threshold_ = settings.movementThreshold;
 }
 
 void MotionDetectorEvent::apply(cv::Mat &frame)
@@ -371,7 +371,7 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
     }
 
     movement_ = next_.clone();
-    if(nChanges() > sensitivity_) {
+    if(nChanges() > threshold_) {
         if(min_x-10 > 0) min_x -= 10;
         if(min_y-10 > 0) min_y -= 10;
         if(max_x+10 < result_.cols-1) max_x += 10;

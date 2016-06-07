@@ -3,7 +3,7 @@
 #include <fstream>
 #include <opencv2/opencv.hpp>
 #include "test.h"
-#include "eventreader.h"
+#include "eventparser.h"
 #include "eventcontainer.h"
 #include "cycdatabuffer.h"
 
@@ -15,9 +15,9 @@ Test::~Test()
 {
 }
 
-void Test::testEventReader() const
+void Test::testEventParser() const
 {
-    EventReader evReader;
+    EventParser evReader;
     connect(&evReader, SIGNAL(error(const QString&)), this, SLOT(errorMsg(const QString&)));
     EventContainer events;
 

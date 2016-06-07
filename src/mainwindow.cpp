@@ -11,7 +11,7 @@
 #include "cycdatabuffer.h"
 #include "videocompressorthread.h"
 #include "motiondialog.h"
-#include "eventreader.h"
+#include "eventparser.h"
 #include "videodialog.h"
 #include "videofilewriter.h"
 #include "highlighter.h"
@@ -206,10 +206,10 @@ void MainWindow::start()
     strList.append("");
 
     //Read, create and store all the events from strList
-    EventReader eventReader;
-    connect(&eventReader, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
+    EventParser eventParser;
+    connect(&eventParser, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
 
-    if(eventReader.loadEvents(strList, events_)) {
+    if(eventParser.loadEvents(strList, events_)) {
         eventsDuration_.setHMS(0, 0, 0);
         eventsDuration_ = eventsDuration_.addMSecs(events_.getTotalDuration());
 

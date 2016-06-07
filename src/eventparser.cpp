@@ -1,22 +1,22 @@
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
-#include "eventreader.h"
+#include "eventparser.h"
 #include "eventcontainer.h"
 
 using std::move;
 
-EventReader::EventReader()
+EventParser::EventParser()
 {
 }
 
-bool EventReader::loadEvents(const QStringList &strList, EventContainer& events)
+bool EventParser::loadEvents(const QStringList &strList, EventContainer& events)
 {
     imageObjects_.clear();
     videoObjects_.clear();
     events.clear();
 
-    //Start reading the events, line by line
+    //Start parsing the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
         //The string should be of the form "Event: type=.., start=.., etc.."
@@ -26,15 +26,15 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer& events)
 
         if(split.size() > 1) {
             if(str == "event") {
-                if(!readEvent(split[1], events, i+1))
+                if(!parseEvent(split[1], events, i+1))
                     return false;
             }
             else if(str == "object") {
-                if(!readObject(split[1], i+1))
+                if(!parseObject(split[1], i+1))
                     return false;
             }
             else if(str == "delete") {
-                if(!readDelEvent(split[1], events, i+1))
+                if(!parseDelEvent(split[1], events, i+1))
                     return false;
             }
             //Ignore comments
@@ -52,7 +52,7 @@ bool EventReader::loadEvents(const QStringList &strList, EventContainer& events)
     return true;
 }
 
-bool EventReader::readEvent(const QString &str, EventContainer& events, int lineNumber)
+bool EventParser::parseEvent(const QString &str, EventContainer& events, int lineNumber)
 {
     //Split the string to get a list of strings of the form param=val e.g. {"type=...", "start=...", etc..}
     QStringList strList = str.split(',');
@@ -69,7 +69,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
     for(int i = 0; i < strList.size(); i++) {
         if(strList[i].contains("=")) {
             QStringList split = strList[i].split('=');
-            if(!readEventParam(split[0], split[1], lineNumber))
+            if(!parseEventParam(split[0], split[1], lineNumber))
                 return false;
         }
     }
@@ -83,7 +83,7 @@ bool EventReader::readEvent(const QString &str, EventContainer& events, int line
     return true;
 }
 
-bool EventReader::readDelEvent(const QString &str, EventContainer& events, int lineNumber)
+bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -98,7 +98,7 @@ bool EventReader::readDelEvent(const QString &str, EventContainer& events, int l
             QString param = split[0];
             QString value = split[1];
 
-            if(!readEventParam(param, value, lineNumber))
+            if(!parseEventParam(param, value, lineNumber))
                 return false;
         }
     }
@@ -159,7 +159,7 @@ bool EventReader::readDelEvent(const QString &str, EventContainer& events, int l
     return true;
 }
 
-bool EventReader::readObject(const QString &str, int lineNumber)
+bool EventParser::parseObject(const QString &str, int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -174,7 +174,7 @@ bool EventReader::readObject(const QString &str, int lineNumber)
             QString param = split[0];
             QString value = split[1];
 
-            if(!readObjectParam(param, value, lineNumber))
+            if(!parseObjectParam(param, value, lineNumber))
                 return false;
         }
     }
@@ -208,7 +208,7 @@ bool EventReader::readObject(const QString &str, int lineNumber)
     return true;
 }
 
-bool EventReader::readEventParam(const QString &p, const QString &v, int lineNumber)
+bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNumber)
 {
     QString param = p.toLower().replace(" ", "");
     QString value = v.toLower().replace(" ", "");
@@ -299,7 +299,7 @@ bool EventReader::readEventParam(const QString &p, const QString &v, int lineNum
     return true;
 }
 
-bool EventReader::readObjectParam(const QString &p, const QString &v, int lineNumber)
+bool EventParser::parseObjectParam(const QString &p, const QString &v, int lineNumber)
 {
     QString param = p.toLower().replace(" ", "");
     if(param == "type") {
@@ -327,7 +327,7 @@ bool EventReader::readObjectParam(const QString &p, const QString &v, int lineNu
     return true;
 }
 
-bool EventReader::createEvent(EventPtr &ev, int lineNumber)
+bool EventParser::createEvent(EventPtr &ev, int lineNumber)
 {
     switch(type_) {
     case Event::EVENT_FLIP:
@@ -428,7 +428,7 @@ bool EventReader::createEvent(EventPtr &ev, int lineNumber)
     return true;
 }
 
-float EventReader::toFloat(const QString &str, int line, const QString &param) const
+float EventParser::toFloat(const QString &str, int line, const QString &param) const
 {
     bool ok;
     QString string = str.toLower().replace(" ", "");
@@ -444,7 +444,7 @@ float EventReader::toFloat(const QString &str, int line, const QString &param) c
     return  num;
 }
 
-int EventReader::toInt(const QString &str, int line, const QString &param) const
+int EventParser::toInt(const QString &str, int line, const QString &param) const
 {
     bool ok;
     QString string = str.toLower().replace(" ", "");

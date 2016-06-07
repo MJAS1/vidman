@@ -312,7 +312,7 @@ private:
 
     bool            color_;
     bool            isTracking_;
-    int             sensitivity_;
+    int             threshold_;
     int             min_x, max_x, min_y, max_y;
 };
 

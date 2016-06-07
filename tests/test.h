@@ -1,5 +1,5 @@
-#ifndef TESTEVENTREADER_H
-#define TESTEVENTREADER_H
+#ifndef TESTEVENTPARSER_H
+#define TESTEVENTPARSER_H
 
 #include <QtTest>
 #include <QObject>
@@ -12,9 +12,9 @@ public:
     ~Test();
 
 private slots:
-    void testEventReader() const;
+    void testEventParser() const;
     void errorMsg(const QString&) const;
     //void testMotionDetector();
 };
 
-#endif // TESTEVENTREADER_H
+#endif // TESTEVENTPARSER_H

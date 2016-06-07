@@ -21,7 +21,7 @@ SOURCES += mainwindow.cpp \
     filewriter.cpp \
     cycdatabuffer.cpp \
     eventcontainer.cpp \
-    eventreader.cpp \
+    eventparser.cpp \
     linenumberarea.cpp \
     textedit.cpp \
     highlighter.cpp \
@@ -33,7 +33,8 @@ SOURCES += mainwindow.cpp \
     event.cpp \
     motiondialog.cpp \
     glworker.cpp \
-    cameraworker.cpp
+    cameraworker.cpp \
+    eventparser.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -47,7 +48,7 @@ HEADERS += mainwindow.h \
     common.h \
     event.h \
     eventcontainer.h \
-    eventreader.h \
+    eventparser.h \
     linenumberarea.h \
     textedit.h \
     highlighter.h \
@@ -58,7 +59,8 @@ HEADERS += mainwindow.h \
     logfile.h \
     motiondialog.h \
     glworker.h \
-    cameraworker.h
+    cameraworker.h \
+    eventparser.h
 
 FORMS += mainwindow.ui \
     videodialog.ui \

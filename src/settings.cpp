@@ -96,14 +96,14 @@ Settings::Settings()
     }
 
     //Sensitivity of movement detection
-    if(!settings.contains("video/movementSensitivity"))
+    if(!settings.contains("video/movementThreshold"))
     {
-        settings.setValue("video/movementSensitivity", 10);
-        movementSensitivity = 10;
+        settings.setValue("video/movementThreshold", 10);
+        movementThreshold = 10;
     }
     else
     {
-        movementSensitivity = settings.value("video/movementSensitivity").toInt();
+        movementThreshold = settings.value("video/movementThreshold").toInt();
     }
 
     //---------------------------------------------------------------------

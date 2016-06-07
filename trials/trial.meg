@@ -1,0 +1,1427 @@
+Object: type=image, id=0, filename=../img/button.png
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1703, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1974, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1533, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1212, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1608, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1311, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1912, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1752, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1421, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1640, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1313, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1632, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1448, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1016, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1908, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1144, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1840, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1880, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1983, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=2000, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1050, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1833, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1375, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1143, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1551, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1111, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1679, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1417, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1342, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1689, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1903, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1343, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1792, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1465, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1004, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1779, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1042, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1508, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1093, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1804, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1995, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1619, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1353, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1398, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1287, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1141, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1200, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1038, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1337, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1280, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1798, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1043, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1909, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1995, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1122, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1956, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1549, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1487, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1462, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1248, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1695, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1542, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1038, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1248, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1444, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1593, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1063, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1062, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1443, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1898, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1801, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1273, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1583, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1645, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1741, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1819, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1635, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1703, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1961, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1503, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1878, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1759, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1585, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1038, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1923, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1536, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1702, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1887, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1557, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1227, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1944, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1175, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1543, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1039, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1677, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1221, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1454, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1539, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1729, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1095, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1458, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1104, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1419, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1211, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1468, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1665, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1876, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1816, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1602, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1776, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1272, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1712, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1733, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1841, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1402, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1763, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1075, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1453, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1715, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1599, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1368, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1307, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1428, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1985, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1564, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1762, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1012, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1111, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1235, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1089, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1554, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1165, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1997, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1249, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1191, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1646, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1817, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1943, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1674, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1068, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1726, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1414, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1502, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1648, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1708, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1540, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1498, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1625, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1460, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1644, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1569, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1735, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1981, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1609, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1418, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1010, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1667, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1963, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1044, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1521, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1369, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1090, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1938, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1631, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1089, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1886, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1827, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1686, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1894, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1618, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1828, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1605, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1522, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1576, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1467, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1565, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1814, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1161, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1280, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1712, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1783, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1831, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1854, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1919, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1514, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1822, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1442, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1778, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1556, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1336, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1247, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1478, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1666, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=freeze, start=0
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=5
+Event: type=image, start=1952, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1550, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1160, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1528, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+
+Event: type=fadeout, start=0, duration=2000, delay=2000, trigcode=1
+Delete: start=0, type=freeze
+Event: type=fadein, start=1000, duration=2000, delay=2000,trigcode=2
+Event: type=detectmotion, trigCode=4
+Event: type=image, start=1453, x=400, y=100, objectid=0,delay=1000, trigcode=3
+Delete: start=1000, type=image, delay=1000
+

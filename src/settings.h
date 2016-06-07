@@ -28,7 +28,7 @@ public:
     // video
     int				jpgQuality;
     int             fps;
-    int             movementSensitivity;
+    int             movementThreshold;
     bool			color;
     bool            vsync;
     bool            flip;

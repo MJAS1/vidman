@@ -1,5 +1,5 @@
-#ifndef EVENTREADER_H
-#define EVENTREADER_H
+#ifndef EVENTPARSER_H
+#define EVENTPARSER_H
 
 #include <memory>
 #include <QObject>
@@ -9,7 +9,7 @@
 #include "settings.h"
 
 
-/*! Reads events from a QStringList and stores them in an EventContainer. The
+/*! Parse events from a QStringList and stores them in an EventContainer. The
 QStringList is created from MainWindow's TextEdit when start is clicked.
 LoadEvents returns false if the input text is incorrectly formatted.
 */
@@ -24,11 +24,11 @@ struct VideoObject {
     int duration_;
 };
 
-class EventReader : public QObject
+class EventParser : public QObject
 {
     Q_OBJECT
 public:
-    EventReader();
+    EventParser();
 
     bool loadEvents(const QStringList &strList, EventContainer& events);
 
@@ -36,11 +36,11 @@ signals:
     void error(const QString&) const;
 
 private:
-    bool                readEvent(const QString &str, EventContainer& events, int lineNumber);
-    bool                readObject(const QString &str, int lineNumber);
-    bool                readDelEvent(const QString &str, EventContainer& events, int lineNumber);
-    bool                readEventParam(const QString &param, const QString &value, int lineNumber);
-    bool                readObjectParam(const QString &param, const QString &value, int lineNumber);
+    bool                parseEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                parseObject(const QString &str, int lineNumber);
+    bool                parseDelEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                parseEventParam(const QString &param, const QString &value, int lineNumber);
+    bool                parseObjectParam(const QString &param, const QString &value, int lineNumber);
 
     bool                createEvent(EventPtr&, int lineNumber);
 
@@ -65,4 +65,4 @@ private:
     QMap<int, cv::Mat>                  imageObjects_;
 };
 
-#endif // EVENTREADER_H
+#endif // EVENTPARSER_H
