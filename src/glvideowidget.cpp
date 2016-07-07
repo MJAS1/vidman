@@ -29,6 +29,7 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
     connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
     connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
+    connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(), SLOT(onStartButton()));
 
     fpsTimer_.start(1000);
 
@@ -93,4 +94,10 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
 VideoDialog* GLVideoWidget::videoDialog()
 {
     return videoDialog_;
+}
+
+void GLVideoWidget::keyPressEvent(QKeyEvent *ev)
+{
+    if(ev->key() == Qt::Key_Space)
+        emit startScript();
 }

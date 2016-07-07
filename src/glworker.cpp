@@ -109,6 +109,7 @@ void GLWorker::startLoop()
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glw_->swapBuffers();
+        glFinish();
 
         ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
         if(!trigPort_.isEmpty())

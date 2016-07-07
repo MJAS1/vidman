@@ -40,9 +40,11 @@ public slots:
 signals:
     void    drawFrame(unsigned char* imBuf);
     void    resize(int w, int h);
+    void    startScript();
 
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *e);
+    void    keyPressEvent(QKeyEvent* ev);
     void    resizeEvent(QResizeEvent*);
     void    paintEvent(QPaintEvent*e);
     QSize   sizeHint() const {return QSize(640, 480);}
