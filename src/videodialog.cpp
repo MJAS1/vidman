@@ -18,7 +18,7 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
-    connect(ui->aspectRatioSlider, SIGNAL(sliderMoved(int)), this, SIGNAL(aspectRatioChanged(int)));
+    connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this, SIGNAL(aspectRatioChanged(int)));
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
@@ -115,4 +115,14 @@ void VideoDialog::onExternTrig(bool on)
 MainWindow* VideoDialog::mainWindow() const
 {
     return window_;
+}
+
+void VideoDialog::increaseAspectRatio()
+{
+    ui->aspectRatioSlider->setValue(ui->aspectRatioSlider->value()+3);
+}
+
+void VideoDialog::decreaseAspectRatio()
+{
+    ui->aspectRatioSlider->setValue(ui->aspectRatioSlider->value()-3);
 }

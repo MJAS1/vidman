@@ -41,6 +41,8 @@ signals:
     void    drawFrame(unsigned char* imBuf);
     void    resize(int w, int h);
     void    startScript();
+    void    increaseAspectRatio();
+    void    decreaseAspectRatio();
 
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *e);

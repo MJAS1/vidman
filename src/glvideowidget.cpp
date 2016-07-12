@@ -30,6 +30,8 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
     connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
     connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(), SLOT(onStartButton()));
+    connect(this, SIGNAL(increaseAspectRatio()), videoDialog_, SLOT(increaseAspectRatio()));
+    connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_, SLOT(decreaseAspectRatio()));
 
     fpsTimer_.start(1000);
 
@@ -100,4 +102,8 @@ void GLVideoWidget::keyPressEvent(QKeyEvent *ev)
 {
     if(ev->key() == Qt::Key_Space)
         emit startScript();
+    else if(ev->key() == Qt::Key_Plus)
+        emit increaseAspectRatio();
+    else if(ev->key() == Qt::Key_Minus)
+        emit decreaseAspectRatio();
 }

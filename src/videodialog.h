@@ -33,6 +33,8 @@ public slots:
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
     void onExternTrig(bool on);
+    void increaseAspectRatio();
+    void decreaseAspectRatio();
 
 signals:
     void drawFrame(unsigned char*);
