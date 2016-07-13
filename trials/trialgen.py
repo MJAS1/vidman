@@ -28,7 +28,7 @@ y = 100
 file.write("Object: type=image, id=0, filename="+imgFilename+"\n\n")
 trials = []
 
-for i in range(0, 159):
+for i in range(0, 319):
     trial = "Event: type=fadeout, start=0, duration={}, delay={}," \
             " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode) 
     trial += "Delete: start=0, type=freeze\n"
@@ -43,7 +43,7 @@ for i in range(0, 159):
     trial += "Delete: start={}, type=image, delay={}\n".format(imgDuration, imgDelay)
     trials.append(trial) 
 
-for i in range(0, 39):
+for i in range(0, 79):
     trial = "Event: type=fadeout, start=0, duration={}, delay={}," \
             " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode) 
     trial += "Delete: start=0, type=freeze\n"
