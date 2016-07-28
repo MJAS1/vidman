@@ -86,6 +86,7 @@ uint32_t Camera::getShutter() const
     dc1394_get_register(dc1394camera_, SHUTTER_ADDR, &shutter);
     return shutter;
 }
+
 uint32_t Camera::getGain() const
 {
     uint32_t gain;

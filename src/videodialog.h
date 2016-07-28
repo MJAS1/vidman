@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "outputdevice.h"
+#include "settings.h"
 
 class MainWindow;
 class Camera;
@@ -33,12 +34,13 @@ public slots:
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
     void onExternTrig(bool on);
+    void onAspectRatioSliderMoved(int videoWidth);
     void increaseAspectRatio();
     void decreaseAspectRatio();
 
 signals:
     void drawFrame(unsigned char*);
-    void aspectRatioChanged(int newVal);
+    void aspectRatioChanged(int videoWidth);
     void outputDeviceChanged(OutputDevice::PortType);
 
 protected:
@@ -57,6 +59,7 @@ private:
     MainWindow*             window_;
     GLVideoWidget*          glVideoWidget_;
     Camera&                 cam_;
+    Settings                settings_;
 };
 
 #endif // VIDEODIALOG_H

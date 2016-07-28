@@ -18,19 +18,22 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
-    connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this, SIGNAL(aspectRatioChanged(int)));
+
+
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
     if(!format.hasOpenGL())
         std::cerr << "OpenGL not supported by window system. Cannot use vsync." << std::endl;
 
-    Settings settings;
-    format.setSwapInterval(settings.vsync);
+    format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
 
     initUI();
+
+    connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this, SLOT(onAspectRatioSliderMoved(int)));
+    ui->aspectRatioSlider->setValue(settings_.videoWidth);
 }
 
 void VideoDialog::initUI()
@@ -125,4 +128,10 @@ void VideoDialog::increaseAspectRatio()
 void VideoDialog::decreaseAspectRatio()
 {
     ui->aspectRatioSlider->setValue(ui->aspectRatioSlider->value()-3);
+}
+
+void VideoDialog::onAspectRatioSliderMoved(int videoWidth)
+{
+    settings_.setValue("video/videoWidth", videoWidth);
+    emit aspectRatioChanged(videoWidth);
 }

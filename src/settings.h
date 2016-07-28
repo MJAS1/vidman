@@ -8,6 +8,9 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 
+#include <QSettings>
+#include <QMutex>
+
 //! Application-wide settings preserved across multiple invocations.
 /*!
  * This class contains application-wide settings read from disc. To read the
@@ -25,10 +28,13 @@ class Settings {
 public:
     Settings();
 
+    void            setValue(const QString &key, const QVariant &value);
+
     // video
     int				jpgQuality;
     int             fps;
     int             movementThreshold;
+    int             videoWidth;
     bool			color;
     bool            vsync;
     bool            flip;
@@ -38,6 +44,10 @@ public:
     // misc
     char			storagePath[500];
     int             printerPortAddr;
+
+private:
+
+    QSettings       settings_;
 };
 
 #endif /* SETTINGS_H_ */

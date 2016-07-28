@@ -1,135 +1,146 @@
 /*
- * settings.cpp
+ * settings_.cpp
  *
  *  Created on: Mar 7, 2011
  *      Author: andrey
  */
-#include <QSettings>
-
 #include "settings.h"
 #include "config.h"
 
-Settings::Settings()
+Settings::Settings() : settings_(ORG_NAME, APP_NAME)
 {
-    QSettings settings(ORG_NAME, APP_NAME);
-
-
     //---------------------------------------------------------------------
     // Video settings
     //
 
     // JPEG quality
-    if(!settings.contains("video/jpeg_quality"))
+    if(!settings_.contains("video/jpeg_quality"))
     {
-        settings.setValue("video/jpeg_quality", 80);
+        settings_.setValue("video/jpeg_quality", 80);
         jpgQuality = 80;
     }
     else
     {
-        jpgQuality = settings.value("video/jpeg_quality").toInt();
+        jpgQuality = settings_.value("video/jpeg_quality").toInt();
     }
 
     // Use color mode
-    if(!settings.contains("video/color"))
+    if(!settings_.contains("video/color"))
     {
-        settings.setValue("video/color", true);
+        settings_.setValue("video/color", true);
         color = true;
     }
     else
     {
-        color = settings.value("video/color").toBool();
+        color = settings_.value("video/color").toBool();
     }
 
     //Use vsync
-    if(!settings.contains("video/vsync"))
+    if(!settings_.contains("video/vsync"))
     {
-        settings.setValue("video/vsync", true);
+        settings_.setValue("video/vsync", true);
         vsync = false;
     }
     else
     {
-        vsync = settings.value("video/vsync").toBool();
+        vsync = settings_.value("video/vsync").toBool();
     }
 
     //Flip the video image on default
-    if(!settings.contains("video/flip"))
+    if(!settings_.contains("video/flip"))
     {
-        settings.setValue("video/flip", true);
+        settings_.setValue("video/flip", true);
         flip = true;
     }
     else
     {
-        flip = settings.value("video/flip").toBool();
+        flip = settings_.value("video/flip").toBool();
     }
 
     //Turn the video image upside down on default
-    if(!settings.contains("video/rotate"))
+    if(!settings_.contains("video/rotate"))
     {
-        settings.setValue("video/rotate", true);
+        settings_.setValue("video/rotate", true);
         turnAround = true;
     }
     else
     {
-        turnAround = settings.value("video/rotate").toBool();
+        turnAround = settings_.value("video/rotate").toBool();
     }
 
     //Add a fixation point to the video
-    if(!settings.contains("video/fixPoint"))
+    if(!settings_.contains("video/fixPoint"))
     {
-        settings.setValue("video/fixPoint", true);
+        settings_.setValue("video/fixPoint", true);
         fixPoint = true;
     }
     else
     {
-        fixPoint = settings.value("video/fixPoint").toBool();
+        fixPoint = settings_.value("video/fixPoint").toBool();
     }
 
     //Frames per second
-    if(!settings.contains("video/fps"))
+    if(!settings_.contains("video/fps"))
     {
-        settings.setValue("video/fps", 60);
+        settings_.setValue("video/fps", 60);
         fps = 30;
     }
     else
     {
-        fps = settings.value("video/fps").toInt();
+        fps = settings_.value("video/fps").toInt();
     }
 
     //Sensitivity of movement detection
-    if(!settings.contains("video/movementThreshold"))
+    if(!settings_.contains("video/movementThreshold"))
     {
-        settings.setValue("video/movementThreshold", 10);
+        settings_.setValue("video/movementThreshold", 10);
         movementThreshold = 10;
     }
     else
     {
-        movementThreshold = settings.value("video/movementThreshold").toInt();
+        movementThreshold = settings_.value("video/movementThreshold").toInt();
+    }
+
+    //Video frame width used for changing aspect ratio
+    if(!settings_.contains("video/videoWidth"))
+    {
+        settings_.setValue("video/videoWidth", 640);
+        videoWidth = 640;
+    }
+    else
+    {
+        videoWidth = settings_.value("video/videoWidth").toInt();
     }
 
     //---------------------------------------------------------------------
-    // Misc settings
+    // Misc settings_
     //
 
     // Data storage folder
-    if(!settings.contains("misc/data_storage_path"))
+    if(!settings_.contains("misc/data_storage_path"))
     {
-        settings.setValue("misc/data_storage_path", "../videodat");
+        settings_.setValue("misc/data_storage_path", "../videodat");
         sprintf(storagePath, "../viddeodat");
     }
     else
     {
-        sprintf(storagePath, settings.value("misc/data_storage_path").toString().toLocal8Bit().data());
+        sprintf(storagePath, settings_.value("misc/data_storage_path").toString().toLocal8Bit().data());
     }
 
     //Parallel port address
-    if(!settings.contains("misc/parallel_port_address"))
+    if(!settings_.contains("misc/parallel_port_address"))
     {
-        settings.setValue("misc/parallel_port_address", 0x3010);
+        settings_.setValue("misc/parallel_port_address", 0x3010);
         printerPortAddr = 0x3010;
     }
     else
     {
-        printerPortAddr = settings.value("misc/parallel_port_address").toInt();
+        printerPortAddr = settings_.value("misc/parallel_port_address").toInt();
     }
+}
+
+void Settings::setValue(const QString &key, const QVariant &value)
+{
+    settings_.setValue(key, value);
 }
 

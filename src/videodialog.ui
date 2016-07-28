@@ -84,6 +84,9 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="tickPosition">
+        <enum>QSlider::NoTicks</enum>
+       </property>
       </widget>
      </item>
      <item row="0" column="2">
