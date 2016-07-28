@@ -28,41 +28,48 @@ y = 100
 file.write("Object: type=image, id=0, filename="+imgFilename+"\n\n")
 trials = []
 
-for i in range(0, 319):
-    trial = "Event: type=fadeout, start=0, duration={}, delay={}," \
-            " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode) 
-    trial += "Delete: start=0, type=freeze\n"
-    trial += "Event: type=fadein, start={}, duration={}, delay={}," \
-             "trigcode={}\n".format(blackDuration, fadeDuration, 
-                                    fadeDuration, fadeinTrigCode)
-    trial += "Event: type=detectmotion, trigCode={}\n".format(standardTrigCode)
-
-    delay = random.randint(minDelay, maxDelay)
-    trial += "Event: type=image, start={}, x={}, y={}, objectid=0," \
-             "delay={}, trigcode={}\n".format(delay, x, y, imgDuration, imgTrigCode)
-    trial += "Delete: start={}, type=image, delay={}\n".format(imgDuration, imgDelay)
-    trials.append(trial) 
+trials = ["normal"]*5
 
 for i in range(0, 79):
-    trial = "Event: type=fadeout, start=0, duration={}, delay={}," \
-            " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode) 
-    trial += "Delete: start=0, type=freeze\n"
-    trial += "Event: type=freeze, start=0\n"
-    trial += "Event: type=fadein, start={}, duration={}, delay={}," \
-             "trigcode={}\n".format(blackDuration, fadeDuration, 
-                                    fadeDuration, fadeinTrigCode)
-    trial += "Event: type=detectmotion, trigCode={}\n".format(deviantTrigCode)
+    ls = ["normal"]*4
+    ls.append("deviant")
+    random.shuffle(ls)
+    trials.extend(ls)
 
-    delay = random.randint(minDelay, maxDelay)
-    trial += "Event: type=image, start={}, x={}, y={}, objectid=0," \
-             "delay={}, trigcode={}\n".format(delay, x, y, imgDuration, imgTrigCode)
-    trial += "Delete: start={}, type=image, delay={}\n".format(imgDuration, imgDelay)
-    trials.append(trial) 
-
-random.shuffle(trials)
+for i in range(len(trials)-1):
+    if trials[i] == "deviant" and trials[i+1] == "deviant":
+        trials[i], trials[i-1] = trials[i-1], trials[i]
 
 for trial in trials:
-    file.write(trial)
-    file.write("\n")
+    if trial == "normal":
+        file.write("Event: type=fadeout, start=0, duration={}, delay={}," \
+                " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode))
+        file.write("Delete: start=0, type=freeze\n")
+        file.write("Event: type=fadein, start={}, duration={}, delay={}," \
+                 "trigcode={}\n".format(blackDuration, fadeDuration, 
+                                        fadeDuration, fadeinTrigCode))
+        file.write("Event: type=detectmotion, trigCode={}\n".format(standardTrigCode))
+
+        delay = random.randint(minDelay, maxDelay)
+        file.write("Event: type=image, start={}, x={}, y={}, objectid=0," \
+                 "delay={}, trigcode={}\n".format(delay, x, y, imgDuration, imgTrigCode))
+        file.write("Delete: start={}, type=image, delay={}\n".format(imgDuration, imgDelay))
+        file.write("\n")
+
+    else:
+        file.write("Event: type=fadeout, start=0, duration={}, delay={}," \
+                " trigcode={}\n".format(fadeDuration, fadeDuration, fadeoutTrigCode))
+        file.write("Delete: start=0, type=freeze\n")
+        file.write("Event: type=freeze, start=0\n")
+        file.write("Event: type=fadein, start={}, duration={}, delay={}," \
+                 "trigcode={}\n".format(blackDuration, fadeDuration, 
+                                        fadeDuration, fadeinTrigCode))
+        file.write("Event: type=detectmotion, trigCode={}\n".format(deviantTrigCode))
+
+        delay = random.randint(minDelay, maxDelay)
+        file.write("Event: type=image, start={}, x={}, y={}, objectid=0," \
+                 "delay={}, trigcode={}\n".format(delay, x, y, imgDuration, imgTrigCode))
+        file.write("Delete: start={}, type=image, delay={}\n".format(imgDuration, imgDelay))
+        file.write("\n")
 
 file.close();
