@@ -137,7 +137,6 @@ bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int 
         case Event::EVENT_FREEZE:
             ev->appendLog(QString("Freeze event removed. "));
             break;
-
         case Event::EVENT_ZOOM:
             ev->appendLog(QString("Zoom event removed."));
             break;
@@ -146,6 +145,9 @@ bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int 
             break;
         case Event::EVENT_RECORD:
             ev->appendLog(QString("Record event removed."));
+            break;
+        case Event::EVENT_DETECT_MOTION:
+            ev->appendLog(QString("Detect motion event removed."));
             break;
 
         default:
