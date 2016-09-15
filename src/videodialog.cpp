@@ -53,6 +53,8 @@ void VideoDialog::initUI()
 
         ui->vrSlider->setMinimum(VR_MIN_VAL);
         ui->vrSlider->setMaximum(VR_MAX_VAL);
+
+        cam_.setWhiteBalance(settings_.whitebalance);
     }
     else {
         ui->shutterSlider->setEnabled(false);
@@ -93,11 +95,13 @@ void VideoDialog::onGainChanged(int newVal)
 void VideoDialog::onUVChanged(int newVal)
 {
     cam_.setUV(newVal, ui->vrSlider->value());
+    settings_.setValue("video/whiteBalance", cam_.getWhiteBalance());
 }
 
 void VideoDialog::onVRChanged(int newVal)
 {
     cam_.setVR(newVal, ui->uvSlider->value());
+    settings_.setValue("video/whiteBalance", cam_.getWhiteBalance());
 }
 
 void VideoDialog::closeEvent(QCloseEvent *)

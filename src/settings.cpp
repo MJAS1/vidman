@@ -112,6 +112,16 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         videoWidth = settings_.value("video/videoWidth").toInt();
     }
 
+    if(!settings_.contains("video/whiteBalance"))
+    {
+        whitebalance = (UV_MAX_VAL*UV_REG_SHIFT + VR_MAX_VAL + WHITEBALANCE_OFFSET) / 2;
+        settings_.setValue("video/whiteBalance", whitebalance);
+    }
+    else
+    {
+        whitebalance = settings_.value("video/whiteBalance").toInt();
+    }
+
     //---------------------------------------------------------------------
     // Misc settings_
     //

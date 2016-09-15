@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QDebug>
 #include <unistd.h>
 #include "config.h"
 #include "camera.h"
@@ -134,6 +135,26 @@ void Camera::setVR(int newVal, int uvValue)
 
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, newVal + UV_REG_SHIFT * uvValue + WHITEBALANCE_OFFSET);
+
+    if (err != DC1394_SUCCESS) {
+        cerr << "Could not set white balance register" << endl;
+        //abort();
+    }
+}
+
+uint32_t Camera::getWhiteBalance() const
+{
+    uint32_t wb;
+    dc1394_get_register(dc1394camera_, WHITEBALANCE_ADDR, &wb);
+    return wb;
+}
+
+void Camera::setWhiteBalance(uint32_t wb)
+{
+    dc1394error_t	err;
+
+    // Since UV and VR live in the same register, we need to take care of both
+    err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, wb);
 
     if (err != DC1394_SUCCESS) {
         cerr << "Could not set white balance register" << endl;

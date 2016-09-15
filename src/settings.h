@@ -40,6 +40,7 @@ public:
     bool            flip;
     bool            turnAround;
     bool            fixPoint;
+    uint32_t        whitebalance;
 
     // misc
     char			storagePath[500];

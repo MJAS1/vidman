@@ -25,6 +25,8 @@ public:
     void        setGain(int newVal);
     void        setUV(int newVal, int vrValue);
     void        setVR(int newVal, int uvValue);
+    uint32_t    getWhiteBalance() const;
+    void        setWhiteBalance(uint32_t wb);
 
     //Allows the camera to be controlled by an external trigger source
     void        setExternTrigger(bool on);
