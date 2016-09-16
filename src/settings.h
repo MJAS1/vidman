@@ -41,6 +41,8 @@ public:
     bool            turnAround;
     bool            fixPoint;
     uint32_t        whitebalance;
+    uint32_t        shutter;
+    uint32_t        gain;
 
     // misc
     char			storagePath[500];

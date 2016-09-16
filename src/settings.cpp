@@ -122,6 +122,26 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         whitebalance = settings_.value("video/whiteBalance").toInt();
     }
 
+    if(!settings_.contains("video/shutter"))
+    {
+        shutter = (SHUTTER_MAX_VAL - SHUTTER_MIN_VAL) / 10;
+        settings_.setValue("video/shutter", shutter);
+    }
+    else
+    {
+        shutter = settings_.value("video/shutter").toInt();
+    }
+
+    if(!settings_.contains("video/gain"))
+    {
+        gain = (GAIN_MAX_VAL - GAIN_MIN_VAL) / 10;
+        settings_.setValue("video/gain", gain);
+    }
+    else
+    {
+        gain = settings_.value("video/gain").toInt();
+    }
+
     //---------------------------------------------------------------------
     // Misc settings_
     //

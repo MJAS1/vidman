@@ -40,13 +40,15 @@ void VideoDialog::initUI()
 {
     // Setup gain/shutter sliders
     if(!cam_.empty()) {
+        cam_.setShutter(settings_.shutter);
         ui->shutterSlider->setMinimum(SHUTTER_MIN_VAL);
         ui->shutterSlider->setMaximum(SHUTTER_MAX_VAL);
-        ui->shutterSlider->setValue(cam_.getShutter() - SHUTTER_OFFSET);
+        ui->shutterSlider->setValue(settings_.shutter);
 
+        cam_.setGain(settings_.gain);
         ui->gainSlider->setMinimum(GAIN_MIN_VAL);
         ui->gainSlider->setMaximum(GAIN_MAX_VAL);
-        ui->gainSlider->setValue(cam_.getGain() - GAIN_OFFSET);
+        ui->gainSlider->setValue(settings_.gain);
 
         ui->uvSlider->setMinimum(UV_MIN_VAL);
         ui->uvSlider->setMaximum(UV_MAX_VAL);
