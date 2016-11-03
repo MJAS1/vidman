@@ -21,11 +21,6 @@ void MotionDialog::setPixmap(const QPixmap &p)
     ui->label->setPixmap(p);
 }
 
-void MotionDialog::onColorButtonToggled(bool arg)
-{
-    emit changeColors(arg);
-}
-
 void MotionDialog::closeEvent(QCloseEvent *)
 {
     window_->toggleMotionDialogChecked(false);

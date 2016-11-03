@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>60</y>
+     <y>30</y>
      <width>640</width>
      <height>480</height>
     </rect>
@@ -34,91 +34,9 @@
     <string/>
    </property>
   </widget>
-  <widget class="QPushButton" name="colorButton">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>40</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../resource.qrc">
-     <normaloff>:/img/videoIconColors.png</normaloff>:/img/videoIconColors.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>30</width>
-     <height>30</height>
-    </size>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="bwButton">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>10</y>
-     <width>40</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-   <property name="icon">
-    <iconset resource="../resource.qrc">
-     <normaloff>:/img/videoIconBW.png</normaloff>:/img/videoIconBW.png</iconset>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>30</width>
-     <height>30</height>
-    </size>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="autoExclusive">
-    <bool>true</bool>
-   </property>
-  </widget>
  </widget>
- <resources>
-  <include location="../resource.qrc"/>
-  <include location="../resource.qrc"/>
-  <include location="../resource.qrc"/>
- </resources>
- <connections>
-  <connection>
-   <sender>colorButton</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>MotionDialog</receiver>
-   <slot>onColorButtonToggled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>29</x>
-     <y>29</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>329</x>
-     <y>272</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <resources/>
+ <connections/>
  <slots>
   <slot>onColorButtonToggled(bool)</slot>
  </slots>

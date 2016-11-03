@@ -22,10 +22,6 @@ public:
 
 public slots:
     void setPixmap(const QPixmap&);
-    void onColorButtonToggled(bool);
-
-signals:
-    void changeColors(bool);
 
 private:
     void closeEvent(QCloseEvent*);

@@ -12,8 +12,9 @@ namespace cv {
 class Mat;
 }
 
-class EventContainer
+class EventContainer : public QObject
 {
+    Q_OBJECT
 public:
 
     EventContainer();
@@ -32,6 +33,9 @@ public:
 
     EventPtr        pop_front();
     const EventPtr& operator[](int id) const;
+
+public slots:
+    void            sort();
 
 private:
     EventContainer(const EventContainer&);

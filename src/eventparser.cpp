@@ -58,7 +58,7 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events, int lin
     QStringList strList = str.split(',');
 
     //Event parameters
-    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ = 0;
+    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ = target_ = trigCode2_ = tolerance_ = 0;
     eventId_ = -1;
     scale_ = 1;
     objectIdOk_ = false;
@@ -292,6 +292,19 @@ bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNu
             return false;
         }
     }
+    else if(param == "trigcode2") {
+        if((trigCode2_ = toInt(v, lineNumber, QString("trigcode2"))) == -1)
+            return false;
+    }
+    else if(param == "target") {
+        if((target_ = toInt(v, lineNumber, QString("target"))) == -1)
+            return false;
+    }
+    else if(param == "tolerance") {
+        if((tolerance_ = toInt(v, lineNumber, QString("tolerance"))) == -1)
+            return false;
+    }
+
     else if(param.replace(" ", "").isEmpty());
     else {
         emit error(QString("Error: couldn't understand '%1' in line %2.").arg(param).arg(lineNumber));
@@ -383,7 +396,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
         break;
 
     case Event::EVENT_DETECT_MOTION:
-        ev.reset(new MotionDetectorEvent(start_, delay_, eventId_, trigCode_));
+        ev.reset(new MotionDetectorEvent(start_, target_,  tolerance_, delay_, eventId_, trigCode_, trigCode2_));
         ev->appendLog(QString("Movement detected"));
         break;
 

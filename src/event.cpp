@@ -1,5 +1,6 @@
 #include <QImage>
 #include <QPixmap>
+#include <QDebug>
 #include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
@@ -349,12 +350,16 @@ void PlaybackEvent::unpause()
     paused_ = false;
 }
 
-MotionDetectorEvent::MotionDetectorEvent(int start, int delay, int id, int trigCode) :
-    Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode, MOTION_DETECTOR_PRIORITY),
-    color_(true), isTracking_(true)
+MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance, int delay, int id, int trigCode, int trigCode2, State state) :
+    Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode, MOTION_DETECTOR_PRIORITY), state_(state), trigCode2_(trigCode2), target_(target),
+    tolerance_(tolerance)
 {
     Settings settings;
     threshold_ = settings.movementThreshold;
+}
+
+MotionDetectorEvent::MotionDetectorEvent(State state) : state_(state)
+{
 }
 
 void MotionDetectorEvent::apply(cv::Mat &frame)
@@ -370,25 +375,46 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         next_ = frame.clone();
     }
 
-    movement_ = next_.clone();
-    if(nChanges() > threshold_) {
-        if(min_x-10 > 0) min_x -= 10;
-        if(min_y-10 > 0) min_y -= 10;
-        if(max_x+10 < result_.cols-1) max_x += 10;
-        if(max_y+10 < result_.rows-1) max_y += 10;
+    switch(state_) {
+        case WAITING:
+            if(nChanges() > threshold_) {
+                emit triggered(trigCode_, log_);
+                timer_.start();
+                state_ = STARTED;
+            }
+            break;
 
-        // draw rectangle round the changed pixel
-        cv::Point x(min_x,min_y);
-        cv::Point y(max_x,max_y);
-        cv::Rect rect(x,y);
-        cv::rectangle(movement_,rect,cv::Scalar(0, 0, 255),2);
-        if(isTracking_) {
-            emit triggered(trigCode_, log_);
-            isTracking_ = false;
-        }
+        case STARTED:
+            if(nChanges() < threshold_) {
+                state_ = FINISHED;
+                emit triggered(trigCode2_, QString("Movement finished."));
+                time_ = timer_.elapsed();
+                if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
+                    color_ = cv::Scalar(0, 255, 0);
+                else
+                    color_ = cv::Scalar(0, 0, 255);
+                timer_.restart();
+
+                //After the movement has finished, this event doesn't track movement anymore and is just used
+                //to write the duration of the movement on the frame. Thus the priority needs to be changed.
+                //The priorityChanged signal is connected to the eventcontainer so that it is resorted by priority.
+                priority_ = DEFAULT_PRIORITY;
+                emit priorityChanged();
+            }
+            break;
+
+        case FINISHED:
+            if(timer_.elapsed() < 1000)
+                cv::putText(frame, std::string(std::to_string(time_)), cv::Point(VIDEO_WIDTH/2-20,VIDEO_HEIGHT/2), cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+            else
+                ready_=true;
+            break;
+
+        case MOTION_DIALOG:
+            nChanges();
+            createMotionPixmap();
+            break;
     }
-
-    createMotionPixmap();
 }
 
 int MotionDetectorEvent::nChanges()
@@ -425,22 +451,14 @@ int MotionDetectorEvent::nChanges()
 void MotionDetectorEvent::apply(EventContainer &events)
 {
     events.deleteType(Event::EVENT_DETECT_MOTION);
+    connect(this, SIGNAL(priorityChanged()), &events, SLOT(sort()));
 }
 
 void MotionDetectorEvent::createMotionPixmap()
 {
     QImage img;
-    if(color_)
-        img = QImage(movement_.data, movement_.cols, movement_.rows, movement_.step, QImage::Format_RGB888);
-    else
-        img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
+    img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
     emit pixmapReady(pixmap);
-}
-
-
-void MotionDetectorEvent::changeMovementFrameColor(bool color)
-{
-    color_ = color;
 }

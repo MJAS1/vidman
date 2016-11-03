@@ -292,27 +292,43 @@ class MotionDetectorEvent : public Event
 {
     Q_OBJECT
 public:
-    explicit MotionDetectorEvent(int start, int delay, int id,
-                                 int trigCode);
+    enum State {
+        WAITING,
+        STARTED,
+        FINISHED,
+        MOTION_DIALOG
+    };
+
+    explicit MotionDetectorEvent(int start, int target, int tolerance,
+                                 int delay, int id, int trigCode, int trigCode2,
+                                 State state = WAITING);
+
+    explicit MotionDetectorEvent(State state = MOTION_DIALOG);
+
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
 
-public slots:
-    void            changeMovementFrameColor(bool);
-
 signals:
     void            pixmapReady(const QPixmap&);
+    void            priorityChanged();
 
 private:
     void            createMotionPixmap();
-
     int             nChanges();
-    cv::Mat         prev_, current_, next_, result_, movement_;
-    cv::Point       centroid_;
 
-    bool            color_;
-    bool            isTracking_;
+    State           state_;
+    QElapsedTimer   timer_;
+    qint64          time_;
+
+    cv::Mat         prev_, current_, next_, result_;
+    cv::Point       centroid_;
+    cv::Scalar      color_;
+
+    bool            motionDialog_;
     int             threshold_;
+    int             trigCode2_;
+    int             target_;
+    int             tolerance_;
     int             min_x, max_x, min_y, max_y;
 };
 

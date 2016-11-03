@@ -71,6 +71,8 @@ void EventContainer::applyEvents(cv::Mat &frame)
         else
             iter++;
     }
+
+    //sort();
 }
 
 void EventContainer::pauseEvents()
@@ -90,5 +92,12 @@ int EventContainer::getTotalDuration() const
     return std::accumulate(events_.begin(), events_.end(), 0,
                            [](int x, const EventPtr& a) {
         return x + a->getStart() + a->getDelay();
+    });
+}
+
+void EventContainer::sort()
+{
+    std::sort(events_.begin(), events_.end(), [](const EventPtr& l, const EventPtr& r) {
+        return l->getPriority() > r->getPriority();
     });
 }

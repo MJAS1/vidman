@@ -31,7 +31,6 @@ public:
 
 signals:
     void motionPixmapReady(const QPixmap&);
-    void motionDialogColorChanged(bool);
 
 public slots:
     void motionDialogToggled(bool);

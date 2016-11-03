@@ -150,11 +150,9 @@ void CameraWorker::onEventTriggered(int trigCode, const QString& log)
 void CameraWorker::motionDialogToggled(bool on)
 {
     if(on) {
-        EventPtr movement(new MotionDetectorEvent(0, 0, 0, 0));
+        EventPtr movement(new MotionDetectorEvent());
         connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
                 SIGNAL(motionPixmapReady(const QPixmap&)));
-        connect(this, SIGNAL(motionDialogColorChanged(bool)), movement.get(),
-                SLOT(changeMovementFrameColor(bool)));
         preEvents_.insertSorted(std::move(movement));
     }
     else {
