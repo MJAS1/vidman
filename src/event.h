@@ -283,10 +283,8 @@ private:
 /*This class detects movement between subsequent frames. It stores three frames:
  * previous, current and next, and detects motion using "differential images"
  * method https://blog.cedric.ws/opencv-simple-motion-detection. This class can
- * also emit a QPixmpap of either the original image with the movement
- * highlighted with a red rectangle, or a black-and-white image with the
- * movement shown as white pixels. The emitted pixmap can then be drawn to
- * MotionDialog.
+ * also emit a QPixmpap of a black-and-white image with the movement shown as white
+ * pixels. The emitted pixmap can then be drawn to MotionDialog.
 */
 class MotionDetectorEvent : public Event
 {
@@ -294,7 +292,8 @@ class MotionDetectorEvent : public Event
 public:
     enum State {
         WAITING,
-        STARTED,
+        TRACKING,
+        MAYBE_FINISHED,
         FINISHED,
         MOTION_DIALOG
     };
@@ -317,7 +316,7 @@ private:
     int             nChanges();
 
     State           state_;
-    QElapsedTimer   timer_;
+    QElapsedTimer   movementTimer_, finishTimer_;
     qint64          time_;
 
     cv::Mat         prev_, current_, next_, result_;

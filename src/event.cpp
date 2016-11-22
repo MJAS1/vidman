@@ -376,40 +376,57 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
     }
 
     switch(state_) {
+        //Wating for the movement to start
         case WAITING:
             if(nChanges() > threshold_) {
                 emit triggered(trigCode_, log_);
-                timer_.start();
-                state_ = STARTED;
+                movementTimer_.start();
+                state_ = TRACKING;
             }
             break;
 
-        case STARTED:
+        //Movement has started
+        case TRACKING:
             if(nChanges() < threshold_) {
-                state_ = FINISHED;
-                emit triggered(trigCode2_, QString("Movement finished."));
-                time_ = timer_.elapsed();
-                if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
-                    color_ = cv::Scalar(0, 255, 0);
-                else
-                    color_ = cv::Scalar(0, 0, 255);
-                timer_.restart();
-
-                //After the movement has finished, this event doesn't track movement anymore and is just used
-                //to write the duration of the movement on the frame. Thus the priority needs to be changed.
-                //The priorityChanged signal is connected to the eventcontainer so that it is resorted by priority.
-                priority_ = DEFAULT_PRIORITY;
-                emit priorityChanged();
+                finishTimer_.start();
+                state_ = MAYBE_FINISHED;
             }
             break;
 
+        //Movement has maybe stopped. Make sure that it really stopped instead of a brief pause in movement
+        //due to a change in direction for example.
+        case MAYBE_FINISHED:
+            if(nChanges() < threshold_) {
+                if(finishTimer_.elapsed() > 20) {
+                    state_ = FINISHED;
+                    emit triggered(trigCode2_, QString("Movement finished."));
+                    time_ = movementTimer_.elapsed();
+                    if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
+                        color_ = cv::Scalar(0, 255, 0);
+                    else
+                        color_ = cv::Scalar(0, 0, 255);
+                    finishTimer_.restart();
+
+                    //After the movement has finished, this event doesn't track movement anymore and is just used
+                    //to write the duration of the movement on the frame. Thus the priority needs to be changed.
+                    //The priorityChanged signal is connected to the eventcontainer so that it is resorted by priority.
+                    priority_ = DEFAULT_PRIORITY;
+                    emit priorityChanged();
+                }
+            }
+            else
+                state_ = TRACKING;
+            break;
+
+        //Movement finished, draw time elapsed for movement to the frame.
         case FINISHED:
-            if(timer_.elapsed() < 1000)
+            if(finishTimer_.elapsed() < 1000)
                 cv::putText(frame, std::string(std::to_string(time_)), cv::Point(VIDEO_WIDTH/2-20,VIDEO_HEIGHT/2), cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
             else
                 ready_=true;
             break;
 
+        //This state is only used for the event associated with a motion dialog.
         case MOTION_DIALOG:
             nChanges();
             createMotionPixmap();

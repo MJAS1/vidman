@@ -41,7 +41,7 @@ while i < len(trials):
 for trial in trials:
     if trial == "standard":
         delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, trigCode={}, start={}\n".format(standardTrigCode, delay))
+        file.write("Event: type=detectmotion, target=600, tolerance=200, trigCode={}, start={}\n".format(standardTrigCode, delay))
         file.write("Event: type=image, x={}, y={}, objectid=0," \
                  "delay={}, trigcode={}\n".format(x, y, imgDuration, imgTrigCode))
         file.write("Delete: start={}, type=image\n".format(imgDuration))

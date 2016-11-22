@@ -71,8 +71,6 @@ void EventContainer::applyEvents(cv::Mat &frame)
         else
             iter++;
     }
-
-    //sort();
 }
 
 void EventContainer::pauseEvents()
