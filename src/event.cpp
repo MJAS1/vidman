@@ -421,7 +421,7 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         //Movement finished, draw time elapsed for movement to the frame.
         case FINISHED:
             if(finishTimer_.elapsed() < 1000)
-                cv::putText(frame, std::string(std::to_string(time_)), cv::Point(VIDEO_WIDTH/2-20,VIDEO_HEIGHT/2), cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+                cv::putText(frame, std::string(std::to_string(time_)), cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2), cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
             else
                 ready_=true;
             break;

@@ -18,13 +18,15 @@ minDelay = 1000
 maxDelay = 2000
 imgDuration = 700
 x = 400
-y = 100
+y = 200
+target = 250
+tolerance = 51
 
 file.write("Object: type=image, id=0, filename="+imgFilename+"\n\n")
 
 trials = []
-trials = ["standard"]*360
-trials.extend(["deviant"]*40)
+trials = ["standard"]*300
+trials.extend(["deviant"]*100)
 random.shuffle(trials)
 #Start each trial with only standards
 trials[0:0] = 20*["standard"]
@@ -41,7 +43,7 @@ while i < len(trials):
 for trial in trials:
     if trial == "standard":
         delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, target=600, tolerance=200, trigCode={}, start={}\n".format(standardTrigCode, delay))
+        file.write("Event: type=detectmotion, target={}, tolerance={}, trigCode={}, start={}\n".format(target, tolerance, standardTrigCode, delay))
         file.write("Event: type=image, x={}, y={}, objectid=0," \
                  "delay={}, trigcode={}\n".format(x, y, imgDuration, imgTrigCode))
         file.write("Delete: start={}, type=image\n".format(imgDuration))
@@ -49,7 +51,7 @@ for trial in trials:
 
     else:
         delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, trigCode={}, start={}\n".format(deviantTrigCode, delay))
+        file.write("Event: type=detectmotion, target={}, tolerance={}, trigCode={}, start={}\n".format(target, tolerance, deviantTrigCode, delay))
         file.write("Event: type=freeze, start=0\n")
         file.write("Event: type=image, x={}, y={}, objectid=0," \
                  "delay={}, trigcode={}\n".format(x, y, imgDuration, imgTrigCode))
