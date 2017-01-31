@@ -1,6 +1,8 @@
 from sys import argv
 import random
 
+random.seed(312)
+
 if len(argv) != 2:
     print "Usage: " + argv[0] + " <filename>."
     exit()
@@ -14,6 +16,7 @@ imgFilename = "../img/button.png"
 imgTrigCode = 1
 standardTrigCode = 2
 deviantTrigCode = 3
+missTrigCode = 4
 minDelay = 1000
 maxDelay = 2000
 imgDuration = 700
@@ -43,18 +46,37 @@ while i < len(trials):
 for trial in trials:
     if trial == "standard":
         delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, target={}, tolerance={}, trigCode={}, start={}\n".format(target, tolerance, standardTrigCode, delay))
+        file.write("Event: type=detectmotion, target={}, tolerance={},"
+                   "trigCode={}, trigcode2={}, start={}\n".format(
+                                                            target,
+                                                            tolerance,
+                                                            standardTrigCode,
+                                                            missTrigCode,
+                                                            delay))
         file.write("Event: type=image, x={}, y={}, objectid=0," \
-                 "delay={}, trigcode={}\n".format(x, y, imgDuration, imgTrigCode))
+                 "delay={}, trigcode={}\n".format(x,
+                                                  y,
+                                                  imgDuration,
+                                                  imgTrigCode))
         file.write("Delete: start={}, type=image\n".format(imgDuration))
         file.write("Delete: start=0, type=detectmotion\n")
 
     else:
         delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, target={}, tolerance={}, trigCode={}, start={}\n".format(target, tolerance, deviantTrigCode, delay))
+        file.write("Event: type=detectmotion, target={}, tolerance={},"
+                   "trigCode={}, trigcode2={}, start={}\n".format(
+                                                            target,
+                                                            tolerance,
+                                                            missTrigCode,
+                                                            deviantTrigCode,
+                                                            delay))
         file.write("Event: type=freeze, start=0\n")
         file.write("Event: type=image, x={}, y={}, objectid=0," \
-                 "delay={}, trigcode={}\n".format(x, y, imgDuration, imgTrigCode))
+                 "delay={}, trigcode={}\n".format(
+                                            x,
+                                            y,
+                                            imgDuration,
+                                            imgTrigCode))
         file.write("Delete: start={}, type=image\n".format(imgDuration))
         file.write("Delete: start=0, type=freeze\n")
         file.write("Delete: start=0, type=detectmotion\n")
