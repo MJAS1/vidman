@@ -67,8 +67,8 @@ for trial in trials:
                    "trigCode={}, trigcode2={}, start={}\n".format(
                                                             target,
                                                             tolerance,
-                                                            missTrigCode,
                                                             deviantTrigCode,
+                                                            missTrigCode,
                                                             delay))
         file.write("Event: type=freeze, start=0\n")
         file.write("Event: type=image, x={}, y={}, objectid=0," \
