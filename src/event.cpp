@@ -1,6 +1,5 @@
 #include <QImage>
 #include <QPixmap>
-#include <QDebug>
 #include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
@@ -43,7 +42,7 @@ void FlipEvent::apply(EventContainer &events)
 }
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
-    Event(EVENT_FADEIN, start, delay, duration, id, trigCode), amount_(-255),
+    Event(EVENT_FADEIN, start, delay, duration, id, trigCode, FADE_PRIORITY), amount_(-255),
     stopped_(false)
 {
     timerWithPause_.invalidate();
@@ -86,7 +85,7 @@ void FadeInEvent::unpause()
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
-    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode), amount_(0),
+    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode, FADE_PRIORITY), amount_(0),
     stopped_(false)
 {
     timerWithPause_.invalidate();

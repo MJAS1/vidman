@@ -12,6 +12,7 @@
 class EventContainer;
 
 const int DEFAULT_PRIORITY = 0;
+const int FADE_PRIORITY = 1;
 const int FREEZE_PRIORITY = 3;
 const int RECORD_PRIORITY = 4;
 const int PLAYBACK_PRIORITY = 4;
