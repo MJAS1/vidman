@@ -1,5 +1,6 @@
 #include <QImage>
 #include <QPixmap>
+#include "mainwindow.h"
 #include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
@@ -477,4 +478,27 @@ void MotionDetectorEvent::createMotionPixmap()
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
     emit pixmapReady(pixmap);
+}
+
+PauseEvent::PauseEvent(MainWindow *window)
+{
+    connect(this, SIGNAL(triggered(int,QString)), window, SLOT(pause()));
+
+    int baseline = 0;
+    cv::Size size1 = getTextSize(std::string("Press space to continue"), cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
+    cv::Size size2 = getTextSize(std::string("Paused"), cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
+    point1 = cv::Point((VIDEO_WIDTH - size2.width)/2,(VIDEO_HEIGHT + size2.height)/2);
+    point2 = cv::Point((VIDEO_WIDTH - size1.width)/2,(VIDEO_HEIGHT + size1.height)/2 + size2.height + 10);
+}
+
+void PauseEvent::apply(cv::Mat &frame)
+{
+    Event::apply(frame);
+    cv::putText(frame, std::string("Paused"), point1, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
+    cv::putText(frame, std::string("Press space to continue"), point2, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
+}
+
+void PauseEvent::unpause()
+{
+    ready_ = true;
 }

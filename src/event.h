@@ -10,6 +10,7 @@
 #include "timerwithpause.h"
 
 class EventContainer;
+class MainWindow;
 
 const int DEFAULT_PRIORITY = 0;
 const int FADE_PRIORITY = 1;
@@ -330,6 +331,19 @@ private:
     int             target_;
     int             tolerance_;
     int             min_x, max_x, min_y, max_y;
+};
+
+class PauseEvent : public Event
+{
+    Q_OBJECT
+public:
+    explicit PauseEvent(MainWindow* window);
+
+    virtual void apply(cv::Mat &);
+    virtual void unpause();
+
+private:
+    cv::Point point1, point2;
 };
 
 #endif // EVENT_H

@@ -12,7 +12,7 @@ else {
 }
 
 PKGCONFIG += opencv
-LIBS += -L../lib -lvidman_debug -L/usr/share/lib -ldc1394
+LIBS += -L../lib -lvidman_debug -L/usr/share/lib -ldc1394 -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11
 

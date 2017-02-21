@@ -30,7 +30,7 @@ class EventParser : public QObject
 public:
     EventParser();
 
-    bool loadEvents(const QStringList &strList, EventContainer& events);
+    bool loadEvents(const QStringList &strList, EventContainer& events, MainWindow* window = nullptr);
 
 signals:
     void error(const QString&) const;

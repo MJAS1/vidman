@@ -51,6 +51,7 @@ signals:
 public slots:
     void setStatus(const QString&);
     void fileWriterError(const QString&);
+    void pause();
     
 private slots:
     void onStartButton();
@@ -103,7 +104,6 @@ private:
     void                    setCurrentFileName(const QString &fileName);
 
     void                    start();
-    void                    pause();
     void                    unpause();
 
     int                     currentEventDuration_;

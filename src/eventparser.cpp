@@ -10,7 +10,7 @@ EventParser::EventParser()
 {
 }
 
-bool EventParser::loadEvents(const QStringList &strList, EventContainer& events)
+bool EventParser::loadEvents(const QStringList &strList, EventContainer& events, MainWindow* window)
 {
     imageObjects_.clear();
     videoObjects_.clear();
@@ -43,6 +43,10 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events)
                 emit error(QString("Error: couldn't understand '%1' in line %2.").arg(split[0]).arg(i+1));
                 return false;
             }
+        }
+        else if(str == "pause") {
+            EventPtr ev(new PauseEvent(window));
+            events.append(move(ev));
         }
         else if(!str.isEmpty()) {
             emit error(QString("Error: couldn't understand line %1.").arg(i+1));

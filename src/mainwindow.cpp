@@ -208,7 +208,7 @@ void MainWindow::start()
     EventParser eventParser;
     connect(&eventParser, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
 
-    if(eventParser.loadEvents(strList, events_)) {
+    if(eventParser.loadEvents(strList, events_, this)) {
         eventsDuration_.setHMS(0, 0, 0);
         eventsDuration_ = eventsDuration_.addMSecs(events_.getTotalDuration());
 
@@ -406,13 +406,13 @@ void MainWindow::addFlipEvent()
 
 void MainWindow::addFadeInEvent()
 {
-    QString str("event: type=fade in, start=0, duration=5000, delay=0");
+    QString str("event: type=fadein, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeOutEvent()
 {
-    QString str("event: type=fade out, start=0, duration=5000, delay=0");
+    QString str("event: type=fadeout, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
