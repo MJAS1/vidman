@@ -2142,6 +2142,7 @@ Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, sta
 Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
 Delete: start=700, type=image
 Delete: start=0, type=detectmotion
+Pause
 Event: type=fadeout, start=0, duration=1000, delay=1000
 Event: type=detectmotion, target=250, tolerance=51, trigCode=4, trigcode2=5, start=1068
 Event: type=image, x=400, y=200, objectid=0, delay=700, trigcode=1
@@ -3144,6 +3145,7 @@ Event: type=image, x=400, y=200, objectid=0, delay=700, trigcode=1
 Delete: start=700, type=image
 Delete: start=0, type=detectmotion
 Event: type=fadein, start=0, duration=1000, delay=1000
+Pause
 Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1957
 Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
 Delete: start=700, type=image

@@ -85,6 +85,7 @@ for trial in trials:
         file.write("Delete: start=0, type=detectmotion\n")
 
     elif trial == "blackscreen":
+    	file.write("Pause\n")
         file.write("Event: type=fadeout, start=0, duration=1000, "
                     "delay=1000\n")
         for i in range(250):
@@ -106,6 +107,7 @@ for trial in trials:
             file.write("Delete: start=0, type=detectmotion\n")
         file.write("Event: type=fadein, start=0, duration=1000, "
                     "delay=1000\n")
+    	file.write("Pause\n")
             
    
 file.close();
