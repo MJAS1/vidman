@@ -21,8 +21,8 @@ missTrigCode = 5
 minDelay = 1000
 maxDelay = 2000
 imgDuration = 700
-x = 400
-y = 200
+x = 290
+y = 270
 target = 250
 tolerance = 51
 

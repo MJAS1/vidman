@@ -10,6 +10,7 @@
 
 #include <QSettings>
 #include <QMutex>
+#include "outputdevice.h"
 
 //! Application-wide settings preserved across multiple invocations.
 /*!
@@ -28,21 +29,22 @@ class Settings {
 public:
     Settings();
 
-    void            setValue(const QString &key, const QVariant &value);
+    void                    setValue(const QString &key, const QVariant &value);
 
     // video
-    int				jpgQuality;
-    int             fps;
-    int             movementThreshold;
-    int             videoWidth;
-    bool			color;
-    bool            vsync;
-    bool            flip;
-    bool            turnAround;
-    bool            fixPoint;
-    uint32_t        whitebalance;
-    uint32_t        shutter;
-    uint32_t        gain;
+    int                     jpgQuality;
+    int                     fps;
+    int                     movementThreshold;
+    int                     videoWidth;
+    bool                    color;
+    bool                    vsync;
+    bool                    flip;
+    bool                    turnAround;
+    bool                    fixPoint;
+    uint32_t                whitebalance;
+    uint32_t                shutter;
+    uint32_t                gain;
+    OutputDevice::PortType  portType;
 
     // misc
     char			storagePath[500];

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Camera::Camera() : initialized_(false)
+Camera::Camera() : empty_(true)
 {
     //Initialize camera
     capCam_.open(300);
@@ -27,15 +27,11 @@ Camera::Camera() : initialized_(false)
     err = dc1394_camera_enumerate(dc1394Context_, &camList);
     if (err != DC1394_SUCCESS) {
         cerr << "Failed to enumerate cameras" << endl;
-        free(dc1394Context_);
         return;
     }
 
-    dc1394camera_ = NULL;
-
     if (camList->num == 0) {
         cerr << "No cameras found" << endl;
-        free(dc1394Context_);
         return;
     }
 
@@ -43,22 +39,19 @@ Camera::Camera() : initialized_(false)
     dc1394camera_ = dc1394_camera_new(dc1394Context_, camList->ids[0].guid);
     if (!dc1394camera_) {
         cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << endl;
-        free(dc1394Context_);
         return;
     }
     cout << "Using camera with GUID " << dc1394camera_->guid << endl;
 
     dc1394_camera_free_list(camList);
 
-    initialized_ = true;
+    empty_ = false;
 }
 
 Camera::~Camera()
 {
-    if(initialized_) {
-        free(dc1394Context_);
-        free(dc1394camera_);
-    }
+    free(dc1394Context_);
+    free(dc1394camera_);
 }
 
 void Camera::setFPS(int fps)
@@ -71,14 +64,12 @@ void Camera::setFPS(int fps)
 
 void Camera::operator >>(cv::Mat& frame)
 {
-    mutex_.lock();
     capCam_ >> frame;
-    mutex_.unlock();
 }
 
 bool Camera::empty() const
 {
-    return !initialized_;
+    return empty_;
 }
 
 uint32_t Camera::getShutter() const
@@ -98,7 +89,6 @@ uint32_t Camera::getGain() const
 void Camera::setShutter(int newVal)
 {
     dc1394error_t	err;
-
     err = dc1394_set_register(dc1394camera_, SHUTTER_ADDR, newVal + SHUTTER_OFFSET);
 
     if (err != DC1394_SUCCESS)
@@ -109,7 +99,6 @@ void Camera::setShutter(int newVal)
 void Camera::setGain(int newVal)
 {
     dc1394error_t	err;
-
     err = dc1394_set_register(dc1394camera_, GAIN_ADDR, newVal + GAIN_OFFSET);
 
     if (err != DC1394_SUCCESS)
@@ -123,10 +112,8 @@ void Camera::setUV(int newVal, int vrValue)
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, newVal * UV_REG_SHIFT + vrValue + WHITEBALANCE_OFFSET);
 
-    if (err != DC1394_SUCCESS) {
+    if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
-        //abort();
-    }
 }
 
 void Camera::setVR(int newVal, int uvValue)
@@ -136,10 +123,8 @@ void Camera::setVR(int newVal, int uvValue)
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, newVal + UV_REG_SHIFT * uvValue + WHITEBALANCE_OFFSET);
 
-    if (err != DC1394_SUCCESS) {
+    if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
-        //abort();
-    }
 }
 
 uint32_t Camera::getWhiteBalance() const
@@ -156,20 +141,15 @@ void Camera::setWhiteBalance(uint32_t wb)
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, wb);
 
-    if (err != DC1394_SUCCESS) {
+    if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
-        //abort();
-    }
 }
 
 void Camera::setExternTrigger(bool on)
 {
     dc1394error_t	err;
-
     err = dc1394_external_trigger_set_power(dc1394camera_, on ? DC1394_ON : DC1394_OFF);
 
-    if (err != DC1394_SUCCESS) {
+    if (err != DC1394_SUCCESS)
         cerr << "Couldn't set external trigger." << endl;
-        //abort();
-    }
 }

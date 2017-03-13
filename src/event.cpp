@@ -364,6 +364,11 @@ MotionDetectorEvent::MotionDetectorEvent(State state) : state_(state)
 
 void MotionDetectorEvent::apply(cv::Mat &frame)
 {
+    if(first_) {
+        movementTimer_.start();
+        first_ = false;
+    }
+
     if(next_.empty()) {
         next_ = frame.clone();
         current_ = next_;
@@ -380,7 +385,6 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         case WAITING:
             if(nChanges() > threshold_) {
                 emit triggered(trigCode_, log_);
-                movementTimer_.start();
                 state_ = TRACKING;
             }
             break;

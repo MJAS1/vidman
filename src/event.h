@@ -77,7 +77,6 @@ public:
     int         getPriority() const {return priority_;}
 
     bool        isReady() const {return ready_;}
-
     void        appendLog(const QString &str) {log_ = str;}
 
 signals:
@@ -105,8 +104,8 @@ class DelEvent : public Event
 {
 public:
 
-    //Remove event can be initialized to remove either an event with a specific id
-    //or all the events of a given type
+    //Remove event can be initialized to remove either an event with a specific
+    //id or all the events of a given type.
     explicit DelEvent(int start, int delay, int delId, int trigCode = 0) :
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}

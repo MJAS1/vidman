@@ -1,10 +1,8 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <QMutex>
 #include <opencv2/opencv.hpp>
 #include <dc1394/dc1394.h>
-
 
 /*! This class is used to control the videocamera. It uses dc1394 library to
  * access the camera's register and OpenCV to acquire frames.
@@ -39,9 +37,8 @@ private:
     cv::VideoCapture        capCam_;
     dc1394camera_t*         dc1394camera_;
     dc1394_t*               dc1394Context_;
-    QMutex                  mutex_;
 
-    bool                    initialized_;
+    bool                    empty_;
 };
 
 #endif // CAMERA_H

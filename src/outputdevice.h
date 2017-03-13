@@ -1,7 +1,8 @@
 #ifndef OUTPUTDEVICE_H
 #define OUTPUTDEVICE_H
 
-#include "settings.h"
+
+class Settings;
 
 //Output device is used to control a parallel or a serial port for trigger signals.
 
@@ -9,6 +10,7 @@ class OutputDevice
 {
 public:
     OutputDevice();
+    ~OutputDevice();
 
     enum PortType {
         PORT_NULL,
@@ -23,11 +25,13 @@ public:
     void setFd(int);
 
 private:
+    OutputDevice(const OutputDevice&);
+    OutputDevice& operator=(const OutputDevice&);
+
     int fd_;
 
-    Settings settings_;
     PortType portType_;
-
+    Settings *settings_;
 };
 
 #endif // OUTPUTDEVICE_H
