@@ -12,7 +12,8 @@ using namespace std;
 
 int StoppableThread::nextId = 0;
 
-StoppableThread::StoppableThread(QObject *parent) : QThread(parent), shouldStop(false)
+StoppableThread::StoppableThread(QObject *parent) : QThread(parent),
+    shouldStop(false)
 {
     id = nextId++;
 

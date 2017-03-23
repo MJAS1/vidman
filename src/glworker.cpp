@@ -11,7 +11,7 @@
 GLWorker::GLWorker(GLVideoWidget *glw) : QObject(), glw_(glw),
     videoWidth_(VIDEO_WIDTH), shouldStop_(false)
 {
-    buf_ = NULL;
+    buf_ = nullptr;
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
 
@@ -35,12 +35,18 @@ void GLWorker::initializeGL()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    shaderProgram_.addShaderFromSourceFile(QGLShader::Vertex, ":/src/vertexShader.vsh");
-    shaderProgram_.addShaderFromSourceFile(QGLShader::Fragment, ":/src/fragmentShader.fsh");
+    shaderProgram_.addShaderFromSourceFile(QGLShader::Vertex,
+                                           ":/src/vertexShader.vsh");
+    shaderProgram_.addShaderFromSourceFile(QGLShader::Fragment,
+                                           ":/src/fragmentShader.fsh");
     shaderProgram_.link();
     glw_->doneCurrent();
 }
 
+/* start() and stop() are called by the main thread. However, the loop is
+ * supposed to be working in a different thread. invokeMethod() makes sure that
+ * the call for startLoop() and stopLoop is placed in the thread's event queue.
+ */
 void GLWorker::start()
 {
     QMetaObject::invokeMethod(this, "startLoop", Qt::QueuedConnection);
@@ -58,9 +64,10 @@ void GLWorker::onDrawFrame(unsigned char *imBuf)
 
 void GLWorker::resizeGL(int w, int h)
 {
-    // Change the viewport to preserve the aspect ratio. Compute new height
-    // corresponding to the current width and new width corresponding to the
-    // current heigh and see which one fits.
+    /* Change the viewport to preserve the aspect ratio. Compute new height
+     * corresponding to the current width and new width corresponding to the
+     * current heigh and see which one fits.
+     */
     int dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));;
     int dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));;
 
@@ -92,7 +99,7 @@ void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
-    //Wait until the first frame is ready and window is exposed
+    //Wait until the first frame is ready and window is exposed to avoid warnings.
     while(!(buf_ && glw_->windowHandle()->isExposed()))
         QCoreApplication::processEvents();
 
@@ -100,18 +107,27 @@ void GLWorker::startLoop()
     shaderProgram_.setUniformValue("texture", 0);
     shaderProgram_.setAttributeArray("vertex", vertices_.constData());
     shaderProgram_.enableAttributeArray("vertex");
-    shaderProgram_.setAttributeArray("textureCoordinate", textureCoordinates_.constData());
+    shaderProgram_.setAttributeArray("textureCoordinate",
+                                     textureCoordinates_.constData());
     shaderProgram_.enableAttributeArray("textureCoordinate");
 
     while(!shouldStop_)
     {
+        //Start drawing the frames.
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0,
                      GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glw_->swapBuffers();
+
+        /* With vsync enabled glFinish() should stop the thread until a v-blank
+         * signal has been received, meaning that the screen image has been
+         * updated with the front framebuffer. The execution of the code
+         * following glFinish() should then sync with the screen refresh rate.
+         */
         glFinish();
 
+        //Write trigger code to output port and log the event.
         ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
         if(!trigPort_.isEmpty())
             trigPort_.writeData(chunkAttrib.trigCode);

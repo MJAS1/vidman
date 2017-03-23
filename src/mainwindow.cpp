@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initVideo();
 
     connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
-            cameraWorker_, SLOT(motionDialogToggled(bool)));
+            cameraWorker_.get(), SLOT(motionDialogToggled(bool)));
 
     //Set status bar
     status_.setIndent(10);
@@ -62,7 +62,6 @@ void MainWindow::stopThreads()
     cameraWorker_->stop();
     cameraThread_->quit();
     cameraThread_->wait();
-    delete cameraWorker_;
 }
 
 
@@ -104,7 +103,7 @@ void MainWindow::initVideo()
         cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
         cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
         cameraThread_ = new QThread(this);
-        cameraWorker_ = new CameraWorker(cycVideoBufRaw_, cam_);
+        cameraWorker_.reset(new CameraWorker(cycVideoBufRaw_, cam_));
         videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_,
                                                settings_.storagePath, this);
         videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_,
@@ -116,7 +115,7 @@ void MainWindow::initVideo()
                 SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)),
                 videoDialog_, SIGNAL(drawFrame(unsigned char*)));
-        connect(cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)),
+        connect(cameraWorker_.get(), SIGNAL(motionPixmapReady(const QPixmap&)),
                 motionDialog_, SLOT(setPixmap(const QPixmap&)));
 
         // Start video running
@@ -310,13 +309,14 @@ void MainWindow::updateTime()
     qint64 msecsElapsed = runningTime_.msecsElapsed();
     time = time.addMSecs(msecsElapsed);
 
-    ui->timeLbl->setText(time.toString(QString("hh:mm:ss"))+"/"+eventsDuration_.toString(QString("hh:mm:ss")));
+    ui->timeLbl->setText(time.toString(QString("hh:mm:ss"))
+                         +"/"+eventsDuration_.toString(QString("hh:mm:ss")));
 }
 
 void MainWindow::fileOpen()
 {
-    QString fn = QFileDialog::getOpenFileName(this, "Open File...",
-                                              QString(),tr("MEG files (*.meg);;All Files (*)"));
+    QString fn = QFileDialog::getOpenFileName(this, "Open File...", QString(),
+                                              tr("MEG files (*.meg);;All Files (*)"));
     if (!fn.isEmpty())
         load(fn);
 }
@@ -374,11 +374,11 @@ bool MainWindow::fileSave()
 
 bool MainWindow::fileSaveAs()
 {
-    QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."),
-                                              QString(), "MEG files (*.meg);;All Files (*)");
+    QString fn = QFileDialog::getSaveFileName(this, tr("Save as..."), QString(),
+                                              "MEG files (*.meg);;All Files (*)");
     if (fn.isEmpty())
         return false;
-    if (!(fn.endsWith(".meg", Qt::CaseInsensitive)) && !(fn.endsWith(".txt", Qt::CaseInsensitive)))
+    if (!(fn.endsWith(".meg", Qt::CaseInsensitive)) && !(fn.endsWith(".txt",Qt::CaseInsensitive)))
         fn += ".meg"; // default
 
     setCurrentFileName(fn);
@@ -482,7 +482,8 @@ void MainWindow::addZoomEvent()
 
 void MainWindow::addRecordEvent()
 {
-    QString str("event: type=record, start=0, duration=2000, delay=2000, objectId=0");
+    QString str("event: type=record, start=0, duration=2000, delay=2000,"
+                "objectId=0");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -502,7 +503,6 @@ void MainWindow::closeEvent(QCloseEvent *e)
         e->ignore();
         return;
     }
-
     QApplication::quit();
 }
 

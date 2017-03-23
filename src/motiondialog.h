@@ -12,6 +12,11 @@ namespace Ui {
 class MotionDialog;
 }
 
+/*! MotionDialog is only visible when checked in the file menu of MainWindow.
+ * It is used to display the 'differential image' produced by a
+ * MotionDetectorEvent, which can be in turn used to adjust the threshold value
+ * for motion detection.
+ * */
 class MotionDialog : public QDialog
 {
     Q_OBJECT

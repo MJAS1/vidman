@@ -38,7 +38,8 @@ Camera::Camera() : empty_(true)
     // use the first camera in the list
     dc1394camera_ = dc1394_camera_new(dc1394Context_, camList->ids[0].guid);
     if (!dc1394camera_) {
-        cerr << "Failed to initialize camera with guid " << camList->ids[0].guid << endl;
+        cerr << "Failed to initialize camera with guid " << camList->ids[0].guid
+             << endl;
         return;
     }
     cout << "Using camera with GUID " << dc1394camera_->guid << endl;
@@ -88,7 +89,8 @@ uint32_t Camera::getGain() const
 void Camera::setShutter(int newVal)
 {
     dc1394error_t	err;
-    err = dc1394_set_register(dc1394camera_, SHUTTER_ADDR, newVal + SHUTTER_OFFSET);
+    err = dc1394_set_register(dc1394camera_, SHUTTER_ADDR,
+                              newVal + SHUTTER_OFFSET);
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set shutter register" << endl;
@@ -109,7 +111,8 @@ void Camera::setUV(int newVal, int vrValue)
     dc1394error_t	err;
 
     // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, newVal * UV_REG_SHIFT + vrValue + WHITEBALANCE_OFFSET);
+    err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR,
+                              newVal * UV_REG_SHIFT + vrValue + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
@@ -120,7 +123,8 @@ void Camera::setVR(int newVal, int uvValue)
     dc1394error_t	err;
 
     // Since UV and VR live in the same register, we need to take care of both
-    err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR, newVal + UV_REG_SHIFT * uvValue + WHITEBALANCE_OFFSET);
+    err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR,
+                              newVal + UV_REG_SHIFT * uvValue + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
@@ -147,7 +151,8 @@ void Camera::setWhiteBalance(uint32_t wb)
 void Camera::setExternTrigger(bool on)
 {
     dc1394error_t	err;
-    err = dc1394_external_trigger_set_power(dc1394camera_, on ? DC1394_ON : DC1394_OFF);
+    err = dc1394_external_trigger_set_power(dc1394camera_,
+                                            on ? DC1394_ON : DC1394_OFF);
 
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set external trigger." << endl;

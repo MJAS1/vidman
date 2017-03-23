@@ -9,7 +9,8 @@
 class CycDataBuffer;
 class Camera;
 
-/*! This class acquires, timestamps and processes frames for a single Camera. It
+/*!
+ * This class acquires, timestamps and processes frames for a single Camera. It
  * should be moved to a separate QThread with QObject::moveToThread() before
  * calling start()
  */

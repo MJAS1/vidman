@@ -17,6 +17,10 @@ namespace Ui {
 class VideoDialog;
 }
 
+/*!
+ * VideoDialog contains the glVideoWidget which is used to display the video. It
+ * also contains the sliders to control camera shutter, gain etc.
+ */
 class VideoDialog : public QDialog
 {
     Q_OBJECT

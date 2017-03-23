@@ -42,7 +42,8 @@ void FlipEvent::apply(EventContainer &events)
     events.deleteType(Event::EVENT_FLIP);
 }
 
-FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
+FadeInEvent::FadeInEvent(int start, int duration, int delay, int id,
+                         int trigCode) :
     Event(EVENT_FADEIN, start, delay, duration, id, trigCode, FADE_PRIORITY),
     amount_(-255), stopped_(false)
 {
@@ -85,7 +86,8 @@ void FadeInEvent::unpause()
     timerWithPause_.resume();
 }
 
-FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
+FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id,
+                           int trigCode) :
     Event(EVENT_FADEOUT, start, delay, duration, id, trigCode, FADE_PRIORITY),
     amount_(0), stopped_(false)
 {
@@ -323,7 +325,8 @@ void RecordEvent::unpause()
 
 PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
                              int id, int trigCode) :
-    Event(EVENT_PLAYBACK, start, delay, duration, id, trigCode, PLAYBACK_PRIORITY),
+    Event(EVENT_PLAYBACK, start, delay, duration, id, trigCode,
+          PLAYBACK_PRIORITY),
     video_(video), finished_(false), paused_(false)
 {
     iter_ = video_->frames_.begin();
@@ -387,57 +390,20 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
     switch(state_) {
         //Wating for the movement to start
         case WAITING:
-            if(nChanges() > threshold_) {
-                emit triggered(trigCode_, log_);
-                state_ = TRACKING;
-            }
+            waiting();
             break;
-
         //Movement has started
         case TRACKING:
-            if(nChanges() < threshold_) {
-                finishTimer_.start();
-                state_ = MAYBE_FINISHED;
-            }
+            tracking();
             break;
-
         //Movement has maybe stopped. Make sure that it really stopped instead
         //of a brief pause in movement due to a change in direction for example.
         case MAYBE_FINISHED:
-            if(nChanges() < threshold_) {
-                if(finishTimer_.elapsed() > 100) {
-                    state_ = FINISHED;
-                    emit triggered(trigCode2_, QString("Movement finished."));
-                    time_ = movementTimer_.elapsed();
-                    if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
-                        color_ = cv::Scalar(0, 255, 0);
-                    else
-                        color_ = cv::Scalar(0, 0, 255);
-                    finishTimer_.restart();
-
-                    /*
-                     * After the movement has finished, this event doesn't track
-                     * movement anymore and is just used to write the duration
-                     * of the movement on the frame. Thus the priority needs to
-                     * be changed. The priorityChanged signal is connected to
-                     * the eventcontainer so that it is resorted by priority.
-                    */
-                    priority_ = DEFAULT_PRIORITY;
-                    emit priorityChanged();
-                }
-            }
-            else
-                state_ = TRACKING;
+            maybeFinished();
             break;
-
         //Movement finished, draw time elapsed for movement to the frame.
         case FINISHED:
-            if(finishTimer_.elapsed() < 1000)
-                cv::putText(frame, std::string(std::to_string(time_)),
-                            cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2),
-                            cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
-            else
-                ready_=true;
+            finished(frame);
             break;
 
         //This state is only used for the event associated with a motion dialog.
@@ -446,6 +412,63 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
             createMotionPixmap();
             break;
     }
+}
+
+void MotionDetectorEvent::waiting()
+{
+    if(nChanges() > threshold_) {
+        emit triggered(trigCode_, log_);
+        state_ = TRACKING;
+    }
+}
+
+void MotionDetectorEvent::tracking()
+{
+    if(nChanges() < threshold_) {
+        //Finish timer is used to keep track how long the image has been still.
+        finishTimer_.start();
+        state_ = MAYBE_FINISHED;
+    }
+}
+
+void MotionDetectorEvent::maybeFinished()
+{
+    if(nChanges() < threshold_) {
+        if(finishTimer_.elapsed() > 100) {
+            state_ = FINISHED;
+            emit triggered(trigCode2_, QString("Movement finished."));
+            time_ = movementTimer_.elapsed();
+            if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
+                color_ = cv::Scalar(0, 255, 0);
+            else
+                color_ = cv::Scalar(0, 0, 255);
+            finishTimer_.restart();
+
+            /*
+             * After the movement has finished, this event doesn't track
+             * movement anymore and is just used to write the duration of the
+             * movement on the frame. Thus, the priority needs to be changed.
+             * The priorityChanged signal is connected to the eventcontainer so
+             * that it is resorted by priority.
+             */
+            priority_ = DEFAULT_PRIORITY;
+            emit priorityChanged();
+        }
+    }
+    else
+        state_ = TRACKING;
+}
+
+void MotionDetectorEvent::finished(cv::Mat &frame)
+{
+    //Draw the duration of the movement on the frame.
+    int duration = 1000;
+    if(finishTimer_.elapsed() < duration)
+        cv::putText(frame, std::string(std::to_string(time_)),
+                    cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2),
+                    cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+    else
+        ready_=true;
 }
 
 int MotionDetectorEvent::nChanges()

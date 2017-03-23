@@ -2,9 +2,8 @@
 #define OUTPUTDEVICE_H
 
 
-class Settings;
-
-//Output device is used to control a parallel or a serial port for trigger signals.
+/*! Output device is used to control a parallel or a serial port for trigger
+ * signals. */
 
 class OutputDevice
 {
@@ -29,9 +28,7 @@ private:
     OutputDevice& operator=(const OutputDevice&);
 
     int fd_;
-
     PortType portType_;
-    Settings *settings_;
 };
 
 #endif // OUTPUTDEVICE_H

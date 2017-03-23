@@ -12,8 +12,8 @@
 #include "config.h"
 #include "common.h"
 
-VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
-    QDialog(window), ui(new Ui::VideoDialog), window_(window), cam_(cam)
+VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
+    QDialog(parent), ui(new Ui::VideoDialog), window_(parent), cam_(cam)
 {
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
@@ -22,8 +22,7 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
       trigger signals with screen refresh rate. */
     QGLFormat format;
     if(!format.hasOpenGL())
-        std::cerr << "OpenGL not supported by window system. Cannot use vsync."
-                  << std::endl;
+        std::cerr << "OpenGL not supported by window system." << std::endl;
 
     format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);

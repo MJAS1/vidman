@@ -8,9 +8,9 @@
 
 class GLVideoWidget;
 
-/* This class is used to swap the front and back frame buffers and do all the
+/*! This class is used to swap the front and back frame buffers and do all the
  * drawing on a GLVideoWidget. In order to keep the main thread responsive,
- * GLWorker should be moved to a separate thread with QObject::moveToThread()
+ * GLWorker should be moved to a separate thread with QObject::moveToThread().
  */
 
 class GLWorker : public QObject
@@ -30,7 +30,7 @@ public slots:
 
     /* Because ioperm sets port permissions only for the calling thread, it is
      * important that trigPort.open() is called by the thread worked by
-     * GLWorker. This function is used to set trigPort to a given port
+     * GLWorker. This function is used to set trigPort to a given port.
      */
     void setOutputDevice(OutputDevice::PortType portType);
 

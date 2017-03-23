@@ -8,44 +8,52 @@
 #include "event.h"
 #include "settings.h"
 
-
-/*! Parse events from a QStringList and stores them in an EventContainer. The
-QStringList is created from MainWindow's TextEdit when start is clicked.
-LoadEvents returns false if the input text is incorrectly formatted.
-*/
-
 using std::shared_ptr;
 class EventContainer;
 
-//VideoObject is used to create record and playback events. Contains the frames
-//belonging to the particular video and length in milliseconds.
+/*
+ * VideoObject is used to create record and playback events. Contains the frames
+ * belonging to the particular video and length in milliseconds.
+ */
 struct VideoObject {
     QList<cv::Mat> frames_;
     int duration_;
 };
 
+/*!
+ * Parses events from a QStringList and stores them in an EventContainer. The
+ * QStringList is created from MainWindow's TextEdit when start is clicked.
+ * LoadEvents returns false if the input text is incorrectly formatted.
+*/
 class EventParser : public QObject
 {
     Q_OBJECT
 public:
     EventParser();
 
-    bool loadEvents(const QStringList &strList, EventContainer& events, MainWindow* window = nullptr);
+    bool loadEvents(const QStringList &strList, EventContainer& events,
+                    MainWindow* window = nullptr);
 
 signals:
     void error(const QString&) const;
 
 private:
-    bool                parseEvent(const QString &str, EventContainer& events, int lineNumber);
+    bool                parseEvent(const QString &str, EventContainer& events,
+                                   int lineNumber);
     bool                parseObject(const QString &str, int lineNumber);
-    bool                parseDelEvent(const QString &str, EventContainer& events, int lineNumber);
-    bool                parseEventParam(const QString &param, const QString &value, int lineNumber);
-    bool                parseObjectParam(const QString &param, const QString &value, int lineNumber);
+    bool                parseDelEvent(const QString &str,
+                                      EventContainer& events, int lineNumber);
+    bool                parseEventParam(const QString &param,
+                                        const QString &value, int lineNumber);
+    bool                parseObjectParam(const QString &param,
+                                         const QString &value, int lineNumber);
 
     bool                createEvent(EventPtr&, int lineNumber);
 
-    float               toFloat(const QString &str, int line, const QString &param) const;
-    int                 toInt(const QString &str, int line, const QString &param) const;
+    float               toFloat(const QString &str, int line,
+                                const QString &param) const;
+    int                 toInt(const QString &str, int line,
+                              const QString &param) const;
 
     Settings            settings_;
 

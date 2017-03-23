@@ -5,8 +5,8 @@
 #include "event.h"
 
 /*!
-Custom container class for storing events.
-  */
+ * Custom container class for storing events.
+ */
 
 namespace cv {
 class Mat;

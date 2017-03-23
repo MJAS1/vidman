@@ -10,8 +10,8 @@
 #include "common.h"
 #include "config.h"
 
-CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf),
-    cam_(cam), trigCode_(0), shouldStop_(false)
+CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) :
+    cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldStop_(false)
 {
     Settings settings;
 
@@ -38,7 +38,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
 
 /* start() and stop() are called by the main thread. However, the loop is
  * supposed to be working in a different thread. invokeMethod() makes sure that
- * the call for startLoop() and  stopLoop is placed in the thread's event queue.
+ * the call for startLoop() and stopLoop is placed in the thread's event queue.
  */
 void CameraWorker::start()
 {

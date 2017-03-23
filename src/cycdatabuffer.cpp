@@ -14,7 +14,8 @@
 using namespace std;
 
 CycDataBuffer::CycDataBuffer(int bufSize, QObject* parent) :
-    QObject(parent), isRec(false), insertPtr(0), getPtr(0), bufSize(bufSize), buffSemaphore(new QSemaphore())
+    QObject(parent), isRec(false), insertPtr(0), getPtr(0), bufSize(bufSize),
+    buffSemaphore(new QSemaphore())
 {
     // Allocate the buffer. Reserve some extra space necessary to handle
     // chunks of varying size.

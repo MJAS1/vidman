@@ -10,28 +10,30 @@
 
 using namespace std;
 
-OutputDevice::OutputDevice() : portType_(PORT_NULL), settings_(new Settings)
+OutputDevice::OutputDevice() : portType_(PORT_NULL)
 {
-    open(settings_->portType);
+    Settings settings;
+    open(settings.portType);
 }
 
 OutputDevice::~OutputDevice()
 {
-    delete settings_;
 }
 
 void OutputDevice::writeData(int trigCode)
 {
+    Settings settings;
+
     switch (portType_) {
         case PORT_PARALLEL:
-            outb(trigCode, settings_->printerPortAddr);
+            outb(trigCode, settings.printerPortAddr);
             break;
 
         case PORT_SERIAL:
             if(ioctl(fd_, TIOCMSET, &trigCode) == -1) {
                 cerr << "Cannot open port: " <<  strerror(errno) << endl;
                 portType_ = PORT_NULL;
-                settings_->setValue("misc/port_type", PORT_NULL);
+                settings.setValue("misc/port_type", PORT_NULL);
             }
             break;
 
@@ -42,29 +44,33 @@ void OutputDevice::writeData(int trigCode)
 
 bool OutputDevice::open(PortType port)
 {
+    Settings settings;
+
     switch (port) {
         case PORT_PARALLEL:
-            if(ioperm(settings_->printerPortAddr, 1, 1)) {
+            if(ioperm(settings.printerPortAddr, 1, 1)) {
                 portType_ = PORT_NULL;
-                settings_->setValue("misc/port_type", PORT_NULL);
-                cerr << "Cannot get the port. Maybe you should run this program as root." << endl;
+                settings.setValue("misc/port_type", PORT_NULL);
+                cerr << "Cannot get the port. Maybe you should run this"
+                        "program as root." << endl;
             }
             else {
                 portType_ = PORT_PARALLEL;
-                settings_->setValue("misc/port_type", PORT_PARALLEL);
+                settings.setValue("misc/port_type", PORT_PARALLEL);
             }
             break;
 
         case PORT_SERIAL:
             if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
                 portType_ = PORT_NULL;
-                settings_->setValue("misc/port_type", PORT_NULL);
+                settings.setValue("misc/port_type", PORT_NULL);
                 fd_ = -1;
-                cerr << "Cannot open USB port. Maybe you should run this program as root." << endl;
+                cerr << "Cannot open USB port. Maybe you should run this"
+                        "program as root." << endl;
             }
             else {
                 portType_ = PORT_SERIAL;
-                settings_->setValue("misc/port_type", PORT_SERIAL);
+                settings.setValue("misc/port_type", PORT_SERIAL);
             }
             break;
 

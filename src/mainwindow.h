@@ -124,9 +124,12 @@ private:
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
     QThread*                cameraThread_;
-    CameraWorker*           cameraWorker_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
+
+    /*Since moveToThread() cannot be used to move objects with a parent,
+     *use unique_ptr instead of qt ownership to manage memory.*/
+    std::unique_ptr<CameraWorker> cameraWorker_;
 
     QTimer                  eventTmr_;
     QTimer                  timeTmr_;

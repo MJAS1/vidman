@@ -9,9 +9,12 @@ TextEdit::TextEdit(QWidget *parent) :
 {
     lineNumberArea = new LineNumberArea(this);
 
-    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth()));
-    connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
-    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+    connect(this, SIGNAL(blockCountChanged(int)), this,
+            SLOT(updateLineNumberAreaWidth()));
+    connect(this, SIGNAL(updateRequest(QRect,int)), this,
+            SLOT(updateLineNumberArea(QRect,int)));
+    connect(this, SIGNAL(cursorPositionChanged()), this,
+            SLOT(highlightCurrentLine()));
 
     updateLineNumberAreaWidth();
     highlightCurrentLine();
@@ -26,6 +29,7 @@ int TextEdit::lineNumberAreaWidth()
         ++digits;
     }
 
+    //'9' is the widest character.
     int space = 3 + fontMetrics().width(QLatin1Char('9'))*digits;
 
     return space;
@@ -41,7 +45,8 @@ void TextEdit::updateLineNumberArea(const QRect &rect, int dy)
     if(dy)
         lineNumberArea->scroll(0, dy);
     else
-        lineNumberArea->update(0, rect.y(), lineNumberArea->width(),rect.height());
+        lineNumberArea->update(0, rect.y(), lineNumberArea->width(),
+                               rect.height());
 
     if(rect.contains(viewport()->rect()))
         updateLineNumberAreaWidth();
@@ -53,7 +58,8 @@ void TextEdit::resizeEvent(QResizeEvent *ev)
     QPlainTextEdit::resizeEvent(ev);
 
     QRect cr = contentsRect();
-    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(),
+                                      lineNumberAreaWidth(), cr.height()));
 }
 
 void TextEdit::highlightCurrentLine()
@@ -93,7 +99,8 @@ void TextEdit::lineNumberAreaPaintEvent(QPaintEvent *ev)
         {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::black);
-            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(0, top, lineNumberArea->width(),
+                             fontMetrics().height(), Qt::AlignRight, number);
         }
 
         block = block.next();
