@@ -14,8 +14,6 @@
 
 using namespace std;
 
-//class QWindow;
-
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
        videoDialog_(parent), glworker_(this)
@@ -23,15 +21,22 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     setAutoBufferSwap(false);
 
     connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
-    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_, SLOT(onDrawFrame(unsigned char*)));
-    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this, SLOT(onDrawFrame()));
-    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_, SLOT(onAspectRatioChanged(int)));  
+    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_,
+            SLOT(onDrawFrame(unsigned char*)));
+    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this,
+            SLOT(onDrawFrame()));
+    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_,
+            SLOT(onAspectRatioChanged(int)));
     qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
-    connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)), &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
+    connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
+            &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
     connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
-    connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(), SLOT(onStartButton()));
-    connect(this, SIGNAL(increaseAspectRatio()), videoDialog_, SLOT(increaseAspectRatio()));
-    connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_, SLOT(decreaseAspectRatio()));
+    connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(),
+            SLOT(onStartButton()));
+    connect(this, SIGNAL(increaseAspectRatio()), videoDialog_,
+            SLOT(increaseAspectRatio()));
+    connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_,
+            SLOT(decreaseAspectRatio()));
 
     fpsTimer_.start(1000);
 
@@ -78,8 +83,9 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
-		videoDialog_->show();
         showNormal();
+		videoDialog_->show();
+
     }
     else {
         setWindowFlags(Qt::Window);

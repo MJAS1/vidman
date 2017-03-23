@@ -36,7 +36,8 @@ MainWindow::MainWindow(QWidget *parent) :
     initToolButton();
     initVideo();
 
-    connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)), cameraWorker_, SLOT(motionDialogToggled(bool)));
+    connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
+            cameraWorker_, SLOT(motionDialogToggled(bool)));
 
     //Set status bar
     status_.setIndent(10);
@@ -67,7 +68,8 @@ void MainWindow::stopThreads()
 
 void MainWindow::initToolButton()
 {
-    //ToolButton can't be assigned to toolbar in ui designer so it has to be done manually here.
+    //ToolButton can't be assigned to toolbar in ui designer so it has to be
+    //done manually here.
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionAddImageObject);
     menu->addAction(ui->actionAddVideoObject);
@@ -103,12 +105,19 @@ void MainWindow::initVideo()
         cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
         cameraThread_ = new QThread(this);
         cameraWorker_ = new CameraWorker(cycVideoBufRaw_, cam_);
-        videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_, settings_.storagePath, this);
-        videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_, cycVideoBufJpeg_, settings_.jpgQuality, this);
+        videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_,
+                                               settings_.storagePath, this);
+        videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_,
+                                                           cycVideoBufJpeg_,
+                                                           settings_.jpgQuality,
+                                                           this);
 
-        connect(videoFileWriter_, SIGNAL(error(const QString&)), this, SLOT(fileWriterError(const QString&)));
-        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), videoDialog_, SIGNAL(drawFrame(unsigned char*)));
-        connect(cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)), motionDialog_, SLOT(setPixmap(const QPixmap&)));
+        connect(videoFileWriter_, SIGNAL(error(const QString&)), this,
+                SLOT(fileWriterError(const QString&)));
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)),
+                videoDialog_, SIGNAL(drawFrame(unsigned char*)));
+        connect(cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)),
+                motionDialog_, SLOT(setPixmap(const QPixmap&)));
 
         // Start video running
         videoFileWriter_->start();
@@ -206,7 +215,8 @@ void MainWindow::start()
 
     //Read, create and store all the events from strList
     EventParser eventParser;
-    connect(&eventParser, SIGNAL(error(const QString&)), this, SLOT(setStatus(const QString&)));
+    connect(&eventParser, SIGNAL(error(const QString&)), this,
+            SLOT(setStatus(const QString&)));
 
     if(eventParser.loadEvents(strList, events_, this)) {
         eventsDuration_.setHMS(0, 0, 0);
@@ -306,7 +316,7 @@ void MainWindow::updateTime()
 void MainWindow::fileOpen()
 {
     QString fn = QFileDialog::getOpenFileName(this, "Open File...",
-                                              QString(), tr("MEG files (*.meg);;All Files (*)"));
+                                              QString(),tr("MEG files (*.meg);;All Files (*)"));
     if (!fn.isEmpty())
         load(fn);
 }

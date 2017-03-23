@@ -19,8 +19,7 @@ CycDataBuffer::CycDataBuffer(int bufSize, QObject* parent) :
     // Allocate the buffer. Reserve some extra space necessary to handle
     // chunks of varying size.
     dataBuf = new unsigned char[bufSize + 2 * (int(bufSize*MAX_CHUNK_SIZE) + sizeof(ChunkAttrib))];
-    if (!dataBuf)
-    {
+    if (!dataBuf) {
         cerr << "Cannot allocate memory for circular buffer" << endl;
         abort();
     }
@@ -34,12 +33,10 @@ CycDataBuffer::~CycDataBuffer()
 
 void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
 {
-
     // Check for buffer overflow. CIRC_BUF_MARG is the safety margin against
     // race condition between consumer and producer threads when the buffer
     // is close to full.
-    if (buffSemaphore->available() >=  bufSize * (1-CIRC_BUF_MARG))
-    {
+    if (buffSemaphore->available() >=  bufSize * (1-CIRC_BUF_MARG)) {
         cerr << "Circular buffer overflow!" << endl;
         abort();
     }
@@ -47,8 +44,7 @@ void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
     // Make sure that the safety margin is at least several (four) times the
     // chunk size. This is necessary to prevent the race condition between
     // consumer and producer threads when the buffer is close to full.
-    if(_attrib.chunkSize+sizeof(ChunkAttrib)+MAXLOG > bufSize*MAX_CHUNK_SIZE)
-    {
+    if(_attrib.chunkSize+sizeof(ChunkAttrib)+MAXLOG > bufSize*MAX_CHUNK_SIZE) {
         cerr << "The chunk size is too large!" << endl;
         abort();
     }
@@ -65,8 +61,7 @@ void CycDataBuffer::insertChunk(unsigned char* _data, ChunkAttrib &_attrib)
 
     emit chunkReady(dataBuf + insertPtr);
     insertPtr += _attrib.chunkSize;
-    if(insertPtr >= bufSize)
-    {
+    if(insertPtr >= bufSize) {
         insertPtr = 0;
     }
 }
@@ -83,8 +78,7 @@ unsigned char* CycDataBuffer::getChunk(ChunkAttrib* _attrib)
     res = dataBuf + getPtr;
 
     getPtr += _attrib->chunkSize;
-    if(getPtr >= bufSize)
-    {
+    if(getPtr >= bufSize) {
         getPtr = 0;
     }
 

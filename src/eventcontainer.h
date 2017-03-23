@@ -38,9 +38,6 @@ public slots:
     void            sort();
 
 private:
-    EventContainer(const EventContainer&);
-    EventContainer& operator=(const EventContainer&);
-
     std::vector<EventPtr> events_;
 };
 

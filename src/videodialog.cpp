@@ -18,13 +18,12 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
-
-
     /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
       trigger signals with screen refresh rate. */
     QGLFormat format;
     if(!format.hasOpenGL())
-        std::cerr << "OpenGL not supported by window system. Cannot use vsync." << std::endl;
+        std::cerr << "OpenGL not supported by window system. Cannot use vsync."
+                  << std::endl;
 
     format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
@@ -32,7 +31,8 @@ VideoDialog::VideoDialog(MainWindow *window, Camera& cam) :
 
     initUI();
 
-    connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this, SLOT(onAspectRatioSliderMoved(int)));
+    connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this,
+            SLOT(onAspectRatioSliderMoved(int)));
     ui->aspectRatioSlider->setValue(settings_.videoWidth);
 }
 
@@ -80,8 +80,10 @@ void VideoDialog::paintEvent(QPaintEvent *)
     gradient.setColorAt(0, QColor(150, 150, 150));
     gradient.setColorAt(0.5, QColor(140, 140, 140));
     gradient.setColorAt(1, QColor(80, 80, 80));
-    painter.drawRect(glVideoWidget_->pos().x(), 0, glVideoWidget_->width()-1, glVideoWidget_->pos().y());
-    painter.fillRect(glVideoWidget_->pos().x()+1, 1, glVideoWidget_->width()-2, glVideoWidget_->pos().y()-1, gradient);
+    painter.drawRect(glVideoWidget_->pos().x(), 0, glVideoWidget_->width()-1,
+                     glVideoWidget_->pos().y());
+    painter.fillRect(glVideoWidget_->pos().x()+1, 1, glVideoWidget_->width()-2,
+                     glVideoWidget_->pos().y()-1, gradient);
 }
 
 void VideoDialog::onShutterChanged(int newVal)

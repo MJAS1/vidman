@@ -30,7 +30,7 @@ public slots:
 
     /* Because ioperm sets port permissions only for the calling thread, it is
      * important that trigPort.open() is called by the thread worked by
-     * GLWorker.This function is used to set trigPort to a given port
+     * GLWorker. This function is used to set trigPort to a given port
      */
     void setOutputDevice(OutputDevice::PortType portType);
 

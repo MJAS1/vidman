@@ -44,7 +44,6 @@ Camera::Camera() : empty_(true)
     cout << "Using camera with GUID " << dc1394camera_->guid << endl;
 
     dc1394_camera_free_list(camList);
-
     empty_ = false;
 }
 

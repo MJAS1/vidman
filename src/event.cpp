@@ -43,8 +43,8 @@ void FlipEvent::apply(EventContainer &events)
 }
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id, int trigCode) :
-    Event(EVENT_FADEIN, start, delay, duration, id, trigCode, FADE_PRIORITY), amount_(-255),
-    stopped_(false)
+    Event(EVENT_FADEIN, start, delay, duration, id, trigCode, FADE_PRIORITY),
+    amount_(-255), stopped_(false)
 {
     timerWithPause_.invalidate();
 }
@@ -55,7 +55,7 @@ void FadeInEvent::apply(cv::Mat &frame)
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
-            interval_ = duration_/255;
+            interval_ = duration_ / 255;
         }
         int msecsElapsed = timerWithPause_.msecsElapsed();
         amount_ = -255 + msecsElapsed/interval_;
@@ -86,8 +86,8 @@ void FadeInEvent::unpause()
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id, int trigCode) :
-    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode, FADE_PRIORITY), amount_(0),
-    stopped_(false)
+    Event(EVENT_FADEOUT, start, delay, duration, id, trigCode, FADE_PRIORITY),
+    amount_(0), stopped_(false)
 {
     timerWithPause_.invalidate();
 }
@@ -98,7 +98,7 @@ void FadeOutEvent::apply(cv::Mat &frame)
     if(!stopped_) {
         if(!timerWithPause_.isValid()) {
             timerWithPause_.start();
-            interval_ = duration_/255;
+            interval_ = duration_ / 255;
         }
         int msecsElapsed = timerWithPause_.msecsElapsed();
         amount_ = -msecsElapsed/interval_;
@@ -141,7 +141,8 @@ void ImageEvent::apply(cv::Mat &frame)
         overlayImage(frame, image_, frame, pos_);
 }
 
-//Code from Jepson's Blog http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
+//Code from Jepson's Blog:
+//http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
 void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foreground,
   cv::Mat &output, const cv::Point2i& location)
 {
@@ -350,9 +351,12 @@ void PlaybackEvent::unpause()
     paused_ = false;
 }
 
-MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance, int delay, int id, int trigCode, int trigCode2, State state) :
-    Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode, MOTION_DETECTOR_PRIORITY), state_(state), trigCode2_(trigCode2), target_(target),
-    tolerance_(tolerance)
+MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
+                                         int delay, int id, int trigCode,
+                                         int trigCode2, State state) :
+            Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode,
+            MOTION_DETECTOR_PRIORITY), state_(state), trigCode2_(trigCode2),
+            target_(target), tolerance_(tolerance)
 {
     Settings settings;
     threshold_ = settings.movementThreshold;
@@ -397,11 +401,11 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
             }
             break;
 
-        //Movement has maybe stopped. Make sure that it really stopped instead of a brief pause in movement
-        //due to a change in direction for example.
+        //Movement has maybe stopped. Make sure that it really stopped instead
+        //of a brief pause in movement due to a change in direction for example.
         case MAYBE_FINISHED:
             if(nChanges() < threshold_) {
-                if(finishTimer_.elapsed() > 60) {
+                if(finishTimer_.elapsed() > 100) {
                     state_ = FINISHED;
                     emit triggered(trigCode2_, QString("Movement finished."));
                     time_ = movementTimer_.elapsed();
@@ -411,9 +415,13 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
                         color_ = cv::Scalar(0, 0, 255);
                     finishTimer_.restart();
 
-                    //After the movement has finished, this event doesn't track movement anymore and is just used
-                    //to write the duration of the movement on the frame. Thus the priority needs to be changed.
-                    //The priorityChanged signal is connected to the eventcontainer so that it is resorted by priority.
+                    /*
+                     * After the movement has finished, this event doesn't track
+                     * movement anymore and is just used to write the duration
+                     * of the movement on the frame. Thus the priority needs to
+                     * be changed. The priorityChanged signal is connected to
+                     * the eventcontainer so that it is resorted by priority.
+                    */
                     priority_ = DEFAULT_PRIORITY;
                     emit priorityChanged();
                 }
@@ -425,7 +433,9 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         //Movement finished, draw time elapsed for movement to the frame.
         case FINISHED:
             if(finishTimer_.elapsed() < 1000)
-                cv::putText(frame, std::string(std::to_string(time_)), cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2), cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+                cv::putText(frame, std::string(std::to_string(time_)),
+                            cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2),
+                            cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
             else
                 ready_=true;
             break;
@@ -478,7 +488,8 @@ void MotionDetectorEvent::apply(EventContainer &events)
 void MotionDetectorEvent::createMotionPixmap()
 {
     QImage img;
-    img = QImage(result_.data, result_.cols, result_.rows, result_.step, QImage::Format_Indexed8);
+    img = QImage(result_.data, result_.cols, result_.rows, result_.step,
+                 QImage::Format_Indexed8);
     QPixmap pixmap;
     pixmap.convertFromImage(img.rgbSwapped());
     emit pixmapReady(pixmap);
@@ -489,17 +500,23 @@ PauseEvent::PauseEvent(MainWindow *window)
     connect(this, SIGNAL(triggered(int,QString)), window, SLOT(pause()));
 
     int baseline = 0;
-    cv::Size size1 = getTextSize(std::string("Press space to continue"), cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
-    cv::Size size2 = getTextSize(std::string("Paused"), cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
-    point1 = cv::Point((VIDEO_WIDTH - size2.width)/2,(VIDEO_HEIGHT + size2.height)/2);
-    point2 = cv::Point((VIDEO_WIDTH - size1.width)/2,(VIDEO_HEIGHT + size1.height)/2 + size2.height + 10);
+    cv::Size size1 = getTextSize(std::string("Press space to continue"),
+                                 cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
+    cv::Size size2 = getTextSize(std::string("Paused"), cv::FONT_HERSHEY_DUPLEX,
+                                 1, 1, &baseline);
+    point1 = cv::Point((VIDEO_WIDTH - size2.width)/2,
+                       (VIDEO_HEIGHT + size2.height)/2);
+    point2 = cv::Point((VIDEO_WIDTH - size1.width)/2,
+                       (VIDEO_HEIGHT + size1.height)/2 + size2.height + 10);
 }
 
 void PauseEvent::apply(cv::Mat &frame)
 {
     Event::apply(frame);
-    cv::putText(frame, std::string("Paused"), point1, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
-    cv::putText(frame, std::string("Press space to continue"), point2, cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
+    cv::putText(frame, std::string("Paused"), point1, cv::FONT_HERSHEY_DUPLEX,
+                1, cv::Scalar(255,255,255));
+    cv::putText(frame, std::string("Press space to continue"), point2,
+                cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
 }
 
 void PauseEvent::unpause()

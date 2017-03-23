@@ -62,7 +62,8 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events, int lin
     QStringList strList = str.split(',');
 
     //Event parameters
-    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ = target_ = trigCode2_ = tolerance_ = 0;
+    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ =
+            target_ = trigCode2_ = tolerance_ = 0;
     eventId_ = -1;
     scale_ = 1;
     objectIdOk_ = false;

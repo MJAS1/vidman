@@ -12,6 +12,7 @@
 class EventContainer;
 class MainWindow;
 
+//Priorities are used to determine the order in which to apply an event.
 const int DEFAULT_PRIORITY = 0;
 const int FADE_PRIORITY = 1;
 const int FREEZE_PRIORITY = 3;
@@ -23,11 +24,11 @@ struct VideoObject;
 
 /*!
 Event objects are used to specify the starting time, duration, effects etc.
-of events handled by the program. Each event can modify an OpenCV Mat video frame
-or an EventContainer holding other events by using the apply virtual functions.
-apply(EventContainer&) is used to remove other events from the container for
-example by DelEvents and other events for which only one event of the type
-should exist in the container.
+of events handled by the program. Each event can modify an OpenCV Mat video
+frame or an EventContainer holding other events by using the apply virtual
+functions. apply(EventContainer&) is used to remove other events from the
+container for example by DelEvents and other events for which only one event of
+the type should exist in the container.
  */
 
 class Event;
@@ -57,7 +58,8 @@ public:
     };
 
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
-                   int duration=0, int id = -1, int trigCode = 0, int priority = DEFAULT_PRIORITY) :
+                   int duration=0, int id = -1, int trigCode = 0,
+                   int priority = DEFAULT_PRIORITY) :
         type_(type), start_(start), delay_(delay),
         duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
         ready_(false), first_(true) {}
@@ -284,8 +286,8 @@ private:
 /*This class detects movement between subsequent frames. It stores three frames:
  * previous, current and next, and detects motion using "differential images"
  * method https://blog.cedric.ws/opencv-simple-motion-detection. This class can
- * also emit a QPixmpap of a black-and-white image with the movement shown as white
- * pixels. The emitted pixmap can then be drawn to MotionDialog.
+ * also emit a QPixmpap of a black-and-white image with the movement shown as
+ * white pixels. The emitted pixmap can then be drawn to MotionDialog.
 */
 class MotionDetectorEvent : public Event
 {

@@ -58,9 +58,9 @@ void GLWorker::onDrawFrame(unsigned char *imBuf)
 
 void GLWorker::resizeGL(int w, int h)
 {
-    // Change the viewport to preserve the aspect ratio.
-    // Compute new height corresponding to the current width and new width
-    // corresponding to the current heigh and see which one fits.
+    // Change the viewport to preserve the aspect ratio. Compute new height
+    // corresponding to the current width and new width corresponding to the
+    // current heigh and see which one fits.
     int dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));;
     int dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));;
 
@@ -105,7 +105,8 @@ void GLWorker::startLoop()
 
     while(!shouldStop_)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0,
+                     GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glw_->swapBuffers();

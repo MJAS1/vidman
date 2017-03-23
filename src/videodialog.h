@@ -47,13 +47,11 @@ protected:
     void paintEvent(QPaintEvent*);
 
 private:
-    void initUI();
-
     VideoDialog(const VideoDialog&);
     VideoDialog& operator=(const VideoDialog&);
 
+    void initUI();
     void closeEvent(QCloseEvent *);
-
 
     Ui::VideoDialog*        ui;
     MainWindow*             window_;
