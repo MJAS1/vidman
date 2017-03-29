@@ -167,20 +167,10 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
     {
         printerPortAddr = settings_.value("misc/parallel_port_address").toInt();
     }
-
-    //Port type
-    if(!settings_.contains("misc/port_type"))
-    {
-        settings_.setValue("misc/port_type", OutputDevice::PORT_NULL);
-        portType = OutputDevice::PORT_NULL;
-    }
-    else
-    {
-        printerPortAddr = settings_.value("misc/port_type").toInt();
-    }
 }
 
 void Settings::setValue(const QString &key, const QVariant &value)
 {
     settings_.setValue(key, value);
 }
+
