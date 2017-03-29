@@ -1,0 +1,302 @@
+Object: type=image, id=0, filename=../img/button.png
+
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion
+Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
+Event: type=image, x=400, y=200, objectid=0,delay=700, trigcode=1
+Delete: start=700, type=image
+Delete: start=0, type=detectmotion

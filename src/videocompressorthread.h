@@ -14,7 +14,8 @@
 class VideoCompressorThread : public StoppableThread
 {
 public:
-    VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf, int _jpgQuality, QObject* parent = 0);
+    VideoCompressorThread(CycDataBuffer* _inpBuf, CycDataBuffer* _outBuf,
+                          int _jpgQuality, QObject* parent = 0);
     virtual ~VideoCompressorThread();
 
 protected:

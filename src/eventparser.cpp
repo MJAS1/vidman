@@ -10,7 +10,8 @@ EventParser::EventParser()
 {
 }
 
-bool EventParser::loadEvents(const QStringList &strList, EventContainer& events, MainWindow* window)
+bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
+                             MainWindow* window)
 {
     imageObjects_.clear();
     videoObjects_.clear();
@@ -40,7 +41,8 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
             //Ignore comments
             else if(str[0] == '#' || split[0].simplified() == "");
             else {
-                emit error(QString("Error: couldn't understand '%1' in line %2.").arg(split[0]).arg(i+1));
+                emit error(QString("Error: couldn't understand '%1' in line %2.")
+                           .arg(split[0]).arg(i+1));
                 return false;
             }
         }
@@ -56,13 +58,16 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
     return true;
 }
 
-bool EventParser::parseEvent(const QString &str, EventContainer& events, int lineNumber)
+bool EventParser::parseEvent(const QString &str, EventContainer& events,
+                             int lineNumber)
 {
-    //Split the string to get a list of strings of the form param=val e.g. {"type=...", "start=...", etc..}
+    //Split the string to get a list of strings of the form param=val e.g.
+    //{"type=...", "start=...", etc..}
     QStringList strList = str.split(',');
 
     //Event parameters
-    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ = target_ = trigCode2_ = tolerance_ = 0;
+    start_ = duration_ = delay_ = x_ = y_ = objectId_ = angle_ = trigCode_ =
+            target_ = trigCode2_ = tolerance_ = 0;
     eventId_ = -1;
     scale_ = 1;
     objectIdOk_ = false;
@@ -87,7 +92,8 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events, int lin
     return true;
 }
 
-bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int lineNumber)
+bool EventParser::parseDelEvent(const QString &str, EventContainer& events,
+                                int lineNumber)
 {
     QStringList strList = str.split(',');
 
@@ -108,7 +114,9 @@ bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int 
     }
 
     if(eventId_ > -1 && type_) {
-        emit error(QString("Error: remove event declared with id and type in line %1.").arg(lineNumber));
+        emit error(QString("Error: remove event declared with id and type in"
+                           "line %1.")
+                   .arg(lineNumber));
         return false;
     }
     else if(eventId_ > -1) {
@@ -155,7 +163,9 @@ bool EventParser::parseDelEvent(const QString &str, EventContainer& events, int 
             break;
 
         default:
-            emit error(QString("Error: remove event declared without id or type in line %1").arg(lineNumber));
+            emit error(QString("Error: remove event declared without id or type"
+                               "in line %1")
+                       .arg(lineNumber));
             return false;
         }
 
@@ -186,9 +196,11 @@ bool EventParser::parseObject(const QString &str, int lineNumber)
     }
 
     if(objectType_ == "image") {
-        cv::Mat file(cv::imread(fileName_.toStdString(), CV_LOAD_IMAGE_UNCHANGED));
+        cv::Mat file(cv::imread(fileName_.toStdString(),
+                                CV_LOAD_IMAGE_UNCHANGED));
         if(file.empty()) {
-            emit error(QString("Error: couldn't load image file '%1'.").arg(fileName_));
+            emit error(QString("Error: couldn't load image file '%1'.")
+                       .arg(fileName_));
             return false;
         }
         imageObjects_[objectId_] = file;
@@ -204,17 +216,20 @@ bool EventParser::parseObject(const QString &str, int lineNumber)
         videoObjects_.insert(objectId_, videoObject);
     }
     else if(objectType_ == "") {
-        emit error(QString("Error: no type declared for object in line %1").arg(lineNumber));
+        emit error(QString("Error: no type declared for object in line %1")
+                   .arg(lineNumber));
         return false;
     }
     else {
-        emit error(QString("Error: invalid type '%1' for object in line %1").arg(objectType_).arg(lineNumber));
+        emit error(QString("Error: invalid type '%1' for object in line %1")
+                   .arg(objectType_).arg(lineNumber));
         return false;
     }
     return true;
 }
 
-bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNumber)
+bool EventParser::parseEventParam(const QString &p, const QString &v,
+                                  int lineNumber)
 {
     QString param = p.toLower().replace(" ", "");
     QString value = v.toLower().replace(" ", "");
@@ -232,7 +247,8 @@ bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNu
         else if(value == "record") type_ = Event::EVENT_RECORD;
         else if(value == "playback") type_ = Event::EVENT_PLAYBACK;
         else {
-            emit error(QString("Error: invalid type '%1' in line %2.").arg(v).arg(lineNumber));
+            emit error(QString("Error: invalid type '%1' in line %2.")
+                       .arg(v).arg(lineNumber));
             return false;
         }
     }
@@ -282,7 +298,9 @@ bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNu
         if((scale_ = toFloat(v, lineNumber, QString("scale"))) == -1)
             return false;
         else if(scale_ < 1) {
-            emit error(QString("Error: scale must be greater than 1 for zoom event in line %1").arg(lineNumber));
+            emit error(QString("Error: scale must be greater than 1 for zoom"
+                               "event in line %1")
+                       .arg(lineNumber));
             return false;
         }
     }
@@ -292,7 +310,9 @@ bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNu
         else if(value=="red") color_=cv::Scalar(0, 0, 255);
         else if(value=="blue") color_=cv::Scalar(255, 0, 0);
         else {
-            emit error(QString("Error: couldn't understand color '%1' in line %2. Try black, white, red or blue.").arg(v).arg(lineNumber));
+            emit error(QString("Error: couldn't understand color '%1' in"
+                               "line %2. Try black, white, red or blue.")
+                       .arg(v).arg(lineNumber));
             return false;
         }
     }
@@ -311,19 +331,22 @@ bool EventParser::parseEventParam(const QString &p, const QString &v, int lineNu
 
     else if(param.replace(" ", "").isEmpty());
     else {
-        emit error(QString("Error: couldn't understand '%1' in line %2.").arg(param).arg(lineNumber));
+        emit error(QString("Error: couldn't understand '%1' in line %2.")
+                   .arg(param).arg(lineNumber));
         return false;
     }
 
     return true;
 }
 
-bool EventParser::parseObjectParam(const QString &p, const QString &v, int lineNumber)
+bool EventParser::parseObjectParam(const QString &p, const QString &v,
+                                   int lineNumber)
 {
     QString param = p.toLower().replace(" ", "");
     if(param == "type") {
         if(((objectType_ = v) != "video") && (objectType_ != "image")) {
-            emit error(QString("Error: invalid type '%1' in line %2").arg(objectType_).arg(lineNumber));
+            emit error(QString("Error: invalid type '%1' in line %2")
+                       .arg(objectType_).arg(lineNumber));
             return false;
         }
     }
@@ -339,7 +362,8 @@ bool EventParser::parseObjectParam(const QString &p, const QString &v, int lineN
             return false;
     }
     else {
-        emit error(QString("Error: couldn't understand '%1' in line %2.").arg(p.simplified()).arg(lineNumber));
+        emit error(QString("Error: couldn't understand '%1' in line %2.")
+                   .arg(p.simplified()).arg(lineNumber));
         return false;
     }
 
@@ -355,32 +379,41 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
         break;
 
     case Event::EVENT_FADEIN:
-        ev.reset(new FadeInEvent(start_, duration_, delay_, eventId_, trigCode_));
+        ev.reset(new FadeInEvent(start_, duration_, delay_, eventId_,
+                                 trigCode_));
         ev->appendLog(QString("Fade in event added. "));
         break;
 
     case Event::EVENT_FADEOUT:
-        ev.reset(new FadeOutEvent(start_, duration_, delay_, eventId_, trigCode_));
+        ev.reset(new FadeOutEvent(start_, duration_, delay_, eventId_,
+                                  trigCode_));
         ev->appendLog(QString("Fade out event added. "));
         break;
 
     case Event::EVENT_IMAGE:
         if(objectIdOk_) {
             if(!imageObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find image object with id %1 in line %2").arg(objectId_).arg(lineNumber));
+                emit error(QString("Error: couldn't find image object with id"
+                                   "%1 in line %2")
+                           .arg(objectId_).arg(lineNumber));
                 return false;
             }
-            ev.reset(new ImageEvent(start_, cv::Point2i(x_, y_), imageObjects_[objectId_], delay_, eventId_, trigCode_));
+            ev.reset(new ImageEvent(start_, cv::Point2i(x_, y_),
+                                    imageObjects_[objectId_], delay_, eventId_,
+                                    trigCode_));
             ev->appendLog(QString("Image event added. "));
         }
         else {
-            emit error(QString("Error: image event declared without object id in line %1").arg(lineNumber));
+            emit error(QString("Error: image event declared without object id"
+                               "in line %1")
+                       .arg(lineNumber));
             return false;
         }
         break;
 
     case Event::EVENT_TEXT:
-        ev.reset(new TextEvent(start_, string_, color_, cv::Point2i(x_, y_), delay_, eventId_, trigCode_));
+        ev.reset(new TextEvent(start_, string_, color_, cv::Point2i(x_, y_),
+                               delay_, eventId_, trigCode_));
         ev->appendLog(QString("Text event added. "));
         break;
 
@@ -395,30 +428,39 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
         break;
 
     case Event::EVENT_ZOOM:
-        ev.reset(new ZoomEvent(start_, scale_, duration_, delay_, eventId_, trigCode_));
+        ev.reset(new ZoomEvent(start_, scale_, duration_, delay_, eventId_,
+                               trigCode_));
         ev->appendLog(QString("Zoom event added"));
         break;
 
     case Event::EVENT_DETECT_MOTION:
-        ev.reset(new MotionDetectorEvent(start_, target_,  tolerance_, delay_, eventId_, trigCode_, trigCode2_));
+        ev.reset(new MotionDetectorEvent(start_, target_,  tolerance_, delay_,
+                                         eventId_, trigCode_, trigCode2_));
         ev->appendLog(QString("Movement detected"));
         break;
 
     case Event::EVENT_RECORD:
         if(objectIdOk_) {
             if(!videoObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId_).arg(lineNumber));
+                emit error(QString("Error: couldn't find video object with id"
+                                   "%1 in line %2")
+                           .arg(objectId_).arg(lineNumber));
                 return false;
             }
             if(duration_ > videoObjects_[objectId_]->duration_) {
-                emit error(QString("Error: record event duration too big for video object in line %1").arg(lineNumber));
+                emit error(QString("Error: record event duration too big for"
+                                   "video object in line %1")
+                           .arg(lineNumber));
                 return false;
             }
-            ev.reset(new RecordEvent(start_, videoObjects_[objectId_], delay_, duration_, eventId_, trigCode_));
+            ev.reset(new RecordEvent(start_, videoObjects_[objectId_], delay_,
+                                     duration_, eventId_, trigCode_));
             ev->appendLog(QString("Record event added"));
         }
         else {
-            emit error(QString("Error: record event declared without object id in line %1").arg(lineNumber));
+            emit error(QString("Error: record event declared without object id"
+                               "in line %1")
+                       .arg(lineNumber));
             return false;
         }
         break;
@@ -426,20 +468,26 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
     case Event::EVENT_PLAYBACK:
         if(objectIdOk_) {
             if(!videoObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find video object with id %1 in line %2").arg(objectId_).arg(lineNumber));
+                emit error(QString("Error: couldn't find video object with id"
+                                   "%1 in line %2")
+                           .arg(objectId_).arg(lineNumber));
                 return false;
             }
-            ev.reset(new PlaybackEvent(start_, videoObjects_[objectId_], delay_, duration_, eventId_, trigCode_));
+            ev.reset(new PlaybackEvent(start_, videoObjects_[objectId_], delay_,
+                                       duration_, eventId_, trigCode_));
             ev->appendLog(QString("Playback event added."));
         }
         else {
-            emit error(QString("Error: playback event declared without object id in line %1").arg(lineNumber));
+            emit error(QString("Error: playback event declared without object"
+                               "id in line %1")
+                       .arg(lineNumber));
             return false;
         }
         break;
 
     default:
-        emit error(QString("Error: event declared without a type in line %1").arg(lineNumber));
+        emit error(QString("Error: event declared without a type in line %1")
+                   .arg(lineNumber));
         return false;
 
     }
@@ -453,11 +501,15 @@ float EventParser::toFloat(const QString &str, int line, const QString &param) c
     QString string = str.toLower().replace(" ", "");
     float num = string.toFloat(&ok);
     if(!ok) {
-        emit error(QString("Error: couldn't convert %1 '%2' in line %3 to floating point").arg(param).arg(str).arg(line));
+        emit error(QString("Error: couldn't convert %1 '%2' in line %3 to"
+                           "floating point")
+                   .arg(param).arg(str).arg(line));
         return -1;
     }
     if(num < 0) {
-        emit error(QString("Error: %1 on line %2 must be a positive floating point").arg(param).arg(line));
+        emit error(QString("Error: %1 on line %2 must be a positive floating"
+                           "point")
+                   .arg(param).arg(line));
         return -1;
     }
     return  num;
@@ -469,11 +521,14 @@ int EventParser::toInt(const QString &str, int line, const QString &param) const
     QString string = str.toLower().replace(" ", "");
     int num = string.toInt(&ok);
     if(!ok) {
-        emit error(QString("Error: Couldn't convert %1 '%2' in line %3 to integer").arg(param).arg(str).arg(line));
+        emit error(QString("Error: Couldn't convert %1 '%2' in line %3 to"
+                           "integer")
+                   .arg(param).arg(str).arg(line));
         return -1;
     }
     if(num < 0) {
-        emit error(QString("Error: %1 on line %2 must be a positive integer").arg(param).arg(line));
+        emit error(QString("Error: %1 on line %2 must be a positive integer")
+                   .arg(param).arg(line));
         return -1;
     }
     return  num;

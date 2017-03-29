@@ -4,7 +4,8 @@
 #include <opencv2/opencv.hpp>
 #include <dc1394/dc1394.h>
 
-/*! This class is used to control the videocamera. It uses dc1394 library to
+/*!
+ * This class is used to control the videocamera. It uses dc1394 library to
  * access the camera's register and OpenCV to acquire frames.
  */
 

@@ -19,11 +19,9 @@ FileWriter::FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suff
 {
 }
 
-
 FileWriter::~FileWriter()
 {
 }
-
 
 void FileWriter::stoppableRun()
 {
@@ -43,14 +41,18 @@ void FileWriter::stoppableRun()
 		{
 			if (!prevIsRec)
 			{
-                QString name(QDateTime::currentDateTime().toString("%1/yyyy-MM-dd--hh:mm:ss%2.%3"));
+                QString name(QDateTime::currentDateTime()
+                             .toString("%1/yyyy-MM-dd--hh:mm:ss%2.%3"));
                 name = name.arg(path).arg(suffix).arg(ext);
 
-                outData.open(name.toStdString().c_str(), ios_base::out | ios_base::binary | ios_base::trunc);
+                outData.open(name.toStdString().c_str(),
+                             ios_base::out | ios_base::binary | ios_base::trunc);
                 if(outData.fail())
 				{
-                    cerr << "Error opening the file " << name.toStdString()  << ". " << strerror(errno) << endl;
-                    emit error(QString("Error opening the file %1. %2").arg(name).arg(strerror(errno)));
+                    cerr << "Error opening the file " << name.toStdString()
+                         << ". " << strerror(errno) << endl;
+                    emit error(QString("Error opening the file %1. %2")
+                               .arg(name).arg(strerror(errno)));
                     continue;
 				}
 				header = getHeader(&headerLen);
@@ -58,7 +60,8 @@ void FileWriter::stoppableRun()
 			}
 
 			chunkSz = chunkAttrib.chunkSize;
-			outData.write((const char*)(&(chunkAttrib.timestamp)), sizeof(uint64_t));
+            outData.write((const char*)(&(chunkAttrib.timestamp)),
+                          sizeof(uint64_t));
 			outData.write((const char*)(&chunkSz), sizeof(uint32_t));
 			outData.write((const char*)databuf, chunkAttrib.chunkSize);
 		}
@@ -80,7 +83,5 @@ void FileWriter::stoppableRun()
 			}
 			return;
 		}
-
-
 	}
 }

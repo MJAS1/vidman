@@ -38,7 +38,8 @@ signals:
     void error(const QString&) const;
 
 protected:
-    FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix, const char* ext, QObject* parent = 0);
+    FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix,
+               const char* ext, QObject* parent = 0);
 	virtual ~FileWriter();
 	virtual void stoppableRun();
 

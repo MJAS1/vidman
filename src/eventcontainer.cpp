@@ -95,7 +95,8 @@ int EventContainer::getTotalDuration() const
 
 void EventContainer::sort()
 {
-    std::sort(events_.begin(), events_.end(), [](const EventPtr& l, const EventPtr& r) {
+    std::sort(events_.begin(), events_.end(), [](const EventPtr& l,
+              const EventPtr& r) {
         return l->getPriority() > r->getPriority();
     });
 }

@@ -10,8 +10,8 @@
 #include "common.h"
 #include "config.h"
 
-CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf),
-    cam_(cam), trigCode_(0), shouldStop_(false)
+CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) :
+    cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldStop_(false)
 {
     Settings settings;
 
@@ -24,7 +24,8 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
     if(settings.fixPoint) {
         //fixPoint.png is stored in qt resource file, so it needs to be loaded to QImage first
         QImage fixImg(":/img/fixPoint.png");
-        cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4, fixImg.bits(), fixImg.bytesPerLine()).clone();
+        cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
+                                 fixImg.bits(), fixImg.bytesPerLine()).clone();
         cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
         if(!fixMat.empty())
@@ -38,7 +39,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) : cycBuf_(cycBuf)
 
 /* start() and stop() are called by the main thread. However, the loop is
  * supposed to be working in a different thread. invokeMethod() makes sure that
- * the call for startLoop() and  stopLoop is placed in the thread's event queue.
+ * the call for startLoop() and stopLoop is placed in the thread's event queue.
  */
 void CameraWorker::start()
 {

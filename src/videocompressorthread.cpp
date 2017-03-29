@@ -13,16 +13,17 @@
 #include "config.h"
 #include "videocompressorthread.h"
 
-VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf, CycDataBuffer* outBuf, int jpgQuality, QObject* parent) :
-    StoppableThread(parent), inpBuf(inpBuf), outBuf(outBuf), jpgQuality(jpgQuality)
+VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf,
+                                             CycDataBuffer* outBuf,
+                                             int jpgQuality, QObject* parent) :
+    StoppableThread(parent), inpBuf(inpBuf), outBuf(outBuf),
+    jpgQuality(jpgQuality)
 {
 }
-
 
 VideoCompressorThread::~VideoCompressorThread()
 {
 }
-
 
 void VideoCompressorThread::stoppableRun()
 {

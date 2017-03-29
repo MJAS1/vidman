@@ -5,8 +5,8 @@
 #include "event.h"
 
 /*!
-Custom container class for storing events.
-  */
+ * Custom container class for storing events.
+ */
 
 namespace cv {
 class Mat;
@@ -38,9 +38,6 @@ public slots:
     void            sort();
 
 private:
-    EventContainer(const EventContainer&);
-    EventContainer& operator=(const EventContainer&);
-
     std::vector<EventPtr> events_;
 };
 

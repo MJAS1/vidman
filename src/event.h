@@ -12,6 +12,7 @@
 class EventContainer;
 class MainWindow;
 
+//Priorities are used to determine the order in which to apply an event.
 const int DEFAULT_PRIORITY = 0;
 const int FADE_PRIORITY = 1;
 const int FREEZE_PRIORITY = 3;
@@ -22,12 +23,14 @@ const int MOTION_DETECTOR_PRIORITY = 5;
 struct VideoObject;
 
 /*!
-Event objects are used to specify the starting time, duration, effects etc.
-of events handled by the program. Each event can modify an OpenCV Mat video frame
-or an EventContainer holding other events by using the apply virtual functions.
-apply(EventContainer&) is used to remove other events from the container for
-example by DelEvents and other events for which only one event of the type
-should exist in the container.
+ * Event objects are used to specify the starting time, duration, effects etc.
+ * of video  events handled by the program. Each event can modify an OpenCV Mat
+ * video frame or an EventContainer holding other events by using the apply
+ * virtual functions. apply(EventContainer&) can be used  for example to remove
+ * other events from the container by DelEvents and other events for which only
+ * one event of the type should exist in the container. When apply(frame) is
+ * used for the first time, the event will emit a triggered() signal as long
+ * as the derived class calls Event::apply(frame) in the overrided function.
  */
 
 class Event;
@@ -57,7 +60,8 @@ public:
     };
 
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
-                   int duration=0, int id = -1, int trigCode = 0, int priority = DEFAULT_PRIORITY) :
+                   int duration=0, int id = -1, int trigCode = 0,
+                   int priority = DEFAULT_PRIORITY) :
         type_(type), start_(start), delay_(delay),
         duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
         ready_(false), first_(true) {}
@@ -99,18 +103,21 @@ private:
     Event& operator=(const Event&);
 };
 
-//This class is used to specify what event should be deleted and when
+/*!
+ * This class is used to specify what event should be deleted and when
+ */
 class DelEvent : public Event
 {
 public:
 
-    //Remove event can be initialized to remove either an event with a specific
-    //id or all the events of a given type.
+    /* Remove event can be initialized to remove either an event with a specific
+     * id or all the events of a given type. */
     explicit DelEvent(int start, int delay, int delId, int trigCode = 0) :
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}
 
-    explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0):
+    explicit DelEvent(int start, int delay, EventType delType,
+                      int trigCode = 0):
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
     {}
 
@@ -171,7 +178,8 @@ class ImageEvent : public Event
 {
 public:
     explicit ImageEvent(int start, const cv::Point2i& pos,
-                        const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
+                        const cv::Mat &image, int delay, int id = -1,
+                        int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
 private:
@@ -188,7 +196,8 @@ class TextEvent : public Event
 {
 public:
     explicit TextEvent(int start, const QString& str, cv::Scalar color,
-                       const cv::Point2i& pos, int delay, int id = -1, int trigCode = 0);
+                       const cv::Point2i& pos, int delay, int id = -1,
+                       int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
 
@@ -202,7 +211,8 @@ private:
 class RotateEvent : public Event
 {
 public:
-    explicit RotateEvent(int start, int angle, int delay, int id = -1, int trigCode = 0);
+    explicit RotateEvent(int start, int angle, int delay, int id = -1,
+                         int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
@@ -281,11 +291,12 @@ private:
     bool paused_;
 };
 
-/*This class detects movement between subsequent frames. It stores three frames:
+/*!
+ * This class detects movement between subsequent frames. It stores three frames:
  * previous, current and next, and detects motion using "differential images"
  * method https://blog.cedric.ws/opencv-simple-motion-detection. This class can
- * also emit a QPixmpap of a black-and-white image with the movement shown as white
- * pixels. The emitted pixmap can then be drawn to MotionDialog.
+ * also emit a QPixmpap of the differential image with the movement shown as
+ * white pixels. The emitted pixmap can then be drawn to a MotionDialog.
 */
 class MotionDetectorEvent : public Event
 {
@@ -315,6 +326,11 @@ signals:
 private:
     void            createMotionPixmap();
     int             nChanges();
+
+    void            waiting();
+    void            tracking();
+    void            maybeFinished();
+    void            finished(cv::Mat &frame);
 
     State           state_;
     QElapsedTimer   movementTimer_, finishTimer_;
