@@ -103,18 +103,21 @@ private:
     Event& operator=(const Event&);
 };
 
-//This class is used to specify what event should be deleted and when
+/*!
+ * This class is used to specify what event should be deleted and when
+ */
 class DelEvent : public Event
 {
 public:
 
-    //Remove event can be initialized to remove either an event with a specific
-    //id or all the events of a given type.
+    /* Remove event can be initialized to remove either an event with a specific
+     * id or all the events of a given type. */
     explicit DelEvent(int start, int delay, int delId, int trigCode = 0) :
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}
 
-    explicit DelEvent(int start, int delay, EventType delType, int trigCode = 0):
+    explicit DelEvent(int start, int delay, EventType delType,
+                      int trigCode = 0):
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
     {}
 
@@ -175,7 +178,8 @@ class ImageEvent : public Event
 {
 public:
     explicit ImageEvent(int start, const cv::Point2i& pos,
-                        const cv::Mat &image, int delay, int id = -1, int trigCode = 0);
+                        const cv::Mat &image, int delay, int id = -1,
+                        int trigCode = 0);
 
     virtual void apply(cv::Mat &frame);
 private:

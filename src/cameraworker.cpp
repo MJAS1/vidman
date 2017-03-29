@@ -24,7 +24,8 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) :
     if(settings.fixPoint) {
         //fixPoint.png is stored in qt resource file, so it needs to be loaded to QImage first
         QImage fixImg(":/img/fixPoint.png");
-        cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4, fixImg.bits(), fixImg.bytesPerLine()).clone();
+        cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
+                                 fixImg.bits(), fixImg.bytesPerLine()).clone();
         cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
         if(!fixMat.empty())

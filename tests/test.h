@@ -14,6 +14,7 @@ public:
 private slots:
     void testEventParser() const;
     void errorMsg(const QString&) const;
+
     //void testMotionDetector();
 };
 

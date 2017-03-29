@@ -76,7 +76,8 @@ void GLWorker::resizeGL(int w, int h)
     else if(dispW <= w)
         glViewport((w - dispW) / 2, 0, dispW, h);
     else {
-        std::cerr << "Internal error while computing the viewport size" << std::endl;
+        std::cerr << "Internal error while computing the viewport size"
+                  << std::endl;
         abort();
     }
 }
@@ -99,7 +100,8 @@ void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
-    //Wait until the first frame is ready and window is exposed to avoid warnings.
+    /*Wait until the first frame is ready and window is exposed to avoid
+     * warnings. */
     while(!(buf_ && glw_->windowHandle()->isExposed()))
         QCoreApplication::processEvents();
 

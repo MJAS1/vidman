@@ -122,6 +122,7 @@ void MainWindow::initVideo()
         videoFileWriter_->start();
         videoCompressorThread_->start();
 
+
         cameraWorker_->moveToThread(cameraThread_);
         cameraThread_->start();
         cameraWorker_->start();

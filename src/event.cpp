@@ -200,7 +200,8 @@ TextEvent::TextEvent(int start, const QString& str, cv::Scalar color,
 void TextEvent::apply(cv::Mat &frame)
 {
     Event::apply(frame);
-    cv::putText(frame, str_.toStdString(), pos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+    cv::putText(frame, str_.toStdString(), pos_, cv::FONT_HERSHEY_DUPLEX, 1,
+                color_, 2);
 }
 
 RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
@@ -405,7 +406,6 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         case FINISHED:
             finished(frame);
             break;
-
         //This state is only used for the event associated with a motion dialog.
         case MOTION_DIALOG:
             nChanges();
