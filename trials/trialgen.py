@@ -21,10 +21,10 @@ missTrigCode = 5
 minDelay = 1000
 maxDelay = 2000
 imgDuration = 700
-x = 290
-y = 270
-target = 250
-tolerance = 51
+x = 330
+y = 150
+target = 575
+tolerance = 76
 
 file.write("Object: type=image, id=0, filename="+imgFilename+"\n\n")
 

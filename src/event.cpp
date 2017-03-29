@@ -401,7 +401,7 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         //due to a change in direction for example.
         case MAYBE_FINISHED:
             if(nChanges() < threshold_) {
-                if(finishTimer_.elapsed() > 60) {
+                if(finishTimer_.elapsed() > 100) {
                     state_ = FINISHED;
                     emit triggered(trigCode2_, QString("Movement finished."));
                     time_ = movementTimer_.elapsed();
