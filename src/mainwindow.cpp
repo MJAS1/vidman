@@ -21,10 +21,21 @@
 #include "timerwithpause.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow), state_(STOPPED), time_(0)
+    QMainWindow(parent), ui(new Ui::MainWindow), time_(0), state_(STOPPED),
+    videoDialog_(new VideoDialog(this, cam_)),
+    cycVideoBufRaw_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this)),
+    cycVideoBufJpeg_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this)),
+    cameraThread_(new QThread(this)),
+    videoFileWriter_(new VideoFileWriter(cycVideoBufJpeg_,
+                                         settings_.storagePath, this)),
+    videoCompressorThread_(new VideoCompressorThread(cycVideoBufRaw_,
+                                                     cycVideoBufJpeg_,
+                                                     settings_.jpgQuality,
+                                                     this)),
+    cameraWorker_(new CameraWorker(cycVideoBufRaw_, cam_, this))
 {
     ui->setupUi(this);
-    videoDialog_ = new VideoDialog(this, cam_);
+
     videoDialog_->show();
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -37,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     initVideo();
 
     connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
-            cameraWorker_.get(), SLOT(motionDialogToggled(bool)));
+            cameraWorker_, SLOT(motionDialogToggled(bool)));
 
     //Set status bar
     status_.setIndent(10);
@@ -100,29 +111,16 @@ void MainWindow::initVideo()
 {
     if(!cam_.empty()) {
         // Set up video recording
-        cycVideoBufRaw_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
-        cycVideoBufJpeg_ = new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this);
-        cameraThread_ = new QThread(this);
-        cameraWorker_.reset(new CameraWorker(cycVideoBufRaw_, cam_));
-        videoFileWriter_ = new VideoFileWriter(cycVideoBufJpeg_,
-                                               settings_.storagePath, this);
-        videoCompressorThread_ = new VideoCompressorThread(cycVideoBufRaw_,
-                                                           cycVideoBufJpeg_,
-                                                           settings_.jpgQuality,
-                                                           this);
-
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this,
                 SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)),
                 videoDialog_, SIGNAL(drawFrame(unsigned char*)));
-        connect(cameraWorker_.get(), SIGNAL(motionPixmapReady(const QPixmap&)),
+        connect(cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)),
                 motionDialog_, SLOT(setPixmap(const QPixmap&)));
 
         // Start video running
         videoFileWriter_->start();
         videoCompressorThread_->start();
-
-
         cameraWorker_->moveToThread(cameraThread_);
         cameraThread_->start();
         cameraWorker_->start();

@@ -10,8 +10,9 @@
 #include "common.h"
 #include "config.h"
 
-CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam) :
-    cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldStop_(false)
+CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam, QObject* parent):
+    QObject(parent), cycBuf_(cycBuf), cam_(cam), trigCode_(0),
+    shouldStop_(false)
 {
     Settings settings;
 

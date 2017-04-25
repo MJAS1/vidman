@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QTime>
 #include <QLabel>
+#include <QThread>
 #include "camera.h"
 #include "outputdevice.h"
 #include "settings.h"
@@ -108,9 +109,12 @@ private:
 
     int                     currentEventDuration_;
 
+    qint64                  time_;
+
     Highlighter*            highlighter_;
     State                   state_;
 
+    Camera                  cam_;
     VideoDialog*            videoDialog_;
     MotionDialog*           motionDialog_;
     LogFile                 logFile_;
@@ -118,7 +122,6 @@ private:
     QLabel                  status_;
     QLabel                  motionDetectorLabel_;
     QTime                   eventsDuration_;
-    Camera                  cam_;
     Settings                settings_;
 
     CycDataBuffer*          cycVideoBufRaw_;
@@ -126,17 +129,13 @@ private:
     QThread*                cameraThread_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
-
-    /*Since moveToThread() cannot be used to move objects with a parent, use
-     * unique_ptr instead of qt ownership to manage memory.*/
-    std::unique_ptr<CameraWorker> cameraWorker_;
+    CameraWorker*           cameraWorker_;
 
     QTimer                  eventTmr_;
     QTimer                  timeTmr_;
     TimerWithPause          runningTime_;
 
     EventContainer          events_;
-    qint64                  time_;
 };
 
 #endif // MAINWINDOW_H

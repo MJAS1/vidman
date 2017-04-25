@@ -19,7 +19,8 @@ class CameraWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit CameraWorker(CycDataBuffer* cycBuf, Camera &cam);
+    explicit CameraWorker(CycDataBuffer* cycBuf, Camera &cam,
+                          QObject* parent = nullptr);
 
     void start();
     void stop();
