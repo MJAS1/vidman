@@ -63,8 +63,7 @@ private:
     int             videoWidth_;
 
     VideoDialog*    videoDialog_;
-    QThread         glthread_;
-    GLWorker        glworker_;
+
 
 private slots:
     void updateFPS();

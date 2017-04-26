@@ -8,8 +8,8 @@
 #include "glworker.h"
 #include "glvideowidget.h"
 
-GLWorker::GLWorker(GLVideoWidget *glw) : QObject(), glw_(glw),
-    videoWidth_(VIDEO_WIDTH), shouldStop_(false)
+GLWorker::GLWorker(GLVideoWidget *glw) :
+    glw_(glw), videoWidth_(VIDEO_WIDTH), shouldStop_(false)
 {
     buf_ = nullptr;
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)

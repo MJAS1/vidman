@@ -8,6 +8,7 @@
 #include <QThread>
 #include "camera.h"
 #include "outputdevice.h"
+#include "glworker.h"
 #include "settings.h"
 #include "logfile.h"
 #include "eventcontainer.h"
@@ -129,13 +130,16 @@ private:
     QThread*                cameraThread_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
-    CameraWorker*           cameraWorker_;
+    CameraWorker            cameraWorker_;
+    GLWorker                glworker_;
 
     QTimer                  eventTmr_;
     QTimer                  timeTmr_;
     TimerWithPause          runningTime_;
 
     EventContainer          events_;
+
+    QThread                 glthread_;
 };
 
 #endif // MAINWINDOW_H

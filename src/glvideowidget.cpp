@@ -16,23 +16,15 @@ using namespace std;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
-       videoDialog_(parent), glworker_(this)
+       videoDialog_(parent)
 {
     //Important to manually swap the framebuffers for syncing trigger signals.
     setAutoBufferSwap(false);
 
     connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
-    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_,
-            SLOT(onDrawFrame(unsigned char*)));
+
     connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this,
             SLOT(onDrawFrame()));
-    connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_,
-            SLOT(onAspectRatioChanged(int)));
-
-    qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
-    connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
-            &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
-    connect(this, SIGNAL(resize(int,int)), &glworker_, SLOT(resizeGL(int,int)));
     connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(),
             SLOT(onStartButton()));
     connect(this, SIGNAL(increaseAspectRatio()), videoDialog_,
@@ -41,24 +33,10 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
             SLOT(decreaseAspectRatio()));
 
     fpsTimer_.start(1000);
-
-/*
- * QGLContext::moveToThread() was introduced in Qt5 and is necessary to
- * enable OpenGL in a different thread.
- */
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    context()->moveToThread(&glthread_);
-#endif
-    glworker_.moveToThread(&glthread_);
-    glthread_.start();
-    glworker_.start();
 }
 
 GLVideoWidget::~GLVideoWidget()
 {
-    glworker_.stop();
-    glthread_.quit();
-    glthread_.wait();
 }
 
 void GLVideoWidget::paintEvent(QPaintEvent *)

@@ -142,3 +142,13 @@ void VideoDialog::onAspectRatioSliderMoved(int videoWidth)
     settings_.setValue("video/videoWidth", videoWidth);
     emit aspectRatioChanged(videoWidth);
 }
+
+QGLContext* VideoDialog::context() const
+{
+    return glVideoWidget_->context();
+}
+
+GLVideoWidget* VideoDialog::glVideoWidget()
+{
+    return glVideoWidget_;
+}

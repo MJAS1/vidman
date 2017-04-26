@@ -6,6 +6,7 @@
 #include "settings.h"
 
 class MainWindow;
+class QGLContext;
 class Camera;
 class GLVideoWidget;
 class CycDataBuffer;
@@ -31,6 +32,10 @@ public:
 
     void updateFPS(int fps);
     MainWindow* mainWindow() const;
+    GLVideoWidget* glVideoWidget();
+
+    //Returns the context of childwidget glVideoWidget
+    QGLContext* context() const;
 
 public slots:
     void onShutterChanged(int newVal);
