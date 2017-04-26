@@ -2,6 +2,7 @@
 #include <cstring>
 #include <QCoreApplication>
 #include <QWindow>
+#include <QDebug>
 #include "videodialog.h"
 #include "mainwindow.h"
 #include "common.h"
@@ -102,8 +103,10 @@ void GLWorker::startLoop()
 
     /*Wait until the first frame is ready and window is exposed to avoid
      * warnings. */
-    while(!(buf_ && glw_->windowHandle()->isExposed()))
+    while(!(buf_ && glw_->windowHandle()->isExposed())) {
+        emit vblank();
         QCoreApplication::processEvents();
+    }
 
     shaderProgram_.bind();
     shaderProgram_.setUniformValue("texture", 0);
@@ -128,6 +131,7 @@ void GLWorker::startLoop()
          * following glFinish() should then sync with the screen refresh rate.
          */
         glFinish();
+        emit vblank();
 
         //Write trigger code to output port and log the event.
         ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));

@@ -138,8 +138,6 @@ private:
     TimerWithPause          runningTime_;
 
     EventContainer          events_;
-
-    QThread                 glthread_;
 };
 
 #endif // MAINWINDOW_H

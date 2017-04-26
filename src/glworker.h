@@ -36,6 +36,9 @@ public slots:
      */
     void setOutputDevice(OutputDevice::PortType portType);
 
+signals:
+    void vblank();
+
 private:
     void                    initializeGL();
 

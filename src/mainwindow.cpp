@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QCloseEvent>
 #include <QStatusBar>
+#include <QDebug>
 #include "glvideowidget.h"
 #include "config.h"
 #include "cycdatabuffer.h"
@@ -47,18 +48,8 @@ MainWindow::MainWindow(QWidget *parent) :
             &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
     connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)), &glworker_,
             SLOT(resizeGL(int,int)));
-/*
- * QGLContext::moveToThread() was introduced in Qt5 and is necessary to
- * enable OpenGL in a different thread.
- */
-#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-    videoDialog_->glVideoWidget()->context()->moveToThread(&glthread_);
-#endif
-    glworker_.moveToThread(&glthread_);
-    glthread_.start();
-    glworker_.start();
+    connect(&glworker_, SIGNAL(vblank()), &cameraWorker_, SLOT(captureFrame()));
 
-    videoDialog_->show();
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
@@ -66,6 +57,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     initToolButton();
     initVideo();
+
+    videoDialog_->show();
 
     connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
             &cameraWorker_, SLOT(motionDialogToggled(bool)));
@@ -90,12 +83,9 @@ void MainWindow::stopThreads()
     // The piece of code stopping the threads should execute fast enough,
     // otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
     // order of stopping the threads is important.
-    glworker_.stop();
-    glthread_.quit();
-    glthread_.wait();
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
-    cameraWorker_.stop();
+    glworker_.stop();
     cameraThread_->quit();
     cameraThread_->wait();
 }
@@ -146,9 +136,17 @@ void MainWindow::initVideo()
         // Start video running
         videoFileWriter_->start();
         videoCompressorThread_->start();
+/*
+ * QGLContext::moveToThread() was introduced in Qt5 and is necessary to
+ * enable OpenGL in a different thread.
+ */
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
+        videoDialog_->context()->moveToThread(cameraThread_);
+#endif
         cameraWorker_.moveToThread(cameraThread_);
         cameraThread_->start();
-        cameraWorker_.start();
+        glworker_.moveToThread(cameraThread_);
+        glworker_.start();
 
         //Setup event handling
         eventTmr_.setSingleShot(true);
