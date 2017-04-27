@@ -4,6 +4,7 @@
 #include <QImage>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QElapsedTimer>
 #include "settings.h"
 #include "cameraworker.h"
 #include "camera.h"
@@ -35,19 +36,15 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
 
-    cam_.setFPS(settings.fps);
-}
-
-CameraWorker::~CameraWorker()
-{
-
+    if(!cam_.empty())
+        cam_.setFPS(settings.fps);
 }
 
 void CameraWorker::captureFrame()
 {
     cam_ >> frame_;
     if (frame_.empty()) {
-        std::cerr << "Error dequeuing a frame" << std::endl;
+        std::cerr << "Error dequeuing a frame." << std::endl;
         abort();
     }
 
@@ -66,7 +63,7 @@ void CameraWorker::captureFrame()
 
     //Some video event may have emitted a signal, so process events before
     //continuing.
-    //QCoreApplication::processEvents();
+    QCoreApplication::processEvents();
 
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 

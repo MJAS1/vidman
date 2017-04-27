@@ -55,6 +55,7 @@ bool OutputDevice::open(PortType port)
             break;
 
         default:
+            portType_ = PORT_NULL;
             break;
     }
 

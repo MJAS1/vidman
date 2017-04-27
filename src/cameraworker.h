@@ -20,7 +20,6 @@ class CameraWorker : public QObject
     Q_OBJECT
 public:
     explicit CameraWorker(CycDataBuffer* cycBuf, Camera &cam);
-    ~CameraWorker();
 
     void clearEvents();
     void pause();

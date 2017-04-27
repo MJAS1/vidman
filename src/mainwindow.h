@@ -6,6 +6,7 @@
 #include <QTime>
 #include <QLabel>
 #include <QThread>
+#include <QElapsedTimer>
 #include "camera.h"
 #include "outputdevice.h"
 #include "glworker.h"
@@ -127,7 +128,7 @@ private:
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
-    QThread*                cameraThread_;
+    QThread*                workerThread_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
     CameraWorker            cameraWorker_;
@@ -138,6 +139,7 @@ private:
     TimerWithPause          runningTime_;
 
     EventContainer          events_;
+    OutputDevice            trigPort_;
 };
 
 #endif // MAINWINDOW_H

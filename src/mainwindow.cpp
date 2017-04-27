@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     videoDialog_(new VideoDialog(this, cam_)),
     cycVideoBufRaw_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this)),
     cycVideoBufJpeg_(new CycDataBuffer(CIRC_VIDEO_BUFF_SZ, this)),
-    cameraThread_(new QThread(this)),
+    workerThread_(new QThread(this)),
     videoFileWriter_(new VideoFileWriter(cycVideoBufJpeg_,
                                          settings_.storagePath, this)),
     videoCompressorThread_(new VideoCompressorThread(cycVideoBufRaw_,
@@ -39,16 +39,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), &glworker_,
-            SLOT(onDrawFrame(unsigned char*)));
     connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_,
             SLOT(onAspectRatioChanged(int)));
     qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
     connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
-            &glworker_, SLOT(setOutputDevice(OutputDevice::PortType)));
-    connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)), &glworker_,
-            SLOT(resizeGL(int,int)));
-    connect(&glworker_, SIGNAL(vblank()), &cameraWorker_, SLOT(captureFrame()));
+            &trigPort_, SLOT(open(OutputDevice::PortType)));
+    connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)),
+            &glworker_, SLOT(resizeGL(int,int)));
+    connect(&glworker_, SIGNAL(vblank()),
+            &cameraWorker_, SLOT(captureFrame()), Qt::DirectConnection);
+    connect(&glworker_, SIGNAL(triggerSignal(int)),
+            &trigPort_, SLOT(writeData(int)));
+    connect(&glworker_, SIGNAL(log(const QString&)),
+            &logFile_, SLOT(write(const QString&)));
 
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -69,6 +72,9 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addWidget(&status_, 1);
 
     highlighter_ = new Highlighter(ui->textEdit->document());
+
+    trigPort_.moveToThread(workerThread_);
+    logFile_.moveToThread(workerThread_);
 }
 
 MainWindow::~MainWindow()
@@ -86,8 +92,8 @@ void MainWindow::stopThreads()
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
     glworker_.stop();
-    cameraThread_->quit();
-    cameraThread_->wait();
+    workerThread_->quit();
+    workerThread_->wait();
 }
 
 
@@ -130,6 +136,8 @@ void MainWindow::initVideo()
                 SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)),
                 videoDialog_, SIGNAL(drawFrame(unsigned char*)));
+        connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), &glworker_,
+                SLOT(onDrawFrame(unsigned char*)));
         connect(&cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)),
                 motionDialog_, SLOT(setPixmap(const QPixmap&)));
 
@@ -141,11 +149,11 @@ void MainWindow::initVideo()
  * enable OpenGL in a different thread.
  */
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
-        videoDialog_->context()->moveToThread(cameraThread_);
+        videoDialog_->context()->moveToThread(workerThread_);
 #endif
-        cameraWorker_.moveToThread(cameraThread_);
-        cameraThread_->start();
-        glworker_.moveToThread(cameraThread_);
+        cameraWorker_.moveToThread(workerThread_);
+        workerThread_->start();
+        glworker_.moveToThread(workerThread_);
         glworker_.start();
 
         //Setup event handling

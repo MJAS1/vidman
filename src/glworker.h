@@ -29,15 +29,10 @@ public slots:
     void onAspectRatioChanged(int w);
     void resizeGL(int w, int h);
 
-    /*
-     * Because ioperm sets port permissions only for the calling thread, it is
-     * important that trigPort.open() is called by the thread worked by
-     * GLWorker. This function is used to set trigPort to a given port.
-     */
-    void setOutputDevice(OutputDevice::PortType portType);
-
 signals:
     void vblank();
+    void triggerSignal(int);
+    void log(const QString&);
 
 private:
     void                    initializeGL();
@@ -47,8 +42,6 @@ private:
     int                     videoWidth_;
     bool                    shouldStop_;
     unsigned char*          buf_;
-
-    OutputDevice            trigPort_;
 
     QGLShaderProgram        shaderProgram_;
     QVector<QVector2D>      vertices_;
