@@ -3,8 +3,6 @@
 #include <cstring>
 #include <QImage>
 #include <QCoreApplication>
-#include <QDebug>
-#include <QElapsedTimer>
 #include "settings.h"
 #include "cameraworker.h"
 #include "camera.h"
@@ -42,6 +40,10 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
 
 void CameraWorker::captureFrame()
 {
+    //Set default trigger code for each frame. Toggle between 0 and 1.
+    trigCode_ = !trigCode_;
+    log_.clear();
+
     cam_ >> frame_;
     if (frame_.empty()) {
         std::cerr << "Error dequeuing a frame." << std::endl;
@@ -64,17 +66,12 @@ void CameraWorker::captureFrame()
     //Some video event may have emitted a signal, so process events before
     //continuing.
     QCoreApplication::processEvents();
-
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
     ChunkAttrib chunkAttrib;
     strncpy(chunkAttrib.log, log_.toStdString().c_str(), MAXLOG);
     chunkAttrib.log[MAXLOG-1] = '\0';
-    log_.clear();
-
     chunkAttrib.trigCode = trigCode_;
-    trigCode_ = 0;
-
     chunkAttrib.chunkSize = VIDEO_HEIGHT * VIDEO_WIDTH * 3;
     chunkAttrib.timestamp = msec;
 
