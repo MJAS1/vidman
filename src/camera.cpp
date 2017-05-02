@@ -45,6 +45,7 @@ Camera::Camera() : empty_(true)
     cout << "Using camera with GUID " << dc1394camera_->guid << endl;
 
     //Camera frame buffersize of 1 lowers the maximum framerate for some reason
+    //so use at least 2.
     capCam_.set(CV_CAP_PROP_BUFFERSIZE, 2);
 
     dc1394_camera_free_list(camList);

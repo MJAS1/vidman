@@ -45,7 +45,6 @@ public:
 
     void toggleVideoDialogChecked(bool);
     void toggleMotionDialogChecked(bool);
-    void writeToLog(const QString&);
 
 signals:
     void outputDeviceChanged(OutputDevice::PortType);
@@ -54,6 +53,7 @@ signals:
 public slots:
     void setStatus(const QString&);
     void fileWriterError(const QString&);
+    void writeToLog(const QString&);
     void pause();
     
 private slots:

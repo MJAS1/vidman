@@ -38,33 +38,30 @@ MainWindow::MainWindow(QWidget *parent) :
     glworker_(videoDialog_->glVideoWidget())
 {
     ui->setupUi(this);
+    motionDialog_ = new MotionDialog(this);
+    connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
+            &cameraWorker_, SLOT(motionDialogToggled(bool)));
 
+    qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
+    connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
+            &trigPort_, SLOT(open(OutputDevice::PortType)));
     connect(videoDialog_, SIGNAL(aspectRatioChanged(int)), &glworker_,
             SLOT(onAspectRatioChanged(int)));
-    qRegisterMetaType<OutputDevice::PortType>("OutputDevice::PortType");
-    connect(videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
-            &trigPort_, SLOT(open(OutputDevice::PortType)));
     connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)),
             &glworker_, SLOT(resizeGL(int,int)));
+
     connect(&glworker_, SIGNAL(vblank()),
             &cameraWorker_, SLOT(captureFrame()), Qt::DirectConnection);
     connect(&glworker_, SIGNAL(triggerSignal(int)),
-            &trigPort_, SLOT(writeData(int)));
+            &trigPort_, SLOT(writeData(int)), Qt::DirectConnection);
     connect(&glworker_, SIGNAL(log(const QString&)),
-            &logFile_, SLOT(write(const QString&)));
-
-    motionDialog_ = new MotionDialog(this);
-    connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(this, SIGNAL(outputDeviceChanged(OutputDevice::PortType)),
-            videoDialog_, SIGNAL(outputDeviceChanged(OutputDevice::PortType)));    
+            this, SLOT(writeToLog(const QString&)), Qt::DirectConnection);
 
     initToolButton();
     initVideo();
 
     videoDialog_->show();
-
-    connect(ui->viewMotionDetectorAction, SIGNAL(triggered(bool)),
-            &cameraWorker_, SLOT(motionDialogToggled(bool)));
 
     //Set status bar
     status_.setIndent(10);
@@ -154,6 +151,7 @@ void MainWindow::initVideo()
         cameraWorker_.moveToThread(workerThread_);
         workerThread_->start();
         glworker_.moveToThread(workerThread_);
+        glworker_.onAspectRatioChanged(settings_.videoWidth);
         glworker_.start();
 
         //Setup event handling

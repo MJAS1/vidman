@@ -50,7 +50,6 @@ public slots:
 signals:
     void drawFrame(unsigned char*);
     void aspectRatioChanged(int videoWidth);
-    void outputDeviceChanged(OutputDevice::PortType);
 
 protected:
     void paintEvent(QPaintEvent*);
