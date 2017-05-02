@@ -19,13 +19,13 @@ class CameraWorker : public QObject
 {
     Q_OBJECT
 public:
-    explicit CameraWorker(CycDataBuffer* cycBuf, Camera &cam);
-
-    void clearEvents();
-    void pause();
-    void unpause();
+    explicit CameraWorker(CycDataBuffer* cycBuf, Camera& cam);
 
     void handleEvent(EventPtr ev);
+    void clearEvents();
+
+    void pause();
+    void unpause();
 
 signals:
     void motionPixmapReady(const QPixmap&);
@@ -41,7 +41,7 @@ private:
     CycDataBuffer*  cycBuf_;
     Camera&         cam_;
     EventContainer  events_;
-    EventContainer  preEvents_;
+    EventContainer  defaultEvents_;
 
     QMutex          mutex_;
     QString         log_;

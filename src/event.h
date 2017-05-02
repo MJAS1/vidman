@@ -112,12 +112,12 @@ public:
 
     /* Remove event can be initialized to remove either an event with a specific
      * id or all the events of a given type. */
-    explicit DelEvent(int start, int delay, int delId, int trigCode = 0) :
+    explicit DelEvent(int start, int delay, int delId, int trigCode=0) :
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}
 
     explicit DelEvent(int start, int delay, EventType delType,
-                      int trigCode = 0):
+                      int trigCode=0):
         Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
     {}
 
@@ -133,17 +133,25 @@ class FlipEvent : public Event
 {
 public:
 
-    explicit FlipEvent(int start, int delay, int id = -1, int trigCode = 0);
+    explicit FlipEvent(int start, int axis=1, int delay=0, int id=-1,
+                       int trigCode=0);
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
+
+private:
+    /* Specifies how to flip.
+     * 0: Flip around x axis,
+     * positive value e.g. 1: Flip around y axis,
+     * negative value e.g. -1: Flip around both axes */
+    int axis_;
 };
 
 class FadeInEvent : public Event
 {
 public:
-    explicit FadeInEvent(int start, int duration = 5, int delay=0, int id = -1,
-                         int trigCode = 0);
+    explicit FadeInEvent(int start, int duration=5, int delay=0, int id=-1,
+                         int trigCode=0);
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);

@@ -14,22 +14,21 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldStop_(false)
 {
     Settings settings;
-
-    if(settings.flip)
-        preEvents_.insertSorted(EventPtr(new FlipEvent(0, 0)));
-
-    if(settings.turnAround)
-        preEvents_.insertSorted(EventPtr(new RotateEvent(0, 180, 0)));
+    if(settings.flip) {
+        int code = settings.flipCode;
+        defaultEvents_.insertSorted(EventPtr(new FlipEvent(0, code)));
+    }
 
     if(settings.fixPoint) {
-        //fixPoint.png is stored in qt resource file, so it needs to be loaded to QImage first
+        /* fixPoint.png is stored in qt resource file, so it needs to be loaded
+         * to QImage first. */
         QImage fixImg(":/img/fixPoint.png");
         cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
                                  fixImg.bits(), fixImg.bytesPerLine()).clone();
         cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
         if(!fixMat.empty())
-            preEvents_.insertSorted(EventPtr(new ImageEvent(0,cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0)));
+            defaultEvents_.insertSorted(EventPtr(new ImageEvent(0,cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0)));
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
@@ -57,14 +56,14 @@ void CameraWorker::captureFrame()
     msec = timestamp.tv_nsec / 1000000;
     msec += timestamp.tv_sec * 1000;
 
-    preEvents_.applyEvents(frame_);
+    defaultEvents_.applyEvents(frame_);
 
     mutex_.lock();
     events_.applyEvents(frame_);
     mutex_.unlock();
 
-    //Some video event may have emitted a signal, so process events before
-    //continuing.
+    /* Some video event may have emitted a signal, so process events before
+     * continuing. */
     QCoreApplication::processEvents();
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
@@ -121,9 +120,9 @@ void CameraWorker::motionDialogToggled(bool on)
         EventPtr movement(new MotionDetectorEvent());
         connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
                 SIGNAL(motionPixmapReady(const QPixmap&)));
-        preEvents_.insertSorted(std::move(movement));
+        defaultEvents_.insertSorted(std::move(movement));
     }
     else {
-        preEvents_.deleteType(Event::EVENT_DETECT_MOTION);
+        defaultEvents_.deleteType(Event::EVENT_DETECT_MOTION);
     }
 }

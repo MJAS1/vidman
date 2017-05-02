@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cameraWorker_(cycVideoBufRaw_, cam_),
     glworker_(videoDialog_->glVideoWidget())
 {
+    //Order of function calls in constructor is important.
     ui->setupUi(this);
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -58,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(&glworker_, SIGNAL(log(const QString&)),
             this, SLOT(writeToLog(const QString&)), Qt::DirectConnection);
 
+    trigPort_.moveToThread(workerThread_);
+    logFile_.moveToThread(workerThread_);
+
     initToolButton();
     initVideo();
 
@@ -69,9 +73,6 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addWidget(&status_, 1);
 
     highlighter_ = new Highlighter(ui->textEdit->document());
-
-    trigPort_.moveToThread(workerThread_);
-    logFile_.moveToThread(workerThread_);
 }
 
 MainWindow::~MainWindow()

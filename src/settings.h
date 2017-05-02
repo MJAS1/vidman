@@ -35,10 +35,10 @@ public:
     int             fps;
     int             movementThreshold;
     int             videoWidth;
+    int             flipCode;
     bool			color;
     bool            vsync;
     bool            flip;
-    bool            turnAround;
     bool            fixPoint;
     uint32_t        whitebalance;
     uint32_t        shutter;

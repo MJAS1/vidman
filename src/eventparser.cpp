@@ -70,6 +70,7 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events,
             target_ = trigCode2_ = tolerance_ = 0;
     eventId_ = -1;
     scale_ = 1;
+    axis_ = 1;
     objectIdOk_ = false;
     color_ = cv::Scalar(0, 0, 0);
     type_ = Event::EVENT_NULL;
@@ -328,9 +329,17 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         if((tolerance_ = toInt(v, lineNumber, QString("tolerance"))) == -1)
             return false;
     }
-
-    else if(param.replace(" ", "").isEmpty());
-    else {
+    else if(param == "axis") {
+        if(v == "x") axis_ = 0;
+        else if(v == "y") axis_ = 1;
+        else if(v == "both") axis_ = -1;
+        else {
+            emit error(QString("Error: axis must be 'x', 'y' or 'both'"
+                                "in line %2.").arg(lineNumber));
+            return false;
+        }
+    }
+    else if(!param.replace(" ", "").isEmpty()) {
         emit error(QString("Error: couldn't understand '%1' in line %2.")
                    .arg(param).arg(lineNumber));
         return false;
@@ -374,7 +383,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
 {
     switch(type_) {
     case Event::EVENT_FLIP:
-        ev.reset(new FlipEvent(start_, delay_, eventId_, trigCode_));
+        ev.reset(new FlipEvent(start_, axis_, delay_, eventId_, trigCode_));
         ev->appendLog(QString("Flip event added."));
         break;
 
@@ -489,7 +498,6 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
         emit error(QString("Error: event declared without a type in line %1")
                    .arg(lineNumber));
         return false;
-
     }
 
     return true;

@@ -44,8 +44,8 @@ Camera::Camera() : empty_(true)
     }
     cout << "Using camera with GUID " << dc1394camera_->guid << endl;
 
-    //Camera frame buffersize of 1 lowers the maximum framerate for some reason
-    //so use at least 2.
+    /* Camera frame buffersize of 1 lowers the maximum framerate for some reason
+     * so use at least 2. */
     capCam_.set(CV_CAP_PROP_BUFFERSIZE, 2);
 
     dc1394_camera_free_list(camList);
@@ -60,10 +60,8 @@ Camera::~Camera()
 
 void Camera::setFPS(int fps)
 {
-    if(!capCam_.set(CV_CAP_PROP_FPS, fps)) {
+    if(!capCam_.set(CV_CAP_PROP_FPS, fps))
         cerr << "Could not set framerate" << endl;
-        abort();
-    }
 }
 
 void Camera::operator >>(cv::Mat& frame)
@@ -116,7 +114,8 @@ void Camera::setUV(int newVal, int vrValue)
 
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR,
-                              newVal * UV_REG_SHIFT + vrValue + WHITEBALANCE_OFFSET);
+                              newVal * UV_REG_SHIFT + vrValue
+                              + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
@@ -128,7 +127,8 @@ void Camera::setVR(int newVal, int uvValue)
 
     // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394camera_, WHITEBALANCE_ADDR,
-                              newVal + UV_REG_SHIFT * uvValue + WHITEBALANCE_OFFSET);
+                              newVal + UV_REG_SHIFT * uvValue
+                              + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set white balance register" << endl;
