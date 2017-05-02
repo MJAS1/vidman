@@ -50,8 +50,8 @@ Camera::Camera() : empty_(true)
 
 Camera::~Camera()
 {
-    free(dc1394Context_);
-    free(dc1394camera_);
+    dc1394_free(dc1394Context_);
+    dc1394_camera_free(dc1394camera_);
 }
 
 void Camera::setFPS(int fps)
