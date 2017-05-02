@@ -36,8 +36,8 @@ private:
     Camera& operator=(const Camera&);
 
     cv::VideoCapture        capCam_;
-    dc1394camera_t*         dc1394camera_ = nullptr;
-    dc1394_t*               dc1394Context_ = nullptr;
+    dc1394camera_t*         dc1394camera_;
+    dc1394_t*               dc1394Context_;
 
     bool                    empty_;
 };

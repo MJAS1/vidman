@@ -36,6 +36,8 @@ public:
     int             movementThreshold;
     int             videoWidth;
     int             flipCode;
+    int             defaultTrig1;
+    int             defaultTrig2;
     bool			color;
     bool            vsync;
     bool            flip;

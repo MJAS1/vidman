@@ -48,6 +48,8 @@ private:
     cv::Mat         frame_;
 
     int             trigCode_;
+    int             defaultTrig1_;
+    int             defaultTrig2_;
     bool            shouldStop_;
 };
 

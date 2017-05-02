@@ -171,6 +171,28 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
     {
         printerPortAddr = settings_.value("misc/parallel_port_address").toInt();
     }
+
+    /* Default trigger codes for frames. The trigger code will toggle between,
+     * defaultTrig1 and defaultTrig2 */
+    if(!settings_.contains("misc/default_trigger1"))
+    {
+        settings_.setValue("misc/default_trigger1", 1);
+        defaultTrig1 = 1;
+    }
+    else
+    {
+        defaultTrig1 = settings_.value("misc/default_trigger1").toInt();
+    }
+
+    if(!settings_.contains("misc/default_trigger2"))
+    {
+        settings_.setValue("misc/default_trigger2", 2);
+        defaultTrig2 = 1;
+    }
+    else
+    {
+        defaultTrig2 = settings_.value("misc/default_trigger2").toInt();
+    }
 }
 
 void Settings::setValue(const QString &key, const QVariant &value)

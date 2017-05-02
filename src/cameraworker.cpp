@@ -13,22 +13,29 @@
 CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     cycBuf_(cycBuf), cam_(cam), trigCode_(0), shouldStop_(false)
 {
-    Settings settings;
+    Settings settings;  
+    defaultTrig1_ = settings.defaultTrig1;
+    defaultTrig2_ = settings.defaultTrig2;
+
+    //Setup defaultEvents for processing each frame captured by the camera.
     if(settings.flip) {
         int code = settings.flipCode;
         defaultEvents_.insertSorted(EventPtr(new FlipEvent(0, code)));
     }
-
     if(settings.fixPoint) {
         /* fixPoint.png is stored in qt resource file, so it needs to be loaded
-         * to QImage first. */
+         * to QImage before converting to cv::Mat. */
         QImage fixImg(":/img/fixPoint.png");
         cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
                                  fixImg.bits(), fixImg.bytesPerLine()).clone();
         cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
 
-        if(!fixMat.empty())
-            defaultEvents_.insertSorted(EventPtr(new ImageEvent(0,cv::Point2i((VIDEO_WIDTH-fixMat.cols)/2, (VIDEO_HEIGHT-fixMat.rows)/2), fixMat, 0)));
+        if(!fixMat.empty()) {
+            cv::Point2i pos((VIDEO_WIDTH-fixMat.cols)/2,
+                            (VIDEO_HEIGHT-fixMat.rows)/2);
+            EventPtr imgEvent(new ImageEvent(0, pos, fixMat, 0));
+            defaultEvents_.insertSorted(std::move(imgEvent));
+        }
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
     }
@@ -39,8 +46,9 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
 
 void CameraWorker::captureFrame()
 {
-    //Set default trigger code for each frame. Toggle between 0 and 1.
-    trigCode_ = !trigCode_;
+    /* Set default trigger code for each frame. Toggle between defaultTrig1_ and
+     * defaultTrig2. */
+    trigCode_ = (trigCode_ == defaultTrig1_ ? defaultTrig2_: defaultTrig1_);
     log_.clear();
 
     cam_ >> frame_;
