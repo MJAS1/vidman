@@ -9,7 +9,7 @@ using namespace std;
 Camera::Camera() : empty_(true)
 {
     //Initialize camera
-    capCam_.open(300);
+    capCam_.open(CV_CAP_FIREWARE);
     if(!capCam_.isOpened()) {
         cerr << "No cameras found" << endl;
         return;
@@ -26,11 +26,14 @@ Camera::Camera() : empty_(true)
 
     err = dc1394_camera_enumerate(dc1394Context_, &camList);
     if (err != DC1394_SUCCESS) {
+        dc1394_free(dc1394Context_);
         cerr << "Failed to enumerate cameras" << endl;
         return;
     }
 
     if (camList->num == 0) {
+        dc1394_camera_free_list(camList);
+        dc1394_free(dc1394Context_);
         cerr << "No cameras found" << endl;
         return;
     }
@@ -38,6 +41,8 @@ Camera::Camera() : empty_(true)
     // use the first camera in the list
     dc1394camera_ = dc1394_camera_new(dc1394Context_, camList->ids[0].guid);
     if (!dc1394camera_) {
+        dc1394_camera_free_list(camList);
+        dc1394_free(dc1394Context_);
         cerr << "Failed to initialize camera with guid " << camList->ids[0].guid
              << endl;
         return;
@@ -98,7 +103,6 @@ void Camera::setShutter(int newVal)
 
     if (err != DC1394_SUCCESS)
         cerr << "Could not set shutter register" << endl;
-
 }
 
 void Camera::setGain(int newVal)

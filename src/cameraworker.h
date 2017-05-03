@@ -11,8 +11,8 @@ class Camera;
 
 /*!
  * This class acquires, timestamps and processes frames for a single Camera. It
- * should be moved to a separate QThread with QObject::moveToThread() before
- * calling start()
+ * should be moved to the same QThread with GLWorker to ensure they are
+ * correctly synced together.
  */
 
 class CameraWorker : public QObject
@@ -28,10 +28,15 @@ public:
     void unpause();
 
 signals:
+    //Emit a QPixmap showing motion, so it can be drawn e.g. to a MotionDialog.
     void motionPixmapReady(const QPixmap&);
 
 public slots:
+    /* If the motionDialog is shown, a motion detector event has to be added to
+     * defaultEvents_. When the dialog is hidden the event is again deleted. */
     void motionDialogToggled(bool);
+
+    //Grab a new frame, process it and insert it to cycBuf_.
     void captureFrame();
 
 private slots:
@@ -50,7 +55,6 @@ private:
     int             trigCode_;
     int             defaultTrig1_;
     int             defaultTrig2_;
-    bool            shouldStop_;
 };
 
 #endif // CAMERAWORKER_H

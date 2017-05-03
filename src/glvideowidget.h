@@ -28,13 +28,7 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, VideoDialog* parent=0);
-    virtual ~GLVideoWidget();
-
-    void setVideoWidth(int newVal);
-    void setOutputDevice(OutputDevice::PortType portType);
-
-    VideoDialog* videoDialog();
+    GLVideoWidget(const QGLFormat& format, VideoDialog* parent=nullptr);
 
 public slots:
     void    onDrawFrame();

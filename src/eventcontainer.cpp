@@ -4,10 +4,6 @@
 
 using std::move;
 
-EventContainer::EventContainer()
-{
-}
-
 void EventContainer::clear()
 {
     events_.clear();
@@ -55,8 +51,8 @@ void EventContainer::insertSorted(EventPtr event)
     if(!event->isReady()) {
         auto iter = std::lower_bound(events_.begin(), events_.end(), event,
                                      [](const EventPtr& l, const EventPtr& r) {
-            return l->getPriority() > r->getPriority();
-        });
+            return l->getPriority() > r->getPriority();}
+        );
         events_.insert(iter, move(event));
     }
 }

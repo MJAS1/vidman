@@ -35,10 +35,6 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     fpsTimer_.start(1000);
 }
 
-GLVideoWidget::~GLVideoWidget()
-{
-}
-
 void GLVideoWidget::paintEvent(QPaintEvent *)
 {
     /*
@@ -81,11 +77,6 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
 {
     emit resize(e->size().width(), e->size().height());
-}
-
-VideoDialog* GLVideoWidget::videoDialog()
-{
-    return videoDialog_;
 }
 
 void GLVideoWidget::keyPressEvent(QKeyEvent *ev)

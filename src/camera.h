@@ -27,8 +27,10 @@ public:
     void        setWhiteBalance(uint32_t wb);
     void        setFPS(int fps);
 
-    //Allows the camera to be controlled by an external trigger source
+    //Allows the camera to be controlled by an external trigger source.
     void        setExternTrigger(bool on);
+
+    //Grab frame.
     void        operator>>(cv::Mat& frame);
 
 private:
