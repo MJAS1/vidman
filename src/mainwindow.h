@@ -43,7 +43,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void toggleVideoDialogChecked(bool);
     void toggleMotionDialogChecked(bool);
 
 signals:
@@ -51,6 +50,7 @@ signals:
     void stopCameraWorker();
     
 public slots:
+    void toggleVideoDialogChecked(bool);
     void setStatus(const QString&);
     void fileWriterError(const QString&);
     void writeToLog(const QString&);

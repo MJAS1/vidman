@@ -1,9 +1,3 @@
-/*
- * glvideowidget.cpp
- *
- *  Created on: Jun 6, 2010
- *      Author: andrey
- */
 #include <QResizeEvent>
 #include <QWindow>
 #include "mainwindow.h"
@@ -15,14 +9,11 @@
 using namespace std;
 
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
-    : QGLWidget(format, parent), frames_(0), videoWidth_(VIDEO_WIDTH),
-       videoDialog_(parent)
+    : QGLWidget(format, parent), videoWidth_(VIDEO_WIDTH), videoDialog_(parent)
 {
     //Important to manually swap the framebuffers for syncing trigger signals.
     setAutoBufferSwap(false);
 
-    connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(),
-            SLOT(onStartButton()));
     connect(this, SIGNAL(increaseAspectRatio()), videoDialog_,
             SLOT(increaseAspectRatio()));
     connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_,
@@ -43,8 +34,8 @@ void GLVideoWidget::paintEvent(QPaintEvent *)
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-    // TODO: Fix black screen issue after exiting full screen. This problem was
-    // introduced after upgrading to Qt5 from Qt4.8.
+    /* TODO: Fix black screen issue after exiting full screen. This problem was
+     * introduced after upgrading to Qt5 from Qt4.8. */
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
         showNormal();
@@ -65,7 +56,7 @@ void GLVideoWidget::resizeEvent(QResizeEvent *e)
 void GLVideoWidget::keyPressEvent(QKeyEvent *ev)
 {
     if(ev->key() == Qt::Key_Space)
-        emit startScript();
+        emit pause();
     else if(ev->key() == Qt::Key_Plus)
         emit increaseAspectRatio();
     else if(ev->key() == Qt::Key_Minus)

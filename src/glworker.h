@@ -3,8 +3,6 @@
 
 #include <QObject>
 #include <QGLShaderProgram>
-#include "outputdevice.h"
-#include "cycdatabuffer.h"
 
 class GLVideoWidget;
 

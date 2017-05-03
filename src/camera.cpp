@@ -1,5 +1,4 @@
 #include <iostream>
-#include <QDebug>
 #include <unistd.h>
 #include "config.h"
 #include "camera.h"
@@ -9,7 +8,7 @@ using namespace std;
 Camera::Camera() : empty_(true)
 {
     //Initialize camera
-    capCam_.open(CV_CAP_FIREWARE);
+    capCam_.open(CV_CAP_FIREWIRE);
     if(!capCam_.isOpened()) {
         cerr << "No cameras found" << endl;
         return;

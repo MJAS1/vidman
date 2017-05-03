@@ -3,17 +3,12 @@
 
 #include <QDialog>
 #include <QTimer>
-#include "outputdevice.h"
 #include "settings.h"
 
 class MainWindow;
 class QGLContext;
 class Camera;
 class GLVideoWidget;
-class CycDataBuffer;
-class CameraThread;
-class VideoFileWriter;
-class VideoCompressorThread;
 
 namespace Ui {
 class VideoDialog;
@@ -31,7 +26,6 @@ public:
     explicit VideoDialog(MainWindow *window, Camera &cam);
     ~VideoDialog();
 
-    MainWindow* mainWindow() const;
     GLVideoWidget* glVideoWidget();
 
     //Returns the context of childwidget glVideoWidget
@@ -51,6 +45,7 @@ public slots:
 
 signals:
     void aspectRatioChanged(int videoWidth);
+    void closed(bool);
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -63,7 +58,6 @@ private:
     void closeEvent(QCloseEvent *);
 
     Ui::VideoDialog*        ui;
-    MainWindow*             window_;
     GLVideoWidget*          glVideoWidget_;
     Camera&                 cam_;
     Settings                settings_;
@@ -71,7 +65,6 @@ private:
     QTimer                  fpsTimer_;
 
     int                     n_frames_;
-
 };
 
 #endif // VIDEODIALOG_H

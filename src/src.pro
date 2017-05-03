@@ -65,7 +65,7 @@ FORMS += mainwindow.ui \
     motiondialog.ui
 
 PKGCONFIG += opencv
-LIBS += -L/usr/share/lib -ldc1394 -ljpeg
+LIBS += -ldc1394 -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11
 

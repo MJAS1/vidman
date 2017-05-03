@@ -1,18 +1,7 @@
-/*
- * glvideowidget.h
- *
- *  Created on: Jun 6, 2010
- *      Author: andrey
- */
-
 #ifndef GLVIDEOWIDGET_H_
 #define GLVIDEOWIDGET_H_
 
 #include <QGLWidget>
-#include <QTimer>
-#include <QThread>
-#include "outputdevice.h"
-#include "glworker.h"
 
 class VideoDialog;
 
@@ -30,13 +19,10 @@ class GLVideoWidget : public QGLWidget
 public:
     GLVideoWidget(const QGLFormat& format, VideoDialog* parent=nullptr);
 
-public slots:
-    void    onDrawFrame();
-
 signals:
     void    drawFrame(unsigned char* imBuf);
     void    resize(int w, int h);
-    void    startScript();
+    void    pause();
     void    increaseAspectRatio();
     void    decreaseAspectRatio();
 
@@ -51,13 +37,8 @@ private:
     GLVideoWidget(const GLVideoWidget&);
     GLVideoWidget& operator=(const GLVideoWidget&);
 
-    int             frames_;
     int             videoWidth_;
-
     VideoDialog*    videoDialog_;
-
-private slots:
-    void updateFPS();
 };
 
 #endif /* GLVIDEOWIDGET_H_ */

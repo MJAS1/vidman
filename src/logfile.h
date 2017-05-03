@@ -8,9 +8,7 @@ class LogFile : public QObject
 {
     Q_OBJECT
 public:
-
     LogFile();
-    ~LogFile();
 
     void setActive(bool on);
     bool isActive() const;

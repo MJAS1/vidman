@@ -1,9 +1,7 @@
 #include <iostream>
-#include <cstring>
 #include <QCoreApplication>
 #include <QWindow>
-#include "videodialog.h"
-#include "mainwindow.h"
+#include "cycdatabuffer.h"
 #include "common.h"
 #include "glworker.h"
 #include "glvideowidget.h"
@@ -94,7 +92,6 @@ void GLWorker::startLoop()
 
     /*Wait until the first frame is ready and window is exposed to avoid
      * warnings. */
-
     while(!(buf_ && glw_->windowHandle()->isExposed())) {
         emit vblank();
         QCoreApplication::processEvents();

@@ -4,8 +4,8 @@
 #include "cycdatabuffer.h"
 #include "settings.h"
 
-//Output device is used to control a parallel or a serial port for trigger signals.
-
+/*! Output device is used to control a parallel or a serial port for trigger
+ * signals. */
 class OutputDevice : public QObject
 {
     Q_OBJECT

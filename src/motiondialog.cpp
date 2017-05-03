@@ -1,4 +1,3 @@
-#include <QPainter>
 #include "motiondialog.h"
 #include "ui_motiondialog.h"
 #include "mainwindow.h"
