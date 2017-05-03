@@ -21,18 +21,12 @@ GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
     //Important to manually swap the framebuffers for syncing trigger signals.
     setAutoBufferSwap(false);
 
-    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
-
-    connect(videoDialog_, SIGNAL(drawFrame(unsigned char*)), this,
-            SLOT(onDrawFrame()));
     connect(this, SIGNAL(startScript()), videoDialog_->mainWindow(),
             SLOT(onStartButton()));
     connect(this, SIGNAL(increaseAspectRatio()), videoDialog_,
             SLOT(increaseAspectRatio()));
     connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_,
             SLOT(decreaseAspectRatio()));
-
-    fpsTimer_.start(1000);
 }
 
 void GLVideoWidget::paintEvent(QPaintEvent *)
@@ -45,17 +39,6 @@ void GLVideoWidget::paintEvent(QPaintEvent *)
      * active in GLThread where all the drawing should be done. This
      * reimplementation should therefore remove the warnings.
      */
-}
-
-void GLVideoWidget::onDrawFrame()
-{
-    frames_++;
-}
-
-void GLVideoWidget::updateFPS()
-{
-    videoDialog_->updateFPS(frames_);
-    frames_ = 0;
 }
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)

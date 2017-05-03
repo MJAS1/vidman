@@ -34,7 +34,6 @@ SOURCES += mainwindow.cpp \
     motiondialog.cpp \
     glworker.cpp \
     cameraworker.cpp \
-    eventparser.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -60,7 +59,6 @@ HEADERS += mainwindow.h \
     motiondialog.h \
     glworker.h \
     cameraworker.h \
-    eventparser.h
 
 FORMS += mainwindow.ui \
     videodialog.ui \

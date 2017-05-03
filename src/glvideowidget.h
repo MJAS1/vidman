@@ -51,13 +51,10 @@ private:
     GLVideoWidget(const GLVideoWidget&);
     GLVideoWidget& operator=(const GLVideoWidget&);
 
-    QTimer          fpsTimer_;
-
     int             frames_;
     int             videoWidth_;
 
     VideoDialog*    videoDialog_;
-
 
 private slots:
     void updateFPS();

@@ -2,6 +2,7 @@
 #define VIDEODIALOG_H
 
 #include <QDialog>
+#include <QTimer>
 #include "outputdevice.h"
 #include "settings.h"
 
@@ -30,7 +31,6 @@ public:
     explicit VideoDialog(MainWindow *window, Camera &cam);
     ~VideoDialog();
 
-    void updateFPS(int fps);
     MainWindow* mainWindow() const;
     GLVideoWidget* glVideoWidget();
 
@@ -38,6 +38,7 @@ public:
     QGLContext* context() const;
 
 public slots:
+    void updateFPS();
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
@@ -46,9 +47,9 @@ public slots:
     void onAspectRatioSliderMoved(int videoWidth);
     void increaseAspectRatio();
     void decreaseAspectRatio();
+    void onDrawFrame();
 
 signals:
-    void drawFrame(unsigned char*);
     void aspectRatioChanged(int videoWidth);
 
 protected:
@@ -66,6 +67,11 @@ private:
     GLVideoWidget*          glVideoWidget_;
     Camera&                 cam_;
     Settings                settings_;
+
+    QTimer                  fpsTimer_;
+
+    int                     n_frames_;
+
 };
 
 #endif // VIDEODIALOG_H
