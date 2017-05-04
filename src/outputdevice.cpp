@@ -38,7 +38,8 @@ bool OutputDevice::open(PortType port)
         case PORT_PARALLEL:
             if(ioperm(settings_.printerPortAddr, 1, 1)) {
                 portType_ = PORT_NULL;
-                cerr << "Cannot get the port. May be you should run this program as root" << endl;
+                cerr << "Cannot get the port. May be you should run this"
+                        "program as root" << endl;
             }
             else
                 portType_ = PORT_PARALLEL;
@@ -48,13 +49,15 @@ bool OutputDevice::open(PortType port)
             if((fd_ = ::open("/dev/ttyUSB0", O_RDWR)) < 1) {
                 portType_ = PORT_NULL;
                 fd_ = -1;
-                cerr << "Cannot open USB port. May be you should run this program as root" << endl;
+                cerr << "Cannot open USB port. May be you should run this"
+                        "program as root" << endl;
             }
             else
                 portType_ = PORT_SERIAL;
             break;
 
         default:
+            portType_ = PORT_NULL;
             break;
     }
 

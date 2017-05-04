@@ -2,9 +2,6 @@
 #define MOTIONDIALOG_H
 
 #include <QDialog>
-#include <opencv2/opencv.hpp>
-#include "event.h"
-#include "eventcontainer.h"
 
 class MainWindow;
 
@@ -16,11 +13,10 @@ class MotionDialog;
  * It is used to display the 'differential image' produced by a
  * MotionDetectorEvent, which can be in turn used to adjust the threshold value
  * for motion detection.
- * */
+ */
 class MotionDialog : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit MotionDialog(MainWindow *parent = 0);
     ~MotionDialog();

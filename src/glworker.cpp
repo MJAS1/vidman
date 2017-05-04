@@ -1,15 +1,13 @@
 #include <iostream>
-#include <cstring>
 #include <QCoreApplication>
 #include <QWindow>
-#include "videodialog.h"
-#include "mainwindow.h"
+#include "cycdatabuffer.h"
 #include "common.h"
 #include "glworker.h"
 #include "glvideowidget.h"
 
-GLWorker::GLWorker(GLVideoWidget *glw) : QObject(), glw_(glw),
-    videoWidth_(VIDEO_WIDTH), shouldStop_(false)
+GLWorker::GLWorker(GLVideoWidget *glw) :
+    glw_(glw), videoWidth_(VIDEO_WIDTH), shouldStop_(false)
 {
     buf_ = nullptr;
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
@@ -88,22 +86,16 @@ void GLWorker::onAspectRatioChanged(int w)
     resizeGL(glw_->width(), glw_->height());
 }
 
-void GLWorker::setOutputDevice(OutputDevice::PortType portType)
-{
-    if(portType)
-        trigPort_.open(portType);
-    else
-        trigPort_.close();
-}
-
 void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
     /*Wait until the first frame is ready and window is exposed to avoid
      * warnings. */
-    while(!(buf_ && glw_->windowHandle()->isExposed()))
+    while(!(buf_ && glw_->windowHandle()->isExposed())) {
+        emit vblank();
         QCoreApplication::processEvents();
+    }
 
     shaderProgram_.bind();
     shaderProgram_.setUniformValue("texture", 0);
@@ -128,13 +120,12 @@ void GLWorker::startLoop()
          * following glFinish() should then sync with the screen refresh rate.
          */
         glFinish();
+        emit vblank();
 
-        //Write trigger code to output port and log the event.
         ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
-        if(!trigPort_.isEmpty())
-            trigPort_.writeData(chunkAttrib.trigCode);
+        emit triggerSignal(chunkAttrib.trigCode);
         if(strlen(chunkAttrib.log))
-            glw_->videoDialog()->mainWindow()->writeToLog(QString(chunkAttrib.log));
+            emit log(QString(chunkAttrib.log));
 
         QCoreApplication::processEvents();
     }

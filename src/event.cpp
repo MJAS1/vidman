@@ -26,15 +26,15 @@ void DelEvent::apply(EventContainer &events)
     ready_ = true;
 }
 
-FlipEvent::FlipEvent(int start, int delay, int id, int trigCode) :
-    Event(EVENT_FLIP, start, delay, 0, id, trigCode)
+FlipEvent::FlipEvent(int start, int axis, int delay, int id, int trigCode) :
+    Event(EVENT_FLIP, start, delay, 0, id, trigCode), axis_(axis)
 {
 }
 
 void FlipEvent::apply(cv::Mat &frame)
 {    
     Event::apply(frame);
-    cv::flip(frame, frame, 1);
+    cv::flip(frame, frame, axis_);
 }
 
 void FlipEvent::apply(EventContainer &events)

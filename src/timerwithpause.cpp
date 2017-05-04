@@ -2,20 +2,24 @@
 #include "timerwithpause.h"
 
 TimerWithPause::TimerWithPause() :
-    QElapsedTimer(), time_(0), paused_(false)
+    time_(0), paused_(false)
 {
 }
 
 void TimerWithPause::pause()
 {
+    mutex_.lock();
     time_ = nsecsElapsed();
     paused_ = true;
+    mutex_.unlock();
 }
 
 void TimerWithPause::resume()
 {
+    mutex_.lock();
     QElapsedTimer::restart();
     paused_ = false;
+    mutex_.unlock();
 }
 
 qint64 TimerWithPause::nsecsElapsed() const

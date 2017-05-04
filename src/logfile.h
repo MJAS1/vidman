@@ -4,23 +4,24 @@
 #include <QFile>
 #include <QMutex>
 
-class LogFile
+class LogFile : public QObject
 {
+    Q_OBJECT
 public:
-
     LogFile();
-    ~LogFile();
 
     void setActive(bool on);
     bool isActive() const;
     bool open();
     void close();
-    void write(const QString& log);
 
     QString errorString() const;
     QString fileName() const;
 
     void operator<<(const QString& log);
+
+public slots:
+    void write(const QString& log);
 
 private:
     LogFile(const LogFile&);

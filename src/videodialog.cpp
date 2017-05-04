@@ -1,11 +1,5 @@
-#include <QMessageBox>
-#include <QTextStream>
-#include <QDateTime>
-#include <QDebug>
 #include <QGLFormat>
-#include <memory>
 #include "glvideowidget.h"
-#include "settings.h"
 #include "mainwindow.h"
 #include "videodialog.h"
 #include "ui_videodialog.h"
@@ -13,7 +7,7 @@
 #include "common.h"
 
 VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
-    QDialog(parent), ui(new Ui::VideoDialog), window_(parent), cam_(cam)
+    QDialog(parent), ui(new Ui::VideoDialog), cam_(cam), n_frames_(0)
 {
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
@@ -33,6 +27,15 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
     connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this,
             SLOT(onAspectRatioSliderMoved(int)));
     ui->aspectRatioSlider->setValue(settings_.videoWidth);
+
+    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
+    fpsTimer_.setTimerType(Qt::PreciseTimer);
+    fpsTimer_.start(1000);
+
+    connect(glVideoWidget_, SIGNAL(pause()), parent,
+            SLOT(onStartButton()));
+    connect(this, SIGNAL(closed(bool)), parent,
+            SLOT(toggleVideoDialogChecked(bool)));
 }
 
 void VideoDialog::initUI()
@@ -109,22 +112,24 @@ void VideoDialog::onVRChanged(int newVal)
 
 void VideoDialog::closeEvent(QCloseEvent *)
 {
-    window_->toggleVideoDialogChecked(false);
+    emit closed(true);
+    //window_->toggleVideoDialogChecked(false);
 }
 
-void VideoDialog::updateFPS(int fps)
+void VideoDialog::updateFPS()
 {
-    ui->FPSLabel->setText(QString("FPS: %1").arg(fps));
+    ui->FPSLabel->setText(QString("FPS: %1").arg(n_frames_));
+    n_frames_ = 0;
+}
+
+void VideoDialog::onDrawFrame()
+{
+    n_frames_++;
 }
 
 void VideoDialog::onExternTrig(bool on)
 {
     cam_.setExternTrigger(on);
-}
-
-MainWindow* VideoDialog::mainWindow() const
-{
-    return window_;
 }
 
 void VideoDialog::increaseAspectRatio()
@@ -141,4 +146,14 @@ void VideoDialog::onAspectRatioSliderMoved(int videoWidth)
 {
     settings_.setValue("video/videoWidth", videoWidth);
     emit aspectRatioChanged(videoWidth);
+}
+
+QGLContext* VideoDialog::context() const
+{
+    return glVideoWidget_->context();
+}
+
+GLVideoWidget* VideoDialog::glVideoWidget()
+{
+    return glVideoWidget_;
 }

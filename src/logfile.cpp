@@ -7,12 +7,6 @@ LogFile::LogFile() : active_(false)
 {
 }
 
-LogFile::~LogFile()
-{
-    if(file_.isOpen())
-        file_.close();
-}
-
 void LogFile::setActive(bool on)
 {
     mutex_.lock();

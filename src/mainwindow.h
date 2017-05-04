@@ -5,8 +5,11 @@
 #include <QTimer>
 #include <QTime>
 #include <QLabel>
+#include <QThread>
+#include <QElapsedTimer>
 #include "camera.h"
 #include "outputdevice.h"
+#include "glworker.h"
 #include "settings.h"
 #include "logfile.h"
 #include "eventcontainer.h"
@@ -40,17 +43,17 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-    void toggleVideoDialogChecked(bool);
     void toggleMotionDialogChecked(bool);
-    void writeToLog(const QString&);
 
 signals:
     void outputDeviceChanged(OutputDevice::PortType);
     void stopCameraWorker();
     
 public slots:
+    void toggleVideoDialogChecked(bool);
     void setStatus(const QString&);
     void fileWriterError(const QString&);
+    void writeToLog(const QString&);
     void pause();
     
 private slots:
@@ -108,9 +111,12 @@ private:
 
     int                     currentEventDuration_;
 
+    qint64                  time_;
+
     Highlighter*            highlighter_;
     State                   state_;
 
+    Camera                  cam_;
     VideoDialog*            videoDialog_;
     MotionDialog*           motionDialog_;
     LogFile                 logFile_;
@@ -118,25 +124,22 @@ private:
     QLabel                  status_;
     QLabel                  motionDetectorLabel_;
     QTime                   eventsDuration_;
-    Camera                  cam_;
     Settings                settings_;
 
     CycDataBuffer*          cycVideoBufRaw_;
     CycDataBuffer*          cycVideoBufJpeg_;
-    QThread*                cameraThread_;
+    QThread*                workerThread_;
     VideoFileWriter*        videoFileWriter_;
     VideoCompressorThread*  videoCompressorThread_;
-
-    /*Since moveToThread() cannot be used to move objects with a parent, use
-     * unique_ptr instead of qt ownership to manage memory.*/
-    std::unique_ptr<CameraWorker> cameraWorker_;
+    CameraWorker            cameraWorker_;
+    GLWorker                glworker_;
 
     QTimer                  eventTmr_;
     QTimer                  timeTmr_;
     TimerWithPause          runningTime_;
 
     EventContainer          events_;
-    qint64                  time_;
+    OutputDevice            trigPort_;
 };
 
 #endif // MAINWINDOW_H

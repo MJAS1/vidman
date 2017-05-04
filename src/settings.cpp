@@ -46,7 +46,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         vsync = settings_.value("video/vsync").toBool();
     }
 
-    //Flip the video image on default
+    //Flip the frames by default.
     if(!settings_.contains("video/flip"))
     {
         settings_.setValue("video/flip", true);
@@ -57,15 +57,19 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         flip = settings_.value("video/flip").toBool();
     }
 
-    //Turn the video image upside down on default
-    if(!settings_.contains("video/rotate"))
+    /*
+     * 0: Vertical flip
+     * Positive integer e.g. 1: Horizontal flip
+     * Negative integer e.g. -1: Horizontal and vertical flip
+     */
+    if(!settings_.contains("video/flipCode"))
     {
-        settings_.setValue("video/rotate", true);
-        turnAround = true;
+        settings_.setValue("video/flipCode", 0);
+        flipCode = 0;
     }
     else
     {
-        turnAround = settings_.value("video/rotate").toBool();
+        flipCode = settings_.value("video/flipCode").toInt();
     }
 
     //Add a fixation point to the video
@@ -83,7 +87,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
     if(!settings_.contains("video/fps"))
     {
         settings_.setValue("video/fps", 60);
-        fps = 30;
+        fps = 60;
     }
     else
     {
@@ -166,6 +170,28 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
     else
     {
         printerPortAddr = settings_.value("misc/parallel_port_address").toInt();
+    }
+
+    /* Default trigger codes for frames. The trigger code will toggle between,
+     * defaultTrig1 and defaultTrig2 */
+    if(!settings_.contains("misc/default_trigger1"))
+    {
+        settings_.setValue("misc/default_trigger1", 1);
+        defaultTrig1 = 1;
+    }
+    else
+    {
+        defaultTrig1 = settings_.value("misc/default_trigger1").toInt();
+    }
+
+    if(!settings_.contains("misc/default_trigger2"))
+    {
+        settings_.setValue("misc/default_trigger2", 2);
+        defaultTrig2 = 1;
+    }
+    else
+    {
+        defaultTrig2 = settings_.value("misc/default_trigger2").toInt();
     }
 }
 

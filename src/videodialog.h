@@ -2,16 +2,13 @@
 #define VIDEODIALOG_H
 
 #include <QDialog>
-#include "outputdevice.h"
+#include <QTimer>
 #include "settings.h"
 
 class MainWindow;
+class QGLContext;
 class Camera;
 class GLVideoWidget;
-class CycDataBuffer;
-class CameraThread;
-class VideoFileWriter;
-class VideoCompressorThread;
 
 namespace Ui {
 class VideoDialog;
@@ -29,10 +26,13 @@ public:
     explicit VideoDialog(MainWindow *window, Camera &cam);
     ~VideoDialog();
 
-    void updateFPS(int fps);
-    MainWindow* mainWindow() const;
+    GLVideoWidget* glVideoWidget();
+
+    //Returns the context of childwidget glVideoWidget
+    QGLContext* context() const;
 
 public slots:
+    void updateFPS();
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
@@ -41,11 +41,11 @@ public slots:
     void onAspectRatioSliderMoved(int videoWidth);
     void increaseAspectRatio();
     void decreaseAspectRatio();
+    void onDrawFrame();
 
 signals:
-    void drawFrame(unsigned char*);
     void aspectRatioChanged(int videoWidth);
-    void outputDeviceChanged(OutputDevice::PortType);
+    void closed(bool);
 
 protected:
     void paintEvent(QPaintEvent*);
@@ -58,10 +58,13 @@ private:
     void closeEvent(QCloseEvent *);
 
     Ui::VideoDialog*        ui;
-    MainWindow*             window_;
     GLVideoWidget*          glVideoWidget_;
     Camera&                 cam_;
     Settings                settings_;
+
+    QTimer                  fpsTimer_;
+
+    int                     n_frames_;
 };
 
 #endif // VIDEODIALOG_H

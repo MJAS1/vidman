@@ -15,20 +15,22 @@ public:
     Camera();
     ~Camera();
 
-    void        setFPS(int fps);
     bool        empty() const;
 
     uint32_t    getShutter() const;
     uint32_t    getGain() const;
+    uint32_t    getWhiteBalance() const;
     void        setShutter(int newVal);
     void        setGain(int newVal);
     void        setUV(int newVal, int vrValue);
     void        setVR(int newVal, int uvValue);
-    uint32_t    getWhiteBalance() const;
     void        setWhiteBalance(uint32_t wb);
+    void        setFPS(int fps);
 
-    //Allows the camera to be controlled by an external trigger source
+    //Allows the camera to be controlled by an external trigger source.
     void        setExternTrigger(bool on);
+
+    //Grab frame.
     void        operator>>(cv::Mat& frame);
 
 private:

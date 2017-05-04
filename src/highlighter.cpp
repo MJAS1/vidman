@@ -26,7 +26,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
                     << "\\by\\b"<< "\\bfilename\\b" << "\\bid\\b" << "\\bobjectid\\b"
                     << "\\bangle\\b" << "\\bdelay\\b" << "\\bcolor\\b"
                     << "\\btrigcode\\b" << "\\bstring\\b" << "\\btarget\\b"
-                    << "\\btolerance\\b" << "\\btrigcode2\\b";
+                    << "\\btolerance\\b" << "\\btrigcode2\\b" << "\\baxis\\b";
 
     foreach(const QString& pattern, keywordPatterns)
     {

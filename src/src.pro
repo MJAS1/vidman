@@ -34,7 +34,6 @@ SOURCES += mainwindow.cpp \
     motiondialog.cpp \
     glworker.cpp \
     cameraworker.cpp \
-    eventparser.cpp
 
 HEADERS += mainwindow.h \
     videodialog.h \
@@ -60,14 +59,13 @@ HEADERS += mainwindow.h \
     motiondialog.h \
     glworker.h \
     cameraworker.h \
-    eventparser.h
 
 FORMS += mainwindow.ui \
     videodialog.ui \
     motiondialog.ui
 
 PKGCONFIG += opencv
-LIBS += -L/usr/share/lib -ldc1394 -ljpeg
+LIBS += -ldc1394 -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11
 

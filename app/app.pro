@@ -29,7 +29,7 @@ CONFIG(release, debug|release) {
 }
 
 PKGCONFIG += opencv
-LIBS += -L../lib -lvidman_$$BUILD -L/usr/share/lib -ldc1394 -ljpeg
+LIBS += -L../lib -lvidman_$$BUILD -ldc1394 -ljpeg
 
 TARGET = vidman_$$BUILD
 

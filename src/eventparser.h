@@ -61,6 +61,7 @@ private:
     int                 x_, y_, objectId_, eventId_;
     int                 angle_, trigCode_, length_;
     int                 trigCode2_, target_, tolerance_;
+    int                 axis_;
 
     float               scale_;
     bool                objectIdOk_;
