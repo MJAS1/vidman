@@ -8,8 +8,8 @@ TimerWithPause::TimerWithPause() :
 
 void TimerWithPause::pause()
 {
-    mutex_.lock();
     time_ = nsecsElapsed();
+    mutex_.lock();
     paused_ = true;
     mutex_.unlock();
 }
