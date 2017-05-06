@@ -1,113 +1,145 @@
-from sys import argv
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+from sys import argv, exit
+import numpy as np
 import random
 
 random.seed(312)
 
-if len(argv) != 2:
-    print "Usage: " + argv[0] + " <filename>."
-    exit()
+#%% Constants
+IMG = "../img/button.png"
+TRIG_IMG = 1
+TRIG_STANDARD = 2
+TRIG_DEVIANT = 3
+TRIG_BLANK = 4
+TRIG_MISS = 5
+IMG_DURATION = 1200
+X = 330
+Y = 150
+TARGET = 575
+TOLERANCE = 76
+MIN_DELAY = 1000
+MAX_DELAY = 2000
 
-script, filename = argv
 
-file = open(filename, 'w')
-file.truncate();
+#%%
+def create_block(n_standards, n_deviants, min_distance):
+    """ 
+    Parameters
+    ----------
+    n_standards : int
+        Number of standard condition in the block
+        
+    n_deviants : int
+        Number of deviant conditions in the block
+        
+    min_distance : int
+        Minimun distance between successive deviant conditions
+    
+    Returns
+    -------
+    numpy.array
+    """
+    if n_deviants and (min_distance > (n_standards + n_deviants) / n_deviants):
+        raise ValueError("Minimum distance too high.")
+        
+    initial_standards = n_standards - min_distance * n_deviants
+    block = np.array(["standard"]*initial_standards + ["deviant"]*n_deviants)
+    block = np.random.permutation(block)
+    deviants = np.where(block == "deviant")[0].repeat(min_distance)
+    
+    #Insert min_distance number of standards after each deviant
+    block = np.insert(block, deviants+1, "standard")
+    
+    return block
 
-imgFilename = "../img/button.png"
-imgTrigCode = 1
-standardTrigCode = 2
-deviantTrigCode = 3
-blackScreenTrigCode = 4
-missTrigCode = 5
-minDelay = 1000
-maxDelay = 2000
-imgDuration = 700
-x = 330
-y = 150
-target = 575
-tolerance = 76
+    
+#%%
+def standard_condition(trig):
+    delay = random.randint(MIN_DELAY, MAX_DELAY)
+    txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}," \
+          "trigcode2={}, start={}\n".format(TARGET, TOLERANCE, trig,
+                                            TRIG_MISS, delay)
+    txt += "Event: type=image, x={}, y={}, objectid=0, delay={}," \
+           "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+    txt += "Delete: start=0, type=image\n"
+    txt += "Delete: start=0, type=detectmotion\n\n"
+    
+    return txt
 
-file.write("Object: type=image, id=0, filename="+imgFilename+"\n\n")
 
-trials = []
-trials = ["standard"]*400
-trials.extend(["deviant"]*100)
-random.shuffle(trials)
-#Start each trial with only standards
-trials[0:0] = 20*["standard"]
+#%%
+def deviant_condition(trig):
+    delay = random.randint(MIN_DELAY, MAX_DELAY)     
+    txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}, " \
+          "trigcode2={}, start={}\n".format(TARGET, TOLERANCE, trig,
+                                            TRIG_MISS, delay)
+    txt += "Event: type=freeze, start=0\n "
+    txt += "Event: type=image, x={}, y={}, objectid=0, delay={}, " \
+           "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+    txt += "Delete: start=0, type=image\n"
+    txt += "Delete: start=0, type=freeze\n"
+    txt += "Delete: start=0, type=detectmotion\n\n"
+    
+    return txt
 
-#Make sure a fixed number of standard runs follow each deviant
-i = 0
-while i < len(trials):
-    if trials[i] == "deviant": 
-        trials[i+1:i+1] = 5*["standard"]
-        i = i + 6
-    else:
-        i = i + 1
 
-trials[len(trials)/2:len(trials)/2] = ["blackscreen"]
+#%%
+def create_trial():
+    """
+    Returns
+    -------
+    string
+        Script that can be run by the vidman application.
+    """
+    
+    """
+    First block: start with 20 standard conditions then 250 conditions with 10% 
+    deviant conditions.
+    Second block: 250 conditions with 10% deviants.
+    Third block: Black screen with 250 standard conditions.
+    Fourth block: 250 conditions with 10% deviants.
+    Fifth block: 250 conditions with 10% deviants.
+    """
+    b1 = np.concatenate([create_block(20, 0, 0), create_block(225, 25, 5)])
+    b2 = create_block(225, 25, 5)
+    b3 = ["fade out"] + ["blank"]*250 + ["fade in"]
+    b4 = create_block(225, 25, 5)
+    b5 = create_block(225, 25, 5)
+    
+    blocks = [b1, b2, b3, b4, b5]                              
+    out = ""
+    for block in blocks:
+        for condition in block:
+            if condition == "standard":
+                out += standard_condition(TRIG_STANDARD)
+            elif condition == "deviant":
+                out += deviant_condition(TRIG_DEVIANT)
+            elif condition == "blank":
+                out += standard_condition(TRIG_BLANK)
+            elif condition == "fade out":
+                out += "Event: type=fadeout, start=0, duration=1000, delay=1000\n\n"
+            elif condition == "fade in":
+                out += "Event: type=fadein, start=0, duration=1000, delay=1000\n\n"
+    
+        out += "Pause\n\n"
+        
+    return out
+    
 
-for trial in trials:
-    if trial == "standard":
-        delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, target={}, tolerance={}, "
-                   "trigCode={}, trigcode2={}, start={}\n".format(
-                                                            target,
-                                                            tolerance,
-                                                            standardTrigCode,
-                                                            missTrigCode,
-                                                            delay))
-        file.write("Event: type=image, x={}, y={}, objectid=0," \
-                 "delay={}, trigcode={}\n".format(x,
-                                                  y,
-                                                  imgDuration,
-                                                  imgTrigCode))
-        file.write("Delete: start={}, type=image\n".format(imgDuration))
-        file.write("Delete: start=0, type=detectmotion\n")
+#%%    
+if __name__ == '__main__':
+    if len(argv) != 2:
+        print "Usage: " + argv[0] + " <filename>."
+        exit()
 
-    elif trial == "deviant":
-        delay = random.randint(minDelay, maxDelay)
-        file.write("Event: type=detectmotion, target={}, tolerance={}, "
-                   "trigCode={}, trigcode2={}, start={}\n".format(
-                                                            target,
-                                                            tolerance,
-                                                            deviantTrigCode,
-                                                            missTrigCode,
-                                                            delay))
-        file.write("Event: type=freeze, start=0\n")
-        file.write("Event: type=image, x={}, y={}, objectid=0, " \
-                 "delay={}, trigcode={}\n".format(
-                                            x,
-                                            y,
-                                            imgDuration,
-                                            imgTrigCode))
-        file.write("Delete: start={}, type=image\n".format(imgDuration))
-        file.write("Delete: start=0, type=freeze\n")
-        file.write("Delete: start=0, type=detectmotion\n")
-
-    elif trial == "blackscreen":
-    	file.write("Pause\n")
-        file.write("Event: type=fadeout, start=0, duration=1000, "
-                    "delay=1000\n")
-        for i in range(250):
-            file.write("Event: type=detectmotion, target={}, " 
-                        "tolerance={}, trigCode={}, trigcode2={}, "
-                        "start={}\n".format(
-                                        target,
-                                        tolerance,
-                                        blackScreenTrigCode,
-                                        missTrigCode,
-                                        delay))
-            file.write("Event: type=image, x={}, y={}, objectid=0, " \
-                 "delay={}, trigcode={}\n".format(
-                                            x,
-                                            y,
-                                            imgDuration,
-                                            imgTrigCode))
-            file.write("Delete: start={}, type=image\n".format(imgDuration))
-            file.write("Delete: start=0, type=detectmotion\n")
-        file.write("Event: type=fadein, start=0, duration=1000, "
-                    "delay=1000\n")
-    	file.write("Pause\n")
-            
-   
-file.close();
+    script, filename = argv
+    
+    out = create_trial()
+    
+    file = open(filename, 'w')
+    file.truncate();
+    file.write("Object: type=image, id=0, filename="+IMG+"\n\n")
+    file.write(out)            
+    file.close();
