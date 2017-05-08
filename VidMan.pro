@@ -7,3 +7,5 @@ CONFIG(debug, debug|release) {
     SUBDIRS += tests
     tests.depends = src
 }
+
+RESOURCES += resource.qrc
