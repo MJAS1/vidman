@@ -12,14 +12,8 @@ sys.path.append('../trials')
 import trialgen as tg
 
 class TestTrialgen(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-
-    def tearDown(self):
-        pass
-
+    """Tests that trialgen.py is producing trials correctly.
+    """
 
     def test_trig_count(self):
         out = tg.create_trial()
@@ -27,7 +21,7 @@ class TestTrialgen(unittest.TestCase):
         deviants = out.count("trigcode={}".format(tg.TRIG_DEVIANT))
         blanks = out.count("trigcode={}".format(tg.TRIG_BLANK))
 
-        self.assertEqual(standards, 920)
+        self.assertEqual(standards, 900+20)
         self.assertEqual(deviants, 100)
         self.assertEqual(blanks, 250)
 
@@ -54,9 +48,11 @@ class TestTrialgen(unittest.TestCase):
             
             self.assertEqual(all(d >= 5 for d in distances), True)
 
-    def test_pauses(self):
+
+    def test_pause_count(self):
         out = tg.create_trial()
         self.assertEqual(out.count("Pause"), 5)
+
 
 if __name__ == "__main__":
     unittest.main()
