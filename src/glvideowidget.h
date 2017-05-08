@@ -34,9 +34,6 @@ protected:
     QSize   sizeHint() const {return QSize(640, 480);}
 
 private:
-    GLVideoWidget(const GLVideoWidget&);
-    GLVideoWidget& operator=(const GLVideoWidget&);
-
     int             videoWidth_;
     VideoDialog*    videoDialog_;
 };

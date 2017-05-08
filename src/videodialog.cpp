@@ -113,7 +113,6 @@ void VideoDialog::onVRChanged(int newVal)
 void VideoDialog::closeEvent(QCloseEvent *)
 {
     emit closed(true);
-    //window_->toggleVideoDialogChecked(false);
 }
 
 void VideoDialog::updateFPS()

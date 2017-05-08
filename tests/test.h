@@ -4,15 +4,17 @@
 #include <QtTest>
 #include <QObject>
 
+/*! Unit tests */
+
 class Test : public QObject
 {
     Q_OBJECT
-public:
-    explicit Test(QObject *parent = 0);
-    ~Test();
 
 private slots:
+    void testCamera() const;
+    void testCameraWorker() const;
     void testEventParser() const;
+    void testEventParser_data();
     void errorMsg(const QString&) const;
 
     //void testMotionDetector();

@@ -1,97 +1,131 @@
 #include <QStringList>
+#include <QTest>
+#include <QSignalSpy>
 #include <iostream>
 #include <fstream>
 #include <opencv2/opencv.hpp>
+#include "config.h"
+#include "camera.h"
+#include "cameraworker.h"
 #include "test.h"
 #include "eventparser.h"
 #include "eventcontainer.h"
 #include "cycdatabuffer.h"
 
-Test::Test(QObject *parent) : QObject(parent)
+void Test::testCamera() const
 {
+    Camera camera;
+    camera.setGain(10);
+    QCOMPARE(camera.getGain(), 10+GAIN_OFFSET);
+    camera.setShutter(10);
+    QCOMPARE(camera.getShutter(), 10+SHUTTER_OFFSET);
+    camera.setWhiteBalance(10+WHITEBALANCE_OFFSET);
+    QCOMPARE(camera.getWhiteBalance(), 10+WHITEBALANCE_OFFSET);
+
+    cv::Mat frame;
+    camera >> frame;
+    QCOMPARE(frame.empty(), false);
 }
 
-Test::~Test()
+void Test::testCameraWorker() const
 {
+    Camera camera;
+    CycDataBuffer cycBuf(CIRC_VIDEO_BUFF_SZ);
+    CameraWorker camWorker(&cycBuf, camera);
+
+    QSignalSpy spy(&cycBuf, SIGNAL(chunkReady(unsigned char*)));
+    for(int i = 0; i < 5; ++i) camWorker.captureFrame();
+    QCOMPARE(spy.count(), 5);
 }
 
 void Test::testEventParser() const
 {
     EventParser evReader;
-    connect(&evReader, SIGNAL(error(const QString&)), this, SLOT(errorMsg(const QString&)));
+    connect(&evReader, SIGNAL(error(const QString&)), this,
+            SLOT(errorMsg(const QString&)));
     EventContainer events;
 
+    QFETCH(QStringList, strList);
+    QFETCH(bool, result);
+
+    QCOMPARE(evReader.loadEvents(strList, events), result);
+}
+
+void Test::testEventParser_data()
+{
+    QTest::addColumn<QStringList>("strList");
+    QTest::addColumn<bool>("result");
+
     QStringList strList;
-    strList.append(QString("Event: type=d"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Event: type=d";
+    QTest::newRow("1") << strList << false;
 
     strList.clear();
-    strList.append(QString("Event: type"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Event: type";
+    QTest::newRow("2") << strList << false;
 
     strList.clear();
-    strList.append(QString("Event: type="));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Event: type=";
+    QTest::newRow("3") << strList << false;
 
     strList.clear();
-    strList.append(QString("Object: type=image, id=0, filename=../img/button.png"));
-    strList.append(QString("Event: type=image, start=2000, x=0, y=0, objectId=0"));
-    QCOMPARE(evReader.loadEvents(strList, events), true);
+    strList << "Object: type=image, id=0, filename=../img/button.png"
+            << "Event: type=image, start=2000, x=0, y=0, objectId=0";
+    QTest::newRow("4") << strList << true;
 
     strList.clear();
-    strList.append(QString("Event: type=flip, start=0, trigcode=10"));
-    strList.append(QString("Event: type=fade in, start=1000, duration=5000, delay=0, trigcode=10"));
-    strList.append(QString("Event: type=fade out, start=0, duration=5000, delay=0, trigcode=10"));
-    strList.append(QString("Event: type=text, start=0, x=0, y=0, color=black, string=test"));
-    strList.append(QString("Event: type=rotate, start=99, angle=90"));
-    strList.append(QString("Event: type=freeze, start=0, trigcode=10"));
-    strList.append(QString("Delete: start=0, id=0, trigcode=3"));
-    strList.append(QString("Delete: start=0, type=image, trigcode=43"));
-    strList.append(QString("Event: type=zoom, start=0, scale=1.5, duration=2000, trigcode=10"));
-    QCOMPARE(evReader.loadEvents(strList, events), true);
-
-
-    strList.clear();
-    strList.append(QString("Object: type=video, id=0, duration=2000"));
-    strList.append(QString("Event: type=record, start=0, duration=2000, objectId=0"));
-    strList.append(QString("Event: type=playback, start=0, duration=2000, objectId=0"));
-    QCOMPARE(evReader.loadEvents(strList, events), true);
+    strList << "Event: type=flip, start=0, trigcode=10"
+			<< "Event: type=fade in, start=1000, duration=5000, delay=0, trigcode=10"
+			<< "Event: type=fade out, start=0, duration=5000, delay=0, trigcode=10"
+			<< "Event: type=text, start=0, x=0, y=0, color=black, string=test"
+			<< "Event: type=rotate, start=99, angle=90"
+			<< "Event: type=freeze, start=0, trigcode=10"
+			<< "Delete: start=0, id=0, trigcode=3"
+			<< "Delete: start=0, type=image, trigcode=43"
+			<< "Event: type=zoom, start=0, scale=1.5, duration=2000, trigcode=10";
+    QTest::newRow("5") << strList << true;
 
     strList.clear();
-    strList.append(QString("Object: type=video, id=0, filename=../img/"));
-    strList.append(QString("Event: type=image, start=2000, x=0, y=0, objectId=0"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Object: type=video, id=0, duration=2000"
+			<< "Event: type=record, start=0, duration=2000, objectId=0"
+			<< "Event: type=playback, start=0, duration=2000, objectId=0";
+    QTest::newRow("6") << strList << true;
 
     strList.clear();
-    strList.append(QString("Object: type=image, id=1, filename=../img/button.png"));
-    strList.append(QString("Event: type=image, start=2000, x=0, y=0, objectId=0"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Object: type=video, id=0, filename=../img/"
+			<< "Event: type=image, start=2000, x=0, y=0, objectId=0";
+    QTest::newRow("6") << strList << false;
 
     strList.clear();
-    strList.append(QString("Object: type=video, id=0, length=1000"));
-    strList.append(QString("Event: type=record, start=0, duration=2000, objectId=0"));
-    strList.append(QString("Event: type=playback, start=0, duration=2000, objectId=0"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Object: type=image, id=1, filename=../img/button.png"
+			<< "Event: type=image, start=2000, x=0, y=0, objectId=0";
+    QTest::newRow("7") << strList << false;
 
     strList.clear();
-    strList.append(QString("Event: type=zoom, start=0, scale=0.9, duration=2000"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Object: type=video, id=0, length=1000"
+			<< "Event: type=record, start=0, duration=2000, objectId=0"
+            << "Event: type=playback, start=0, duration=2000, objectId=0";
+    QTest::newRow("8") << strList << false;
+
+    strList.clear();
+    strList << "Event: type=zoom, start=0, scale=0.9, duration=2000";
+    QTest::newRow("9") << strList << false;
 
     strList.clear();
     strList.append(QString("Evnt: type=zoom, start=0, scale=0.9, duration=2000"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    QTest::newRow("10") << strList << false;
 
     strList.clear();
-    strList.append(QString("Evnt: type=zoom, start=0, scale=0.9, dration=2000"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Evnt: type=zoom, start=0, scale=0.9, dration=2000";
+    QTest::newRow("11") << strList << false;
 
     strList.clear();
-    strList.append(QString("Event: type=flip, start=das"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Event: type=flip, start=das";
+    QTest::newRow("12") << strList << false;
 
     strList.clear();
-    strList.append(QString("Event: type=flip, start=1.2"));
-    QCOMPARE(evReader.loadEvents(strList, events), false);
+    strList << "Event: type=flip, start=1.2";
+    QTest::newRow("13") << strList << false;
 }
 
 /*
@@ -112,6 +146,7 @@ void Test::testMotionDetector()
     QCOMPARE(motionDetector.movementDetected(hand2), true);
 }
 */
+
 void Test::errorMsg(const QString &s) const
 {
     qDebug() << s;
