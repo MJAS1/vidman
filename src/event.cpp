@@ -518,10 +518,8 @@ void MotionDetectorEvent::createMotionPixmap()
     emit pixmapReady(pixmap);
 }
 
-PauseEvent::PauseEvent(MainWindow *window)
+PauseEvent::PauseEvent()
 {
-    connect(this, SIGNAL(triggered(int,QString)), window, SLOT(pause()));
-
     int baseline = 0;
     cv::Size size1 = getTextSize(std::string("Press space to continue"),
                                  cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);

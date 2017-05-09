@@ -356,11 +356,14 @@ private:
     int             min_x, max_x, min_y, max_y;
 };
 
+/*! This event can be used to pause the running script. The triggered() signal
+ * is connected to MainWindow's pause() slot by EventParser. */
+
 class PauseEvent : public Event
 {
     Q_OBJECT
 public:
-    explicit PauseEvent(MainWindow* window);
+    PauseEvent();
 
     virtual void apply(cv::Mat &);
     virtual void unpause();

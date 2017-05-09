@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
+#include "mainwindow.h"
 #include "eventparser.h"
 #include "eventcontainer.h"
 
@@ -47,7 +48,9 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
             }
         }
         else if(str == "pause") {
-            EventPtr ev(new PauseEvent(window));
+            EventPtr ev(new PauseEvent);
+            connect(ev.get(), SIGNAL(triggered(int,QString)),
+                    window, SLOT(pause()));
             events.append(move(ev));
         }
         else if(!str.isEmpty()) {
