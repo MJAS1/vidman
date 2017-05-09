@@ -120,13 +120,12 @@ void GLWorker::startLoop()
          * following glFinish() should then sync with the screen refresh rate.
          */
         glFinish();
-        emit vblank();
-
         ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
         emit triggerSignal(chunkAttrib.trigCode);
         if(strlen(chunkAttrib.log))
             emit log(QString(chunkAttrib.log));
 
+        emit vblank();
         QCoreApplication::processEvents();
     }
 
