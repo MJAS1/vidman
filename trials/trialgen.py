@@ -13,7 +13,7 @@ TRIG_IMG = 1
 TRIG_STANDARD = 2
 TRIG_DEVIANT = 3
 TRIG_BLANK = 4
-TRIG_MISS = 5
+TRIG_STOP = 5
 IMG_DURATION = 1200
 X = 330
 Y = 150
@@ -60,7 +60,7 @@ def standard_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)
     txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}," \
           "trigcode2={}, start={}\n".format(TARGET, TOLERANCE, trig,
-                                            TRIG_MISS, delay)
+                                            TRIG_STOP, delay)
     txt += "Event: type=image, x={}, y={}, objectid=0, delay={}," \
            "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
@@ -74,7 +74,7 @@ def deviant_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)     
     txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}, " \
           "trigcode2={}, start={}\n".format(TARGET, TOLERANCE, trig,
-                                            TRIG_MISS, delay)
+                                            TRIG_STOP, delay)
     txt += "Event: type=freeze, start=0\n "
     txt += "Event: type=image, x={}, y={}, objectid=0, delay={}, " \
            "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
