@@ -54,7 +54,7 @@ void CameraWorker::captureFrame()
     cam_ >> frame_;
     if (frame_.empty()) {
         std::cerr << "Error dequeuing a frame." << std::endl;
-        abort();
+        return;
     }
 
     struct timespec	timestamp;

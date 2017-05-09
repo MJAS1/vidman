@@ -40,6 +40,7 @@ private:
     cv::VideoCapture        capCam_;
     dc1394camera_t*         dc1394Camera_;
     dc1394_t*               dc1394Context_;
+    dc1394camera_list_t*    camList_;
 
     bool                    empty_;
 };

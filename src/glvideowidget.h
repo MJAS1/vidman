@@ -20,7 +20,6 @@ public:
     GLVideoWidget(const QGLFormat& format, VideoDialog* parent=nullptr);
 
 signals:
-    void    drawFrame(unsigned char* imBuf);
     void    resize(int w, int h);
     void    pause();
     void    increaseAspectRatio();

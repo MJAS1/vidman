@@ -10,7 +10,7 @@ class CycDataBuffer;
 class Camera;
 
 /*!
- * This class acquires, timestamps and processes frames for a single Camera. It
+ * This class acquires, processes and timestamps frames for a single Camera. It
  * should be moved to the same QThread with GLWorker to ensure they are
  * correctly synced together.
  */

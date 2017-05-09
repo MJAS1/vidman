@@ -6,7 +6,8 @@
 using namespace std;
 
 Camera::Camera() :
-    empty_(true), dc1394Camera_(nullptr), dc1394Context_(nullptr)
+    dc1394Camera_(nullptr), dc1394Context_(nullptr),  camList_(nullptr),
+    empty_(true)
 {
     //Initialize camera
     capCam_.open(CV_CAP_FIREWIRE);
@@ -15,32 +16,28 @@ Camera::Camera() :
         return;
     }
 
-    dc1394camera_list_t*	camList;
     dc1394error_t			err;
-
     dc1394Context_ = dc1394_new();
     if(!dc1394Context_) {
         cerr << "Cannot initialize!" << endl;
         return;
     }
 
-    err = dc1394_camera_enumerate(dc1394Context_, &camList);
+    err = dc1394_camera_enumerate(dc1394Context_, &camList_);
     if (err != DC1394_SUCCESS) {
         cerr << "Failed to enumerate cameras" << endl;
         return;
     }
 
-    if (camList->num == 0) {
-        dc1394_camera_free_list(camList);
+    if (camList_->num == 0) {
         cerr << "No cameras found" << endl;
         return;
     }
 
     // use the first camera in the list
-    dc1394Camera_ = dc1394_camera_new(dc1394Context_, camList->ids[0].guid);
+    dc1394Camera_ = dc1394_camera_new(dc1394Context_, camList_->ids[0].guid);
     if (!dc1394Camera_) {
-        dc1394_camera_free_list(camList);
-        cerr << "Failed to initialize camera with guid " << camList->ids[0].guid
+        cerr << "Failed to initialize camera with guid " << camList_->ids[0].guid
              << endl;
         return;
     }
@@ -49,13 +46,13 @@ Camera::Camera() :
     /* Camera frame buffersize of 1 lowers the maximum framerate for some reason
      * so use at least 2. */
     capCam_.set(CV_CAP_PROP_BUFFERSIZE, 2);
-
-    dc1394_camera_free_list(camList);
     empty_ = false;
 }
 
 Camera::~Camera()
 {
+    if(camList_)
+        dc1394_camera_free_list(camList_);
     if(dc1394Camera_)
         dc1394_camera_free(dc1394Camera_);
     if(dc1394Context_)

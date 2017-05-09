@@ -1,3 +1,6 @@
+#This script can be used for practice before the measurement. It conly contains 
+#standard conditions.
+
 Object: type=image, id=0, filename=../img/button.png
 
 Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
