@@ -21,12 +21,14 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
     //Start parsing the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
+
         //The string should be of the form "Event: type=.., start=.., etc.."
         //Split from ':', remove whitespaces and convert to lower case
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
-
-        if(split.size() > 1) {
+        //Ignore comments
+        if(str[0] == '#' || split[0].simplified() == "");
+        else if(split.size() > 1) {
             if(str == "event") {
                 if(!parseEvent(split[1], events, i+1))
                     return false;
@@ -39,8 +41,6 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
                 if(!parseDelEvent(split[1], events, i+1))
                     return false;
             }
-            //Ignore comments
-            else if(str[0] == '#' || split[0].simplified() == "");
             else {
                 emit error(QString("Error: couldn't understand '%1' in line %2.")
                            .arg(split[0]).arg(i+1));
