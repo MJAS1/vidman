@@ -34,7 +34,7 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
 
     connect(glVideoWidget_, SIGNAL(pause()), parent,
             SLOT(onStartButton()));
-    connect(this, SIGNAL(closed(bool)), parent,
+    connect(this, SIGNAL(setVideoDialogAction(bool)), parent,
             SLOT(toggleVideoDialogChecked(bool)));
 }
 
@@ -112,7 +112,7 @@ void VideoDialog::onVRChanged(int newVal)
 
 void VideoDialog::closeEvent(QCloseEvent *)
 {
-    emit closed(true);
+    emit setVideoDialogAction(false);
 }
 
 void VideoDialog::updateFPS()

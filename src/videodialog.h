@@ -45,7 +45,7 @@ public slots:
 
 signals:
     void aspectRatioChanged(int videoWidth);
-    void closed(bool);
+    void setVideoDialogAction(bool);
 
 protected:
     void paintEvent(QPaintEvent*);
