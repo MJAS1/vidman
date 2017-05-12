@@ -7,9 +7,8 @@
 #include "glvideowidget.h"
 
 GLWorker::GLWorker(GLVideoWidget *glw) :
-    glw_(glw), videoWidth_(VIDEO_WIDTH), shouldStop_(false)
+    glw_(glw), videoWidth_(VIDEO_WIDTH), shouldStop_(false), buf_(nullptr)
 {
-    buf_ = nullptr;
     vertices_ << QVector2D(-1, 1) << QVector2D(-1, -1) << QVector2D(1, -1)
              << QVector2D(1, -1) << QVector2D(1, 1) << QVector2D(-1, 1);
 
@@ -120,12 +119,9 @@ void GLWorker::startLoop()
          * following glFinish() should then sync with the screen refresh rate.
          */
         glFinish();
-        ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf_-sizeof(ChunkAttrib)));
-        emit triggerSignal(chunkAttrib.trigCode);
-        if(strlen(chunkAttrib.log))
-            emit log(QString(chunkAttrib.log));
+        ChunkAttrib* chunkAttrib = (ChunkAttrib*)(buf_-sizeof(ChunkAttrib));
+        emit vblank(chunkAttrib);
 
-        emit vblank();
         QCoreApplication::processEvents();
     }
 

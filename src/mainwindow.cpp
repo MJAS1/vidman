@@ -52,12 +52,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)),
             &glworker_, SLOT(resizeGL(int,int)));
 
-    connect(&glworker_, SIGNAL(vblank()),
+    connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
+            this, SLOT(onVBlank(const ChunkAttrib*)), Qt::DirectConnection);
+    connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
             &cameraWorker_, SLOT(captureFrame()), Qt::DirectConnection);
-    connect(&glworker_, SIGNAL(triggerSignal(int)),
-            &trigPort_, SLOT(writeData(int)), Qt::DirectConnection);
-    connect(&glworker_, SIGNAL(log(const QString&)),
-            this, SLOT(writeToLog(const QString&)), Qt::DirectConnection);
 
     trigPort_.moveToThread(workerThread_);
     logFile_.moveToThread(workerThread_);
@@ -567,4 +565,13 @@ void MainWindow::fileWriterError(const QString &str)
     cycVideoBufJpeg_->setIsRec(false);
     ui->recButton->setEnabled(false);
     setStatus(str);
+}
+
+void MainWindow::onVBlank(const ChunkAttrib *chunkAttrib)
+{
+    if(chunkAttrib) {
+        trigPort_.writeData(chunkAttrib->trigCode);
+        if(strlen(chunkAttrib->log))
+            writeToLog(chunkAttrib->log);
+    }
 }

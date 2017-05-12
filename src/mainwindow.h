@@ -44,6 +44,7 @@ public:
     ~MainWindow();
 
     void toggleMotionDialogChecked(bool);
+    void writeToLog(const QString&);
 
 signals:
     void outputDeviceChanged(OutputDevice::PortType);
@@ -53,7 +54,6 @@ public slots:
     void toggleVideoDialogChecked(bool);
     void setStatus(const QString&);
     void fileWriterError(const QString&);
-    void writeToLog(const QString&);
     void pause();
     
 private slots:
@@ -66,6 +66,7 @@ private slots:
     void onKeepLog(bool);
     void onSerialPort(bool);
     void onParallelPort(bool);
+    void onVBlank(const ChunkAttrib*);
 
     void fileNew();
     void fileOpen();
