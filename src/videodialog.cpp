@@ -91,11 +91,13 @@ void VideoDialog::paintEvent(QPaintEvent *)
 void VideoDialog::onShutterChanged(int newVal)
 {
     cam_.setShutter(newVal);
+    settings_.setValue("video/shutter", cam_.getShutter() - SHUTTER_OFFSET);
 }
 
 void VideoDialog::onGainChanged(int newVal)
 {
     cam_.setGain(newVal);
+    settings_.setValue("video/gain", cam_.getGain() - GAIN_OFFSET);
 }
 
 void VideoDialog::onUVChanged(int newVal)
