@@ -111,6 +111,7 @@ void MainWindow::initToolButton()
     menu->addAction(ui->actionAddRotateEvent);
     menu->addAction(ui->actionAddTextEvent);
     menu->addAction(ui->actionAddZoomEvent);
+    menu->addAction(ui->actionAddMotionDetectorEvent);
     menu->addSeparator();
     menu->addAction(ui->actionDeleteId);
     menu->addAction(ui->actionDeleteType);
@@ -168,7 +169,7 @@ void MainWindow::initVideo()
 void MainWindow::getNextEvent()
 {
     int delay = events_[0]->getDelay();
-    cameraWorker_.handleEvent(std::move(events_.pop_front()));
+    cameraWorker_.addEvent(std::move(events_.pop_front()));
 
     //Calculate the start time of the next event
     if(!events_.empty()) {
@@ -373,7 +374,7 @@ bool MainWindow::maybeSave()
     if (fileName_.startsWith(QLatin1String(":/")))
         return true;
     QMessageBox::StandardButton ret;
-    ret = QMessageBox::warning(this, "VideoManipulation",
+    ret = QMessageBox::warning(this, "VidMan",
                                "The document has been modified.\n"
                                "Do you want to save your changes?",
                                QMessageBox::Save | QMessageBox::Discard
@@ -517,6 +518,13 @@ void MainWindow::addRecordEvent()
 void MainWindow::addPlaybackEvent()
 {
     QString str("event: type=playback, start=0, duration=2000, objectId=0");
+    ui->textEdit->insertPlainText(str);
+}
+
+void MainWindow::addMotionDetectorEvent()
+{
+    QString str("Event: type=detectmotion, target=500, tolerance=50, "
+                "trigCode=1, trigcode2=2");
     ui->textEdit->insertPlainText(str);
 }
 

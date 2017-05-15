@@ -106,7 +106,7 @@ void CameraWorker::unpause()
     mutex_.unlock();
 }
 
-void CameraWorker::handleEvent(EventPtr ev)
+void CameraWorker::addEvent(EventPtr ev)
 {
     connect(ev.get(), SIGNAL(triggered(int, const QString&)), this,
             SLOT(onEventTriggered(int, const QString&)));

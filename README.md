@@ -4,18 +4,14 @@ VidMan has been tested on Ubuntu 14.04 LTS. Some problems with vsync were
 encountered on Ubuntu 12.04 LTS but newer versions should be fine. Vsync also
 requires a graphics card with OpenGL support. Some older Nvidia drivers caused
 the software to sometimes hang while using vsync but this problem should be
-fixed on newer drivers. Nvidia drivers for Linux x64 version 331.113 were used
-for testing. Vsync can be turned off by modifying the config file usually
-located at ~/.config/BECS/VidMan.conf and changing the variable vsync to false.
+fixed on newer drivers. Vsync can be turned off by modifying the config file
+usually located at ~/.config/BECS/VidMan.conf and changing the variable vsync
+to false.
 
 ## Installation
 
-VidMan requires Qt and OpenCV to compile. This branch should work with all Qt
-versions starting from Qt 4.8, including Qt 5. It hasn't been properly tested,
-so if you face any strange problems, you should switch to the master branch
-version and use it with Qt 4.8. OpenCV 2.4.9 was used for testing but newer
-versions, including OpenCV 3 should work too.  Other packages required are
-libjpeg-dev and libdc1394-22-dev, which can be installed via:
+VidMan requires Qt and at least OpenCV 3.0 to compile. Other packages required
+are libjpeg-dev and libdc1394-22-dev, which can be installed via:
 
 	sudo apt-get install libjpeg-dev libdc1394-22-dev 
 
@@ -32,8 +28,7 @@ for release version, and:
 	qmake CONFIG+=debug
 	make
 
-for debug version. When performing measurements make sure that you are using the
-release build, since the debug build might introduce extra lag.
+for debug version. 
 
 ## Usage
 
@@ -68,7 +63,7 @@ are listed below:
 * **zoom**: start, scale, duration, delay, id, trigcode
 * **record**: start, objectid, delay, duration, id, trigcode
 * **playback**: start, objectid, delay, duration, id, trigcode
-* **detect motion**: start, delay, id, trigcode
+* **detect motion**: start, delay, id, trigcode, trigcode2
 
 Duration in milliseconds is used for certain events that modify multiple
 subsequent frames. Note the difference between duration and delay. If you want
@@ -85,7 +80,8 @@ Each event has a trigcode parameter which is used to specify the code emitted
 through serial or parallel port when the event is applied. You need to run the
 software with root priviliges in order to gain access to the ports. You also
 need to specify which port you want to use by choosing menu->edit->use serial
-port or use parallel port.
+port or use parallel port. Motion detection uses two trigcodes: trigcode is
+emitted on event onset and trigcode2 when the movement stops.
 
 To use image, record and playback events an object needs to declared. For image
 use the following syntax:

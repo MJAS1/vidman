@@ -21,7 +21,8 @@ class CameraWorker : public QObject
 public:
     explicit CameraWorker(CycDataBuffer* cycBuf, Camera& cam);
 
-    void handleEvent(EventPtr ev);
+    //Adds new video event for processing each frame
+    void addEvent(EventPtr ev);
     void clearEvents();
 
     void pause();

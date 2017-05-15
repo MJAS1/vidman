@@ -434,14 +434,18 @@ void MotionDetectorEvent::tracking()
 void MotionDetectorEvent::maybeFinished()
 {
     if(nChanges() < threshold_) {
-        if(finishTimer_.elapsed() > 100) {
+        if(finishTimer_.elapsed() > minStopTime) {
             state_ = FINISHED;
             emit triggered(trigCode2_, QString("Movement finished."));
             time_ = movementTimer_.elapsed();
-            if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_)
-                color_ = cv::Scalar(0, 255, 0);
-            else
-                color_ = cv::Scalar(0, 0, 255);
+            if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_) {
+                cv::Scalar green(0, 255, 0);
+                color_ = green;
+            }
+            else {
+                cv::Scalar red(0, 0, 255);
+                color_ = red;
+            }
             finishTimer_.restart();
 
             /*
@@ -462,8 +466,7 @@ void MotionDetectorEvent::maybeFinished()
 void MotionDetectorEvent::finished(cv::Mat &frame)
 {
     //Draw the duration of the movement on the frame.
-    int duration = 1000;
-    if(finishTimer_.elapsed() < duration)
+    if(finishTimer_.elapsed() < TextDuration)
         cv::putText(frame, std::string(std::to_string(time_)),
                     cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2),
                     cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
@@ -525,18 +528,18 @@ PauseEvent::PauseEvent()
                                  cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
     cv::Size size2 = getTextSize(std::string("Paused"), cv::FONT_HERSHEY_DUPLEX,
                                  1, 1, &baseline);
-    point1 = cv::Point((VIDEO_WIDTH - size2.width)/2,
+    point1_ = cv::Point((VIDEO_WIDTH - size2.width)/2,
                        (VIDEO_HEIGHT + size2.height)/2);
-    point2 = cv::Point((VIDEO_WIDTH - size1.width)/2,
+    point2_ = cv::Point((VIDEO_WIDTH - size1.width)/2,
                        (VIDEO_HEIGHT + size1.height)/2 + size2.height + 10);
 }
 
 void PauseEvent::apply(cv::Mat &frame)
 {
     Event::apply(frame);
-    cv::putText(frame, std::string("Paused"), point1, cv::FONT_HERSHEY_DUPLEX,
+    cv::putText(frame, std::string("Paused"), point1_, cv::FONT_HERSHEY_DUPLEX,
                 1, cv::Scalar(255,255,255));
-    cv::putText(frame, std::string("Press space to continue"), point2,
+    cv::putText(frame, std::string("Press space to continue"), point2_,
                 cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
 }
 

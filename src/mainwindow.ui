@@ -562,7 +562,7 @@ QToolBar {
   </action>
   <action name="actionAddPlaybackEvent">
    <property name="text">
-    <string>add Playback Event</string>
+    <string>Add Playback Event</string>
    </property>
   </action>
   <action name="actionAddVideoObject">
@@ -576,6 +576,11 @@ QToolBar {
    </property>
    <property name="text">
     <string>Motion dialog</string>
+   </property>
+  </action>
+  <action name="actionAddMotionDetectorEvent">
+   <property name="text">
+    <string>Add Motion Detector Event</string>
    </property>
   </action>
  </widget>
@@ -1169,6 +1174,22 @@ QToolBar {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAddMotionDetectorEvent</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addMotionDetectorEvent()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -1198,5 +1219,6 @@ QToolBar {
   <slot>addDeleteId()</slot>
   <slot>addDeleteType()</slot>
   <slot>onViewMotionDetector(bool)</slot>
+  <slot>addMotionDetectorEvent()</slot>
  </slots>
 </ui>

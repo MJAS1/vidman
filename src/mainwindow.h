@@ -87,6 +87,7 @@ private slots:
     void addZoomEvent();
     void addRecordEvent();
     void addPlaybackEvent();
+    void addMotionDetectorEvent();
 
     void updateTime();
     void getNextEvent();
