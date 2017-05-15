@@ -486,9 +486,8 @@ int MotionDetectorEvent::nChanges()
     cv::dilate(result_,result_,cv::Mat());
 
     int changes = 0;
-    min_x = result_.cols; min_y = result_.rows;
-    max_x = 0;
-    max_y = 0;
+    int min_x = result_.cols, min_y = result_.rows;
+    int max_x = 0, max_y = 0;
 
     for(int i = 0; i < VIDEO_WIDTH; i += 2) {
         for(int j = 0; j < VIDEO_HEIGHT; j += 2) {

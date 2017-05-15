@@ -334,7 +334,10 @@ signals:
     void            priorityChanged();
 
 private:
+    //How long the the duration of movement is shown (in ms)
     static const int TextDuration = 1000;
+
+    //How long changes need to be below threshold to consider movement finished.
     static const int minStopTime = 100;
 
     void            createMotionPixmap();
@@ -350,7 +353,6 @@ private:
     qint64          time_;
 
     cv::Mat         prev_, current_, next_, result_;
-    cv::Point       centroid_;
     cv::Scalar      color_;
 
     bool            motionDialog_;
@@ -358,7 +360,6 @@ private:
     int             trigCode2_;
     int             target_;
     int             tolerance_;
-    int             min_x, max_x, min_y, max_y;
 };
 
 /*! This event can be used to pause the running script. The triggered() signal

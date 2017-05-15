@@ -21,7 +21,6 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
     //Start parsing the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
-
         //The string should be of the form "Event: type=.., start=.., etc.."
         //Split from ':', remove whitespaces and convert to lower case
         QStringList split = strList[i].split(':');

@@ -34,6 +34,10 @@ public:
     void        operator>>(cv::Mat& frame);
 
 private:
+    /* Camera frame buffersize of 1 lowers the maximum framerate for some reason
+     * so use at least 2. */
+    static const int RingBufSz = 2;
+
     Camera(const Camera&);
     Camera& operator=(const Camera&);
 
