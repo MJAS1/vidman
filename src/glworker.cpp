@@ -91,10 +91,8 @@ void GLWorker::startLoop()
 
     /*Wait until the first frame is ready and window is exposed to avoid
      * warnings. */
-    while(!(buf_ && glw_->windowHandle()->isExposed())) {
-        emit vblank();
+    while(!(buf_ && glw_->windowHandle()->isExposed()))
         QCoreApplication::processEvents();
-    }
 
     shaderProgram_.bind();
     shaderProgram_.setUniformValue("texture", 0);

@@ -153,6 +153,9 @@ void MainWindow::initVideo()
         glworker_.moveToThread(workerThread_);
         glworker_.onAspectRatioChanged(settings_.videoWidth);
         glworker_.start();
+        /* First frame needs to be captured manually here, the rest are handled
+         * by connection to glworker vblank(). */
+        cameraWorker_.captureFrame();
 
         //Setup event handling
         eventTmr_.setSingleShot(true);
@@ -577,9 +580,7 @@ void MainWindow::fileWriterError(const QString &str)
 
 void MainWindow::onVBlank(const ChunkAttrib *chunkAttrib)
 {
-    if(chunkAttrib) {
-        trigPort_.writeData(chunkAttrib->trigCode);
-        if(strlen(chunkAttrib->log))
-            writeToLog(chunkAttrib->log);
-    }
+    trigPort_.writeData(chunkAttrib->trigCode);
+    if(strlen(chunkAttrib->log))
+        writeToLog(chunkAttrib->log);
 }

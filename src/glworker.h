@@ -12,7 +12,7 @@ class GLVideoWidget;
  * drawing on a GLVideoWidget. In order to keep the main thread responsive,
  * GLWorker should be moved to a separate thread with QObject::moveToThread().
  * Emits the signal vblank(const ChunkAttrib*) each time the buffers have been
- * swapped so that other funtionality can be synced with the vertical refresh
+ * swapped so that other functionality can be synced with the vertical refresh
  * rate.
  */
 
@@ -32,7 +32,7 @@ public slots:
     void resizeGL(int w, int h);
 
 signals:
-    void vblank(const ChunkAttrib* = nullptr);
+    void vblank(const ChunkAttrib*);
 
 private:
     void                    initializeGL();

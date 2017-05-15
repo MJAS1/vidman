@@ -213,9 +213,9 @@ bool EventParser::parseObject(const QString &str, int lineNumber)
         shared_ptr<VideoObject> videoObject(new VideoObject);
         videoObject->duration_ = duration_;
 
-        //Reserve enough memory to hold all the frames. This is necessary to
-        //make sure that large blocks of memory don't need to be reallocated
-        //while recording.
+        /* Reserve enough memory to hold all the frames. This is necessary to
+         * make sure that large blocks of memory don't need to be reallocated
+         * while recording. */
         videoObject->frames_.reserve(duration_/1000*settings_.fps + 10);
         videoObjects_.insert(objectId_, videoObject);
     }
@@ -302,7 +302,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         if((scale_ = toFloat(v, lineNumber, QString("scale"))) == -1)
             return false;
         else if(scale_ < 1) {
-            emit error(QString("Error: scale must be greater than 1 for zoom"
+            emit error(QString("Error: scale must be greater than 1 for zoom "
                                "event in line %1")
                        .arg(lineNumber));
             return false;
@@ -405,7 +405,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
     case Event::EVENT_IMAGE:
         if(objectIdOk_) {
             if(!imageObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find image object with id"
+                emit error(QString("Error: couldn't find image object with id "
                                    "%1 in line %2")
                            .arg(objectId_).arg(lineNumber));
                 return false;
@@ -416,7 +416,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
             ev->appendLog(QString("Image event added. "));
         }
         else {
-            emit error(QString("Error: image event declared without object id"
+            emit error(QString("Error: image event declared without object id "
                                "in line %1")
                        .arg(lineNumber));
             return false;
@@ -454,13 +454,13 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
     case Event::EVENT_RECORD:
         if(objectIdOk_) {
             if(!videoObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find video object with id"
+                emit error(QString("Error: couldn't find video object with id "
                                    "%1 in line %2")
                            .arg(objectId_).arg(lineNumber));
                 return false;
             }
             if(duration_ > videoObjects_[objectId_]->duration_) {
-                emit error(QString("Error: record event duration too big for"
+                emit error(QString("Error: record event duration too big for "
                                    "video object in line %1")
                            .arg(lineNumber));
                 return false;
@@ -470,7 +470,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
             ev->appendLog(QString("Record event added"));
         }
         else {
-            emit error(QString("Error: record event declared without object id"
+            emit error(QString("Error: record event declared without object id "
                                "in line %1")
                        .arg(lineNumber));
             return false;
@@ -480,7 +480,7 @@ bool EventParser::createEvent(EventPtr &ev, int lineNumber)
     case Event::EVENT_PLAYBACK:
         if(objectIdOk_) {
             if(!videoObjects_.contains(objectId_)) {
-                emit error(QString("Error: couldn't find video object with id"
+                emit error(QString("Error: couldn't find video object with id "
                                    "%1 in line %2")
                            .arg(objectId_).arg(lineNumber));
                 return false;
@@ -512,13 +512,13 @@ float EventParser::toFloat(const QString &str, int line, const QString &param) c
     QString string = str.toLower().replace(" ", "");
     float num = string.toFloat(&ok);
     if(!ok) {
-        emit error(QString("Error: couldn't convert %1 '%2' in line %3 to"
+        emit error(QString("Error: couldn't convert %1 '%2' in line %3 to "
                            "floating point")
                    .arg(param).arg(str).arg(line));
         return -1;
     }
     if(num < 0) {
-        emit error(QString("Error: %1 on line %2 must be a positive floating"
+        emit error(QString("Error: %1 on line %2 must be a positive floating "
                            "point")
                    .arg(param).arg(line));
         return -1;
@@ -532,7 +532,7 @@ int EventParser::toInt(const QString &str, int line, const QString &param) const
     QString string = str.toLower().replace(" ", "");
     int num = string.toInt(&ok);
     if(!ok) {
-        emit error(QString("Error: Couldn't convert %1 '%2' in line %3 to"
+        emit error(QString("Error: Couldn't convert %1 '%2' in line %3 to "
                            "integer")
                    .arg(param).arg(str).arg(line));
         return -1;
