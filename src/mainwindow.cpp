@@ -71,6 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addWidget(&status_, 1);
 
     highlighter_ = new Highlighter(ui->textEdit->document());
+    eventTmr_.setTimerType(Qt::PreciseTimer);
 }
 
 MainWindow::~MainWindow()
