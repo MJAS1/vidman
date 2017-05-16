@@ -52,6 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)),
             &glworker_, SLOT(resizeGL(int,int)));
 
+    /* Slots connected to vblank() will be synced with the screen refresh rate
+     * as long as vsync is on. */
     connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
             this, SLOT(onVBlank(const ChunkAttrib*)), Qt::DirectConnection);
     connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
@@ -142,10 +144,8 @@ void MainWindow::initVideo()
         // Start video running
         videoFileWriter_->start();
         videoCompressorThread_->start();
-/*
- * QGLContext::moveToThread() was introduced in Qt5 and is necessary to
- * enable OpenGL in a different thread.
- */
+/* QGLContext::moveToThread() was introduced in Qt5 and is necessary to
+ * enable OpenGL in a different thread. */
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
         videoDialog_->context()->moveToThread(workerThread_);
 #endif
@@ -527,7 +527,7 @@ void MainWindow::addPlaybackEvent()
 
 void MainWindow::addMotionDetectorEvent()
 {
-    QString str("Event: type=detectmotion, target=500, tolerance=50, "
+    QString str("event: type=detectmotion, target=500, tolerance=50, "
                 "trigCode=1, trigcode2=2");
     ui->textEdit->insertPlainText(str);
 }

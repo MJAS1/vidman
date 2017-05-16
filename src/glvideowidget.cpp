@@ -1,23 +1,13 @@
 #include <QResizeEvent>
-#include <QWindow>
-#include "mainwindow.h"
-#include "videodialog.h"
 #include "glvideowidget.h"
-#include "cycdatabuffer.h"
-#include "common.h"
 
 using namespace std;
 
-GLVideoWidget::GLVideoWidget(const QGLFormat& format, VideoDialog* parent)
-    : QGLWidget(format, parent), videoWidth_(VIDEO_WIDTH), videoDialog_(parent)
+GLVideoWidget::GLVideoWidget(const QGLFormat& format, QWidget* parent)
+    : QGLWidget(format, parent)
 {
     //Important to manually swap the framebuffers for syncing trigger signals.
     setAutoBufferSwap(false);
-
-    connect(this, SIGNAL(increaseAspectRatio()), videoDialog_,
-            SLOT(increaseAspectRatio()));
-    connect(this, SIGNAL(decreaseAspectRatio()), videoDialog_,
-            SLOT(decreaseAspectRatio()));
 }
 
 void GLVideoWidget::paintEvent(QPaintEvent *)
@@ -39,11 +29,11 @@ void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
     if(isFullScreen()) {
         setWindowFlags(Qt::Widget);
         showNormal();
-		videoDialog_->show();
+        parentWidget()->show();
     }
     else {
         setWindowFlags(Qt::Window);
-		videoDialog_->close();
+        parentWidget()->close();
         showFullScreen();
     }
 }

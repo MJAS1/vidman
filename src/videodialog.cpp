@@ -17,7 +17,6 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
     QGLFormat format;
     if(!format.hasOpenGL())
         std::cerr << "OpenGL not supported by window system." << std::endl;
-
     format.setSwapInterval(settings_.vsync);
     glVideoWidget_ = new GLVideoWidget(format, this);
     ui->verticalLayout->addWidget(glVideoWidget_, 1);
@@ -26,16 +25,19 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
 
     connect(ui->aspectRatioSlider, SIGNAL(valueChanged(int)), this,
             SLOT(onAspectRatioSliderMoved(int)));
-    ui->aspectRatioSlider->setValue(settings_.videoWidth);
-
-    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPS()));
-    fpsTimer_.setTimerType(Qt::PreciseTimer);
-    fpsTimer_.start(1000);
-
     connect(glVideoWidget_, SIGNAL(pause()), parent,
             SLOT(onStartButton()));
+    connect(glVideoWidget_, SIGNAL(increaseAspectRatio()), this,
+            SLOT(increaseAspectRatio()));
+    connect(glVideoWidget_, SIGNAL(decreaseAspectRatio()), this,
+            SLOT(decreaseAspectRatio()));
     connect(this, SIGNAL(setVideoDialogAction(bool)), parent,
             SLOT(toggleVideoDialogChecked(bool)));
+    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPSLabel()));
+
+    ui->aspectRatioSlider->setValue(settings_.videoWidth);
+    fpsTimer_.setTimerType(Qt::PreciseTimer);
+    fpsTimer_.start(1000);
 }
 
 void VideoDialog::initUI()
@@ -117,7 +119,7 @@ void VideoDialog::closeEvent(QCloseEvent *)
     emit setVideoDialogAction(false);
 }
 
-void VideoDialog::updateFPS()
+void VideoDialog::updateFPSLabel()
 {
     ui->FPSLabel->setText(QString("FPS: %1").arg(n_frames_));
     n_frames_ = 0;

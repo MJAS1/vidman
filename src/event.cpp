@@ -1,6 +1,4 @@
 #include <QImage>
-#include <QPixmap>
-#include "mainwindow.h"
 #include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
@@ -438,10 +436,13 @@ void MotionDetectorEvent::maybeFinished()
             state_ = FINISHED;
             emit triggered(trigCode2_, QString("Movement finished."));
             time_ = movementTimer_.elapsed();
+
+            //Movement finished within time limit.
             if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_) {
                 cv::Scalar green(0, 255, 0);
                 color_ = green;
             }
+            //Movement was too fast or too slow
             else {
                 cv::Scalar red(0, 0, 255);
                 color_ = red;
@@ -476,12 +477,16 @@ void MotionDetectorEvent::finished(cv::Mat &frame)
 
 int MotionDetectorEvent::nChanges()
 {
+    const int White = 255;
+
+    /* Create a black and white differential image, where white pixels represent
+     * a change. */
     cv::Mat d1, d2;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
     cv::bitwise_and(d1, d2, result_);
     cv::cvtColor(result_, result_, CV_BGR2GRAY);
-    cv::threshold(result_, result_, 5, 255, CV_THRESH_BINARY);
+    cv::threshold(result_, result_, 5, White, CV_THRESH_BINARY);
     cv::erode(result_,result_,cv::Mat());
     cv::dilate(result_,result_,cv::Mat());
 
@@ -489,9 +494,10 @@ int MotionDetectorEvent::nChanges()
     int min_x = result_.cols, min_y = result_.rows;
     int max_x = 0, max_y = 0;
 
+    //Compute the amount of white pixels.
     for(int i = 0; i < VIDEO_WIDTH; i += 2) {
         for(int j = 0; j < VIDEO_HEIGHT; j += 2) {
-            if(static_cast<int>(result_.at<uchar>(j, i)) == 255) {
+            if(static_cast<int>(result_.at<uchar>(j, i)) == White) {
                 changes++;
                 if(min_x>i) min_x = i;
                 if(max_x<i) max_x = i;
@@ -527,18 +533,18 @@ PauseEvent::PauseEvent()
                                  cv::FONT_HERSHEY_DUPLEX, 1, 1, &baseline);
     cv::Size size2 = getTextSize(std::string("Paused"), cv::FONT_HERSHEY_DUPLEX,
                                  1, 1, &baseline);
-    point1_ = cv::Point((VIDEO_WIDTH - size2.width)/2,
+    txtPos1_ = cv::Point((VIDEO_WIDTH - size2.width)/2,
                        (VIDEO_HEIGHT + size2.height)/2);
-    point2_ = cv::Point((VIDEO_WIDTH - size1.width)/2,
+    txtPos2_ = cv::Point((VIDEO_WIDTH - size1.width)/2,
                        (VIDEO_HEIGHT + size1.height)/2 + size2.height + 10);
 }
 
 void PauseEvent::apply(cv::Mat &frame)
 {
     Event::apply(frame);
-    cv::putText(frame, std::string("Paused"), point1_, cv::FONT_HERSHEY_DUPLEX,
+    cv::putText(frame, std::string("Paused"), txtPos1_, cv::FONT_HERSHEY_DUPLEX,
                 1, cv::Scalar(255,255,255));
-    cv::putText(frame, std::string("Press space to continue"), point2_,
+    cv::putText(frame, std::string("Press space to continue"), txtPos2_,
                 cv::FONT_HERSHEY_DUPLEX, 1, cv::Scalar(255,255,255));
 }
 

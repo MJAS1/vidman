@@ -17,7 +17,7 @@ class GLVideoWidget : public QGLWidget
     Q_OBJECT
 
 public:
-    GLVideoWidget(const QGLFormat& format, VideoDialog* parent=nullptr);
+    GLVideoWidget(const QGLFormat& format, QWidget* parent);
 
 signals:
     void    resize(int w, int h);
@@ -31,10 +31,6 @@ protected:
     void    resizeEvent(QResizeEvent*);
     void    paintEvent(QPaintEvent*e);
     QSize   sizeHint() const {return QSize(640, 480);}
-
-private:
-    int             videoWidth_;
-    VideoDialog*    videoDialog_;
 };
 
 #endif /* GLVIDEOWIDGET_H_ */

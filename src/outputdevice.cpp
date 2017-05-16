@@ -72,11 +72,6 @@ bool OutputDevice::isEmpty() const
     return false;
 }
 
-void OutputDevice::setFd(int fd)
-{
-    fd_ = fd;
-}
-
 void OutputDevice::close()
 {
     portType_ = PORT_NULL;

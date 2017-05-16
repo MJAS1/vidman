@@ -50,7 +50,7 @@ public:
         EVENT_FADEOUT,
         EVENT_IMAGE,
         EVENT_TEXT,
-        EVENT_REMOVE,
+        EVENT_DELETE,
         EVENT_ROTATE,
         EVENT_FREEZE,
         EVENT_ZOOM,
@@ -110,23 +110,21 @@ class DelEvent : public Event
 {
 public:
 
-    /* Remove event can be initialized to remove either an event with a specific
+    /* DelEvent can be initialized to remove either an event with a specific
      * id or all the events of a given type. */
     explicit DelEvent(int start, int delay, int delId, int trigCode=0) :
-        Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delId_(delId),
+        Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}
 
     explicit DelEvent(int start, int delay, EventType delType,
                       int trigCode=0):
-        Event(EVENT_REMOVE, start, delay, 0, -1, trigCode), delType_(delType)
-    {}
+        Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delType_(delType) {}
 
     void apply(EventContainer &);
 
 private:
     int         delId_;
     EventType   delType_;
-
 };
 
 class FlipEvent : public Event
@@ -153,8 +151,8 @@ public:
     explicit FadeInEvent(int start, int duration=5, int delay=0, int id=-1,
                          int trigCode=0);
 
-    virtual void apply(cv::Mat &frame);
-    virtual void apply(EventContainer&);
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
     void pause();
     void unpause();
 
@@ -171,8 +169,8 @@ public:
     explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
                           int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
-    virtual void apply(EventContainer&);
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
     void pause();
     void unpause();
 
@@ -189,7 +187,7 @@ public:
                         const cv::Mat &image, int delay, int id = -1,
                         int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 private:
 
     void overlayImage(const cv::Mat &background, const cv::Mat &foreground,
@@ -207,7 +205,7 @@ public:
                        const cv::Point2i& pos, int delay, int id = -1,
                        int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
 
 private:
     cv::Scalar  color_;
@@ -222,8 +220,8 @@ public:
     explicit RotateEvent(int start, int angle, int delay, int id = -1,
                          int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
-    virtual void apply(EventContainer&);
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
 
 private:
     int angle_;
@@ -235,8 +233,8 @@ class FreezeEvent : public Event
 public:
     explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
-    virtual void apply(EventContainer&);
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
 
 private:
     bool    started_;
@@ -250,7 +248,7 @@ public:
     explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0,
                        int id = -1, int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
@@ -270,7 +268,7 @@ public:
     explicit RecordEvent(int start, VideoPtr video, int delay = 0,
                          int duration = 1000, int id = -1, int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
     void pause();
     void unpause();
 private:
@@ -288,7 +286,7 @@ public:
     explicit PlaybackEvent(int start, VideoPtr video, int delay = 0,
                            int duration = 1000, int id = -1, int trigCode = 0);
 
-    virtual void apply(cv::Mat &frame);
+    void apply(cv::Mat &frame);
     void pause();
     void unpause();
 
@@ -326,8 +324,8 @@ public:
 
     explicit MotionDetectorEvent(State state = MOTION_DIALOG);
 
-    virtual void apply(cv::Mat &frame);
-    virtual void apply(EventContainer&);
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
 
 signals:
     void            pixmapReady(const QPixmap&);
@@ -364,18 +362,17 @@ private:
 
 /*! This event can be used to pause the running script. The triggered() signal
  * is connected to MainWindow's pause() slot by EventParser. */
-
 class PauseEvent : public Event
 {
     Q_OBJECT
 public:
     PauseEvent();
 
-    virtual void apply(cv::Mat &);
-    virtual void unpause();
+    void apply(cv::Mat &);
+    void unpause();
 
 private:
-    cv::Point point1_, point2_;
+    cv::Point txtPos1_, txtPos2_;
 };
 
 #endif // EVENT_H

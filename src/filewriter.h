@@ -39,7 +39,7 @@ signals:
 
 protected:
     FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix,
-               const char* ext, QObject* parent = 0);
+               const char* ext, QObject* parent = nullptr);
 	virtual ~FileWriter();
 	virtual void stoppableRun();
 
