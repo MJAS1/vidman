@@ -11,15 +11,6 @@
 
 class EventContainer;
 class MainWindow;
-
-//Priorities are used to determine the order in which to apply an event.
-const int DEFAULT_PRIORITY = 0;
-const int FADE_PRIORITY = 1;
-const int FREEZE_PRIORITY = 3;
-const int RECORD_PRIORITY = 4;
-const int PLAYBACK_PRIORITY = 4;
-const int MOTION_DETECTOR_PRIORITY = 5;
-
 struct VideoObject;
 
 /*!
@@ -59,9 +50,20 @@ public:
         EVENT_DETECT_MOTION
     };
 
+    //Priorities are used to determine the order in which to apply an event.
+    enum Priority
+    {
+        DEFAULT_PRIORITY = 0,
+        FADE_PRIORITY = 1,
+        FREEZE_PRIORITY = 3,
+        RECORD_PRIORITY = 4,
+        PLAYBACK_PRIORITY = 4,
+        MOTION_DETECTOR_PRIORITY = 5
+    };
+
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
                    int duration=0, int id = -1, int trigCode = 0,
-                   int priority = DEFAULT_PRIORITY) :
+                   Priority priority = DEFAULT_PRIORITY) :
         type_(type), start_(start), delay_(delay),
         duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
         ready_(false), first_(true) {}
@@ -92,10 +94,9 @@ protected:
     int         start_, delay_, duration_;
     int         id_;
     int         trigCode_;
-    int         priority_;
+    Priority    priority_;
     bool        ready_;
     bool        first_;
-
     QString     log_;
 
 private:
