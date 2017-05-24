@@ -41,7 +41,7 @@ public slots:
     void captureFrame();
 
 private slots:
-    void onEventTriggered(int trigCode, const QString&);
+    void onEventTriggered(uint8_t trigCode, const QString&);
 
 private:
     CycDataBuffer*  cycBuf_;
@@ -53,9 +53,9 @@ private:
     QString         log_;
     cv::Mat         frame_;
 
-    int             trigCode_;
-    int             defaultTrig1_;
-    int             defaultTrig2_;
+    uint8_t         trigCode_;
+    uint8_t         defaultTrig1_;
+    uint8_t         defaultTrig2_;
 };
 
 #endif // CAMERAWORKER_H

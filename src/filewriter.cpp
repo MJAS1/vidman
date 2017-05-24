@@ -8,6 +8,7 @@
 #include <fstream>
 #include <cerrno>
 #include <QDateTime>
+#include <QDebug>
 
 #include "filewriter.h"
 #include "cycdatabuffer.h"
@@ -29,7 +30,6 @@ void FileWriter::stoppableRun()
 	bool			prevIsRec=false;
 	ofstream		outData;
     ChunkAttrib		chunkAttrib;
-    uint32_t		chunkSz;
 
     unsigned char*	header;
     int				headerLen;
@@ -59,10 +59,12 @@ void FileWriter::stoppableRun()
 				outData.write((const char*)header, headerLen);
 			}
 
-			chunkSz = chunkAttrib.chunkSize;
             outData.write((const char*)(&(chunkAttrib.timestamp)),
                           sizeof(uint64_t));
-			outData.write((const char*)(&chunkSz), sizeof(uint32_t));
+            outData.write((const char*)(&(chunkAttrib.trigCode)),
+                          sizeof(uint8_t));
+            outData.write((const char*)(&chunkAttrib.chunkSize),
+                          sizeof(uint32_t));
 			outData.write((const char*)databuf, chunkAttrib.chunkSize);
 		}
 		else

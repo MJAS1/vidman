@@ -17,10 +17,10 @@ const int MAXLOG = 50;
 //! Attributes associated with each data chunk.
 typedef struct
 {
-    int			chunkSize;
+    uint32_t	chunkSize;
     uint64_t	timestamp;
     bool		isRec;
-    int         trigCode;
+    uint8_t     trigCode;
     char        log[MAXLOG];
 } ChunkAttrib;
 

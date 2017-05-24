@@ -62,7 +62,7 @@ public:
     };
 
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
-                   int duration=0, int id = -1, int trigCode = 0,
+                   int duration=0, int id = -1, uint8_t trigCode = 0,
                    Priority priority = DEFAULT_PRIORITY) :
         type_(type), start_(start), delay_(delay),
         duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
@@ -86,7 +86,7 @@ public:
     void        appendLog(const QString &str) {log_ = str;}
 
 signals:
-    void        triggered(int trigCode_, const QString& log);
+    void        triggered(uint8_t trigCode_, const QString& log);
 
 protected:
     EventType   type_;
@@ -113,12 +113,12 @@ public:
 
     /* DelEvent can be initialized to remove either an event with a specific
      * id or all the events of a given type. */
-    explicit DelEvent(int start, int delay, int delId, int trigCode=0) :
+    explicit DelEvent(int start, int delay, int delId, uint8_t trigCode=0) :
         Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delId_(delId),
         delType_(EVENT_NULL) {}
 
     explicit DelEvent(int start, int delay, EventType delType,
-                      int trigCode=0):
+                      uint8_t trigCode=0):
         Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delType_(delType) {}
 
     void apply(EventContainer &);
@@ -133,7 +133,7 @@ class FlipEvent : public Event
 public:
 
     explicit FlipEvent(int start, int axis=1, int delay=0, int id=-1,
-                       int trigCode=0);
+                       uint8_t trigCode=0);
 
     virtual void apply(cv::Mat &frame);
     virtual void apply(EventContainer&);
@@ -150,7 +150,7 @@ class FadeInEvent : public Event
 {
 public:
     explicit FadeInEvent(int start, int duration=5, int delay=0, int id=-1,
-                         int trigCode=0);
+                         uint8_t trigCode=0);
 
     void apply(cv::Mat &frame);
     void apply(EventContainer&);
@@ -168,7 +168,7 @@ class FadeOutEvent: public Event
 {
 public:
     explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
-                          int trigCode = 0);
+                          uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void apply(EventContainer&);
@@ -186,7 +186,7 @@ class ImageEvent : public Event
 public:
     explicit ImageEvent(int start, const cv::Point2i& pos,
                         const cv::Mat &image, int delay, int id = -1,
-                        int trigCode = 0);
+                        uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
 private:
@@ -204,7 +204,7 @@ class TextEvent : public Event
 public:
     explicit TextEvent(int start, const QString& str, cv::Scalar color,
                        const cv::Point2i& pos, int delay, int id = -1,
-                       int trigCode = 0);
+                       uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
 
@@ -219,7 +219,7 @@ class RotateEvent : public Event
 {
 public:
     explicit RotateEvent(int start, int angle, int delay, int id = -1,
-                         int trigCode = 0);
+                         uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void apply(EventContainer&);
@@ -232,7 +232,8 @@ private:
 class FreezeEvent : public Event
 {
 public:
-    explicit FreezeEvent(int start, int delay, int id = -1, int trigCode = 0);
+    explicit FreezeEvent(int start, int delay, int id = -1,
+                         uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void apply(EventContainer&);
@@ -247,7 +248,7 @@ class ZoomEvent : public Event
 {
 public:
     explicit ZoomEvent(int start, double scale, int duration = 5, int delay = 0,
-                       int id = -1, int trigCode = 0);
+                       int id = -1, uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void pause();
@@ -267,7 +268,8 @@ public:
     typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
     explicit RecordEvent(int start, VideoPtr video, int delay = 0,
-                         int duration = 1000, int id = -1, int trigCode = 0);
+                         int duration = 1000, int id = -1,
+                         uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void pause();
@@ -285,7 +287,7 @@ public:
     typedef typename std::shared_ptr<VideoObject> VideoPtr;
 
     explicit PlaybackEvent(int start, VideoPtr video, int delay = 0,
-                           int duration = 1000, int id = -1, int trigCode = 0);
+                           int duration = 1000, int id = -1, uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
     void pause();
@@ -320,7 +322,8 @@ public:
     };
 
     explicit MotionDetectorEvent(int start, int target, int tolerance,
-                                 int delay, int id, int trigCode, int trigCode2,
+                                 int delay, int id, uint8_t trigCode,
+                                 uint8_t trigCode2,
                                  State state = WAITING);
 
     explicit MotionDetectorEvent(State state = MOTION_DIALOG);

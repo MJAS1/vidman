@@ -116,7 +116,7 @@ void CameraWorker::addEvent(EventPtr ev)
     mutex_.unlock();
 }
 
-void CameraWorker::onEventTriggered(int trigCode, const QString& log)
+void CameraWorker::onEventTriggered(uint8_t trigCode, const QString& log)
 {
     trigCode_ = trigCode;
     log_ = log;

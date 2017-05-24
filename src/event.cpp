@@ -24,7 +24,7 @@ void DelEvent::apply(EventContainer &events)
     ready_ = true;
 }
 
-FlipEvent::FlipEvent(int start, int axis, int delay, int id, int trigCode) :
+FlipEvent::FlipEvent(int start, int axis, int delay, int id, uint8_t trigCode) :
     Event(EVENT_FLIP, start, delay, 0, id, trigCode), axis_(axis)
 {
 }
@@ -41,7 +41,7 @@ void FlipEvent::apply(EventContainer &events)
 }
 
 FadeInEvent::FadeInEvent(int start, int duration, int delay, int id,
-                         int trigCode) :
+                         uint8_t trigCode) :
     Event(EVENT_FADEIN, start, delay, duration, id, trigCode, FADE_PRIORITY),
     amount_(-255), stopped_(false)
 {
@@ -85,7 +85,7 @@ void FadeInEvent::unpause()
 }
 
 FadeOutEvent::FadeOutEvent(int start, int duration, int delay, int id,
-                           int trigCode) :
+                           uint8_t trigCode) :
     Event(EVENT_FADEOUT, start, delay, duration, id, trigCode, FADE_PRIORITY),
     amount_(0), stopped_(false)
 {
@@ -129,7 +129,7 @@ void FadeOutEvent::unpause()
 }
 
 ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image,
-                       int delay, int id, int trigCode) :
+                       int delay, int id, uint8_t trigCode) :
     Event(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
 {
 }
@@ -189,7 +189,7 @@ void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foregrou
 }
 
 TextEvent::TextEvent(int start, const QString& str, cv::Scalar color,
-                     const cv::Point2i& pos, int delay, int id, int trigCode) :
+                     const cv::Point2i& pos, int delay, int id, uint8_t trigCode) :
     Event(EVENT_TEXT, start, delay, 0, id, trigCode), color_(color),
     pos_(pos), str_(str)
 {
@@ -202,7 +202,7 @@ void TextEvent::apply(cv::Mat &frame)
                 color_, 2);
 }
 
-RotateEvent::RotateEvent(int start, int angle, int delay, int id, int trigCode)
+RotateEvent::RotateEvent(int start, int angle, int delay, int id, uint8_t trigCode)
     : Event(EVENT_ROTATE, start, delay, 0, id, trigCode), angle_(angle)
 {
 }
@@ -221,7 +221,7 @@ void RotateEvent::apply(EventContainer &events)
     events.deleteType(Event::EVENT_ROTATE);
 }
 
-FreezeEvent::FreezeEvent(int start, int delay, int id, int trigCode)
+FreezeEvent::FreezeEvent(int start, int delay, int id, uint8_t trigCode)
         : Event(EVENT_FREEZE, start, delay, 0, id, trigCode, FREEZE_PRIORITY),
           started_(false)
 {
@@ -243,7 +243,7 @@ void FreezeEvent::apply(EventContainer &events)
 }
 
 ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id,
-                     int trigCode) :
+                     uint8_t trigCode) :
         Event(EVENT_ZOOM, start, delay, duration, id, trigCode),
         scale_(scale), stopped_(false)
 {
@@ -288,7 +288,7 @@ void ZoomEvent::unpause()
 }
 
 RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration,
-                         int id, int trigCode) :
+                         int id, uint8_t trigCode) :
     Event(EVENT_RECORD, start, delay, duration, id, trigCode, RECORD_PRIORITY),
     video_(video), finished_(false), paused_(false)
 {
@@ -323,7 +323,7 @@ void RecordEvent::unpause()
 }
 
 PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
-                             int id, int trigCode) :
+                             int id, uint8_t trigCode) :
     Event(EVENT_PLAYBACK, start, delay, duration, id, trigCode,
           PLAYBACK_PRIORITY),
     video_(video), finished_(false), paused_(false)
@@ -354,8 +354,8 @@ void PlaybackEvent::unpause()
 }
 
 MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
-                                         int delay, int id, int trigCode,
-                                         int trigCode2, State state) :
+                                         int delay, int id, uint8_t trigCode,
+                                         uint8_t trigCode2, State state) :
             Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode,
             MOTION_DETECTOR_PRIORITY), state_(state), trigCode2_(trigCode2),
             target_(target), tolerance_(tolerance)
