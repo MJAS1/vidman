@@ -48,7 +48,7 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
         }
         else if(str == "pause") {
             EventPtr ev(new PauseEvent);
-            connect(ev.get(), SIGNAL(triggered(int,QString)),
+            connect(ev.get(), SIGNAL(triggered(uint8_t,QString)),
                     window, SLOT(pause()));
             events.append(move(ev));
         }

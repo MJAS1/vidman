@@ -13,6 +13,8 @@
 CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     cycBuf_(cycBuf), cam_(cam), trigCode_(0)
 {
+    qRegisterMetaType<uint8_t>("uint8_t");
+
     Settings settings;  
     defaultTrig1_ = settings.defaultTrig1;
     defaultTrig2_ = settings.defaultTrig2;
@@ -108,8 +110,8 @@ void CameraWorker::unpause()
 
 void CameraWorker::addEvent(EventPtr ev)
 {
-    connect(ev.get(), SIGNAL(triggered(int, const QString&)), this,
-            SLOT(onEventTriggered(int, const QString&)));
+    connect(ev.get(), SIGNAL(triggered(uint8_t, const QString&)), this,
+            SLOT(onEventTriggered(uint8_t, const QString&)));
 
     mutex_.lock();
     events_.insertSorted(std::move(ev));
