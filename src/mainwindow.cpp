@@ -135,7 +135,7 @@ void MainWindow::initVideo()
         connect(videoFileWriter_, SIGNAL(error(const QString&)), this,
                 SLOT(fileWriterError(const QString&)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)),
-                videoDialog_, SLOT(onDrawFrame()));
+                videoDialog_, SLOT(onNewFrame(unsigned char*)));
         connect(cycVideoBufRaw_, SIGNAL(chunkReady(unsigned char*)), &glworker_,
                 SLOT(onDrawFrame(unsigned char*)));
         connect(&cameraWorker_, SIGNAL(motionPixmapReady(const QPixmap&)),

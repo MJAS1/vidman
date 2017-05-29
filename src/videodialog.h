@@ -32,14 +32,13 @@ public:
     QGLContext* context() const;
 
 public slots:
-    void updateFPSLabel();
     void onShutterChanged(int newVal);
     void onGainChanged(int newVal);
     void onUVChanged(int newVal);
     void onVRChanged(int newVal);
     void onExternTrig(bool on);
     void onAspectRatioSliderMoved(int videoWidth);
-    void onDrawFrame();
+    void onNewFrame(unsigned char*);
     void increaseAspectRatio();
     void decreaseAspectRatio();
 
@@ -61,8 +60,9 @@ private:
     GLVideoWidget*          glVideoWidget_;
     Camera&                 cam_;
     Settings                settings_;
-    QTimer                  fpsTimer_;
     int                     n_frames_;
+    uint64_t                prevTimestamp_;
+    int                     frameCnt_;
 };
 
 #endif // VIDEODIALOG_H

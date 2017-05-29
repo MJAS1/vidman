@@ -19,8 +19,8 @@ typedef struct
 {
     uint32_t	chunkSize;
     uint64_t	timestamp;
-    bool		isRec;
     uint8_t     trigCode;
+    bool		isRec;
     char        log[MAXLOG];
 } ChunkAttrib;
 

@@ -7,7 +7,8 @@
 #include "common.h"
 
 VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
-    QDialog(parent), ui(new Ui::VideoDialog), cam_(cam), n_frames_(0)
+    QDialog(parent), ui(new Ui::VideoDialog), cam_(cam), n_frames_(0),
+    prevTimestamp_(0), frameCnt_(0)
 {
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
@@ -33,11 +34,8 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
             SLOT(decreaseAspectRatio()));
     connect(this, SIGNAL(setVideoDialogAction(bool)), parent,
             SLOT(toggleVideoDialogChecked(bool)));
-    connect(&fpsTimer_, SIGNAL(timeout()), this, SLOT(updateFPSLabel()));
 
     ui->aspectRatioSlider->setValue(settings_.videoWidth);
-    fpsTimer_.setTimerType(Qt::PreciseTimer);
-    fpsTimer_.start(1000);
 }
 
 void VideoDialog::initUI()
@@ -119,15 +117,18 @@ void VideoDialog::closeEvent(QCloseEvent *)
     emit setVideoDialogAction(false);
 }
 
-void VideoDialog::updateFPSLabel()
+void VideoDialog::onNewFrame(unsigned char* buf)
 {
-    ui->FPSLabel->setText(QString("FPS: %1").arg(n_frames_));
-    n_frames_ = 0;
-}
+    ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf-sizeof(ChunkAttrib)));
 
-void VideoDialog::onDrawFrame()
-{
-    n_frames_++;
+    if(frameCnt_ == 10) {
+        float fps = 1 / (float(chunkAttrib.timestamp - prevTimestamp_) / 1000);
+        ui->FPSLabel->setText(QString("FPS: %1").arg(fps, 0, 'f', 2));
+        frameCnt_ = 0;
+    }
+
+    prevTimestamp_ = chunkAttrib.timestamp;
+    frameCnt_++;
 }
 
 void VideoDialog::onExternTrig(bool on)
