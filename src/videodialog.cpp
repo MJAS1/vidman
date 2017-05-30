@@ -157,7 +157,7 @@ QGLContext* VideoDialog::context() const
     return glVideoWidget_->context();
 }
 
-GLVideoWidget* VideoDialog::glVideoWidget()
+GLVideoWidget* VideoDialog::glVideoWidget() const
 {
     return glVideoWidget_;
 }

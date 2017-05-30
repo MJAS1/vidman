@@ -13,7 +13,7 @@ EventPtr EventContainer::pop_front()
 {
     EventPtr ev = move(*events_.begin());
     events_.erase(events_.begin());
-    return move(ev);
+    return ev;
 }
 
 void EventContainer::deleteId(int id)

@@ -88,7 +88,7 @@ void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
-    /*Wait until the first frame is ready and window is exposed to avoid
+    /* Wait until the first frame is ready and window is exposed to avoid
      * warnings. */
     while(!(buf_ && glw_->windowHandle()->isExposed()))
         QCoreApplication::processEvents();

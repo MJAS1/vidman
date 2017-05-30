@@ -16,7 +16,7 @@ void Event::apply(cv::Mat &)
 void DelEvent::apply(EventContainer &events)
 {
     emit triggered(trigCode_, log_);
-    if(delType_)
+    if(tag_ == TYPE)
         events.deleteType(delType_);
     else
         events.deleteId(delId_);
@@ -432,7 +432,7 @@ void MotionDetectorEvent::tracking()
 void MotionDetectorEvent::maybeFinished()
 {
     if(nChanges() < threshold_) {
-        if(finishTimer_.elapsed() > minStopTime) {
+        if(finishTimer_.elapsed() > MinStopTime) {
             state_ = FINISHED;
             emit triggered(trigCode2_, QString("Movement finished."));
             time_ = movementTimer_.elapsed();

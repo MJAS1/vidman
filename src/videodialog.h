@@ -26,7 +26,7 @@ public:
     explicit VideoDialog(MainWindow *window, Camera &cam);
     ~VideoDialog();
 
-    GLVideoWidget* glVideoWidget();
+    GLVideoWidget* glVideoWidget() const;
 
     //Returns the context of childwidget glVideoWidget
     QGLContext* context() const;

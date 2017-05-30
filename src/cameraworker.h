@@ -24,7 +24,6 @@ public:
     //Adds new video event for processing each frame
     void addEvent(EventPtr ev);
     void clearEvents();
-
     void pause();
     void unpause();
 

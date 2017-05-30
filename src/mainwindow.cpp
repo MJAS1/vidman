@@ -173,7 +173,7 @@ void MainWindow::initVideo()
 void MainWindow::getNextEvent()
 {
     int delay = events_[0]->getDelay();
-    cameraWorker_.addEvent(std::move(events_.pop_front()));
+    cameraWorker_.addEvent(events_.pop_front());
 
     //Calculate the start time of the next event
     if(!events_.empty()) {

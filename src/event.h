@@ -23,7 +23,6 @@ struct VideoObject;
  * used for the first time, the event will emit a triggered() signal as long
  * as the derived class calls Event::apply(frame) in the overrided function.
  */
-
 class Event;
 typedef typename std::unique_ptr<Event> EventPtr;
 
@@ -114,18 +113,21 @@ public:
     /* DelEvent can be initialized to remove either an event with a specific
      * id or all the events of a given type. */
     explicit DelEvent(int start, int delay, int delId, uint8_t trigCode=0) :
-        Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delId_(delId),
-        delType_(EVENT_NULL) {}
+        Event(EVENT_DELETE, start, delay, 0, -1, trigCode),
+        delId_(delId), tag_(ID) {}
 
-    explicit DelEvent(int start, int delay, EventType delType,
-                      uint8_t trigCode=0):
-        Event(EVENT_DELETE, start, delay, 0, -1, trigCode), delType_(delType) {}
+    explicit DelEvent(int start, int delay, EventType delType, uint8_t trigCode=0):
+        Event(EVENT_DELETE, start, delay, 0, -1, trigCode),
+        delType_(delType), tag_(TYPE) {}
 
     void apply(EventContainer &);
 
 private:
-    int         delId_;
-    EventType   delType_;
+    union {
+        int         delId_;
+        EventType   delType_;
+    };
+    enum {ID, TYPE} tag_;
 };
 
 class FlipEvent : public Event
@@ -340,7 +342,7 @@ private:
     static const int TextDuration = 1000;
 
     //How long changes need to be below threshold to consider movement finished.
-    static const int minStopTime = 100;
+    static const int MinStopTime = 100;
 
     void            createMotionPixmap();
     int             nChanges();
