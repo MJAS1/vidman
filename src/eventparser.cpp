@@ -296,6 +296,11 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         else if(value == "rts") trigCode_ = TIOCM_RTS;
         else if((trigCode_ = toInt(v, lineNumber, QString("trigcode"))) == -1)
             return false;
+        if(trigCode_ > 255) {
+            emit error(QString("Error: trigcode must be between 0 and 255 "
+                               "in line %1.").arg(lineNumber));
+            return false;
+        }
     }
     else if(param == "scale") {
         if((scale_ = toFloat(v, lineNumber, QString("scale"))) == -1)
@@ -322,6 +327,11 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
     else if(param == "trigcode2") {
         if((trigCode2_ = toInt(v, lineNumber, QString("trigcode2"))) == -1)
             return false;
+        if(trigCode2_ > 255) {
+            emit error(QString("Error: trigcode2 must be between 0 and 255 "
+                               "in line %1.").arg(lineNumber));
+            return false;
+        }
     }
     else if(param == "target") {
         if((target_ = toInt(v, lineNumber, QString("target"))) == -1)

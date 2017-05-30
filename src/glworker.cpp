@@ -63,8 +63,7 @@ void GLWorker::resizeGL(int w, int h)
 {
     /* Change the viewport to preserve the aspect ratio. Compute new height
      * corresponding to the current width and new width corresponding to the
-     * current heigh and see which one fits.
-     */
+     * current height and see which one fits. */
     int dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));;
     int dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));;
 
@@ -114,8 +113,7 @@ void GLWorker::startLoop()
         /* With vsync enabled glFinish() should stop the thread until a v-blank
          * signal has been received, meaning that the screen image has been
          * updated with the front framebuffer. The execution of the code
-         * following glFinish() should then sync with the screen refresh rate.
-         */
+         * following glFinish() should then sync with the screen refresh rate.*/
         glFinish();
         ChunkAttrib* chunkAttrib = (ChunkAttrib*)(buf_-sizeof(ChunkAttrib));
         emit vblank(chunkAttrib);
