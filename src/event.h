@@ -104,7 +104,9 @@ private:
 };
 
 /*!
- * This class is used to specify what event should be deleted and when
+ * This class is used to specify what event should be deleted. When
+ * apply(EventContainer&) is called, either an event with delId_ is deleted or
+ * all events of deType_.
  */
 class DelEvent : public Event
 {
@@ -253,15 +255,9 @@ public:
                        int id = -1, uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
-    void pause();
-    void unpause();
 
 private:
-    TimerWithPause timer_;
     double scale_;
-    double interval_;
-    double coef_;
-    bool stopped_;
 };
 
 class RecordEvent : public Event

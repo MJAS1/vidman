@@ -244,47 +244,20 @@ void FreezeEvent::apply(EventContainer &events)
 
 ZoomEvent::ZoomEvent(int start, double scale, int duration, int delay, int id,
                      uint8_t trigCode) :
-        Event(EVENT_ZOOM, start, delay, duration, id, trigCode),
-        scale_(scale), stopped_(false)
+        Event(EVENT_ZOOM, start, delay, duration, id, trigCode), scale_(scale)
 {
-    timer_.invalidate();
 }
 
 void ZoomEvent::apply(cv::Mat &frame)
 {
     Event::apply(frame);
-    if(!stopped_) {
-        if(!timer_.isValid()) {
-            interval_ = (scale_ - 1) / duration_;
-            timer_.start();
-        }
-        int msecsElapsed = timer_.msecsElapsed();
-        coef_ = 1 + interval_*msecsElapsed;
-        if(coef_ >= scale_) {
-            coef_ = scale_;
-            stopped_ = true;
-        }
-    }
-
     cv::Mat tmp;
-    resize(frame, tmp, cv::Size(), coef_, coef_, cv::INTER_LINEAR);
+    resize(frame, tmp, cv::Size(), scale_, scale_, cv::INTER_LINEAR);
 
     //Take only the center 640x480 of the resized image
     cv::Point p((tmp.cols - frame.cols) / 2, (tmp.rows - frame.rows) / 2);
     cv::Rect roi(p, frame.size());
     frame = tmp(roi).clone();
-}
-
-void ZoomEvent::pause()
-{
-    stopped_ = true;
-    timer_.pause();
-}
-
-void ZoomEvent::unpause()
-{
-    stopped_ = false;
-    timer_.resume();
 }
 
 RecordEvent::RecordEvent(int start, VideoPtr video, int delay, int duration,
