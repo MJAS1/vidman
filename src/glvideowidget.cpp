@@ -1,4 +1,5 @@
 #include <QResizeEvent>
+#include <QThread>
 #include "glvideowidget.h"
 
 using namespace std;
@@ -24,18 +25,21 @@ void GLVideoWidget::paintEvent(QPaintEvent *)
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-    /* TODO: Fix black screen issue after exiting full screen. This problem was
-     * introduced after upgrading to Qt5 from Qt4.8. */
-    if(isFullScreen()) {
-        setWindowFlags(Qt::Widget);
-        showNormal();
-        parentWidget()->show();
-    }
-    else {
-        setWindowFlags(Qt::Window);
-        parentWidget()->close();
-        showFullScreen();
-    }
+    /* After updating Qt4 to Qt5 a problem appeared. When coming back to normal
+     * state from fullscreen, the widget showed only a blank black screen.
+     * This is probably due to some internal bug in Qt code. For some very
+     * strange reason the following piece of code made the problem disappear, at
+     * least for most of the time. */
+    setWindowFlags(windowFlags() ^ Qt::Window);
+    setWindowState(windowState() ^ Qt::WindowFullScreen);
+    thread()->msleep(20);
+    setWindowFlags(windowFlags() ^ Qt::Window);
+    setWindowState(windowState() ^ Qt::WindowFullScreen);
+    setWindowFlags(windowFlags() ^ Qt::Window);
+    setWindowState(windowState() ^ Qt::WindowFullScreen);
+    show();
+    parentWidget()->repaint();
+    parentWidget()->update();
 }
 
 void GLVideoWidget::resizeEvent(QResizeEvent *e)
