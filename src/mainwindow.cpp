@@ -448,19 +448,19 @@ void MainWindow::addFlipEvent()
 
 void MainWindow::addFadeInEvent()
 {
-    QString str("event: type=fadein, start=0, duration=5000, delay=0");
+    QString str("event: type=fade_in, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addFadeOutEvent()
 {
-    QString str("event: type=fadeout, start=0, duration=5000, delay=0");
+    QString str("event: type=fade_out, start=0, duration=5000, delay=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addImageEvent()
 {
-    QString str("event: type=image, start=0, x=0, y=0, objectId=0");
+    QString str("event: type=image, start=0, x=0, y=0, object_id=0");
     ui->textEdit->insertPlainText(str);
 }
 
@@ -515,20 +515,20 @@ void MainWindow::addZoomEvent()
 void MainWindow::addRecordEvent()
 {
     QString str("event: type=record, start=0, duration=2000, delay=2000,"
-                "objectId=0");
+                "object_id=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addPlaybackEvent()
 {
-    QString str("event: type=playback, start=0, duration=2000, objectId=0");
+    QString str("event: type=playback, start=0, duration=2000, object_id=0");
     ui->textEdit->insertPlainText(str);
 }
 
 void MainWindow::addMotionDetectorEvent()
 {
-    QString str("event: type=detectmotion, target=500, tolerance=50, "
-                "trigCode=1, successcode=2, failcode=3");
+    QString str("event: type=detect_motion, target=500, tolerance=50, "
+                "trig_code=1, success_code=2, fail_code=3");
     ui->textEdit->insertPlainText(str);
 }
 

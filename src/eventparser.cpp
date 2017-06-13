@@ -162,13 +162,13 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
 
     if(param == "type") {
         if(value == "flip") attr.type_ = Event::EVENT_FLIP;
-        else if(value == "fadein") attr.type_ = Event::EVENT_FADEIN;
-        else if(value == "fadeout") attr.type_ = Event::EVENT_FADEOUT;
+        else if(value == "fade_in") attr.type_ = Event::EVENT_FADEIN;
+        else if(value == "fade_out") attr.type_ = Event::EVENT_FADEOUT;
         else if(value == "image") attr.type_ = Event::EVENT_IMAGE;
         else if(value == "text") attr.type_ = Event::EVENT_TEXT;
         else if(value == "freeze") attr.type_ = Event::EVENT_FREEZE;
         else if(value == "rotate") attr.type_ = Event::EVENT_ROTATE;
-        else if(value == "detectmotion") attr.type_ = Event::EVENT_DETECT_MOTION;
+        else if(value == "detect_motion") attr.type_ = Event::EVENT_DETECT_MOTION;
         else if(value == "zoom") attr.type_ = Event::EVENT_ZOOM;
         else if(value == "record") attr.type_ = Event::EVENT_RECORD;
         else if(value == "playback") attr.type_ = Event::EVENT_PLAYBACK;
@@ -194,7 +194,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         if((attr.y_ = toInt(v, QString("y-coordinate"))) == -1)
             return false;
     }
-    else if(param == "objectid") {
+    else if(param == "object_id") {
         if((attr.objectId_ = toInt(v, QString("objectID"))) == -1)
             return false;
         attr.objectIdOk_ = true;
@@ -214,7 +214,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         if((attr.delay_ = toInt(v, QString("delay"))) == -1)
             return false;
     }
-    else if(param == "trigcode") {
+    else if(param == "trig_code") {
         if(value == "dtr") attr.trigCode_ = TIOCM_DTR;
         else if(value == "rts") attr.trigCode_ = TIOCM_RTS;
         else if((attr.trigCode_ = toInt(v, QString("trigcode"))) == -1)
@@ -246,7 +246,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
             return false;
         }
     }
-    else if(param == "successcode") {
+    else if(param == "success_code") {
         if((attr.successCode_ = toInt(v, QString("successcode"))) == -1)
             return false;
         if(attr.successCode_ > 255) {
@@ -255,7 +255,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
             return false;
         }
     }
-    else if(param == "failcode") {
+    else if(param == "fail_code") {
         if((attr.failCode_ = toInt(v, QString("failcode"))) == -1)
             return false;
         if(attr.failCode_ > 255) {

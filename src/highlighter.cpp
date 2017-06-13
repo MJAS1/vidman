@@ -7,11 +7,11 @@ Highlighter::Highlighter(QTextDocument *parent) :
 
     typeFormat.setForeground(Qt::darkYellow);
     QStringList typePatterns;
-    typePatterns << "\\bfade in\\b" << "\\bfadein\\b" << "\\bfadeout\\b"
-                    << "\\bfade out\\b" << "\\bflip\\b" << "\\bimage\\b"
-                    << "\\btext\\b" << "\\bfreeze\\b" << "\\brotate\\b"
-                    << "\\brts\\b" << "\\bdtr\\b" << "\\bdetectmotion\\b"
-                    << "\\brecord\\b" << "\\bplayback\\b" << "\\bvideo\\b";
+    typePatterns << "\\bfade_in\\b" << "\\bfade_out\\b" << "\\bflip\\b"
+                 << "\\bimage\\b" << "\\btext\\b" << "\\bfreeze\\b"
+                 << "\\brotate\\b" << "\\brts\\b" << "\\bdtr\\b"
+                 << "\\bdetect_motion\\b" << "\\brecord\\b" << "\\bplayback\\b"
+                 << "\\bvideo\\b";
 
     foreach(const QString& pattern, typePatterns)
     {
@@ -23,11 +23,11 @@ Highlighter::Highlighter(QTextDocument *parent) :
     keywordFormat.setForeground(Qt::darkRed);
     QStringList keywordPatterns;
     keywordPatterns << "\\btype\\b" << "\\bstart\\b" << "\\bduration\\b" << "\\bx\\b"
-                    << "\\by\\b"<< "\\bfilename\\b" << "\\bid\\b" << "\\bobjectid\\b"
+                    << "\\by\\b"<< "\\bfilename\\b" << "\\bid\\b" << "\\bobject_id\\b"
                     << "\\bangle\\b" << "\\bdelay\\b" << "\\bcolor\\b"
-                    << "\\btrigcode\\b" << "\\bstring\\b" << "\\btarget\\b"
-                    << "\\btolerance\\b" << "\\baxis\\b" << "\\bsuccesscode\\b"
-                    << "\\bfailcode\\b";
+                    << "\\btrig_code\\b" << "\\bstring\\b" << "\\btarget\\b"
+                    << "\\btolerance\\b" << "\\baxis\\b" << "\\bsuccess_code\\b"
+                    << "\\bfail_code\\b";
 
     foreach(const QString& pattern, keywordPatterns)
     {

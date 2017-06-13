@@ -59,14 +59,14 @@ def create_block(n_standards, n_deviants, min_distance):
 #%%
 def standard_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)
-    txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}, " \
-          "successCode={}, failCode={}, start={}\n".format(TARGET, TOLERANCE,
+    txt = "Event: type=detect_motion, target={}, tolerance={}, trig_code={}, "\
+          "success_code={}, fail_code={}, start={}\n".format(TARGET, TOLERANCE,
                                                            trig, TRIG_SUCCESS, 
                                                            TRIG_FAIL, delay)
-    txt += "Event: type=image, x={}, y={}, objectid=0, delay={}," \
-           "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+    txt += "Event: type=image, x={}, y={}, object_id=0, delay={}," \
+           "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
-    txt += "Delete: start=0, type=detectmotion\n\n"
+    txt += "Delete: start=0, type=detect_motion\n\n"
     
     return txt
 
@@ -74,16 +74,16 @@ def standard_condition(trig):
 #%%
 def deviant_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)     
-    txt = "Event: type=detectmotion, target={}, tolerance={}, trigcode={}, " \
-          "successCode={}, failCode={}, start={}\n".format(TARGET, TOLERANCE,
+    txt = "Event: type=detect_motion, target={}, tolerance={}, trig_code={}, "\
+          "success_code={}, fail_code={}, start={}\n".format(TARGET, TOLERANCE,
                                                            trig, TRIG_SUCCESS, 
                                                            TRIG_FAIL, delay)
     txt += "Event: type=freeze, start=0\n "
-    txt += "Event: type=image, x={}, y={}, objectid=0, delay={}, " \
-           "trigcode={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+    txt += "Event: type=image, x={}, y={}, object_id=0, delay={}, " \
+           "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
     txt += "Delete: start=0, type=freeze\n"
-    txt += "Delete: start=0, type=detectmotion\n\n"
+    txt += "Delete: start=0, type=detect_motion\n\n"
     
     return txt
 
@@ -107,7 +107,7 @@ def create_trial():
     """
     b1 = np.concatenate([create_block(20, 0, 0), create_block(225, 25, 5)])
     b2 = create_block(225, 25, 5)
-    b3 = ["fade out"] + ["blank"]*250 + ["fade in"]
+    b3 = ["fade_out"] + ["blank"]*250 + ["fade_in"]
     b4 = create_block(225, 25, 5)
     b5 = create_block(225, 25, 5)
     
@@ -121,10 +121,10 @@ def create_trial():
                 out += deviant_condition(TRIG_DEVIANT)
             elif condition == "blank":
                 out += standard_condition(TRIG_BLANK)
-            elif condition == "fade out":
-                out += "Event: type=fadeout, start=0, duration=1000, delay=1000\n\n"
-            elif condition == "fade in":
-                out += "Event: type=fadein, start=0, duration=1000, delay=1000\n\n"
+            elif condition == "fade_out":
+                out += "Event: type=fade_out, start=0, duration=1000, delay=1000\n\n"
+            elif condition == "fade_in":
+                out += "Event: type=fade_in, start=0, duration=1000, delay=1000\n\n"
     
         out += "Pause\n\n"
         
