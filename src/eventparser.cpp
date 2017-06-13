@@ -246,11 +246,20 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
             return false;
         }
     }
-    else if(param == "trigcode2") {
-        if((attr.trigCode2_ = toInt(v, QString("trigcode2"))) == -1)
+    else if(param == "successcode") {
+        if((attr.successCode_ = toInt(v, QString("successcode"))) == -1)
             return false;
-        if(attr.trigCode2_ > 255) {
-            emit error(QString("Error: trigcode2 must be between 0 and 255 "
+        if(attr.successCode_ > 255) {
+            emit error(QString("Error: succescode must be between 0 and 255 "
+                               "in line %1.").arg(currentLine_));
+            return false;
+        }
+    }
+    else if(param == "failcode") {
+        if((attr.failCode_ = toInt(v, QString("failcode"))) == -1)
+            return false;
+        if(attr.failCode_ > 255) {
+            emit error(QString("Error: failcode must be between 0 and 255 "
                                "in line %1.").arg(currentLine_));
             return false;
         }
@@ -386,7 +395,7 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
 
     case Event::EVENT_DETECT_MOTION:
         ev.reset(new MotionDetectorEvent(attr.start_, attr.target_,  attr.tolerance_, attr.delay_,
-                                         attr.eventId_, attr.trigCode_, attr.trigCode2_));
+                                         attr.eventId_, attr.trigCode_, attr.successCode_, attr.failCode_));
         ev->appendLog(QString("Movement detected"));
         break;
 

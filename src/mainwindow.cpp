@@ -528,7 +528,7 @@ void MainWindow::addPlaybackEvent()
 void MainWindow::addMotionDetectorEvent()
 {
     QString str("event: type=detectmotion, target=500, tolerance=50, "
-                "trigCode=1, trigcode2=2");
+                "trigCode=1, successcode=2, failcode=3");
     ui->textEdit->insertPlainText(str);
 }
 

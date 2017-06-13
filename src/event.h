@@ -321,7 +321,7 @@ public:
 
     explicit MotionDetectorEvent(int start, int target, int tolerance,
                                  int delay, int id, uint8_t trigCode,
-                                 uint8_t trigCode2,
+                                 uint8_t successCode, uint8_t failCode,
                                  State state = WAITING);
 
     explicit MotionDetectorEvent(State state = MOTION_DIALOG);
@@ -357,7 +357,8 @@ private:
 
     bool            motionDialog_;
     int             threshold_;
-    int             trigCode2_;
+    uint8_t         successCode_;
+    uint8_t         failCode_;
     int             target_;
     int             tolerance_;
 };

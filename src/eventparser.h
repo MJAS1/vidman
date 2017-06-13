@@ -30,7 +30,8 @@ struct EventAttributes {
     int eventId_ = -1;
     int angle_ = 0;
     int trigCode_ = 0;
-    int trigCode2_ = 0;
+    int successCode_ = 0;
+    int failCode_ = 0;
     int target_ = 0;
     int tolerance_ = 0;
     int axis_ = 1;

@@ -328,10 +328,11 @@ void PlaybackEvent::unpause()
 
 MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
                                          int delay, int id, uint8_t trigCode,
-                                         uint8_t trigCode2, State state) :
+                                         uint8_t successCode, uint8_t failCode,
+                                         State state) :
             Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode,
-            MOTION_DETECTOR_PRIORITY), state_(state), trigCode2_(trigCode2),
-            target_(target), tolerance_(tolerance)
+            MOTION_DETECTOR_PRIORITY), state_(state), successCode_(successCode),
+            failCode_(failCode), target_(target), tolerance_(tolerance)
 {
     Settings settings;
     threshold_ = settings.movementThreshold;
@@ -406,17 +407,18 @@ void MotionDetectorEvent::maybeFinished()
 {
     if(nChanges() < threshold_) {
         if(finishTimer_.elapsed() > MinStopTime) {
-            state_ = FINISHED;
-            emit triggered(trigCode2_, QString("Movement finished."));
             time_ = movementTimer_.elapsed();
+            state_ = FINISHED;
 
             //Movement finished within time limit.
             if(time_ < target_ + tolerance_ && time_ > target_ - tolerance_) {
+                emit triggered(successCode_, QString("Movement finished."));
                 cv::Scalar green(0, 255, 0);
                 color_ = green;
             }
             //Movement was too fast or too slow
             else {
+                emit triggered(failCode_, QString("Movement finished."));
                 cv::Scalar red(0, 0, 255);
                 color_ = red;
             }
