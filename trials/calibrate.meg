@@ -1,0 +1,4 @@
+object: type=image, id=0, filename=../img/box.png
+
+event: type=image, start=0, x=300, y=220, object_id=0
+event: type=text, start=0, x=275, y=200, color=black, string=1234

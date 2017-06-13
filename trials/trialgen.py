@@ -16,8 +16,10 @@ TRIG_BLANK = 4
 TRIG_SUCCESS = 5
 TRIG_FAIL = 6
 IMG_DURATION = 1200
-X = 330
-Y = 150
+X = 390
+Y = 190
+DETECTOR_X = 375
+DETECTOR_Y = 215
 TARGET = 575
 TOLERANCE = 76
 MIN_DELAY = 1000
@@ -60,9 +62,9 @@ def create_block(n_standards, n_deviants, min_distance):
 def standard_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)
     txt = "Event: type=detect_motion, target={}, tolerance={}, trig_code={}, "\
-          "success_code={}, fail_code={}, start={}\n".format(TARGET, TOLERANCE,
+          "success_code={}, fail_code={}, x={}, y={}, start={}\n".format(TARGET, TOLERANCE,
                                                            trig, TRIG_SUCCESS, 
-                                                           TRIG_FAIL, delay)
+                                                           TRIG_FAIL, DETECTOR_X, DETECTOR_Y, delay)
     txt += "Event: type=image, x={}, y={}, object_id=0, delay={}," \
            "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
@@ -75,9 +77,9 @@ def standard_condition(trig):
 def deviant_condition(trig):
     delay = random.randint(MIN_DELAY, MAX_DELAY)     
     txt = "Event: type=detect_motion, target={}, tolerance={}, trig_code={}, "\
-          "success_code={}, fail_code={}, start={}\n".format(TARGET, TOLERANCE,
+          "success_code={}, fail_code={}, x={}, y={}, start={}\n".format(TARGET, TOLERANCE,
                                                            trig, TRIG_SUCCESS, 
-                                                           TRIG_FAIL, delay)
+                                                           TRIG_FAIL, DETECTOR_X, DETECTOR_Y, delay)
     txt += "Event: type=freeze, start=0\n "
     txt += "Event: type=image, x={}, y={}, object_id=0, delay={}, " \
            "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)

@@ -54,7 +54,8 @@ public:
     enum Priority
     {
         DEFAULT_PRIORITY = 0,
-        FADE_PRIORITY = 1,
+        IMAGE_PRIORITY = 1,
+        FADE_PRIORITY = 2,
         FREEZE_PRIORITY = 3,
         RECORD_PRIORITY = 4,
         PLAYBACK_PRIORITY = 4,

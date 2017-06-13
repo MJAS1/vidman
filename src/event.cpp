@@ -129,7 +129,8 @@ void FadeOutEvent::unpause()
 
 ImageEvent::ImageEvent(int start, const cv::Point2i& pos, const cv::Mat& image,
                        int delay, int id, uint8_t trigCode) :
-    Event(EVENT_IMAGE, start, delay, 0, id, trigCode), image_(image), pos_(pos)
+    Event(EVENT_IMAGE, start, delay, 0, id, trigCode, IMAGE_PRIORITY),
+    image_(image), pos_(pos)
 {
 }
 
