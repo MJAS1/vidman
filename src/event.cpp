@@ -1,5 +1,4 @@
 #include <QImage>
-#include "common.h"
 #include "event.h"
 #include "eventcontainer.h"
 #include "eventparser.h"
@@ -329,13 +328,14 @@ void PlaybackEvent::unpause()
 MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
                                          int delay, int id, uint8_t trigCode,
                                          uint8_t successCode, uint8_t failCode,
-                                         State state) :
+                                         int x, int y, State state) :
             Event(EVENT_DETECT_MOTION, start, delay, 0, id, trigCode,
             MOTION_DETECTOR_PRIORITY), state_(state), successCode_(successCode),
             failCode_(failCode), target_(target), tolerance_(tolerance)
 {
     Settings settings;
     threshold_ = settings.movementThreshold;
+    textPos_ = cv::Point(x, y);
 }
 
 MotionDetectorEvent::MotionDetectorEvent(State state) : state_(state)
@@ -444,8 +444,7 @@ void MotionDetectorEvent::finished(cv::Mat &frame)
     //Draw the duration of the movement on the frame.
     if(finishTimer_.elapsed() < TextDuration)
         cv::putText(frame, std::string(std::to_string(time_)),
-                    cv::Point(VIDEO_WIDTH/2-30,VIDEO_HEIGHT/2),
-                    cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
+                    textPos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
     else
         ready_=true;
 }

@@ -7,6 +7,7 @@
 #include <memory>
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
+#include "common.h"
 #include "timerwithpause.h"
 
 class EventContainer;
@@ -322,6 +323,8 @@ public:
     explicit MotionDetectorEvent(int start, int target, int tolerance,
                                  int delay, int id, uint8_t trigCode,
                                  uint8_t successCode, uint8_t failCode,
+                                 int x = VIDEO_WIDTH/2-30,
+                                 int y = VIDEO_HEIGHT/2,
                                  State state = WAITING);
 
     explicit MotionDetectorEvent(State state = MOTION_DIALOG);
@@ -354,6 +357,7 @@ private:
 
     cv::Mat         prev_, current_, next_, result_;
     cv::Scalar      color_;
+    cv::Point       textPos_;
 
     bool            motionDialog_;
     int             threshold_;

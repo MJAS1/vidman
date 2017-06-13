@@ -52,7 +52,8 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
             events.append(move(ev));
         }
         else if(!str.isEmpty()) {
-            emit error(QString("Error: couldn't understand line %1.").arg(currentLine_));
+            emit error(QString("Error: couldn't understand line %1.")
+                       .arg(currentLine_));
             return false;
         };
     }
@@ -179,23 +180,23 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         }
     }
     else if(param == "start") {
-        if((attr.start_ = toInt(v, QString("start time"))) == -1)
+        if((attr.start_ = toInt(v, "start time")) == -1)
             return false;
     }
     else if(param == "duration") {
-        if((attr.duration_ = toInt(v, QString("duration"))) == -1)
+        if((attr.duration_ = toInt(v, "duration")) == -1)
             return false;
     }
     else if(param == "x") {
-        if((attr.x_ = toInt(v, QString("x-coordinate"))) == -1)
+        if((attr.x_ = toInt(v, "x-coordinate")) == -1)
             return false;
     }
     else if(param == "y") {
-        if((attr.y_ = toInt(v, QString("y-coordinate"))) == -1)
+        if((attr.y_ = toInt(v, "y-coordinate")) == -1)
             return false;
     }
     else if(param == "object_id") {
-        if((attr.objectId_ = toInt(v, QString("objectID"))) == -1)
+        if((attr.objectId_ = toInt(v, "objectID")) == -1)
             return false;
         attr.objectIdOk_ = true;
     }
@@ -203,21 +204,21 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         attr.string_=v;
     }
     else if(param == "angle") {
-        if((attr.angle_ = toInt(v, QString("angle"))) == -1)
+        if((attr.angle_ = toInt(v, "angle")) == -1)
             return false;
     }
     else if(param == "id") {
-        if((attr.eventId_ = toInt(v, QString("id"))) == -1)
+        if((attr.eventId_ = toInt(v, "id")) == -1)
             return false;
     }
     else if(param == "delay") {
-        if((attr.delay_ = toInt(v, QString("delay"))) == -1)
+        if((attr.delay_ = toInt(v, "delay")) == -1)
             return false;
     }
     else if(param == "trig_code") {
         if(value == "dtr") attr.trigCode_ = TIOCM_DTR;
         else if(value == "rts") attr.trigCode_ = TIOCM_RTS;
-        else if((attr.trigCode_ = toInt(v, QString("trigcode"))) == -1)
+        else if((attr.trigCode_ = toInt(v, "trigcode")) == -1)
             return false;
         if(attr.trigCode_ > 255) {
             emit error(QString("Error: trigcode must be between 0 and 255 "
@@ -226,7 +227,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         }
     }
     else if(param == "scale") {
-        if((attr.scale_ = toFloat(v, QString("scale"))) == -1)
+        if((attr.scale_ = toFloat(v, "scale")) == -1)
             return false;
         else if(attr.scale_ < 1) {
             emit error(QString("Error: scale must be greater than 1 for zoom "
@@ -247,7 +248,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         }
     }
     else if(param == "success_code") {
-        if((attr.successCode_ = toInt(v, QString("successcode"))) == -1)
+        if((attr.successCode_ = toInt(v, "successcode")) == -1)
             return false;
         if(attr.successCode_ > 255) {
             emit error(QString("Error: succescode must be between 0 and 255 "
@@ -256,7 +257,7 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         }
     }
     else if(param == "fail_code") {
-        if((attr.failCode_ = toInt(v, QString("failcode"))) == -1)
+        if((attr.failCode_ = toInt(v, "failcode")) == -1)
             return false;
         if(attr.failCode_ > 255) {
             emit error(QString("Error: failcode must be between 0 and 255 "
@@ -265,11 +266,11 @@ bool EventParser::parseEventParam(const QString &p, const QString &v,
         }
     }
     else if(param == "target") {
-        if((attr.target_ = toInt(v, QString("target"))) == -1)
+        if((attr.target_ = toInt(v, "target")) == -1)
             return false;
     }
     else if(param == "tolerance") {
-        if((attr.tolerance_ = toInt(v, QString("tolerance"))) == -1)
+        if((attr.tolerance_ = toInt(v, "tolerance")) == -1)
             return false;
     }
     else if(param == "axis") {
@@ -337,13 +338,13 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
     case Event::EVENT_FADEIN:
         ev.reset(new FadeInEvent(attr.start_, attr.duration_, attr.delay_,
                                  attr.eventId_, attr.trigCode_));
-        ev->appendLog(QString("Fade in event added. "));
+        ev->appendLog("Fade in event added. ");
         break;
 
     case Event::EVENT_FADEOUT:
         ev.reset(new FadeOutEvent(attr.start_, attr.duration_, attr.delay_,
                                   attr.eventId_, attr.trigCode_));
-        ev->appendLog(QString("Fade out event added. "));
+        ev->appendLog("Fade out event added. ");
         break;
 
     case Event::EVENT_IMAGE:
@@ -357,7 +358,7 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
                 cv::Mat img(imageObjects_[attr.objectId_]);
                 ev.reset(new ImageEvent(attr.start_, p, img, attr.delay_,
                                         attr.eventId_, attr.trigCode_));
-                ev->appendLog(QString("Image event added. "));
+                ev->appendLog("Image event added. ");
             }
         }
         else {
@@ -371,20 +372,20 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
         cv::Point2i p(attr.x_, attr.y_);
         ev.reset(new TextEvent(attr.start_, attr.string_, attr.color_, p,
                                attr.delay_, attr.eventId_, attr.trigCode_));
-        ev->appendLog(QString("Text event added. "));
+        ev->appendLog("Text event added. ");
         }
         break;
 
     case Event::EVENT_FREEZE:
         ev.reset(new FreezeEvent(attr.start_, attr.delay_, attr.eventId_,
                                  attr.trigCode_));
-        ev->appendLog(QString("Freeze event added. "));
+        ev->appendLog("Freeze event added. ");
         break;
 
     case Event::EVENT_ROTATE:
         ev.reset(new RotateEvent(attr.start_, attr.angle_, attr.delay_,
                                  attr.eventId_, attr.trigCode_));
-        ev->appendLog(QString("Rotate event added. "));
+        ev->appendLog("Rotate event added. ");
         break;
 
     case Event::EVENT_ZOOM:
@@ -394,9 +395,10 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
         break;
 
     case Event::EVENT_DETECT_MOTION:
-        ev.reset(new MotionDetectorEvent(attr.start_, attr.target_,  attr.tolerance_, attr.delay_,
-                                         attr.eventId_, attr.trigCode_, attr.successCode_, attr.failCode_));
-        ev->appendLog(QString("Movement detected"));
+        ev.reset(new MotionDetectorEvent(attr.start_, attr.target_,  attr.tolerance_,
+                                         attr.delay_, attr.eventId_, attr.trigCode_,
+                                         attr.successCode_, attr.failCode_, attr.x_, attr.y_));
+        ev->appendLog("Movement detected");
         break;
 
     case Event::EVENT_RECORD:
@@ -412,7 +414,7 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
             else {
                 ev.reset(new RecordEvent(attr.start_, videoObjects_[attr.objectId_], attr.delay_,
                                          attr.duration_, attr.eventId_, attr.trigCode_));
-                ev->appendLog(QString("Record event added"));
+                ev->appendLog("Record event added");
             }
         }
         else {
@@ -430,7 +432,7 @@ EventPtr EventParser::createEvent(const EventAttributes &attr) const
             else {
                 ev.reset(new PlaybackEvent(attr.start_, videoObjects_[attr.objectId_], attr.delay_,
                                            attr.duration_, attr.eventId_, attr.trigCode_));
-                ev->appendLog(QString("Playback event added."));
+                ev->appendLog("Playback event added.");
             }
         }
         else {
@@ -467,37 +469,37 @@ EventPtr EventParser::createDelEvent(EventAttributes &attr) const
                                   attr.trigCode_));
             switch(attr.type_) {
             case Event::EVENT_FLIP:
-                ev->appendLog(QString("Flip event removed. "));
+                ev->appendLog("Flip event removed. ");
                 break;
             case Event::EVENT_FADEIN:
-                ev->appendLog(QString("Fade in event removed. "));
+                ev->appendLog("Fade in event removed. ");
                 break;
             case Event::EVENT_FADEOUT:
-                ev->appendLog(QString("Fade out event removed. "));
+                ev->appendLog("Fade out event removed. ");
                 break;
             case Event::EVENT_IMAGE:
-                ev->appendLog(QString("Image event removed. "));
+                ev->appendLog("Image event removed. ");
                 break;
             case Event::EVENT_TEXT:
-                ev->appendLog(QString("Text event removed. "));
+                ev->appendLog("Text event removed. ");
                 break;
             case Event::EVENT_ROTATE:
-                ev->appendLog(QString("Rotate event removed. "));
+                ev->appendLog("Rotate event removed. ");
                 break;
             case Event::EVENT_FREEZE:
-                ev->appendLog(QString("Freeze event removed. "));
+                ev->appendLog("Freeze event removed. ");
                 break;
             case Event::EVENT_ZOOM:
-                ev->appendLog(QString("Zoom event removed."));
+                ev->appendLog("Zoom event removed.");
                 break;
             case Event::EVENT_PLAYBACK:
-                ev->appendLog(QString("Playback event removed."));
+                ev->appendLog("Playback event removed.");
                 break;
             case Event::EVENT_RECORD:
-                ev->appendLog(QString("Record event removed."));
+                ev->appendLog("Record event removed.");
                 break;
             case Event::EVENT_DETECT_MOTION:
-                ev->appendLog(QString("Detect motion event removed."));
+                ev->appendLog("Detect motion event removed.");
                 break;
             default:
                 break;
