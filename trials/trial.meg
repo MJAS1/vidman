@@ -115,9 +115,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1913
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1913
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1238
@@ -155,16 +157,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1996
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1826
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1996
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1826
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1690
@@ -192,16 +194,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1851
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1851
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1198
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1198
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1735
@@ -249,16 +251,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1625
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1358
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1625
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1358
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1835
@@ -306,16 +308,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1333
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1333
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1916
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1916
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1681
@@ -353,16 +355,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1317
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1197
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1317
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1197
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1202
@@ -395,11 +397,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1136
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1136
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1574
@@ -427,16 +427,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1260
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1260
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1873
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1873
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1733
@@ -479,16 +479,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1573
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1573
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1530
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1530
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1888
@@ -516,11 +516,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1511
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1511
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1210
@@ -553,11 +551,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1478
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1478
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1446
@@ -580,9 +576,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1356
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1356
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1355
@@ -595,11 +593,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1483
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1483
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1899
@@ -647,11 +643,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1126
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1126
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1803
@@ -689,11 +683,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1371
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1371
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1590
@@ -706,9 +698,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1410
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1410
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1281
@@ -736,11 +730,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1480
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1480
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1445
@@ -748,9 +740,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1314
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1314
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1192
@@ -778,11 +772,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1890
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1890
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1608
@@ -805,9 +797,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1898
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1898
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1617
@@ -815,11 +809,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1614
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1614
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1748
@@ -842,9 +834,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1485
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1485
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1381
@@ -867,16 +861,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1546
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1546
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1274
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1274
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1678
@@ -909,9 +903,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1195
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1195
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1568
@@ -944,16 +940,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=2000
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1779
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=2000
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1779
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1773
@@ -991,9 +987,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1701
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1701
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1419
@@ -1011,11 +1009,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1973
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1973
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1604
@@ -1028,9 +1024,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1223
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1223
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1503
@@ -1068,9 +1066,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1069
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1069
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1876
@@ -1083,11 +1083,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1018
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1018
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1742
@@ -1100,9 +1098,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1515
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1515
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1371
@@ -1125,11 +1125,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1585
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1585
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1313
@@ -1137,9 +1135,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1450
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1450
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1124
@@ -1197,11 +1197,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1940
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1940
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1870
@@ -1209,9 +1207,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1954
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1954
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1949
@@ -1239,11 +1239,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1971
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1971
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1294
@@ -1251,9 +1249,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1594
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1594
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1594
@@ -1271,11 +1271,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1977
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1977
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1013
@@ -1298,9 +1296,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1647
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1647
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1140
@@ -1328,11 +1328,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1973
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1973
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1634
@@ -1365,9 +1363,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1274
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1274
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1574
@@ -1407,11 +1407,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1315
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1315
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1768
@@ -1444,9 +1442,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1510
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1510
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1385
@@ -1454,11 +1454,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1709
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1709
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1097
@@ -1496,16 +1494,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1379
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1379
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1133
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1133
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1338
@@ -1533,9 +1531,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1736
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1736
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1696
@@ -1563,11 +1563,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1959
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1959
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1336
@@ -1575,9 +1573,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1124
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1124
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1018
@@ -1672,16 +1672,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1625
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1625
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1871
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1871
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1319
@@ -1719,9 +1719,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1284
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1284
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1140
@@ -1744,11 +1746,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1176
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1176
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1909
@@ -1823,9 +1823,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1647
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1647
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1884
@@ -1853,11 +1855,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1964
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1964
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1622
@@ -1885,16 +1885,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1689
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1399
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1689
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1399
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1620
@@ -1917,9 +1917,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1773
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1773
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1173
@@ -1984,11 +1986,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1377
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1377
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1047
@@ -1996,9 +1996,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1625
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1625
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1405
@@ -2083,11 +2085,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1892
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1892
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1671
@@ -2115,11 +2115,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1184
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1184
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1690
@@ -2127,9 +2125,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1876
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1876
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1665
@@ -2147,11 +2147,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1497
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1497
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1376
@@ -2159,9 +2157,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1134
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1134
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1981
@@ -2189,11 +2189,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1125
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1125
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1820
@@ -2241,16 +2239,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1039
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1538
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1039
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1538
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1512
@@ -2303,16 +2301,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1936
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1313
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1936
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1313
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1287
@@ -2355,11 +2353,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1312
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1312
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1798
@@ -2372,9 +2368,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1838
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1838
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1885
@@ -2397,11 +2395,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1325
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1325
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1843
@@ -2424,9 +2420,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1841
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1841
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1294
@@ -2459,11 +2457,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1285
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1285
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1386
@@ -2471,9 +2467,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1421
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1421
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1194
@@ -2516,11 +2514,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1800
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1800
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1921
@@ -2528,9 +2524,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1278
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1278
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1259
@@ -2588,16 +2586,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1316
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1316
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1691
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1691
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1354
@@ -2635,9 +2633,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1650
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1650
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1555
@@ -2645,11 +2645,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1522
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1522
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1723
@@ -2672,9 +2670,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1441
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1441
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1318
@@ -3975,11 +3975,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1172
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1172
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1530
@@ -3992,9 +3990,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1342
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1342
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1390
@@ -4007,11 +4007,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1079
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1079
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1681
@@ -4044,9 +4042,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1200
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1200
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1225
@@ -4064,11 +4064,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1222
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1222
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1457
@@ -4101,11 +4099,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1282
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1282
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1245
@@ -4148,16 +4144,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1704
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1870
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1704
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1870
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1132
@@ -4180,9 +4176,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1287
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1287
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1233
@@ -4195,11 +4193,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1571
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1571
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1959
@@ -4217,9 +4213,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1993
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1993
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1515
@@ -4247,9 +4245,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1816
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1816
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1045
@@ -4257,11 +4257,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1862
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1862
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1686
@@ -4279,9 +4277,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1278
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1278
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1147
@@ -4289,11 +4289,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1767
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1767
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1453
@@ -4336,16 +4334,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1023
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1023
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1442
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1442
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1705
@@ -4373,11 +4371,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1254
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1254
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1724
@@ -4390,9 +4386,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1322
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1322
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1294
@@ -4415,11 +4413,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1414
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1414
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1751
@@ -4432,9 +4428,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1197
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1197
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1475
@@ -4509,11 +4507,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1515
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1515
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1705
@@ -4521,9 +4517,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1505
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1505
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1899
@@ -4551,11 +4549,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1604
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1604
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1414
@@ -4563,9 +4559,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1322
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1322
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1911
@@ -4593,9 +4591,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1417
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1417
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1290
@@ -4603,11 +4603,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1468
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1468
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1408
@@ -4655,9 +4653,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1186
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1186
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1052
@@ -4680,11 +4680,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1897
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1897
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1763
@@ -4692,9 +4690,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1375
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1375
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1260
@@ -4717,11 +4717,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1833
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1833
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1509
@@ -4739,9 +4737,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1461
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1461
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1451
@@ -4764,11 +4764,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1903
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1903
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1741
@@ -4776,9 +4774,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1793
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1793
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1970
@@ -4816,9 +4816,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1061
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1061
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1068
@@ -4831,11 +4833,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1962
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1962
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1332
@@ -4853,9 +4853,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1925
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1925
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1239
@@ -4878,11 +4880,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1492
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1492
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1177
@@ -4960,9 +4960,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1191
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1191
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1556
@@ -4980,11 +4982,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1988
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1988
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1920
@@ -5089,11 +5089,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1063
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1063
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1954
@@ -5136,9 +5134,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1881
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1881
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1137
@@ -5166,9 +5166,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1832
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1832
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1555
@@ -5186,11 +5188,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1550
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1550
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1328
@@ -5272,11 +5272,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1418
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1418
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1445
@@ -5294,9 +5292,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1181
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1181
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1239
@@ -5309,11 +5309,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1699
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1699
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1998
@@ -5346,9 +5344,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1094
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1094
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1242
@@ -5361,11 +5361,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1772
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1772
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1820
@@ -5398,9 +5396,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1237
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1237
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1695
@@ -5423,11 +5423,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1525
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1525
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1084
@@ -5435,9 +5433,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1327
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1327
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1510
@@ -5465,16 +5465,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1485
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1485
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1526
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1526
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1429
@@ -5507,11 +5507,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1568
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1568
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1540
@@ -5529,9 +5527,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1107
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1107
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1049
@@ -5554,11 +5554,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1238
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1238
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1048
@@ -5586,9 +5584,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1251
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1251
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1489
@@ -5616,11 +5616,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1953
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1953
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1076
@@ -5648,9 +5646,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1505
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1505
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1893
@@ -5678,11 +5678,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1878
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1878
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1616
@@ -5690,9 +5688,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1062
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1062
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1059
@@ -5710,11 +5710,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1438
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1438
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1893
@@ -5727,9 +5725,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1281
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1281
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1163
@@ -5742,11 +5742,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1271
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1271
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1501
@@ -5779,9 +5777,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1213
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1213
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1450
@@ -5799,11 +5799,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1275
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1275
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1830
@@ -5816,9 +5814,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1634
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1634
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1519
@@ -5841,11 +5841,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1528
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1528
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1432
@@ -5858,9 +5856,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1867
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1867
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1215
@@ -5873,11 +5873,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1126
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1126
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1546
@@ -5890,9 +5888,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1563
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1563
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1260
@@ -5920,9 +5920,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1867
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1867
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1633
@@ -5950,11 +5952,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1859
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1859
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1883
@@ -5962,9 +5962,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1095
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1095
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1030
@@ -5992,9 +5994,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1036
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1036
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1022
@@ -6002,11 +6006,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1407
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1407
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1630
@@ -6034,16 +6036,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1172
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1216
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1172
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1216
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1448
@@ -6076,11 +6078,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1562
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1562
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1747
@@ -6103,9 +6103,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1510
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1510
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1232
@@ -6143,11 +6145,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1786
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1786
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1605
@@ -6175,9 +6175,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1914
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1914
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1505
@@ -6205,11 +6207,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1693
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1693
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1092
@@ -6242,16 +6242,16 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1709
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1709
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1768
 Event: type=freeze, start=0
  Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=freeze
-Delete: start=0, type=detect_motion
-
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1768
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
-Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1450
@@ -6304,11 +6304,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1005
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1005
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1181
@@ -6331,9 +6329,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1207
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1207
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1468
@@ -6418,9 +6418,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1637
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1637
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1820
@@ -6448,11 +6450,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1434
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1434
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1414
@@ -6505,9 +6505,11 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1729
-Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1729
+Event: type=freeze, start=0
+ Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
 Delete: start=0, type=image
+Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1909
@@ -6520,11 +6522,9 @@ Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
 Delete: start=0, type=detect_motion
 
-Event: type=detect_motion, target=575, tolerance=76, trig_code=3, success_code=5, fail_code=6, x=375, y=215, start=1872
-Event: type=freeze, start=0
- Event: type=image, x=390, y=190, object_id=0, delay=1200, trig_code=1
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1872
+Event: type=image, x=390, y=190, object_id=0, delay=1200,trig_code=1
 Delete: start=0, type=image
-Delete: start=0, type=freeze
 Delete: start=0, type=detect_motion
 
 Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=215, start=1243

@@ -6,6 +6,7 @@ import numpy as np
 import random
 
 random.seed(312)
+np.random.seed(312)
 
 #%% Constants
 IMG = "../img/button.png"

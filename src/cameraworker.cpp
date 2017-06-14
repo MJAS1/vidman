@@ -75,7 +75,7 @@ void CameraWorker::captureFrame()
     events_->applyEvents(frame_);
     mutex_.unlock();
 
-    // Process signals emitted by video events in events_.
+    // Process signals emitted in events_->applyEvents().
     QCoreApplication::processEvents();
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
