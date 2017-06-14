@@ -16,6 +16,8 @@ class EventContainer : public QObject
 {
     Q_OBJECT
 public:
+    EventContainer(QObject *parent = nullptr);
+
     void            clear();
     void            deleteId(int id);
     void            deleteType(Event::EventType);

@@ -488,7 +488,8 @@ int MotionDetectorEvent::nChanges()
 void MotionDetectorEvent::apply(EventContainer &events)
 {
     events.deleteType(Event::EVENT_DETECT_MOTION);
-    connect(this, SIGNAL(priorityChanged()), &events, SLOT(sort()));
+    connect(this, SIGNAL(priorityChanged()), &events, SLOT(sort()),
+            Qt::QueuedConnection);
 }
 
 void MotionDetectorEvent::createMotionPixmap()

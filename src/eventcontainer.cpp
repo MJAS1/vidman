@@ -4,6 +4,10 @@
 
 using std::move;
 
+EventContainer::EventContainer(QObject *parent) : QObject(parent)
+{
+}
+
 void EventContainer::clear()
 {
     events_.clear();

@@ -15,6 +15,9 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
 {
     qRegisterMetaType<uint8_t>("uint8_t");
 
+    events_ = new EventContainer(this);
+    defaultEvents_ = new EventContainer(this);
+
     Settings settings;  
     defaultTrig1_ = settings.defaultTrig1;
     defaultTrig2_ = settings.defaultTrig2;
@@ -22,7 +25,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     //Setup defaultEvents for processing each frame captured by the camera.
     if(settings.flip) {
         int code = settings.flipCode;
-        defaultEvents_.insertSorted(EventPtr(new FlipEvent(0, code)));
+        defaultEvents_->insertSorted(EventPtr(new FlipEvent(0, code)));
     }
     if(settings.fixPoint) {
         /* fixPoint.png is stored in qt resource file, so it needs to be loaded
@@ -36,7 +39,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
             cv::Point2i pos((VIDEO_WIDTH-fixMat.cols)/2,
                             (VIDEO_HEIGHT-fixMat.rows)/2);
             EventPtr imgEvent(new ImageEvent(0, pos, fixMat, 0));
-            defaultEvents_.insertSorted(std::move(imgEvent));
+            defaultEvents_->insertSorted(std::move(imgEvent));
         }
         else
             std::cerr << "Couldn't load fixPoint.png" << std::endl;
@@ -66,14 +69,13 @@ void CameraWorker::captureFrame()
     msec = timestamp.tv_nsec / 1000000;
     msec += timestamp.tv_sec * 1000;
 
-    defaultEvents_.applyEvents(frame_);
+    defaultEvents_->applyEvents(frame_);
 
     mutex_.lock();
-    events_.applyEvents(frame_);
+    events_->applyEvents(frame_);
     mutex_.unlock();
 
-    /* Some video event may have emitted a signal, so process events before
-     * continuing. */
+    // Process signals emitted by video events in events_.
     QCoreApplication::processEvents();
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 
@@ -90,21 +92,21 @@ void CameraWorker::captureFrame()
 void CameraWorker::clearEvents()
 {
     mutex_.lock();
-    events_.clear();
+    events_->clear();
     mutex_.unlock();
 }
 
 void CameraWorker::pause()
 {
     mutex_.lock();
-    events_.pauseEvents();
+    events_->pauseEvents();
     mutex_.unlock();
 }
 
 void CameraWorker::unpause()
 {
     mutex_.lock();
-    events_.unpauseEvents();
+    events_->unpauseEvents();
     mutex_.unlock();
 }
 
@@ -114,7 +116,7 @@ void CameraWorker::addEvent(EventPtr ev)
             SLOT(onEventTriggered(uint8_t, const QString&)));
 
     mutex_.lock();
-    events_.insertSorted(std::move(ev));
+    events_->insertSorted(std::move(ev));
     mutex_.unlock();
 }
 
@@ -130,9 +132,9 @@ void CameraWorker::motionDialogToggled(bool on)
         EventPtr movement(new MotionDetectorEvent());
         connect(movement.get(), SIGNAL(pixmapReady(const QPixmap&)), this,
                 SIGNAL(motionPixmapReady(const QPixmap&)));
-        defaultEvents_.insertSorted(std::move(movement));
+        defaultEvents_->insertSorted(std::move(movement));
     }
     else {
-        defaultEvents_.deleteType(Event::EVENT_DETECT_MOTION);
+        defaultEvents_->deleteType(Event::EVENT_DETECT_MOTION);
     }
 }

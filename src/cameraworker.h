@@ -45,8 +45,8 @@ private slots:
 private:
     CycDataBuffer*  cycBuf_;
     Camera&         cam_;
-    EventContainer  events_;
-    EventContainer  defaultEvents_;
+    EventContainer* events_;
+    EventContainer* defaultEvents_;
 
     QMutex          mutex_;
     QString         log_;
