@@ -337,10 +337,12 @@ MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
     Settings settings;
     threshold_ = settings.movementThreshold;
     textPos_ = cv::Point(x, y);
+    roi_ = cv::Rect(0, 125, 640, 225);
 }
 
 MotionDetectorEvent::MotionDetectorEvent(State state) : state_(state)
 {
+    roi_ = cv::Rect(0, 125, 640, 225);
 }
 
 void MotionDetectorEvent::apply(cv::Mat &frame)
@@ -351,14 +353,14 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
     }
 
     if(next_.empty()) {
-        next_ = frame.clone();
+        next_ = frame.clone()(roi_);
         current_ = next_;
         prev_ = next_;
     }
     else {
         prev_ = current_;
         current_ = next_;
-        next_ = frame.clone();
+        next_ = frame.clone()(roi_);
     }
 
     switch(state_) {
@@ -470,8 +472,8 @@ int MotionDetectorEvent::nChanges()
     int max_x = 0, max_y = 0;
 
     //Compute the amount of white pixels.
-    for(int i = 0; i < VIDEO_WIDTH; i += 2) {
-        for(int j = 0; j < VIDEO_HEIGHT; j += 2) {
+    for(int i = 0; i < roi_.width; i += 2) {
+        for(int j = 0; j < roi_.height; j += 2) {
             if(static_cast<int>(result_.at<uchar>(j, i)) == White) {
                 changes++;
                 if(min_x>i) min_x = i;

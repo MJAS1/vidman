@@ -359,6 +359,7 @@ private:
     cv::Mat         prev_, current_, next_, result_;
     cv::Scalar      color_;
     cv::Point       textPos_;
+    cv::Rect        roi_;
 
     bool            motionDialog_;
     int             threshold_;
