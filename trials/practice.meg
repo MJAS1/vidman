@@ -1,604 +1,946 @@
-#This script can be used for practice before the real measurement. It conly contains standard conditions.
-
 Object: type=image, id=0, filename=../img/button.png
 
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1691
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1354
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1943
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1904
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
-Event: type=detectmotion, target=250, tolerance=51, trigCode=2, trigcode2=5, start=1339
-Event: type=image, x=330, y=150, objectid=0,delay=700, trigcode=1
-Delete: start=700, type=image
-Delete: start=0, type=detectmotion
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1651
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1657
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1032
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1148
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1971
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1192
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1687
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1441
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
+
+Event: type=detect_motion, target=575, tolerance=76, trig_code=2, success_code=5, fail_code=6, x=375, y=240, start=1968
+Event: type=image, x=390, y=215, object_id=0, delay=1200, trig_code=1
+Delete: start=0, type=image
+Delete: start=0, type=detect_motion
