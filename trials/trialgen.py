@@ -66,7 +66,7 @@ def standard_condition(trig):
           "success_code={}, fail_code={}, x={}, y={}, start={}\n".format(TARGET, TOLERANCE,
                                                            trig, TRIG_SUCCESS, 
                                                            TRIG_FAIL, DETECTOR_X, DETECTOR_Y, delay)
-    txt += "Event: type=image, x={}, y={}, object_id=0, delay={}," \
+    txt += "Event: type=image, x={}, y={}, object_id=0, delay={}, " \
            "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
     txt += "Delete: start=0, type=detect_motion\n\n"

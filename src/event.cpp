@@ -340,7 +340,8 @@ MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
     roi_ = cv::Rect(0, 125, 640, 225);
 }
 
-MotionDetectorEvent::MotionDetectorEvent(State state) : state_(state)
+MotionDetectorEvent::MotionDetectorEvent() :
+    Event(EVENT_DETECT_MOTION), state_(MOTION_DIALOG)
 {
     roi_ = cv::Rect(0, 125, 640, 225);
 }

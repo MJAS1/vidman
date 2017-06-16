@@ -328,7 +328,7 @@ public:
                                  int y = VIDEO_HEIGHT/2,
                                  State state = WAITING);
 
-    explicit MotionDetectorEvent(State state = MOTION_DIALOG);
+    explicit MotionDetectorEvent();
 
     void apply(cv::Mat &frame);
     void apply(EventContainer&);
