@@ -17,8 +17,8 @@ TRIG_BLANK = 4
 TRIG_SUCCESS = 5
 TRIG_FAIL = 6
 IMG_DURATION = 1200
-X = 390
-Y = 215
+IMG_X = 390
+IMG_Y = 215
 DETECTOR_X = 375
 DETECTOR_Y = 240
 TARGET = 575
@@ -67,7 +67,7 @@ def standard_condition(trig):
                                                            trig, TRIG_SUCCESS, 
                                                            TRIG_FAIL, DETECTOR_X, DETECTOR_Y, delay)
     txt += "Event: type=image, x={}, y={}, object_id=0, delay={}, " \
-           "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+           "trig_code={}\n".format(IMG_X, IMG_Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
     txt += "Delete: start=0, type=detect_motion\n\n"
     
@@ -83,7 +83,7 @@ def deviant_condition(trig):
                                                            TRIG_FAIL, DETECTOR_X, DETECTOR_Y, delay)
     txt += "Event: type=freeze, start=0\n "
     txt += "Event: type=image, x={}, y={}, object_id=0, delay={}, " \
-           "trig_code={}\n".format(X, Y, IMG_DURATION, TRIG_IMG)
+           "trig_code={}\n".format(IMG_X, IMG_Y, IMG_DURATION, TRIG_IMG)
     txt += "Delete: start=0, type=image\n"
     txt += "Delete: start=0, type=freeze\n"
     txt += "Delete: start=0, type=detect_motion\n\n"

@@ -545,9 +545,9 @@ void MainWindow::closeEvent(QCloseEvent *e)
     QApplication::quit();
 }
 
-void MainWindow::toggleVideoDialogChecked(bool arg)
+void MainWindow::onVideoDialogClosed()
 {
-    ui->viewVideoDialogAction->setChecked(arg);
+    ui->viewVideoDialogAction->setChecked(false);
 }
 
 void MainWindow::toggleMotionDialogChecked(bool arg)

@@ -22,8 +22,6 @@ public:
 signals:
     void    resize(int w, int h);
     void    pause();
-    void    increaseAspectRatio();
-    void    decreaseAspectRatio();
 
 protected:
     void    mouseDoubleClickEvent(QMouseEvent *e);

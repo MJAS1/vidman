@@ -39,15 +39,10 @@ public slots:
     void onExternTrig(bool on);
     void onAspectRatioSliderMoved(int videoWidth);
     void onNewFrame(unsigned char*);
-    void increaseAspectRatio();
-    void decreaseAspectRatio();
 
 signals:
     void aspectRatioChanged(int videoWidth);
-    void setVideoDialogAction(bool);
-
-protected:
-    void paintEvent(QPaintEvent*);
+    void windowClosed();
 
 private:
     VideoDialog(const VideoDialog&);
@@ -55,6 +50,7 @@ private:
 
     void initUI();
     void closeEvent(QCloseEvent *);
+    void paintEvent(QPaintEvent*);
 
     Ui::VideoDialog*        ui;
     GLVideoWidget*          glVideoWidget_;

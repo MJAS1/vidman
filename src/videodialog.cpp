@@ -28,12 +28,8 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
             SLOT(onAspectRatioSliderMoved(int)));
     connect(glVideoWidget_, SIGNAL(pause()), parent,
             SLOT(onStartButton()));
-    connect(glVideoWidget_, SIGNAL(increaseAspectRatio()), this,
-            SLOT(increaseAspectRatio()));
-    connect(glVideoWidget_, SIGNAL(decreaseAspectRatio()), this,
-            SLOT(decreaseAspectRatio()));
-    connect(this, SIGNAL(setVideoDialogAction(bool)), parent,
-            SLOT(toggleVideoDialogChecked(bool)));
+    connect(this, SIGNAL(windowClosed()), parent,
+            SLOT(onVideoDialogClosed()));
 
     ui->aspectRatioSlider->setValue(settings_.videoWidth);
 }
@@ -114,7 +110,7 @@ void VideoDialog::onVRChanged(int newVal)
 
 void VideoDialog::closeEvent(QCloseEvent *)
 {
-    emit setVideoDialogAction(false);
+    emit windowClosed();
 }
 
 void VideoDialog::onNewFrame(unsigned char* buf)
@@ -134,16 +130,6 @@ void VideoDialog::onNewFrame(unsigned char* buf)
 void VideoDialog::onExternTrig(bool on)
 {
     cam_.setExternTrigger(on);
-}
-
-void VideoDialog::increaseAspectRatio()
-{
-    ui->aspectRatioSlider->setValue(ui->aspectRatioSlider->value()+3);
-}
-
-void VideoDialog::decreaseAspectRatio()
-{
-    ui->aspectRatioSlider->setValue(ui->aspectRatioSlider->value()-3);
 }
 
 void VideoDialog::onAspectRatioSliderMoved(int videoWidth)

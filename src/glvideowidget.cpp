@@ -51,8 +51,4 @@ void GLVideoWidget::keyPressEvent(QKeyEvent *ev)
 {
     if(ev->key() == Qt::Key_Space)
         emit pause();
-    else if(ev->key() == Qt::Key_Plus)
-        emit increaseAspectRatio();
-    else if(ev->key() == Qt::Key_Minus)
-        emit decreaseAspectRatio();
 }

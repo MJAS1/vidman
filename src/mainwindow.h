@@ -51,7 +51,7 @@ signals:
     void stopCameraWorker();
     
 public slots:
-    void toggleVideoDialogChecked(bool);
+    void onVideoDialogClosed();
     void setStatus(const QString&);
     void fileWriterError(const QString&);
     void pause();
