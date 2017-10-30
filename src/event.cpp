@@ -276,7 +276,7 @@ void RecordEvent::apply(cv::Mat &frame)
             timer_.start();
 
         if(timer_.msecsElapsed() < duration_)
-            video_->frames_.append(frame.clone());
+            video_->frames_.append(Frame{frame.clone(), 0});
         else
             finished_ = true;
     }
@@ -306,13 +306,15 @@ PlaybackEvent::PlaybackEvent(int start, VideoPtr video, int delay, int duration,
 
 void PlaybackEvent::apply(cv::Mat &frame)
 {
+    emit triggered(iter_->trigCode_, "Video playback.");
     Event::apply(frame);
-    if(video_->frames_.empty())
-        finished_ = true;
-    if(!finished_ && !paused_) {
-        iter_->copyTo(frame);
+    if(video_->frames_.empty()) {
+        ready_ = true;
+    }
+    if(!paused_) {
+        iter_->data_.copyTo(frame);
         if(++iter_ == video_->frames_.end())
-            finished_ = true;
+            ready_ = true;
     }
 }
 

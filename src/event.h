@@ -11,8 +11,9 @@
 #include "timerwithpause.h"
 
 class EventContainer;
-class MainWindow;
 struct VideoObject;
+struct Frame;
+class MainWindow;
 
 /*!
  * Event objects are used to specify the starting time, duration, effects etc.
@@ -295,7 +296,7 @@ public:
 
 private:
     VideoPtr video_;
-    QList<cv::Mat>::Iterator iter_;
+    QList<Frame>::Iterator iter_;
     bool finished_;
     bool paused_;
 };

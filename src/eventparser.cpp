@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
+#include <opencv2/highgui.hpp>
 #include "mainwindow.h"
 #include "eventparser.h"
 #include "eventcontainer.h"
@@ -136,10 +137,16 @@ bool EventParser::parseObject(const QString &str)
         shared_ptr<VideoObject> videoObject(new VideoObject);
         videoObject->duration_ = attr.duration_;
 
-        /* Reserve enough memory to hold all the frames. This is necessary to
-         * make sure that large blocks of memory don't need to be reallocated
-         * while recording. */
-        videoObject->frames_.reserve(attr.duration_/1000*settings_.fps + 10);
+        //Load video from file or reserve memory for recording.
+        if(attr.fileName_.size()) {
+            loadVideo(attr.fileName_, videoObject);
+        }
+        else {
+            /* Reserve enough memory to hold all the frames. This is necessary to
+             * make sure that large blocks of memory don't need to be reallocated
+             * while recording. */
+            videoObject->frames_.reserve(attr.duration_/1000*settings_.fps + 10);
+        }
         videoObjects_.insert(attr.objectId_, videoObject);
     }
     else if(attr.objectType_ == "") {
@@ -152,6 +159,51 @@ bool EventParser::parseObject(const QString &str)
                    .arg(attr.objectType_).arg(currentLine_));
         return false;
     }
+    return true;
+}
+
+bool EventParser::assertHeader(ifstream &data) const
+{
+    size_t headerLen = strlen(MAGIC_VIDEO_STR)+sizeof(uint32_t);
+    char header[headerLen];
+    data.read(header, headerLen);
+
+    std::string magicStr(header, strlen(MAGIC_VIDEO_STR));
+    if(magicStr != MAGIC_VIDEO_STR) {
+        return false;
+    }
+
+    return true;
+}
+
+bool EventParser::loadVideo(const QString &fn,
+                            const shared_ptr<VideoObject> &video) const
+{
+    ifstream data;
+    data.open(fn.toStdString(), std::ios_base::in | std::ios_base::binary);
+    if(!data.is_open()) {
+        emit error(QString("Error: couldn't open file ") + fn);
+        return false;
+    }
+    if(!assertHeader(data)) {
+        emit error(QString("Error: %1 not a valid VidMan video file.").arg(fn));
+        return false;
+    }
+
+    //Load frames and trigcodes
+    for(int i = 0; i < video->duration_/16; ++i){
+        char buf[sizeof(uint64_t)];
+        data.read(buf, sizeof(uint64_t));
+        data.read(buf, sizeof(uint8_t));
+        uint8_t trigCode = *((uint8_t*)buf);
+        data.read(buf, sizeof(uint32_t));
+        uint32_t chunkSz = *((uint32_t*)buf);
+        std::vector<char> buffer(chunkSz);
+        data.read(buffer.data(), chunkSz);
+        cv::Mat mat = cv::imdecode(buffer, cv::IMREAD_ANYCOLOR);
+        video->frames_.append(Frame{mat, trigCode});
+    }
+
     return true;
 }
 

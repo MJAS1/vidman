@@ -2,6 +2,7 @@
 #define EVENTPARSER_H
 
 #include <memory>
+#include <fstream>
 #include <QObject>
 #include <QMap>
 #include <opencv2/opencv.hpp>
@@ -9,14 +10,20 @@
 #include "settings.h"
 
 using std::shared_ptr;
+using std::ifstream;
 class EventContainer;
 
 /*
  * VideoObject is used to create record and playback events. Contains the frames
  * belonging to the particular video and length in milliseconds.
  */
+struct Frame{
+    cv::Mat data_;
+    uint8_t trigCode_;
+};
+
 struct VideoObject {
-    QList<cv::Mat> frames_;
+    QList<Frame> frames_;
     int duration_;
 };
 
@@ -67,6 +74,10 @@ private:
                          EventAttributes &evAttr) const;
     bool parseObjectParam(const QString &param, const QString &value,
                           EventAttributes &evAttr) const;
+    bool assertHeader(ifstream &data) const;
+    bool loadVideo(const QString &filename,
+                   const shared_ptr<VideoObject> &video) const;
+
 
     EventPtr createEvent(const EventAttributes &evAttr) const;
     EventPtr createDelEvent(EventAttributes &evAttr) const;
