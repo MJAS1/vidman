@@ -17,13 +17,13 @@ class MainWindow;
 
 /*!
  * Event objects are used to specify the starting time, duration, effects etc.
- * of video  events handled by the program. Each event can modify an OpenCV Mat
- * video frame or an EventContainer holding other events by using the apply
- * virtual functions. apply(EventContainer&) can be used for example to remove
- * other events from the container by DelEvents and other events for which only
- * one event of the type should exist in the container. When apply(frame) is
- * used for the first time, the event will emit a triggered() signal as long
- * as the derived class calls Event::apply(frame) in the overrided function.
+ * of video events handled by the program. Each event can modify an OpenCV Mat
+ * video frame or an EventContainer holding other events by using the apply()
+ * virtual functions. apply(EventContainer&) can be used, for example, to remove
+ * other events from the container by DelEvents or other events for which only
+ * one event of the type should exist. When apply(frame) is used for the first
+ * time, the event will emit a triggered() signal as long as the derived class
+ * calls Event::apply(frame) in the overrided function.
  */
 class Event;
 typedef typename std::unique_ptr<Event> EventPtr;
@@ -33,7 +33,7 @@ class Event : public QObject
     Q_OBJECT
 public:
 
-    //All possible events
+    // All possible events
     enum EventType
     {
         EVENT_NULL,
@@ -51,7 +51,7 @@ public:
         EVENT_DETECT_MOTION
     };
 
-    //Priorities are used to determine the order in which to apply an event.
+    // Priorities are used to determine the order in which to apply an event.
     enum Priority
     {
         DEFAULT_PRIORITY = 0,
@@ -66,9 +66,8 @@ public:
     explicit Event(Event::EventType type=EVENT_NULL, int start=0, int delay=0,
                    int duration=0, int id = -1, uint8_t trigCode = 0,
                    Priority priority = DEFAULT_PRIORITY) :
-        type_(type), start_(start), delay_(delay),
-        duration_(duration), id_(id), trigCode_(trigCode), priority_(priority),
-        ready_(false), first_(true) {}
+        type_(type), start_(start), delay_(delay), duration_(duration), id_(id),
+        trigCode_(trigCode), priority_(priority), ready_(false), first_(true) {}
 
     virtual ~Event() {}
 
@@ -115,8 +114,10 @@ class DelEvent : public Event
 {
 public:
 
-    /* DelEvent can be initialized to remove either an event with a specific
-     * id or all the events of a given type. */
+    /*
+     * DelEvent can be initialized to remove either an event with a specific
+     * id or all the events of a given type.
+     */
     explicit DelEvent(int start, int delay, int delId, uint8_t trigCode=0) :
         Event(EVENT_DELETE, start, delay, 0, -1, trigCode),
         delId_(delId), tag_(ID) {}
@@ -146,13 +147,38 @@ public:
     virtual void apply(EventContainer&);
 
 private:
-    /* Specifies how to flip.
+    /*
+     * Specifies how to flip.
      * 0: Flip around x axis,
      * positive value e.g. 1: Flip around y axis,
-     * negative value e.g. -1: Flip around both axes */
+     * negative value e.g. -1: Flip around both axes
+     */
     int axis_;
 };
 
+/*!
+ * This event fades the video view to a black screen.
+ */
+class FadeOutEvent: public Event
+{
+public:
+    explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
+                          uint8_t trigCode = 0);
+
+    void apply(cv::Mat &frame);
+    void apply(EventContainer&);
+    void pause();
+    void unpause();
+
+private:
+    TimerWithPause  timerWithPause_;
+    int     amount_, interval_;
+    bool    stopped_;
+};
+
+/*!
+ * This event fades the video view back to normal from black screen.
+ */
 class FadeInEvent : public Event
 {
 public:
@@ -169,23 +195,6 @@ private:
     TimerWithPause  timerWithPause_;
     int             amount_, interval_;
     bool            stopped_;
-};
-
-class FadeOutEvent: public Event
-{
-public:
-    explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
-                          uint8_t trigCode = 0);
-
-    void apply(cv::Mat &frame);
-    void apply(EventContainer&);
-    void pause();
-    void unpause();
-
-private:
-    TimerWithPause  timerWithPause_;
-    int     amount_, interval_;
-    bool    stopped_;
 };
 
 class ImageEvent : public Event
@@ -302,14 +311,20 @@ private:
 };
 
 /*!
- * This class detects movement between subsequent frames. It stores three frames:
+ * This event detects movement between subsequent frames. It stores three frames:
  * previous, current and next, and detects motion using "differential images"
- * method https://blog.cedric.ws/opencv-simple-motion-detection. After movement
- * has finished, the time it took from the event onset is drawn to the frame.
+ * method https://blog.cedric.ws/opencv-simple-motion-detection.
+ *
+ * After movement has finished, the duration from event onset to movement finish
+ * is drawn as feedback to the subsequent frames. Depending on the target_ and
+ * tolerance_  variables, the time is drawn either in green if the duration is
+ * within limits or in red if not. The event emits the succesCode if the
+ * movement succeeded and the failCode otherwise.
+ *
  * This class can also emit a QPixmpap of the differential image with the
  * movement shown as white pixels. The emitted pixmap can then be drawn to a
  * MotionDialog.
-*/
+ */
 class MotionDetectorEvent : public Event
 {
     Q_OBJECT
@@ -339,10 +354,10 @@ signals:
     void            priorityChanged();
 
 private:
-    //How long the the duration of movement is shown (in ms)
+    //How long the the feedback duration is shown (in ms).
     static const int TextDuration = 1000;
 
-    //How long changes need to be below threshold to consider movement finished.
+    //Minimum duration of no motion to consider movement as finished (in ms).
     static const int MinStopTime = 100;
 
     void            createMotionPixmap();
@@ -363,6 +378,11 @@ private:
     cv::Rect        roi_;
 
     bool            motionDialog_;
+
+    /*
+     * Threshold value for the number of differing pixels to consider movement
+     * as started.
+     */
     int             threshold_;
     uint8_t         successCode_;
     uint8_t         failCode_;
@@ -370,8 +390,10 @@ private:
     int             tolerance_;
 };
 
-/*! This event can be used to pause the running script. The triggered() signal
- * is connected to MainWindow's pause() slot by EventParser. */
+/*!
+ * This event can be used to pause the running script. The triggered() signal
+ * is connected to MainWindow's pause() slot by EventParser.
+ */
 class PauseEvent : public Event
 {
     Q_OBJECT

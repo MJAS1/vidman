@@ -1,10 +1,3 @@
-/*
- * stoppablethread.h
- *
- *  Created on: Jan 14, 2010
- *      Author: meg2meg
- */
-
 #ifndef STOPPABLETHREAD_H_
 #define STOPPABLETHREAD_H_
 
@@ -26,6 +19,7 @@
  * rare) race conditions these messages can be complete garbage. However,
  * this should not affect other functionality of the class.
  */
+
 class StoppableThread : public QThread
 {
 public:

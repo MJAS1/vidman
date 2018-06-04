@@ -51,7 +51,9 @@ void EventContainer::append(EventPtr event)
 
 void EventContainer::insertSorted(EventPtr event)
 {
+    // An event may have an effect on other events of this container
     event->apply(*this);
+
     if(!event->isReady()) {
         auto iter = std::lower_bound(events_.begin(), events_.end(), event,
                                      [](const EventPtr& l, const EventPtr& r) {

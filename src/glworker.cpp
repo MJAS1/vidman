@@ -40,9 +40,11 @@ void GLWorker::initializeGL()
     glw_->doneCurrent();
 }
 
-/* start() and stop() are called by the main thread. However, the loop is
+/*
+ * start() and stop() are called by the main thread. However, the loop is
  * supposed to be working in a different thread. invokeMethod() makes sure that
- * the call for startLoop() and stopLoop is placed in the thread's event queue.
+ * the call for startLoop() and stopLoop is placed in the worker thread's event
+ * queue.
  */
 void GLWorker::start()
 {
@@ -61,9 +63,11 @@ void GLWorker::onDrawFrame(unsigned char *imBuf)
 
 void GLWorker::resizeGL(int w, int h)
 {
-    /* Change the viewport to preserve the aspect ratio. Compute new height
+    /*
+     * Change the viewport to preserve the aspect ratio. Compute new height
      * corresponding to the current width and new width corresponding to the
-     * current height and see which one fits. */
+     * current height and see which one fits.
+     */
     int dispW = int(floor((h / float(VIDEO_HEIGHT)) * videoWidth_));;
     int dispH = int(floor((w / float(videoWidth_)) * VIDEO_HEIGHT));;
 
@@ -88,8 +92,10 @@ void GLWorker::startLoop()
 {
     glw_->makeCurrent();
 
-    /* Wait until the first frame is ready and window is exposed to avoid
-     * warnings. */
+    /*
+     * Wait until the first frame is ready and window is exposed to avoid
+     * warnings.
+     */
     while(!(buf_ && glw_->windowHandle()->isExposed()))
         QCoreApplication::processEvents();
 
@@ -103,17 +109,19 @@ void GLWorker::startLoop()
 
     while(!shouldStop_)
     {
-        //Start drawing the frames.
+        // Start drawing the frames.
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, VIDEO_WIDTH, VIDEO_HEIGHT, 0,
                      GL_RGB, GL_UNSIGNED_BYTE, (GLubyte*)buf_);
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glw_->swapBuffers();
 
-        /* With vsync enabled glFinish() should stop the thread until a v-blank
+        /*
+         * With vsync enabled, glFinish() should stop the thread until a v-blank
          * signal has been received, meaning that the screen image has been
          * updated with the front framebuffer. The execution of the code
-         * following glFinish() should then sync with the screen refresh rate.*/
+         * following glFinish() should then sync with the screen refresh rate.
+         */
         glFinish();
         ChunkAttrib* chunkAttrib = (ChunkAttrib*)(buf_-sizeof(ChunkAttrib));
         emit vblank(chunkAttrib);

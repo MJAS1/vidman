@@ -144,8 +144,11 @@ void MainWindow::initVideo()
         // Start video running
         videoFileWriter_->start();
         videoCompressorThread_->start();
-/* QGLContext::moveToThread() was introduced in Qt5 and is necessary to
- * enable OpenGL in a different thread. */
+
+/*
+ * QGLContext::moveToThread() was introduced in Qt5 and is necessary to
+ * enable OpenGL in a different thread.
+ */
 #if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
         videoDialog_->context()->moveToThread(workerThread_);
 #endif
@@ -154,11 +157,14 @@ void MainWindow::initVideo()
         glworker_.moveToThread(workerThread_);
         glworker_.onAspectRatioChanged(settings_.videoWidth);
         glworker_.start();
-        /* First frame needs to be captured manually here, the rest are handled
-         * by connection to glworker vblank(). */
+
+        /*
+         * First frame needs to be captured manually here, the rest are handled
+         * by connection to glworker vblank().
+         */
         cameraWorker_.captureFrame();
 
-        //Setup event handling
+        // Setup event handling
         eventTmr_.setSingleShot(true);
         connect(&eventTmr_, SIGNAL(timeout()), this, SLOT(getNextEvent()));
     }
@@ -175,7 +181,7 @@ void MainWindow::getNextEvent()
     int delay = events_[0]->getDelay();
     cameraWorker_.addEvent(events_.pop_front());
 
-    //Calculate the start time of the next event
+    //Compute the start time of the next event
     if(!events_.empty()) {
         time_ = runningTime_.msecsElapsed();
         currentEventDuration_ = (events_[0]->getStart()+delay);
@@ -240,15 +246,16 @@ void MainWindow::start()
         setStatus(QString("Error creating log file " +
                           logFile_.fileName() + ". " + logFile_.errorString()));
 
-    //Create a StringList from the texteditor.
+    // Create a StringList from the texteditor.
     QStringList strList = ui->textEdit->toPlainText().split("\n");
     strList.append("");
 
-    //Read, create and store all the events from strList
+    // Read, create and store all the events from strList
     EventParser eventParser;
     connect(&eventParser, SIGNAL(error(const QString&)), this,
             SLOT(setStatus(const QString&)));
 
+    // If no errors are detected, start the script.
     if(eventParser.loadEvents(strList, events_, this)) {
         eventsDuration_.setHMS(0, 0, 0);
         eventsDuration_ = eventsDuration_.addMSecs(events_.getTotalDuration());

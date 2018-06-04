@@ -3,8 +3,10 @@
 
 #include <QSyntaxHighlighter>
 
-//Some code from Qt examples
 
+/*!
+ * This class highlights certain syntax words in the text editor.
+ */
 class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT

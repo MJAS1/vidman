@@ -1,10 +1,3 @@
-/*
- * config.h
- *
- *  Created on: Jun 6, 2010
- *      Author: andrey
- */
-
 #ifndef CONFIG_H_
 #include "common.h"
 
@@ -47,11 +40,6 @@
 // Buffer sizes
 #define CIRC_VIDEO_BUFF_SZ	100000000	// in bytes
 #define CIRC_AUDIO_BUFF_SZ	100000000	// in bytes
-
-// Thread priorities
-#define CAM_THREAD_PRIORITY	10
-#define MIC_THREAD_PRIORITY	15
-#define SPK_THREAD_PRIORITY 5
 
 // Used for storing application settings
 #define ORG_NAME "BECS"

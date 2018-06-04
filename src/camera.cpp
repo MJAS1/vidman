@@ -16,10 +16,10 @@ Camera::Camera() :
         return;
     }
 
-    dc1394error_t			err;
+    dc1394error_t err;
     dc1394Context_ = dc1394_new();
     if(!dc1394Context_) {
-        cerr << "Cannot initialize!" << endl;
+        cerr << "Cannot initialize" << endl;
         return;
     }
 
@@ -89,7 +89,7 @@ uint32_t Camera::getGain() const
 
 void Camera::setShutter(int newVal)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
     err = dc1394_set_register(dc1394Camera_, SHUTTER_ADDR,
                               newVal + SHUTTER_OFFSET);
 
@@ -99,7 +99,7 @@ void Camera::setShutter(int newVal)
 
 void Camera::setGain(int newVal)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
     err = dc1394_set_register(dc1394Camera_, GAIN_ADDR, newVal + GAIN_OFFSET);
 
     if (err != DC1394_SUCCESS)

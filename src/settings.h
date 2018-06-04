@@ -1,10 +1,3 @@
-/*
- * settings.h
- *
- *  Created on: Mar 7, 2011
- *      Author: andrey
- */
-
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 
@@ -21,6 +14,8 @@
  * lifetime of a single program instance. The class should be completely
  * thread-safe (CURRENTLY IT IS NOT).
  */
+
+// Most code in this class from https://github.com/andreyzhd/VideoMEG
 class Settings {
     // TODO: make member variables immutable as much as possible
     // TODO: make the class thread-safe

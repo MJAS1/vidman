@@ -1,9 +1,3 @@
-/*
- * videocompressorthread.cpp
- *
- *  Created on: Jan 14, 2010
- *      Author: meg2meg
- */
 #include <cstdlib>
 #include <stdio.h>
 #include <jpeglib.h>
@@ -16,8 +10,8 @@
 VideoCompressorThread::VideoCompressorThread(CycDataBuffer* inpBuf,
                                              CycDataBuffer* outBuf,
                                              int jpgQuality, QObject* parent) :
-    StoppableThread(parent), inpBuf(inpBuf), outBuf(outBuf),
-    jpgQuality(jpgQuality)
+    StoppableThread(parent), inpBuf_(inpBuf), outBuf_(outBuf),
+    jpgQuality_(jpgQuality)
 {
 }
 
@@ -40,7 +34,7 @@ void VideoCompressorThread::stoppableRun()
         ChunkAttrib					chunkAttrib;
 
         // Get raw image from the input buffer
-        data = inpBuf->getChunk(&chunkAttrib);
+        data = inpBuf_->getChunk(&chunkAttrib);
 
         // Initialize JPEG
         cinfo.err = jpeg_std_error(&jerr);
@@ -55,7 +49,7 @@ void VideoCompressorThread::stoppableRun()
 
         // Use default compression parameters
         jpeg_set_defaults(&cinfo);
-        jpeg_set_quality(&cinfo, jpgQuality, TRUE);
+        jpeg_set_quality(&cinfo, jpgQuality_, TRUE);
 
         // Do the compression
         jpeg_start_compress(&cinfo, TRUE);
@@ -73,7 +67,7 @@ void VideoCompressorThread::stoppableRun()
 
         // Insert compressed image into the output buffer
         chunkAttrib.chunkSize = jpgBufLen;
-        outBuf->insertChunk(jpgBuf, chunkAttrib);
+        outBuf_->insertChunk(jpgBuf, chunkAttrib);
 
         // The output buffer needs to be explicitly freed by the libjpeg client
         free(jpgBuf);

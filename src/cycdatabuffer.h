@@ -1,10 +1,3 @@
-/*
- * cycframebuffer.h
- *
- *  Created on: Jul 2, 2010
- *      Author: andrey
- */
-
 #ifndef CYCDATABUFFER_H_
 #define CYCDATABUFFER_H_
 
@@ -14,7 +7,7 @@ class QSemaphore;
 
 const int MAXLOG = 50;
 
-//! Attributes associated with each data chunk.
+// Attributes associated with each data chunk.
 typedef struct
 {
     uint32_t	chunkSize;
@@ -24,8 +17,6 @@ typedef struct
     char        log[MAXLOG];
 } ChunkAttrib;
 
-
-//! Cyclic buffer capable of holding data chunks of variable size.
 /*!
  * Cyclic buffer for synchronizing producer/consumer threads. Supports single
  * producer, single primary consumer and multiple secondary consumers. Producer
@@ -51,7 +42,7 @@ class CycDataBuffer : public QObject
     Q_OBJECT
 
 public:
-    /*!
+    /*
      * Buffer size is in bytes. Due to implementation details (semaphore counts
      * bytes rather than chunks) buffer size is limited by the size of "int" on
      * your platform.
@@ -60,7 +51,7 @@ public:
     virtual ~CycDataBuffer();
     void insertChunk(unsigned char* _data, ChunkAttrib &_attrib);
 
-    /*!
+    /*
      * Acquire a chunk and return a pointer to it. The chunk is implicitly
      * released next time getChunk is called.
      */
@@ -68,7 +59,7 @@ public:
     void setIsRec(bool _isRec);
 
 signals:
-    /*!
+    /*
      * This signal is raised when a new chunk of data has been copied to the
      * buffer. _data points to the chunk's data. The corresponding ChunkAttrib
      * structure is placed immediately before _data.

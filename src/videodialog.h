@@ -15,8 +15,8 @@ class VideoDialog;
 }
 
 /*!
- * VideoDialog contains the glVideoWidget which is used to display the video. It
- * also contains the sliders to control camera shutter, gain etc.
+ * VideoDialog contains the glVideoWidget, which is used to display video
+ * frames. It also contains sliders to control camera shutter, gain etc.
  */
 class VideoDialog : public QDialog
 {
@@ -28,7 +28,7 @@ public:
 
     GLVideoWidget* glVideoWidget() const;
 
-    //Returns the context of childwidget glVideoWidget
+    // Returns the OpenGL context of the glVideoWidget child widget.
     QGLContext* context() const;
 
 public slots:

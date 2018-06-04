@@ -4,6 +4,9 @@
 #include <QFile>
 #include <QMutex>
 
+/*!
+ * This class is used to write logfiles during the experiment.
+ */
 class LogFile : public QObject
 {
     Q_OBJECT

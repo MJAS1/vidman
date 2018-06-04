@@ -3,8 +3,9 @@
 
 #include <QPlainTextEdit>
 
-
-//Some code from Qt examples
+/*!
+ * Text editor with line numbers in the margin and current line highlighted.
+ */
 class TextEdit : public QPlainTextEdit
 {
     Q_OBJECT

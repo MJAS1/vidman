@@ -11,9 +11,9 @@ class GLVideoWidget;
  * This class is used to swap the front and back frame buffers and do all the
  * drawing on a GLVideoWidget. In order to keep the main thread responsive,
  * GLWorker should be moved to a separate thread with QObject::moveToThread().
- * Emits the signal vblank(const ChunkAttrib*) each time the buffers have been
- * swapped so that other functionality can be synced with the vertical refresh
- * rate.
+ * The class emits the signal vblank(const ChunkAttrib*) each time the buffers
+ * have been swapped so that other functionality can be synced with the vertical
+ * refresh rate.
  */
 
 class GLWorker : public QObject

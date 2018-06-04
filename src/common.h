@@ -1,6 +1,3 @@
-/*
- * This file contains definitions that are shared between video recording and playing software
- */
 #ifndef COMMON_H_
 
 // Camera configuration

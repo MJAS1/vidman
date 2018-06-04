@@ -1,9 +1,3 @@
-/*
- * videofilewriter.cpp
- *
- *  Created on: Jul 1, 2010
- *      Author: andrey
- */
 #include <iostream>
 #include <jpeglib.h>
 #include <stdlib.h>
@@ -20,30 +14,30 @@ VideoFileWriter::VideoFileWriter(CycDataBuffer* cycBuf, const char* path,
 {
     uint32_t ver = VIDEO_FILE_VERSION;
 
-    bufLen = strlen(MAGIC_VIDEO_STR) + sizeof(uint32_t);
-    buf = new unsigned char[bufLen];
+    bufLen_ = strlen(MAGIC_VIDEO_STR) + sizeof(uint32_t);
+    buf_ = new unsigned char[bufLen_];
 
-    if(!buf)
+    if(!buf_)
     {
         cerr << "Error allocating memory!" << endl;
         abort();
     }
 
     // string identifying the file type
-    memcpy(buf, MAGIC_VIDEO_STR, strlen(MAGIC_VIDEO_STR));
+    memcpy(buf_, MAGIC_VIDEO_STR, strlen(MAGIC_VIDEO_STR));
     // version of file format
-    memcpy(buf + strlen(MAGIC_VIDEO_STR), &ver, sizeof(uint32_t));
+    memcpy(buf_ + strlen(MAGIC_VIDEO_STR), &ver, sizeof(uint32_t));
 }
 
 
 VideoFileWriter::~VideoFileWriter()
 {
-    delete []buf;
+    delete []buf_;
 }
 
 
-unsigned char* VideoFileWriter::getHeader(int* _len)
+unsigned char* VideoFileWriter::getHeader(int* len)
 {
-    *_len = bufLen;
-    return(buf);
+    *len = bufLen_;
+    return(buf_);
 }

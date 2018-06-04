@@ -13,8 +13,10 @@ VideoDialog::VideoDialog(MainWindow *parent, Camera& cam) :
     setWindowFlags(Qt::Window);
     ui->setupUi(this);
 
-    /*Setup GLVideoWidget for drawing video frames. SwapInterval is used to sync
-      trigger signals with screen refresh rate. */
+    /*
+     * Setup GLVideoWidget for drawing video frames. SwapInterval is used to
+     * sync trigger signals with screen refresh rate.
+     */
     QGLFormat format;
     if(!format.hasOpenGL())
         std::cerr << "OpenGL not supported by window system." << std::endl;
@@ -117,6 +119,7 @@ void VideoDialog::onNewFrame(unsigned char* buf)
 {
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf-sizeof(ChunkAttrib)));
 
+    //Update and show FPS
     if(frameCnt_ == 10) {
         float fps = 1 / (float(chunkAttrib.timestamp - prevTimestamp_) / 1000);
         ui->FPSLabel->setText(QString("FPS: %1").arg(fps, 0, 'f', 2));

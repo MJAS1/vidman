@@ -25,11 +25,10 @@ void GLVideoWidget::paintEvent(QPaintEvent *)
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-    /* After updating Qt4 to Qt5 a problem appeared. When coming back to normal
-     * state from fullscreen, the widget showed only a blank black screen.
-     * This is probably due to some internal bug in Qt code. For some very
-     * strange reason the following piece of code made the problem disappear, at
-     * least for most of the time. */
+    /* After migrating from Qt4 to Qt5 a problem appeared. When coming back to
+     * normal state from fullscreen, the widget showed only a black screen. This
+     * is probably due to some internal bug in Qt code. This hack made the
+     * problem disappear, at least for most of the time. */
     setWindowFlags(windowFlags() ^ Qt::Window);
     setWindowState(windowState() ^ Qt::WindowFullScreen);
     thread()->msleep(20);

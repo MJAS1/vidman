@@ -28,6 +28,10 @@ namespace Ui {
 class MainWindow;
 }
 
+/*!
+ * This is the main window of the program. It contains the text editor, play
+ * and pause buttons, file menu, etc.
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

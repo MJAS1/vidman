@@ -3,9 +3,11 @@
 
 #include "settings.h"
 
-/*! Output device is used to control a parallel or a serial port for trigger
+/*!
+ * This class is used to control a parallel or a serial port for trigger
  * signals. To make writeData() work, open() should be called by the same
- * thread. */
+ * thread that is used to write to the output port.
+ */
 class OutputDevice : public QObject
 {
     Q_OBJECT
@@ -23,6 +25,7 @@ public:
 
 public slots:
     bool open(OutputDevice::PortType port);
+
     void writeData(int);
 
 private:

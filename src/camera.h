@@ -5,10 +5,9 @@
 #include <dc1394/dc1394.h>
 
 /*!
- * This class is used to control the videocamera. It uses dc1394 library to
- * access the camera's register and OpenCV to acquire frames.
+ * This class is used to control the FireWire videocamera. It uses
+ * dc1394 library to  access the camera's register and OpenCV to acquire frames.
  */
-
 class Camera
 {
 public:
@@ -35,8 +34,10 @@ public:
     void operator>>(cv::Mat& frame);
 
 private:
-    /* Camera frame buffersize of 1 lowers the maximum framerate for some reason
-     * so use at least 2. */
+    /*
+     * Camera frame buffersize of 1 lowers the maximum framerate for some reason
+     * so use at least 2.
+     */
     static const int RingBufSz = 2;
 
     Camera(const Camera&);

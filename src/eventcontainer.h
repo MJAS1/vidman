@@ -22,6 +22,8 @@ public:
     void            deleteId(int id);
     void            deleteType(Event::EventType);
     void            append(EventPtr event);
+
+    //Insert a new event and sort according to priority.
     void            insertSorted(EventPtr event);
     void            applyEvents(cv::Mat& frame);
     void            pauseEvents();
@@ -34,6 +36,7 @@ public:
     const EventPtr& operator[](int id) const;
 
 public slots:
+    // Sort container according to event priority.
     void            sort();
 
 private:

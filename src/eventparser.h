@@ -13,15 +13,16 @@ using std::shared_ptr;
 using std::ifstream;
 class EventContainer;
 
-/*
- * VideoObject is used to create record and playback events. Contains the frames
- * belonging to the particular video and length in milliseconds.
- */
+
 struct Frame{
     cv::Mat data_;
     uint8_t trigCode_;
 };
 
+/*
+ * VideoObject is used to create record- and playback-events. It contains the
+ * frames belonging to the particular video and the duration in milliseconds.
+ */
 struct VideoObject {
     QList<Frame> frames_;
     int duration_;
@@ -52,10 +53,11 @@ struct EventAttributes {
 };
 
 /*!
- * Parses events from a QStringList and stores them in an EventContainer. The
- * QStringList is created from MainWindow's TextEdit when start is clicked.
- * LoadEvents returns false if the input text is incorrectly formatted.
-*/
+ * This class parses events from a QStringList and stores them in an
+ * EventContainer. The QStringList is created from MainWindow's TextEdit when
+ * start is clicked. LoadEvents returns false if the input text is incorrectly
+ * formatted.
+ */
 class EventParser : public QObject
 {
     Q_OBJECT
@@ -64,6 +66,7 @@ public:
                     MainWindow* window = nullptr);
 
 signals:
+    // Emits an error message if the input string is incorrect.
     void error(const QString&) const;
 
 private:

@@ -28,8 +28,10 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
         defaultEvents_->insertSorted(EventPtr(new FlipEvent(0, code)));
     }
     if(settings.fixPoint) {
-        /* fixPoint.png is stored in qt resource file, so it needs to be loaded
-         * to QImage before converting to cv::Mat. */
+        /*
+         * fixPoint.png is stored in the qt resource file, so it needs to be
+         * loaded to a QImage before converting to cv::Mat.
+         */
         QImage fixImg(":/img/fixPoint.png");
         cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
                                  fixImg.bits(), fixImg.bytesPerLine()).clone();
@@ -75,7 +77,7 @@ void CameraWorker::captureFrame()
     events_->applyEvents(frame_);
     mutex_.unlock();
 
-    // Process signals emitted in events_->applyEvents().
+    // Process signals emitted by events_->applyEvents().
     QCoreApplication::processEvents();
     cv::cvtColor(frame_, frame_, CV_BGR2RGB);
 

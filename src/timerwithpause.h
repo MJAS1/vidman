@@ -4,7 +4,9 @@
 #include <QElapsedTimer>
 #include <QMutex>
 
-/*! Timer with pause function.*/
+/*!
+ * A simple thread-safe timer with pause functionality.
+ */
 
 class TimerWithPause : public QElapsedTimer
 {

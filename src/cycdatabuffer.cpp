@@ -1,10 +1,3 @@
-/*
- * cycframebuffer.cpp
- *
- *  Created on: Jul 2, 2010
- *      Author: andrey
- */
-
 #include <QSemaphore>
 #include <stdlib.h>
 #include <iostream>

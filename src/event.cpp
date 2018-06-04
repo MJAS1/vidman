@@ -141,8 +141,8 @@ void ImageEvent::apply(cv::Mat &frame)
         overlayImage(frame, image_, frame, pos_);
 }
 
-//Code from Jepson's Blog:
-//http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
+// Code from Jepson's Blog:
+// http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
 void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foreground,
   cv::Mat &output, const cv::Point2i& location)
 {
@@ -254,7 +254,7 @@ void ZoomEvent::apply(cv::Mat &frame)
     cv::Mat tmp;
     resize(frame, tmp, cv::Size(), scale_, scale_, cv::INTER_LINEAR);
 
-    //Take only the center 640x480 of the resized image
+    // Take only the center 640x480 of the resized image
     cv::Point p((tmp.cols - frame.cols) / 2, (tmp.rows - frame.rows) / 2);
     cv::Rect roi(p, frame.size());
     frame = tmp(roi).clone();
@@ -339,6 +339,9 @@ MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
     Settings settings;
     threshold_ = settings.movementThreshold;
     textPos_ = cv::Point(x, y);
+
+    // Detect movement only from this area. Might have to be changed for future
+    // experiments.
     roi_ = cv::Rect(0, 125, 640, 225);
 }
 
@@ -367,7 +370,7 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
     }
 
     switch(state_) {
-        //Wating for the movement to start
+        // Wating for the movement to start
         case WAITING:
             waiting();
             break;
@@ -375,16 +378,16 @@ void MotionDetectorEvent::apply(cv::Mat &frame)
         case TRACKING:
             tracking();
             break;
-        //Movement has maybe stopped. Make sure that it really stopped instead
-        //of a brief pause in movement due to a change in direction for example.
+        // Movement has maybe finished. Make sure that it really finished instead
+        // of a brief pause due to, e.g., a change in direction.
         case MAYBE_FINISHED:
             maybeFinished();
             break;
-        //Movement finished, draw time elapsed for movement to the frame.
+        // Movement finished, draw duration feedback.
         case FINISHED:
             finished(frame);
             break;
-        //This state is only used for the event associated with a motion dialog.
+        // This state is only used for an event associated with a motion dialog.
         case MOTION_DIALOG:
             nChanges();
             createMotionPixmap();
@@ -460,7 +463,7 @@ int MotionDetectorEvent::nChanges()
     const int White = 255;
 
     /* Create a black and white differential image, where white pixels represent
-     * a change. */
+     * a difference. */
     cv::Mat d1, d2;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);

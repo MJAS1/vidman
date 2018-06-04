@@ -1,10 +1,3 @@
- /*
- * filewriter.h
- *
- *  Created on: Jan 10, 2011
- *      Author: meg2meg
- */
-
 #ifndef FILEWRITER_H_
 #define FILEWRITER_H_
 
@@ -13,7 +6,6 @@
 
 class CycDataBuffer;
 
-//! Base class for audio/video stream writers
 /*!
  * This base class implements functionality that is common to audio and video
  * stream writers - writing from a cyclic buffer to a file, creating/closing
@@ -25,10 +17,8 @@ class CycDataBuffer;
  * When stopping the thread always call the stop() method while chunks are
  * still being continuously inserted into the CycDataBuffer associated with
  * the object - otherwise stop() will hang forever.
- *
- * Derived classes should typically call init() inside the constructor and
- * cleanup() inside the destructor.
  */
+
 class FileWriter : public StoppableThread
 {
 
@@ -47,10 +37,10 @@ protected:
 	virtual unsigned char* getHeader(int* _len) = 0;
 
 private:
-	CycDataBuffer*	cycBuf;
-    QString			path, suffix, ext;
+    CycDataBuffer*	cycBuf_;
+    QString			path_, suffix_, ext_;
 
-	int				streamId;
+    int				streamId_;
 };
 
 #endif /* FILEWRITER_H_ */

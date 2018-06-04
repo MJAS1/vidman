@@ -1,7 +1,7 @@
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
-#include <opencv2/highgui.hpp>
+#include <opencv/highgui.h>
 #include "mainwindow.h"
 #include "eventparser.h"
 #include "eventcontainer.h"
@@ -142,9 +142,11 @@ bool EventParser::parseObject(const QString &str)
             loadVideo(attr.fileName_, videoObject);
         }
         else {
-            /* Reserve enough memory to hold all the frames. This is necessary to
+            /*
+             * Reserve enough memory to hold all the frames. This is necessary to
              * make sure that large blocks of memory don't need to be reallocated
-             * while recording. */
+             * while recording.
+             */
             videoObject->frames_.reserve(attr.duration_/1000*settings_.fps + 10);
         }
         videoObjects_.insert(attr.objectId_, videoObject);
