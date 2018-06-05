@@ -2,6 +2,7 @@
 #define FILEWRITER_H_
 
 #include <QString>
+
 #include "stoppablethread.h"
 
 class CycDataBuffer;
@@ -31,9 +32,10 @@ protected:
     FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix,
                const char* ext, QObject* parent = nullptr);
 	virtual ~FileWriter();
+
 	virtual void stoppableRun();
 
-	//! Return the header to be written at the beginning of the file.
+    // Return the header to be written at the beginning of the file.
 	virtual unsigned char* getHeader(int* _len) = 0;
 
 private:

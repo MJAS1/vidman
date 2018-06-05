@@ -1,12 +1,13 @@
 ## Intro
 
 This software is used to control the experimental flow of
-magnetoencephalography experiments using real-time video feedback as stimulus.
-It can be used to send trigger signals via the parallel port each time the
-video feed is modified. Thus far, a Stingray F033C FireWire video camera has
-been used during the experiments but any FireWire camera should work.
+magnetoencephalography experiments using real-time video feedback of hands as
+stimulus.  It can be used to send trigger signals via the parallel port each
+time the video feed is modified. Thus far, a Stingray F033C FireWire video
+camera has been used during the experiments but any FireWire camera should
+work.
 
-VidMan has been tested on Ubuntu 14.04 LTS. Some problems with vsync were
+VidMan has been tested on Ubuntu 16.04 LTS. Some problems with vsync were
 encountered on Ubuntu 12.04 LTS but newer versions should be fine. It 
 requires a graphics card with OpenGL support. Some older Nvidia drivers caused
 the software to sometimes hang while using vsync but this problem should be
@@ -60,7 +61,7 @@ are listed below:
 * **zoom**: start, scale, duration, delay, id, trigcode
 * **record**: start, objectid, delay, duration, id, trigcode
 * **playback**: start, objectid, delay, duration, id, trigcode
-* **detect motion**: start, delay, id, trigcode, trigcode2, success_code, fail_code, x, y, target
+* **detect motion**: start, delay, id, trigcode, trigcode2, success_code, fail_code, x, y, target, tolerance
 
 Duration in milliseconds is used for certain events that modify multiple
 subsequent frames. Note the difference between duration and delay. If you want
@@ -77,8 +78,10 @@ Each event has a trigcode parameter which is used to specify the code emitted
 through serial or parallel port when the event is applied. You need to run the
 software with root priviliges in order to gain access to the ports. You also
 need to specify which port you want to use by choosing menu->edit->use serial
-port or use parallel port. Motion detection uses two trigcodes: trigcode is
-emitted on event onset and trigcode2 when the movement stops.
+port or use parallel port. The address of the parallel port may have to be
+changed in the config file, if the default address is not correct. Motion
+detection uses two trigcodes: trigcode is emitted on event onset and trigcode2
+when the movement stops.
 
 To use image, record and playback events, an object needs to declared. For image
 use the following syntax:
@@ -96,7 +99,6 @@ then be played with a playback event, e.g.:
 	event: type=record, start=0, duration=2000, delay=2000, objectId=0 
 	event: type=playback, start=0, duration=2000, objectId=0
      
-
 The detect motion event tracks movement and displays the duration of the
 movement in milliseconds. If the duration of the movement is under the value
 specified by the target parameter, the feedback time is shown in green,
@@ -108,3 +110,7 @@ the value from default 10. The value can be set in the config file
 ~/.config/BECS/VidMan.conf by changing the variable movementSensitivity. To
 check how well the motion detection is working, open the motion dialog from
 menu->view->motion dialog.
+
+The script can be paused with:
+
+	pause

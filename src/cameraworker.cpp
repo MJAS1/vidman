@@ -53,8 +53,10 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
 
 void CameraWorker::captureFrame()
 {
-    /* Set default trigger code for each frame. Toggle between defaultTrig1_ and
-     * defaultTrig2. */
+    /*
+     * Set default trigger code for each frame. Toggle between defaultTrig1_ and
+     * defaultTrig2.
+     */
     trigCode_ = (trigCode_ == defaultTrig1_ ? defaultTrig2_: defaultTrig1_);
     log_.clear();
 

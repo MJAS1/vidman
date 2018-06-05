@@ -5,7 +5,7 @@
 #include "cycdatabuffer.h"
 
 /*!
- * This thread compressess frames to jpg.
+ * This thread compressess frames to jpg format.
  */
 class VideoCompressorThread : public StoppableThread
 {

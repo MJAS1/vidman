@@ -1,6 +1,7 @@
 #include <iostream>
 #include <QCoreApplication>
 #include <QWindow>
+
 #include "cycdatabuffer.h"
 #include "common.h"
 #include "glworker.h"

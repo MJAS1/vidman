@@ -31,11 +31,11 @@ public:
 protected:
     virtual void run();
     virtual void stoppableRun() = 0;
-    volatile bool shouldStop;
+    volatile bool shouldStop_;
 
 private:
-    static int nextId;
-    int id;
+    static int nextId_;
+    int id_;
 };
 
 #endif /* STOPPABLETHREAD_H_ */

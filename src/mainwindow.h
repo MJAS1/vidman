@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QThread>
 #include <QElapsedTimer>
+
 #include "camera.h"
 #include "outputdevice.h"
 #include "glworker.h"

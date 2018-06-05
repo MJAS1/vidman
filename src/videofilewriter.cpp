@@ -9,8 +9,8 @@ using namespace std;
 
 
 VideoFileWriter::VideoFileWriter(CycDataBuffer* cycBuf, const char* path,
-                                 QObject *parent)
-    :	FileWriter(cycBuf, path, "_video", "vid", parent)
+                                 QObject *parent) :
+    FileWriter(cycBuf, path, "_video", "vid", parent)
 {
     uint32_t ver = VIDEO_FILE_VERSION;
 
@@ -23,18 +23,16 @@ VideoFileWriter::VideoFileWriter(CycDataBuffer* cycBuf, const char* path,
         abort();
     }
 
-    // string identifying the file type
+    // String identifying the file type
     memcpy(buf_, MAGIC_VIDEO_STR, strlen(MAGIC_VIDEO_STR));
-    // version of file format
+    // Version of file format
     memcpy(buf_ + strlen(MAGIC_VIDEO_STR), &ver, sizeof(uint32_t));
 }
-
 
 VideoFileWriter::~VideoFileWriter()
 {
     delete []buf_;
 }
-
 
 unsigned char* VideoFileWriter::getHeader(int* len)
 {

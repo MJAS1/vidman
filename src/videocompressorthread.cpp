@@ -21,7 +21,7 @@ VideoCompressorThread::~VideoCompressorThread()
 
 void VideoCompressorThread::stoppableRun()
 {
-    while(!shouldStop)
+    while(!shouldStop_)
     {
         // JPEG-related stuff
         struct jpeg_compress_struct	cinfo;
@@ -54,16 +54,15 @@ void VideoCompressorThread::stoppableRun()
         // Do the compression
         jpeg_start_compress(&cinfo, TRUE);
 
-        // write one row at a time
+        // Write one row at a time
         while(cinfo.next_scanline < cinfo.image_height)
         {
             row_pointer = (data + (cinfo.next_scanline * cinfo.image_width * 3));
             jpeg_write_scanlines(&cinfo, &row_pointer, 1);
         }
 
-        // clean up after we're done compressing
+        // Clean up after we're done compressing
         jpeg_finish_compress(&cinfo);
-
 
         // Insert compressed image into the output buffer
         chunkAttrib.chunkSize = jpgBufLen;

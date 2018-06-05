@@ -5,8 +5,8 @@
 #include <dc1394/dc1394.h>
 
 /*!
- * This class is used to control the FireWire videocamera. It uses
- * dc1394 library to  access the camera's register and OpenCV to acquire frames.
+ * This class is used to control the FireWire video camera. It uses dc1394
+ * library to access the camera's register and OpenCV to acquire frames.
  */
 class Camera
 {

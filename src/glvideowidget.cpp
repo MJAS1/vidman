@@ -1,5 +1,6 @@
 #include <QResizeEvent>
 #include <QThread>
+
 #include "glvideowidget.h"
 
 using namespace std;
@@ -7,7 +8,7 @@ using namespace std;
 GLVideoWidget::GLVideoWidget(const QGLFormat& format, QWidget* parent)
     : QGLWidget(format, parent)
 {
-    //Important to manually swap the framebuffers for syncing trigger signals.
+    // Important to manually swap the framebuffers for syncing trigger signals.
     setAutoBufferSwap(false);
 }
 
@@ -25,10 +26,10 @@ void GLVideoWidget::paintEvent(QPaintEvent *)
 
 void GLVideoWidget::mouseDoubleClickEvent(QMouseEvent *)
 {
-    /* After migrating from Qt4 to Qt5 a problem appeared. When coming back to
-     * normal state from fullscreen, the widget showed only a black screen. This
+    /* After migrating from Qt4 to Qt5, a problem appeared. When coming back to
+     * normal state from fullscreen, the widget showed only a blank screen. This
      * is probably due to some internal bug in Qt code. This hack made the
-     * problem disappear, at least for most of the time. */
+     * problem disappear, at least most of the time. */
     setWindowFlags(windowFlags() ^ Qt::Window);
     setWindowState(windowState() ^ Qt::WindowFullScreen);
     thread()->msleep(20);

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <opencv2/opencv.hpp>
+
 #include "eventcontainer.h"
 #include "event.h"
 
@@ -11,10 +12,11 @@ class Camera;
 
 /*!
  * This class acquires, processes and timestamps frames for a single Camera
- * object. Events in the defaultEvents_ container are added to each frame by
- * default. Other events are added with the addEvent()-function. Instances of
- * this class should be moved to the same QThread with GLWorker to ensure that
- * they are correctly synced together.
+ * object. The processed frames are then inserted to the cyclic data buffer.
+ * Events in the defaultEvents_ container are applied to each frame by default.
+ * Other events are added with the addEvent()-function. Instances of this class
+ * should be moved to the same QThread with GLWorker to ensure that they are
+ * correctly synced together.
  */
 class CameraWorker : public QObject
 {
@@ -22,7 +24,7 @@ class CameraWorker : public QObject
 public:
     explicit CameraWorker(CycDataBuffer* cycBuf, Camera& cam);
 
-    // Adds a new video event for processing each frame.
+    // Adds a new video event to be applied for each frame.
     void addEvent(EventPtr ev);
     void clearEvents();
     void pause();

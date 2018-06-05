@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QStatusBar>
 #include <QDebug>
+
 #include "glvideowidget.h"
 #include "config.h"
 #include "cycdatabuffer.h"
@@ -37,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     cameraWorker_(cycVideoBufRaw_, cam_),
     glworker_(videoDialog_->glVideoWidget())
 {
-    //Order of function calls in constructor is important.
+    // Order of function calls in constructor is important.
     ui->setupUi(this);
     motionDialog_ = new MotionDialog(this);
     connect(&timeTmr_, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -52,8 +53,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(videoDialog_->glVideoWidget(), SIGNAL(resize(int,int)),
             &glworker_, SLOT(resizeGL(int,int)));
 
-    /* Slots connected to vblank() will be synced with the screen refresh rate
-     * as long as vsync is on. */
+    /*
+     * Slots connected to vblank() will be synced with the screen refresh rate
+     * as long as vsync is on.
+     */
     connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
             this, SLOT(onVBlank(const ChunkAttrib*)), Qt::DirectConnection);
     connect(&glworker_, SIGNAL(vblank(const ChunkAttrib*)),
@@ -67,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     videoDialog_->show();
 
-    //Set status bar
+    // Set status bar
     status_.setIndent(10);
     status_.setStyleSheet("QLabel { color: red;}");
     statusBar()->addWidget(&status_, 1);
@@ -85,9 +88,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::stopThreads()
 {
-    // The piece of code stopping the threads should execute fast enough,
-    // otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
-    // order of stopping the threads is important.
+    /*
+     * The piece of code stopping the threads should execute fast enough,
+     * otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
+     * order of stopping the threads is important.
+     */
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
     glworker_.stop();
@@ -98,8 +103,10 @@ void MainWindow::stopThreads()
 
 void MainWindow::initToolButton()
 {
-    //ToolButton can't be assigned to toolbar in ui designer so it has to be
-    //done manually here.
+    /*
+     * ToolButton can't be assigned to toolbar in ui designer so it has to be
+     * done manually here.
+     */
     QMenu *menu = new QMenu(this);
     menu->addAction(ui->actionAddImageObject);
     menu->addAction(ui->actionAddVideoObject);
@@ -181,7 +188,7 @@ void MainWindow::getNextEvent()
     int delay = events_[0]->getDelay();
     cameraWorker_.addEvent(events_.pop_front());
 
-    //Compute the start time of the next event
+    // Compute the start time of the next event
     if(!events_.empty()) {
         time_ = runningTime_.msecsElapsed();
         currentEventDuration_ = (events_[0]->getStart()+delay);

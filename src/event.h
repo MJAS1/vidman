@@ -7,6 +7,7 @@
 #include <memory>
 #include <QPixmap>
 #include <opencv2/opencv.hpp>
+
 #include "common.h"
 #include "timerwithpause.h"
 

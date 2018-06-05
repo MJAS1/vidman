@@ -1,4 +1,5 @@
 #include <QMutexLocker>
+
 #include "timerwithpause.h"
 
 TimerWithPause::TimerWithPause() :

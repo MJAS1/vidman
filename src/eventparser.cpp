@@ -2,6 +2,7 @@
 #include <QStringList>
 #include <sys/ioctl.h>
 #include <opencv/highgui.h>
+
 #include "mainwindow.h"
 #include "eventparser.h"
 #include "eventcontainer.h"

@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QMap>
 #include <opencv2/opencv.hpp>
+
 #include "event.h"
 #include "settings.h"
 

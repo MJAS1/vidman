@@ -1,4 +1,5 @@
 #include <QGLFormat>
+
 #include "glvideowidget.h"
 #include "mainwindow.h"
 #include "videodialog.h"
@@ -73,7 +74,7 @@ VideoDialog::~VideoDialog()
 
 void VideoDialog::paintEvent(QPaintEvent *)
 {
-    //Paint the area under sliders and labels
+    // Paint the area under sliders and labels
     QPainter painter(this);
     painter.setPen(QColor(80, 80, 80));
     QLinearGradient gradient(QPoint(0, 0), QPoint(0, glVideoWidget_->pos().y()));

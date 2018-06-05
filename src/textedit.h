@@ -4,7 +4,7 @@
 #include <QPlainTextEdit>
 
 /*!
- * Text editor with line numbers in the margin and current line highlighted.
+ * Text editor with line numbers in the margin and the current line highlighted.
  */
 class TextEdit : public QPlainTextEdit
 {
@@ -24,7 +24,7 @@ private slots:
     void    updateLineNumberArea(const QRect&, int);
 
 private:
-    QWidget *lineNumberArea;
+    QWidget *lineNumberArea_;
 };
 
 #endif // TEXTEDIT_H

@@ -1,13 +1,14 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QTextBlock>
+
 #include "textedit.h"
 #include "linenumberarea.h"
 
 TextEdit::TextEdit(QWidget *parent) :
     QPlainTextEdit(parent)
 {
-    lineNumberArea = new LineNumberArea(this);
+    lineNumberArea_ = new LineNumberArea(this);
 
     connect(this, SIGNAL(blockCountChanged(int)), this,
             SLOT(updateLineNumberAreaWidth()));
@@ -43,9 +44,9 @@ void TextEdit::updateLineNumberAreaWidth()
 void TextEdit::updateLineNumberArea(const QRect &rect, int dy)
 {
     if(dy)
-        lineNumberArea->scroll(0, dy);
+        lineNumberArea_->scroll(0, dy);
     else
-        lineNumberArea->update(0, rect.y(), lineNumberArea->width(),
+        lineNumberArea_->update(0, rect.y(), lineNumberArea_->width(),
                                rect.height());
 
     if(rect.contains(viewport()->rect()))
@@ -58,7 +59,7 @@ void TextEdit::resizeEvent(QResizeEvent *ev)
     QPlainTextEdit::resizeEvent(ev);
 
     QRect cr = contentsRect();
-    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(),
+    lineNumberArea_->setGeometry(QRect(cr.left(), cr.top(),
                                       lineNumberAreaWidth(), cr.height()));
 }
 
@@ -84,7 +85,7 @@ void TextEdit::highlightCurrentLine()
 
 void TextEdit::lineNumberAreaPaintEvent(QPaintEvent *ev)
 {
-    QPainter painter(lineNumberArea);
+    QPainter painter(lineNumberArea_);
 
     painter.fillRect(ev->rect(), QColor(Qt::lightGray).lighter(120));
 
@@ -99,7 +100,7 @@ void TextEdit::lineNumberAreaPaintEvent(QPaintEvent *ev)
         {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::black);
-            painter.drawText(0, top, lineNumberArea->width(),
+            painter.drawText(0, top, lineNumberArea_->width(),
                              fontMetrics().height(), Qt::AlignRight, number);
         }
 

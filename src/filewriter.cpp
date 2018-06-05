@@ -17,7 +17,8 @@ using namespace std;
 
 FileWriter::FileWriter(CycDataBuffer* cycBuf, const char* path,
                        const char* suffix, const char* ext, QObject* parent) :
-    StoppableThread(parent), cycBuf_(cycBuf), path_(path), suffix_(suffix), ext_(ext)
+    StoppableThread(parent), cycBuf_(cycBuf), path_(path), suffix_(suffix),
+    ext_(ext)
 {
 }
 
@@ -35,21 +36,17 @@ void FileWriter::stoppableRun()
     unsigned char*	header;
     int				headerLen;
 
-	while (true)
-	{
+    while (true) {
         databuf = cycBuf_->getChunk(&chunkAttrib);
-		if (chunkAttrib.isRec)
-		{
-			if (!prevIsRec)
-			{
+        if (chunkAttrib.isRec) {
+            if (!prevIsRec) {
                 QString name(QDateTime::currentDateTime()
                              .toString("%1/yyyy-MM-dd--hh:mm:ss%2.%3"));
                 name = name.arg(path_).arg(suffix_).arg(ext_);
 
                 outData.open(name.toStdString().c_str(),
                              ios_base::out | ios_base::binary | ios_base::trunc);
-                if(outData.fail())
-				{
+                if(outData.fail()) {
                     cerr << "Error opening the file " << name.toStdString()
                          << ". " << strerror(errno) << endl;
                     emit error(QString("Error opening the file %1. %2")
@@ -68,20 +65,16 @@ void FileWriter::stoppableRun()
                           sizeof(uint32_t));
 			outData.write((const char*)databuf, chunkAttrib.chunkSize);
 		}
-		else
-		{
-			if (prevIsRec)
-			{
+        else {
+            if (prevIsRec) {
 				outData.close();
 			}
 		}
 
 		prevIsRec = chunkAttrib.isRec;
 
-		if(shouldStop)
-		{
-			if(prevIsRec)
-			{
+        if(shouldStop_) {
+            if(prevIsRec) {
 				outData.close();
 			}
 			return;

@@ -10,35 +10,35 @@
 
 using namespace std;
 
-int StoppableThread::nextId = 0;
+int StoppableThread::nextId_ = 0;
 
 StoppableThread::StoppableThread(QObject *parent) : QThread(parent),
-    shouldStop(false)
+    shouldStop_(false)
 {
-    id = nextId++;
+    id_ = nextId_++;
 
-    clog << "StoppableThread no. " << id << " is created" << endl;
+    clog << "StoppableThread no. " << id_ << " is created" << endl;
 }
 
 
 StoppableThread::~StoppableThread()
 {
-    clog << "StoppableThread no. " << id << " is destroyed" << endl;
+    clog << "StoppableThread no. " << id_ << " is destroyed" << endl;
 }
 
 
 void StoppableThread::run()
 {
-    clog << "Running StoppableThread no. " << id << " ..." << endl;
+    clog << "Running StoppableThread no. " << id_ << " ..." << endl;
     stoppableRun();
 }
 
 
 void StoppableThread::stop()
 {
-    clog << "Stopping StoppableThread no. " << id << " ...";
+    clog << "Stopping StoppableThread no. " << id_ << " ...";
 
-    shouldStop = true;
+    shouldStop_ = true;
     this->wait();
 
     clog << " done" << endl;

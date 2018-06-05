@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTimer>
+
 #include "settings.h"
 
 class MainWindow;
@@ -16,7 +17,7 @@ class VideoDialog;
 
 /*!
  * VideoDialog contains the glVideoWidget, which is used to display video
- * frames. It also contains sliders to control camera shutter, gain etc.
+ * frames. It also contains sliders to control camera shutter, gain, etc.
  */
 class VideoDialog : public QDialog
 {

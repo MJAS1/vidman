@@ -1,4 +1,5 @@
 #include <QImage>
+
 #include "event.h"
 #include "eventcontainer.h"
 #include "eventparser.h"

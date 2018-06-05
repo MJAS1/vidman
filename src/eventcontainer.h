@@ -2,6 +2,7 @@
 #define EventContainer_H
 
 #include <vector>
+
 #include "event.h"
 
 /*!

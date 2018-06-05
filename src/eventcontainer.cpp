@@ -1,5 +1,6 @@
 #include <numeric>
 #include <algorithm>
+
 #include "eventcontainer.h"
 
 using std::move;

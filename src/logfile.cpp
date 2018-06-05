@@ -1,6 +1,7 @@
 #include <QDateTime>
 #include <QTextStream>
 #include <QMutexLocker>
+
 #include "logfile.h"
 
 LogFile::LogFile() : active_(false)
