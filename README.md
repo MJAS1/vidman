@@ -121,5 +121,5 @@ The script can be paused with:
 
 VidMan makes use of the following open source projects:
 
-	- [The Helsinki VideoMEG Project]:(https://github.com/andreyzhd/VideoMEG)
-	- [Elementary icons]:(https://github.com/elementary/icons)
+	- [The Helsinki VideoMEG Project](https://github.com/andreyzhd/VideoMEG)
+	- [Elementary icons](https://github.com/elementary/icons)
