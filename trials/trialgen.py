@@ -144,10 +144,10 @@ def create_trial():
             elif condition == "blank":
                 out += standard_condition(TRIG_BLANK)
             elif condition == "fade_out":
-                out += "Event: type=fade_out, start=0, duration=1000,"\
+                out += "Event: type=fade_out, start=0, duration=1000, "\
                        "delay=1000\n\n"
             elif condition == "fade_in":
-                out += "Event: type=fade_in, start=0, duration=1000,"\
+                out += "Event: type=fade_in, start=0, duration=1000, "\
                        "delay=1000\n\n"
 
         out += "Pause\n\n"
