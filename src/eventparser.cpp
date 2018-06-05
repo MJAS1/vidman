@@ -63,8 +63,10 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
 
 bool EventParser::parseEvent(const QString &str, EventContainer& events) const
 {
-    /* Split the string to get a list of strings of the format param=val e.g.,
-     * {"type=...", "start=...", etc..}. */
+    /*
+     * Split the string to get a list of strings of the format param=val e.g.,
+     * {"type=...", "start=...", etc..}.
+     */
     QStringList strList = str.split(',');
     EventAttributes attr;
 
@@ -195,11 +197,18 @@ bool EventParser::loadVideo(const QString &fn,
     //Load frames and trigcodes
     for(int i = 0; i < video->duration_/16; ++i){
         char buf[sizeof(uint64_t)];
+        // Read timestamp
         data.read(buf, sizeof(uint64_t));
+
+        // Read trigger code
         data.read(buf, sizeof(uint8_t));
         uint8_t trigCode = *((uint8_t*)buf);
+
+        // Read chunk size
         data.read(buf, sizeof(uint32_t));
         uint32_t chunkSz = *((uint32_t*)buf);
+
+        // Read frame data
         std::vector<char> buffer(chunkSz);
         data.read(buffer.data(), chunkSz);
         cv::Mat mat = cv::imdecode(buffer, cv::IMREAD_ANYCOLOR);
