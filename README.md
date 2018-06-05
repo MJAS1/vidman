@@ -120,7 +120,7 @@ Duration is the maximum duration of a video clip in milliseconds. The clip can
 then be played with a playback event, e.g.:
 
 ```
-object: type=video, id=0, duration=2000`
+object: type=video, id=0, duration=2000
 event: type=record, start=0, duration=2000, delay=2000, objectId=0
 event: type=playback, start=0, duration=2000, objectId=0
 ```
@@ -129,8 +129,8 @@ The detect motion event tracks movement and displays the duration of the
 movement in milliseconds. If the duration of the movement is in the interval
 target±tolerance, the feedback time is shown in green, otherwise in red. It
 works by comparing subsequent frames and counting the number of changes in
-pixels. If the number of changes exceeds a threshold value defined in the
-config file, the triggercode is sent. Depending on the environment, the
+pixels. If the number of changes exceeds the threshold value defined in the
+config file, the trigger code is sent. Depending on the environment, the
 threshold value might need to be adjusted. If there is a lot of background
 noise you should increase the value from default 10. The value can be set in
 the config file ~/.config/BECS/VidMan.conf by changing the variable
