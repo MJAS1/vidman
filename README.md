@@ -1,11 +1,12 @@
 ## Intro
 
-This software is used to control the experimental flow of
-magnetoencephalography experiments using real-time video feedback of hands as
-stimulus. It can be used to send trigger signals via the parallel port each
-time the video feed is modified. Thus far, a Stingray F033C FireWire video
-camera has been used during the experiments, but any FireWire camera should
-work.
+This software is released under the GNU General Public License version 3. 
+
+VidMan is used to control the experimental flow of magnetoencephalography
+experiments using real-time video feedback of hands as stimulus. It can be used
+to send trigger signals via the parallel port each time the video feed is
+modified. Thus far, a Stingray F033C FireWire video camera has been used during
+the experiments, but any FireWire camera should work.
 
 VidMan has been tested on Ubuntu 16.04 LTS. Some problems with vsync were
 encountered on Ubuntu 12.04 LTS, but newer versions should be fine. It requires
@@ -17,8 +18,9 @@ However, vsync is required to make the trigger-to-stimulus delay constant.
 
 ## Installation
 
-VidMan requires Qt and at least OpenCV 3.0 to compile. Other packages required
-are libjpeg-dev and libdc1394-22-dev, which can be installed via:
+VidMan requires Qt (https://www.qt.io/) and OpenCV 3.0 or higher
+(https://opencv.org) to compile. Other packages required are libjpeg-dev and
+libdc1394-22-dev, which can be installed via:
 
 	sudo apt-get install libjpeg-dev libdc1394-22-dev 
 
@@ -34,12 +36,12 @@ VidMan works by applying specific events to each frame captured by the video
 camera. The starting time and other parameters of each event must be speficied
 in the text editor. To declare an event, the following syntax is used:
 
-	event: type=flip, start=100, delay=1000, id=1
+	event: type=flip, start=100, delay=1000, id=1, trigcode=2
 
 This declares an event that flips the frame starting 100 ms after the previous
-event. By setting delay to 1000, the next event starts 1000 ms after this
-event, even if its start is set to 0. To remove an event the following syntax
-can be used:
+event, and writes the trigger code 2 to the parallel port. By setting delay to
+1000, the next event starts 1000 ms after this event, even if its start is set
+to 0. To remove an event the following syntax can be used:
 
     delete: start=2000, id=1
 
@@ -108,9 +110,16 @@ config file, the triggercode is sent. Depending on the environment, the
 threshold value might need to be adjusted. If there is a lot of background
 noise you should increase the value from default 10. The value can be set in
 the config file ~/.config/BECS/VidMan.conf by changing the variable
-movementSensitivity. To check how well the motion detection is working, open
-the motion dialog from menu->view->motion dialog.
+movementThreshold. To check how well the motion detection is working, open the
+motion dialog from menu->view->motion dialog.
 
 The script can be paused with:
 
 	pause
+
+## Acknowledgements
+
+VidMan makes use of the following open source projects:
+
+	-[The Helsinki VideoMEG Project]: https://github.com/andreyzhd/VideoMEG
+	-[Elementary icons]: https://github.com/elementary/icons
