@@ -9,7 +9,7 @@ VidMan can be used to:
 - Modifify the video feed in real time.
 - Control the experiment with scripts specifying event timings and effects.
 - Detect movement onset and end from the feed.
-- Write trigger signals to the parallel port to detect event onsets from MEG signal.
+- Write trigger signals to the parallel port to detect event/movement onsets from MEG signal.
 
 Thus far, a Stingray F033C FireWire video camera has been used during
 the experiments, but any FireWire camera should work.
@@ -146,3 +146,4 @@ VidMan makes use of the following open source projects:
 
 -   [The Helsinki VideoMEG Project](https://github.com/andreyzhd/VideoMEG)
 -   [Elementary icons](https://github.com/elementary/icons)
+-   [Examples of the Qt Toolkit](http://doc.qt.io/qt-5/qtexamplesandtutorials.html)

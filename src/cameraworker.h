@@ -1,3 +1,22 @@
+/*
+ * cameraworker.h
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef CAMERAWORKER_H
 #define CAMERAWORKER_H
 
@@ -12,11 +31,12 @@ class Camera;
 
 /*!
  * This class acquires, processes and timestamps frames for a single Camera
- * object. The processed frames are then inserted to the cyclic data buffer.
- * Events in the defaultEvents_ container are applied to each frame by default.
- * Other events are added with the addEvent()-function. Instances of this class
- * should be moved to the same QThread with GLWorker to ensure that they are
- * correctly synced together.
+ * object. The processed frames are subsequently inserted to the cyclic data
+ * buffer. Events in the defaultEvents_ container are applied to each frame by
+ * default. Other events are added with the addEvent()-function.
+ *
+ * Instances of this class should be moved to the same QThread with the glWorker
+ * to ensure that they are correctly synced together.
  */
 class CameraWorker : public QObject
 {

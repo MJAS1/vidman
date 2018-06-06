@@ -1,3 +1,22 @@
+/*
+ * camera.h
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef CAMERA_H
 #define CAMERA_H
 
@@ -5,7 +24,7 @@
 #include <dc1394/dc1394.h>
 
 /*!
- * This class is used to control the FireWire video camera. It uses dc1394
+ * This class is used to control a FireWire video camera. It uses dc1394
  * library to access the camera's register and OpenCV to acquire frames.
  */
 class Camera
@@ -27,7 +46,10 @@ public:
     void setWhiteBalance(uint32_t wb);
     void setFPS(int fps);
 
-    //Allows the camera to be controlled by an external trigger source.
+    /*
+     * Allows the camera to be controlled by an external trigger source
+     * (e.g., a signal generator).
+     */
     void setExternTrigger(bool on);
 
     //Grab frame.

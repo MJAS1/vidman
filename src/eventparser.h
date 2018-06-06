@@ -1,3 +1,22 @@
+/*
+ * eventparser.h
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef EVENTPARSER_H
 #define EVENTPARSER_H
 
@@ -20,7 +39,7 @@ struct Frame{
     uint8_t trigCode_;
 };
 
-/*
+/*!
  * VideoObject is used to create record- and playback-events. It contains the
  * frames belonging to the particular video and the duration in milliseconds.
  */
@@ -56,8 +75,8 @@ struct EventAttributes {
 /*!
  * This class parses events from a QStringList and stores them in an
  * EventContainer. The QStringList is created from MainWindow's TextEdit when
- * start is clicked. LoadEvents returns false if the input text is incorrectly
- * formatted.
+ * start is clicked. LoadEvents returns false and emits an error message if the
+ * input is incorrectly formatted.
  */
 class EventParser : public QObject
 {

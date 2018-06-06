@@ -1,8 +1,28 @@
+/*
+ * cameraworker.cpp
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <cstring>
 #include <sched.h>
 #include <time.h>
-#include <cstring>
 #include <QImage>
 #include <QCoreApplication>
+
 #include "settings.h"
 #include "cameraworker.h"
 #include "camera.h"
@@ -22,7 +42,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     defaultTrig1_ = settings.defaultTrig1;
     defaultTrig2_ = settings.defaultTrig2;
 
-    //Setup defaultEvents for processing each frame captured by the camera.
+    //Setup defaultEvents_ for processing each frame captured by the camera.
     if(settings.flip) {
         int code = settings.flipCode;
         defaultEvents_->insertSorted(EventPtr(new FlipEvent(0, code)));

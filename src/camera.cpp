@@ -1,3 +1,22 @@
+/*
+ * camera.cpp
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <iostream>
 #include <unistd.h>
 
@@ -35,7 +54,7 @@ Camera::Camera() :
         return;
     }
 
-    // use the first camera in the list
+    // Use the first camera in the list
     dc1394Camera_ = dc1394_camera_new(dc1394Context_, camList_->ids[0].guid);
     if (!dc1394Camera_) {
         cerr << "Failed to initialize camera with guid " << camList_->ids[0].guid

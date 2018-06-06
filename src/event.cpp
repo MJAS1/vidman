@@ -1,3 +1,22 @@
+/*
+ * event.cpp
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <QImage>
 
 #include "event.h"
@@ -142,8 +161,10 @@ void ImageEvent::apply(cv::Mat &frame)
         overlayImage(frame, image_, frame, pos_);
 }
 
-// Code from Jepson's Blog:
-// http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
+/*
+ * Code from Jepson's Blog:
+ * http://jepsonsblog.blogspot.fi/2012/10/overlay-transparent-image-in-opencv.html
+ */
 void ImageEvent::overlayImage(const cv::Mat &background, const cv::Mat &foreground,
   cv::Mat &output, const cv::Point2i& location)
 {
@@ -341,8 +362,10 @@ MotionDetectorEvent::MotionDetectorEvent(int start, int target, int tolerance,
     threshold_ = settings.movementThreshold;
     textPos_ = cv::Point(x, y);
 
-    // Detect movement only from this area. Might have to be changed for future
-    // experiments.
+    /*
+     * Detect movement only from this area. ROI might have to be changed/removed
+     * for future experiments.
+     */
     roi_ = cv::Rect(0, 125, 640, 225);
 }
 
@@ -407,7 +430,7 @@ void MotionDetectorEvent::waiting()
 void MotionDetectorEvent::tracking()
 {
     if(nChanges() < threshold_) {
-        //Finish timer is used to keep track how long the image has been still.
+        // Timer to keep track of how long the image has been still.
         finishTimer_.start();
         state_ = MAYBE_FINISHED;
     }
@@ -438,8 +461,8 @@ void MotionDetectorEvent::maybeFinished()
              * After the movement has finished, this event doesn't track
              * movement anymore and is just used to write the duration of the
              * movement on the frame. Thus, the priority needs to be changed.
-             * The priorityChanged signal is connected to the eventcontainer so
-             * that it is resorted by priority.
+             * The priorityChanged() signal is connected to the sort() slot of
+             * eventcontainer so that it is resorted by priority.
              */
             priority_ = DEFAULT_PRIORITY;
             emit priorityChanged();
@@ -451,7 +474,7 @@ void MotionDetectorEvent::maybeFinished()
 
 void MotionDetectorEvent::finished(cv::Mat &frame)
 {
-    //Draw the duration of the movement on the frame.
+    // Draw the duration of the movement on the frame.
     if(finishTimer_.elapsed() < TextDuration)
         cv::putText(frame, std::string(std::to_string(time_)),
                     textPos_, cv::FONT_HERSHEY_DUPLEX, 1, color_, 2);
@@ -463,8 +486,10 @@ int MotionDetectorEvent::nChanges()
 {
     const int White = 255;
 
-    /* Create a black and white differential image, where white pixels represent
-     * a difference. */
+    /*
+     * Create a black and white differential image, where white pixels represent
+     * a difference.
+     */
     cv::Mat d1, d2;
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
@@ -478,7 +503,7 @@ int MotionDetectorEvent::nChanges()
     int min_x = result_.cols, min_y = result_.rows;
     int max_x = 0, max_y = 0;
 
-    //Compute the amount of white pixels.
+    // Compute the amount of white pixels.
     for(int i = 0; i < roi_.width; i += 2) {
         for(int j = 0; j < roi_.height; j += 2) {
             if(static_cast<int>(result_.at<uchar>(j, i)) == White) {

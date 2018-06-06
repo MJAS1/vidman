@@ -1,3 +1,22 @@
+/*
+ * eventparser.cpp
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
@@ -16,17 +35,19 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
     videoObjects_.clear();
     events.clear();
 
-    //Start parsing the events, line by line
+    // Start parsing the events, line by line
     for(int i = 0; i < strList.size(); i++)
     {
         currentLine_ = i+1;
 
-        /* The string should be of the form "Event: type=.., start=.., etc.."
-         * Split from ':', remove whitespaces and convert to lower case. */
+        /*
+         * The string should be of the form "Event: type=.., start=.., etc.."
+         * Split from ':', remove whitespaces and convert to lower case.
+         */
         QStringList split = strList[i].split(':');
         QString str = split[0].toLower().replace(" ", "").simplified();
 
-        //Ignore comments
+        // Ignore comments
         if(str[0] == '#' || split[0].simplified() == "");
         else if(split.size() > 1) {
             if(str == "event") {
@@ -71,7 +92,7 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events) const
     QStringList strList = str.split(',');
     EventAttributes attr;
 
-    //Fill all the parameters required to create an event
+    // Fill all the parameters required to create an event
     for(int i = 0; i < strList.size(); i++) {
         if(strList[i].contains("=")) {
             QStringList split = strList[i].split('=');
@@ -80,7 +101,7 @@ bool EventParser::parseEvent(const QString &str, EventContainer& events) const
         }
     }
 
-    //Create the new event with the acquired parameters
+    // Create the new event with the acquired parameters
     EventPtr ev = createEvent(attr);
     if(!ev)
         return false;
@@ -533,25 +554,25 @@ EventPtr EventParser::createDelEvent(EventAttributes &attr) const
                                   attr.trigCode_));
             switch(attr.type_) {
             case Event::EVENT_FLIP:
-                ev->appendLog("Flip event removed. ");
+                ev->appendLog("Flip event removed.");
                 break;
             case Event::EVENT_FADEIN:
-                ev->appendLog("Fade in event removed. ");
+                ev->appendLog("Fade in event removed.");
                 break;
             case Event::EVENT_FADEOUT:
-                ev->appendLog("Fade out event removed. ");
+                ev->appendLog("Fade out event removed.");
                 break;
             case Event::EVENT_IMAGE:
-                ev->appendLog("Image event removed. ");
+                ev->appendLog("Image event removed.");
                 break;
             case Event::EVENT_TEXT:
-                ev->appendLog("Text event removed. ");
+                ev->appendLog("Text event removed.");
                 break;
             case Event::EVENT_ROTATE:
-                ev->appendLog("Rotate event removed. ");
+                ev->appendLog("Rotate event removed.");
                 break;
             case Event::EVENT_FREEZE:
-                ev->appendLog("Freeze event removed. ");
+                ev->appendLog("Freeze event removed.");
                 break;
             case Event::EVENT_ZOOM:
                 ev->appendLog("Zoom event removed.");
@@ -571,7 +592,7 @@ EventPtr EventParser::createDelEvent(EventAttributes &attr) const
         }
         else {
             emit error(QString("Error: remove event declared without id or type"
-                               "in line %1").arg(currentLine_));
+                               " in line %1").arg(currentLine_));
         }
     }
 

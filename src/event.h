@@ -1,3 +1,22 @@
+/*
+ * event.h
+ *
+ * Author: Manu Sutela
+ * Copyright (C) 2018 Aalto University
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef EVENT_H
 #define EVENT_H
 
@@ -17,15 +36,20 @@ struct Frame;
 class MainWindow;
 
 /*!
- * Event objects are used to specify the starting time, duration, effects etc.
- * of video events handled by the program. Each event can modify an OpenCV Mat
- * video frame or an EventContainer holding other events by using the apply()
- * virtual functions. apply(EventContainer&) can be used, for example, to remove
- * other events from the container by DelEvents or other events for which only
- * one event of the type should exist. When apply(frame) is used for the first
- * time, the event will emit a triggered() signal as long as the derived class
- * calls Event::apply(frame) in the overrided function.
+ * Event objects are used to specify the starting time, duration, effects,
+ * trigger code, etc. of video events handled by the program. Each event can
+ * modify an OpenCV Mat video frame or an EventContainer holding other events by
+ * using the apply() virtual functions.
+ *
+ * The apply(EventContainer&) function can be used, for example, to remove
+ * other events from the container. This is used by DelEvents and other events
+ * for which only one event of the type should exist inside the container.
+ *
+ * When apply(frame) is used for the first time, the event will emit a
+ * triggered() signal as long as the derived class calls Event::apply(frame) in
+ * the overrided function.
  */
+
 class Event;
 typedef typename std::unique_ptr<Event> EventPtr;
 
@@ -34,7 +58,7 @@ class Event : public QObject
     Q_OBJECT
 public:
 
-    // All possible events
+    // All possible event types
     enum EventType
     {
         EVENT_NULL,
@@ -52,7 +76,7 @@ public:
         EVENT_DETECT_MOTION
     };
 
-    // Priorities are used to determine the order in which to apply an event.
+    // Priorities are used to determine the order in which to apply events.
     enum Priority
     {
         DEFAULT_PRIORITY = 0,
@@ -93,7 +117,9 @@ signals:
 protected:
     EventType   type_;
 
-    int         start_, delay_, duration_;
+    int         start_;
+    int         delay_;
+    int         duration_;
     int         id_;
     int         trigCode_;
     Priority    priority_;
@@ -163,7 +189,7 @@ private:
 class FadeOutEvent: public Event
 {
 public:
-    explicit FadeOutEvent(int start, int duration = 5, int delay=0, int id = -1,
+    explicit FadeOutEvent(int start, int duration=5, int delay=0, int id = -1,
                           uint8_t trigCode = 0);
 
     void apply(cv::Mat &frame);
@@ -173,8 +199,10 @@ public:
 
 private:
     TimerWithPause  timerWithPause_;
-    int     amount_, interval_;
-    bool    stopped_;
+
+    int             amount_;
+    int             interval_;
+    bool            stopped_;
 };
 
 /*!
@@ -194,7 +222,9 @@ public:
 
 private:
     TimerWithPause  timerWithPause_;
-    int             amount_, interval_;
+
+    int             amount_;
+    int             interval_;
     bool            stopped_;
 };
 
@@ -215,7 +245,6 @@ private:
     cv::Point2i pos_;
 };
 
-
 class TextEvent : public Event
 {
 public:
@@ -231,7 +260,6 @@ private:
     QString     str_;
 };
 
-
 class RotateEvent : public Event
 {
 public:
@@ -244,7 +272,6 @@ public:
 private:
     int angle_;
 };
-
 
 class FreezeEvent : public Event
 {
@@ -312,19 +339,24 @@ private:
 };
 
 /*!
- * This event detects movement between subsequent frames. It stores three frames:
- * previous, current and next, and detects motion using "differential images"
- * method https://blog.cedric.ws/opencv-simple-motion-detection.
+ * This event detects movement between subsequent frames. It stores three
+ * frames: previous, current and next, and detects motion using "differential
+ * images" method (https://blog.cedric.ws/opencv-simple-motion-detection).
  *
- * After movement has finished, the duration from event onset to movement finish
+ * After movement has finished, the duration from event onset to movement end
  * is drawn as feedback to the subsequent frames. Depending on the target_ and
  * tolerance_  variables, the time is drawn either in green if the duration is
- * within limits or in red if not. The event emits the succesCode if the
- * movement succeeded and the failCode otherwise.
+ * within limits (succesfull movement) or in red if not (failed movement). The
+ * event emits the succesCode if the movement succeeded and the failCode
+ * otherwise.
  *
  * This class can also emit a QPixmpap of the differential image with the
  * movement shown as white pixels. The emitted pixmap can then be drawn to a
  * MotionDialog.
+ *
+ * Currently movement is only detected from a ROI where the right hand was
+ * situated during the MEG experiments. This may have to be changed in the
+ * future for different experiments.
  */
 class MotionDetectorEvent : public Event
 {
@@ -355,10 +387,10 @@ signals:
     void            priorityChanged();
 
 private:
-    //How long the the feedback duration is shown (in ms).
+    // How long the the feedback duration is shown (in ms).
     static const int TextDuration = 1000;
 
-    //Minimum duration of no motion to consider movement as finished (in ms).
+    // Minimum duration of no motion to consider movement as finished (in ms).
     static const int MinStopTime = 100;
 
     void            createMotionPixmap();
