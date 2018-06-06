@@ -171,7 +171,7 @@ bool EventParser::parseObject(const QString &str)
              * make sure that large blocks of memory don't need to be reallocated
              * while recording.
              */
-            videoObject->frames_.reserve(attr.duration_/1000*settings_.fps + 10);
+            videoObject->frames_.reserve(int(attr.duration_/1000.0*settings_.fps) + 10);
         }
         videoObjects_.insert(attr.objectId_, videoObject);
     }
@@ -217,7 +217,7 @@ bool EventParser::loadVideo(const QString &fn,
     }
 
     //Load frames and trigcodes
-    for(int i = 0; i < video->duration_/16; ++i){
+    for(int i = 0; i < int(video->duration_/16.7); ++i){
         char buf[sizeof(uint64_t)];
         // Read timestamp
         data.read(buf, sizeof(uint64_t));

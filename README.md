@@ -2,6 +2,8 @@
 
 This software is released under the GNU General Public License version 3. 
 
+![windows](img/vidman.png)
+
 VidMan is used to control the experimental flow of magnetoencephalography (MEG)
 experiments using real-time video feedback of hands as stimulus.
 
