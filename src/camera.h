@@ -52,7 +52,7 @@ public:
      */
     void setExternTrigger(bool on);
 
-    //Grab frame.
+    // Grab frame.
     void operator>>(cv::Mat& frame);
 
 private:

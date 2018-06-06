@@ -29,7 +29,7 @@ Camera::Camera() :
     dc1394Camera_(nullptr), dc1394Context_(nullptr),  camList_(nullptr),
     empty_(true)
 {
-    //Initialize camera
+    // Initialize the camera
     capCam_.open(CV_CAP_FIREWIRE);
     if(!capCam_.isOpened()) {
         cerr << "No cameras found" << endl;
@@ -80,7 +80,7 @@ Camera::~Camera()
 void Camera::setFPS(int fps)
 {
     if(!capCam_.set(CV_CAP_PROP_FPS, fps))
-        cerr << "Could not set framerate" << endl;
+        cerr << "Couldn't set framerate" << endl;
 }
 
 void Camera::operator >>(cv::Mat& frame)
@@ -114,7 +114,7 @@ void Camera::setShutter(int newVal)
                               newVal + SHUTTER_OFFSET);
 
     if (err != DC1394_SUCCESS)
-        cerr << "Could not set shutter register" << endl;
+        cerr << "Couldn't set shutter register" << endl;
 }
 
 void Camera::setGain(int newVal)
@@ -128,28 +128,28 @@ void Camera::setGain(int newVal)
 
 void Camera::setUV(int newVal, int vrValue)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
 
-    // Since UV and VR live in the same register, we need to take care of both
+    // UV and VR are located in the same register so both need to be used.
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR,
                               newVal * UV_REG_SHIFT + vrValue
                               + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
-        cerr << "Could not set white balance register" << endl;
+        cerr << "Couldn't set white balance register" << endl;
 }
 
 void Camera::setVR(int newVal, int uvValue)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
 
-    // Since UV and VR live in the same register, we need to take care of both
+    // UV and VR are located in the same register, so both need to be used.
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR,
                               newVal + UV_REG_SHIFT * uvValue
                               + WHITEBALANCE_OFFSET);
 
     if (err != DC1394_SUCCESS)
-        cerr << "Could not set white balance register" << endl;
+        cerr << "Couldn't set white balance register" << endl;
 }
 
 uint32_t Camera::getWhiteBalance() const
@@ -161,18 +161,17 @@ uint32_t Camera::getWhiteBalance() const
 
 void Camera::setWhiteBalance(uint32_t wb)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
 
-    // Since UV and VR live in the same register, we need to take care of both
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR, wb);
 
     if (err != DC1394_SUCCESS)
-        cerr << "Could not set white balance register" << endl;
+        cerr << "Couldn't set white balance register" << endl;
 }
 
 void Camera::setExternTrigger(bool on)
 {
-    dc1394error_t	err;
+    dc1394error_t err;
     err = dc1394_external_trigger_set_power(dc1394Camera_,
                                             on ? DC1394_ON : DC1394_OFF);
 

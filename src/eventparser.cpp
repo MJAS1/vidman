@@ -86,7 +86,7 @@ bool EventParser::loadEvents(const QStringList &strList, EventContainer& events,
 bool EventParser::parseEvent(const QString &str, EventContainer& events) const
 {
     /*
-     * Split the string to get a list of strings of the format param=val e.g.,
+     * Split the string to get a list of strings of the format param=val; e.g.,
      * {"type=...", "start=...", etc..}.
      */
     QStringList strList = str.split(',');
@@ -161,7 +161,7 @@ bool EventParser::parseObject(const QString &str)
         shared_ptr<VideoObject> videoObject(new VideoObject);
         videoObject->duration_ = attr.duration_;
 
-        //Load video from file or reserve memory for recording.
+        // Load video from file or reserve memory for recording.
         if(attr.fileName_.size()) {
             loadVideo(attr.fileName_, videoObject);
         }

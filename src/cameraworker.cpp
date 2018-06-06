@@ -42,7 +42,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
     defaultTrig1_ = settings.defaultTrig1;
     defaultTrig2_ = settings.defaultTrig2;
 
-    //Setup defaultEvents_ for processing each frame captured by the camera.
+    // Setup defaultEvents_ for processing each frame captured by the camera.
     if(settings.flip) {
         int code = settings.flipCode;
         defaultEvents_->insertSorted(EventPtr(new FlipEvent(0, code)));

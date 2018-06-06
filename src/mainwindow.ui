@@ -1190,6 +1190,22 @@ QToolBar {
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>242</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>fileSave()</slot>
@@ -1220,5 +1236,6 @@ QToolBar {
   <slot>addDeleteType()</slot>
   <slot>onViewMotionDetector(bool)</slot>
   <slot>addMotionDetectorEvent()</slot>
+  <slot>closeEvent(QCloseEvent*)</slot>
  </slots>
 </ui>
