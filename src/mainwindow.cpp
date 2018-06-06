@@ -107,11 +107,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::stopThreads()
 {
-    /*
-     * The piece of code stopping the threads should execute fast enough,
-     * otherwise cycVideoBufRaw or cycVideoBufJpeg buffer might overflow. The
-     * order of stopping the threads is important.
-     */
+    // Order is important.
     videoFileWriter_->stop();
     videoCompressorThread_->stop();
     glworker_.stop();
