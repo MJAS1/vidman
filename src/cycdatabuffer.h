@@ -34,10 +34,10 @@ const int MAXLOG = 50;
 // Attributes associated with each data chunk.
 typedef struct
 {
-    uint32_t	chunkSize;
-    uint64_t	timestamp;
+    uint32_t    chunkSize;
+    uint64_t    timestamp;
     uint8_t     trigCode;
-    bool		isRec;
+    bool        isRec;
     char        log[MAXLOG];
 } ChunkAttrib;
 
@@ -91,16 +91,16 @@ signals:
     void chunkReady(unsigned char* _data);
 
 private:
-    volatile bool	isRec;
+    volatile bool   isRec;
 
-    unsigned char*	dataBuf;
+    unsigned char*  dataBuf;
 
     int             insertPtr;
     int             getPtr;
     int             bufSize;
 
     // Counts the number of bytes available for reading
-    QSemaphore*		buffSemaphore;
+    QSemaphore*     buffSemaphore;
 };
 
 #endif /* CYCDATABUFFER_H_ */

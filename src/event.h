@@ -383,8 +383,8 @@ public:
     void apply(EventContainer&);
 
 signals:
-    void            pixmapReady(const QPixmap&);
-    void            priorityChanged();
+    void pixmapReady(const QPixmap&);
+    void priorityChanged();
 
 private:
     // How long the the feedback duration is shown (in ms).
