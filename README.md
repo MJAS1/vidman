@@ -15,14 +15,15 @@ Thus far, a Stingray F033C FireWire video camera has been used during
 the experiments, but any FireWire camera should work.
 
 VidMan syncs trigger codes with vertical blanks, i.e., a trigger code is
-written to the parallel port when the front and back buffers are swapped and a
-new frame appears on the screen. Some problems with vsync were encountered on
-some older Ubuntu versions, but newer versions should be fine. VidMan requires
-a graphics card with OpenGL support. Some older Nvidia drivers caused the
-software to sometimes hang when using vsync, but this problem should be fixed
-on newer drivers. Vsync can be turned off by modifying the config file usually
-located at ~/.config/BECS/VidMan.conf and changing the variable vsync to false.
-However, vsync is required to make the trigger-to-stimulus delay constant.
+written to the parallel port each time a the front and back buffers are swapped
+and a new frame appears on the screen. Some problems with vsync were
+encountered on some older Ubuntu versions, but newer versions should be fine.
+VidMan requires a graphics card with OpenGL support. Some older Nvidia drivers
+caused the software to sometimes hang when using vsync, but this problem should
+be fixed on newer drivers. Vsync can be turned off by modifying the config file
+usually located at ~/.config/BECS/VidMan.conf and changing the variable vsync
+to false.  However, vsync is required to make the trigger-to-stimulus delay
+constant.
 
 ## Installation
 
@@ -131,11 +132,10 @@ target±tolerance, the feedback time is shown in green, otherwise in red. It
 works by comparing subsequent frames and counting the number of changes in
 pixels. If the number of changes exceeds the threshold value defined in the
 config file, the trigger code is sent. Depending on the environment, the
-threshold value might need to be adjusted. If there is a lot of background
-noise you should increase the value from default 10. The value can be set in
-the config file ~/.config/BECS/VidMan.conf by changing the variable
-movementThreshold. To check how well the motion detection is working, open the
-motion dialog from menu->view->motion dialog.
+threshold value might need to be adjusted. The value can be set in the config
+file ~/.config/BECS/VidMan.conf by changing the variable movementThreshold. To
+check how well the motion detection is working, open the motion dialog from
+menu->view->motion dialog.
 
 The script can be paused with `pause`.
 
