@@ -1,7 +1,5 @@
 ## About
 
-This software is released under the GNU General Public License version 3. 
-
 ![windows](img/vidman.png)
 
 VidMan is used to control the experimental flow of magnetoencephalography (MEG)
@@ -151,3 +149,5 @@ VidMan makes use of the following open source projects:
 -   [The Helsinki VideoMEG Project](https://github.com/andreyzhd/VideoMEG)
 -   [Elementary icons](https://github.com/elementary/icons)
 -   [Examples of the Qt Toolkit](http://doc.qt.io/qt-5/qtexamplesandtutorials.html)
+
+This software is released under the GNU General Public License version 3.
