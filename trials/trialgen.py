@@ -137,12 +137,12 @@ def create_trial():
         Script that can be run by the vidman application.
     """
 
-    # First block: start with 20 standard conditions then 250 conditions with
-    # 10% deviant conditions.
-    # Second block: 250 conditions with 10% deviants.
-    # Third block: Black screen with 250 standard conditions.
-    # Fourth block: 250 conditions with 10% deviants.
-    # Fifth block: 250 conditions with 10% deviants.
+    # First block: Starts with 20 standard trials after which 250 trials of
+    # which 10% are deviants.
+    # Second block: 250 trials where 10% are deviants.
+    # Third block: 250 blank trials.
+    # Fourth block: 250 trials where 10% are deviants.
+    # Fifth block: 250 trials where 10% are deviants.
     b1 = np.concatenate([create_block(20, 0, 0), create_block(225, 25, 5)])
     b2 = create_block(225, 25, 5)
     b3 = ["fade_out"] + ["blank"]*250 + ["fade_in"]

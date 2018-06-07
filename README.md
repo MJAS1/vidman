@@ -16,8 +16,10 @@ VidMan can be used to:
 Thus far, a Stingray F033C FireWire video camera has been used during
 the experiments, but any FireWire camera should work.
 
-VidMan has been tested on Ubuntu 16.04 LTS. Some problems with vsync were
-encountered on Ubuntu 12.04 LTS, but newer versions should be fine. It requires
+VidMan syncs trigger codes with vertical blanks, i.e., a trigger code is
+written to the parallel port when the front and back buffers are swapped and a
+new frame appears on the screen. Some problems with vsync were encountered on
+some older Ubuntu versions, but newer versions should be fine. VidMan requires
 a graphics card with OpenGL support. Some older Nvidia drivers caused the
 software to sometimes hang when using vsync, but this problem should be fixed
 on newer drivers. Vsync can be turned off by modifying the config file usually
@@ -71,17 +73,17 @@ The former removes the event with id 1, and the latter removes all events of
 type flip. The available events with all possible parameters for each are
 listed below:
 
-* **flip**: start, delay, id, trigcode
-* **fadein**: start, duration, delay, id, trigcode
-* **fadeout**: start, duration, delay, id, trigcode
-* **image**: start, x, y, objectid, delay, id, trigcode
-* **text**: start, string, color, x, y, delay, id, trigcode
-* **rotate**: start, angle, delay, id, trigcode
-* **freeze**: start, delay, id, trigcode
-* **zoom**: start, scale, duration, delay, id, trigcode
-* **record**: start, objectid, delay, duration, id, trigcode
-* **playback**: start, objectid, delay, duration, id, trigcode
-* **detect motion**: start, delay, id, trigcode, trigcode2, success_code, fail_code, x, y, target, tolerance
+* **flip**: start, delay, id, trig_code
+* **fadein**: start, duration, delay, id, trig_code
+* **fadeout**: start, duration, delay, id, trig_code
+* **image**: start, x, y, object_id, delay, id, trig_code
+* **text**: start, string, color, x, y, delay, id, trig_code
+* **rotate**: start, angle, delay, id, trig_code
+* **freeze**: start, delay, id, trig_code
+* **zoom**: start, scale, duration, delay, id, trig_code
+* **record**: start, object_id, delay, duration, id, trig_code
+* **playback**: start, object_id, delay, duration, id, trig_code
+* **detect motion**: start, delay, id, trig_code, trig_code2, success_code, fail_code, x, y, target, tolerance
 
 Duration in milliseconds is used for certain events that modify multiple
 subsequent frames. Note the difference between duration and delay. If you want
