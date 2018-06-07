@@ -149,9 +149,8 @@ def create_trial():
     b4 = create_block(225, 25, 5)
     b5 = create_block(225, 25, 5)
 
-    blocks = [b1, b2, b3, b4, b5]
     out = ""
-    for block in blocks:
+    for block in [b1, b2, b3, b4, b5]:
         for condition in block:
             if condition == "standard":
                 out += standard_condition(TRIG_STANDARD)
@@ -182,7 +181,6 @@ if __name__ == '__main__':
     out = create_trial()
 
     file = open(filename, 'w')
-    file.truncate()
     file.write("Object: type=image, id=0, filename="+IMG+"\n\n")
     file.write(out)
     file.close()
