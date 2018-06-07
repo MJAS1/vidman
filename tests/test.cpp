@@ -89,41 +89,41 @@ void Test::testEventParser_data()
 
     strList.clear();
     strList << "Object: type=image, id=0, filename=../img/button.png"
-            << "Event: type=image, start=2000, x=0, y=0, objectId=0";
+            << "Event: type=image, start=2000, x=0, y=0, object_id=0";
     QTest::newRow("4") << strList << true;
 
     strList.clear();
-    strList << "Event: type=flip, start=0, trigcode=10"
-			<< "Event: type=fade in, start=1000, duration=5000, delay=0, trigcode=10"
-			<< "Event: type=fade out, start=0, duration=5000, delay=0, trigcode=10"
+    strList << "Event: type=flip, start=0, trig_code=10"
+            << "Event: type=fade_in, start=1000, duration=5000, delay=0, trig_code=10"
+            << "Event: type=fade_out, start=0, duration=5000, delay=0, trig_code=10"
 			<< "Event: type=text, start=0, x=0, y=0, color=black, string=test"
 			<< "Event: type=rotate, start=99, angle=90"
-			<< "Event: type=freeze, start=0, trigcode=10"
-			<< "Delete: start=0, id=0, trigcode=3"
-			<< "Delete: start=0, type=image, trigcode=43"
-			<< "Event: type=zoom, start=0, scale=1.5, duration=2000, trigcode=10";
+            << "Event: type=freeze, start=0, trig_code=10"
+            << "Delete: start=0, id=0, trig_code=3"
+            << "Delete: start=0, type=image, trig_code=43"
+            << "Event: type=zoom, start=0, scale=1.5, duration=2000, trig_code=10";
     QTest::newRow("5") << strList << true;
 
     strList.clear();
     strList << "Object: type=video, id=0, duration=2000"
-			<< "Event: type=record, start=0, duration=2000, objectId=0"
-			<< "Event: type=playback, start=0, duration=2000, objectId=0";
+            << "Event: type=record, start=0, duration=2000, object_id=0"
+            << "Event: type=playback, start=0, duration=2000, object_id=0";
     QTest::newRow("6") << strList << true;
 
     strList.clear();
     strList << "Object: type=video, id=0, filename=../img/"
-			<< "Event: type=image, start=2000, x=0, y=0, objectId=0";
+            << "Event: type=image, start=2000, x=0, y=0, object_id=0";
     QTest::newRow("6") << strList << false;
 
     strList.clear();
     strList << "Object: type=image, id=1, filename=../img/button.png"
-			<< "Event: type=image, start=2000, x=0, y=0, objectId=0";
+            << "Event: type=image, start=2000, x=0, y=0, object_id=0";
     QTest::newRow("7") << strList << false;
 
     strList.clear();
     strList << "Object: type=video, id=0, length=1000"
-			<< "Event: type=record, start=0, duration=2000, objectId=0"
-            << "Event: type=playback, start=0, duration=2000, objectId=0";
+            << "Event: type=record, start=0, duration=2000, object_id=0"
+            << "Event: type=playback, start=0, duration=2000, object_id=0";
     QTest::newRow("8") << strList << false;
 
     strList.clear();

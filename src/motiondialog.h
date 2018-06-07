@@ -38,7 +38,7 @@ class MotionDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit MotionDialog(MainWindow *parent = 0);
+    explicit MotionDialog(MainWindow *parent = nullptr);
     ~MotionDialog();
 
 public slots:
