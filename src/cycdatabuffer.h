@@ -73,6 +73,7 @@ public:
      */
     CycDataBuffer(int _bufSize, QObject* parent = nullptr);
     virtual ~CycDataBuffer();
+
     void insertChunk(unsigned char* _data, ChunkAttrib &_attrib);
 
     /*

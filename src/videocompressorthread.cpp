@@ -48,14 +48,14 @@ void VideoCompressorThread::stoppableRun()
     while(!shouldStop_)
     {
         // JPEG-related stuff
-        struct jpeg_compress_struct	cinfo;
-        struct jpeg_error_mgr		jerr;
-        JSAMPROW 					row_pointer;
-        unsigned char*				jpgBuf=NULL;
-        unsigned long				jpgBufLen=0;
+        struct jpeg_compress_struct info;
+        struct jpeg_error_mgr       jerr;
+        JSAMPROW                    row_pointer;
+        unsigned char*              jpgBuf=NULL;
+        unsigned long               jpgBufLen=0;
 
-        unsigned char*				data;
-        ChunkAttrib					chunkAttrib;
+        unsigned char*              data;
+        ChunkAttrib                 chunkAttrib;
 
         // Get raw image from the input buffer
         data = inpBuf_->getChunk(&chunkAttrib);
@@ -79,8 +79,7 @@ void VideoCompressorThread::stoppableRun()
         jpeg_start_compress(&cinfo, TRUE);
 
         // Write one row at a time
-        while(cinfo.next_scanline < cinfo.image_height)
-        {
+        while(cinfo.next_scanline < cinfo.image_height) {
             row_pointer = (data + (cinfo.next_scanline * cinfo.image_width * 3));
             jpeg_write_scanlines(&cinfo, &row_pointer, 1);
         }

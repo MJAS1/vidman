@@ -139,7 +139,7 @@ void VideoDialog::onNewFrame(unsigned char* buf)
 {
     ChunkAttrib chunkAttrib = *((ChunkAttrib*)(buf-sizeof(ChunkAttrib)));
 
-    //Update and show FPS
+    // Update and show FPS
     if(frameCnt_ == 10) {
         float fps = 1 / (float(chunkAttrib.timestamp - prevTimestamp_) / 1000);
         ui->FPSLabel->setText(QString("FPS: %1").arg(fps, 0, 'f', 2));

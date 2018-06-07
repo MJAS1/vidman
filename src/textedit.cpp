@@ -124,8 +124,7 @@ void TextEdit::highlightCurrentLine()
 {
     QList<QTextEdit::ExtraSelection> extraSelections;
 
-    if(!isReadOnly())
-    {
+    if(!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
 
         QColor lineColor = QColor(Qt::yellow).lighter(160);
@@ -151,10 +150,8 @@ void TextEdit::lineNumberAreaPaintEvent(QPaintEvent *ev)
     int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
     int bottom = top + (int)blockBoundingRect(block).height();
 
-    while(block.isValid() && top <= ev->rect().bottom())
-    {
-        if(block.isVisible() && bottom >= ev->rect().top())
-        {
+    while(block.isValid() && top <= ev->rect().bottom()) {
+        if(block.isVisible() && bottom >= ev->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(Qt::black);
             painter.drawText(0, top, lineNumberArea_->width(),

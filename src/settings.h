@@ -49,14 +49,14 @@ public:
     void            setValue(const QString &key, const QVariant &value);
 
     // video
-    int				jpgQuality;
+    int             jpgQuality;
     int             fps;
     int             movementThreshold;
     int             videoWidth;
     int             flipCode;
     int             defaultTrig1;
     int             defaultTrig2;
-    bool			color;
+    bool            color;
     bool            vsync;
     bool            flip;
     bool            fixPoint;
@@ -65,7 +65,7 @@ public:
     uint32_t        gain;
 
     // misc
-    char			storagePath[500];
+    char            storagePath[500];
     int             printerPortAddr;
 
 private:

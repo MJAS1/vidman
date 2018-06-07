@@ -46,13 +46,13 @@ FileWriter::~FileWriter()
 
 void FileWriter::stoppableRun()
 {
-	unsigned char*	databuf;
-	bool			prevIsRec=false;
-	ofstream		outData;
-    ChunkAttrib		chunkAttrib;
+    unsigned char*  databuf;
+    bool            prevIsRec=false;
+    ofstream        outData;
+    ChunkAttrib     chunkAttrib;
 
-    unsigned char*	header;
-    int				headerLen;
+    unsigned char*  header;
+    int             headerLen;
 
     while (true) {
         databuf = cycBuf_->getChunk(&chunkAttrib);

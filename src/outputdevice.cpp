@@ -24,6 +24,7 @@
 #include <cerrno>
 #include <iostream>
 #include <string.h>
+
 #include "outputdevice.h"
 
 using namespace std;

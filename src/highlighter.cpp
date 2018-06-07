@@ -70,8 +70,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
                  << "\\bdetect_motion\\b" << "\\brecord\\b" << "\\bplayback\\b"
                  << "\\bvideo\\b";
 
-    foreach(const QString& pattern, typePatterns)
-    {
+    foreach(const QString& pattern, typePatterns) {
         rule.pattern = QRegExp(pattern);
         rule.format = typeFormat;
         highlightingRules.append(rule);
@@ -86,8 +85,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
                     << "\\btolerance\\b" << "\\baxis\\b" << "\\bsuccess_code\\b"
                     << "\\bfail_code\\b";
 
-    foreach(const QString& pattern, keywordPatterns)
-    {
+    foreach(const QString& pattern, keywordPatterns) {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
@@ -98,8 +96,7 @@ Highlighter::Highlighter(QTextDocument *parent) :
     QStringList blockPatterns;
     blockPatterns << "event" << "delete" << "\\bobject\\b" << "pause";
 
-    foreach(const QString& pattern, blockPatterns)
-    {
+    foreach(const QString& pattern, blockPatterns) {
         rule.pattern = QRegExp(pattern);
         rule.format = blockFormat;
         highlightingRules.append(rule);
@@ -117,12 +114,10 @@ Highlighter::Highlighter(QTextDocument *parent) :
 
 void Highlighter::highlightBlock(const QString &text)
 {
-    foreach(const HighlightingRule& rule, highlightingRules)
-    {
+    foreach(const HighlightingRule& rule, highlightingRules) {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text.toLower());
-        while(index >= 0)
-        {
+        while(index >= 0) {
             int length = expression.matchedLength();
             setFormat(index, length, rule.format);
             index = expression.indexIn(text.toLower(), index + length);
@@ -135,17 +130,14 @@ void Highlighter::highlightBlock(const QString &text)
     if(previousBlockState() != 1)
         startIndex = commentStartExpression.indexIn(text.simplified());
 
-    while(startIndex >= 0)
-    {
+    while(startIndex >= 0) {
         int endIndex = commentEndExpression.indexIn(text, startIndex);
         int commentLength;
-        if(endIndex==-1)
-        {
+        if(endIndex==-1) {
             setCurrentBlockState(1);
             commentLength = text.length()-startIndex;
         }
-        else
-        {
+        else {
             commentLength = endIndex - startIndex + commentEndExpression.matchedLength();
         }
         setFormat(startIndex, commentLength, commentFormat);

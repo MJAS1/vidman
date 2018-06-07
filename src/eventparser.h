@@ -111,7 +111,7 @@ private:
     Settings settings_;
     int currentLine_;
 
-    //VideoObjects shared between a RecordEvent and a PlaybackEvent
+    // VideoObjects shared between a RecordEvent and a PlaybackEvent
     QMap<int, shared_ptr<VideoObject>>  videoObjects_;
     QMap<int, cv::Mat>                  imageObjects_;
 };

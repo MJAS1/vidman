@@ -42,8 +42,8 @@ protected:
     virtual void stoppableRun();
 
 private:
-    CycDataBuffer*	inpBuf_;
-    CycDataBuffer*	outBuf_;
+    CycDataBuffer*  inpBuf_;
+    CycDataBuffer*  outBuf_;
     int             jpgQuality_;
 };
 

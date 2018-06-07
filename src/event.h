@@ -183,9 +183,7 @@ private:
     int axis_;
 };
 
-/*!
- * This event fades the video view to a black screen.
- */
+//! This event fades the video view to a black screen.
 class FadeOutEvent: public Event
 {
 public:
@@ -205,9 +203,8 @@ private:
     bool            stopped_;
 };
 
-/*!
- * This event fades the video view back to normal from black screen.
- */
+
+//! This event fades the video view back to normal from black screen.
 class FadeInEvent : public Event
 {
 public:
