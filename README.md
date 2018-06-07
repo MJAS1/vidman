@@ -49,7 +49,7 @@ camera. The starting time and other parameters of each event must be speficied
 in the text editor. To declare an event, the following syntax is used:
 
 ```
-event: type=flip, start=100, delay=1000, id=1, trigcode=2
+event: type=flip, start=100, delay=1000, id=1, trig_code=2
 ```
 
 This declares an event that flips the frame starting 100 ms after the previous
@@ -81,7 +81,7 @@ listed below:
 * **zoom**: start, scale, duration, delay, id, trig_code
 * **record**: start, object_id, delay, duration, id, trig_code
 * **playback**: start, object_id, delay, duration, id, trig_code
-* **detect motion**: start, delay, id, trig_code, trig_code2, success_code, fail_code, x, y, target, tolerance
+* **detect motion**: start, delay, id, trig_code, success_code, fail_code, x, y, target, tolerance
 
 Duration in milliseconds is used for certain events that modify multiple
 subsequent frames. Note the difference between duration and delay. If you want
@@ -96,14 +96,12 @@ event: type=freeze
 Note also that most parameters are optional. Omitting start, for example, sets
 it to the default value of 0. 
 
-Each event has a trigcode parameter which is used to specify the code written
+Each event has a trig_code parameter which is used to specify the code written
 to the serial or parallel port when the event is applied. You need to run the
 software as root in order to gain access to the ports. You also need to specify
 which port you want to use by choosing menu->edit->use serial port or use
 parallel port. The address of the parallel port may have to be changed in the
-config file, if the default address is not correct. Motion detection uses two
-trigcodes: trigcode is emitted on event onset and trigcode2 when the movement
-stops.
+config file, if the default address is not correct. 
 
 To use image, record and playback events, an object needs to declared. For
 image use the following syntax:
