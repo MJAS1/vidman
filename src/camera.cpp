@@ -112,7 +112,6 @@ void Camera::setShutter(int newVal)
     dc1394error_t err;
     err = dc1394_set_register(dc1394Camera_, SHUTTER_ADDR,
                               newVal + SHUTTER_OFFSET);
-
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set shutter register" << endl;
 }
@@ -121,7 +120,6 @@ void Camera::setGain(int newVal)
 {
     dc1394error_t err;
     err = dc1394_set_register(dc1394Camera_, GAIN_ADDR, newVal + GAIN_OFFSET);
-
     if (err != DC1394_SUCCESS)
         cerr << "Could not set gain register" << endl;
 }
@@ -134,7 +132,6 @@ void Camera::setUV(int newVal, int vrValue)
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR,
                               newVal * UV_REG_SHIFT + vrValue
                               + WHITEBALANCE_OFFSET);
-
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set white balance register" << endl;
 }
@@ -147,7 +144,6 @@ void Camera::setVR(int newVal, int uvValue)
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR,
                               newVal + UV_REG_SHIFT * uvValue
                               + WHITEBALANCE_OFFSET);
-
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set white balance register" << endl;
 }
@@ -162,9 +158,7 @@ uint32_t Camera::getWhiteBalance() const
 void Camera::setWhiteBalance(uint32_t wb)
 {
     dc1394error_t err;
-
     err = dc1394_set_register(dc1394Camera_, WHITEBALANCE_ADDR, wb);
-
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set white balance register" << endl;
 }
@@ -174,7 +168,6 @@ void Camera::setExternTrigger(bool on)
     dc1394error_t err;
     err = dc1394_external_trigger_set_power(dc1394Camera_,
                                             on ? DC1394_ON : DC1394_OFF);
-
     if (err != DC1394_SUCCESS)
         cerr << "Couldn't set external trigger." << endl;
 }

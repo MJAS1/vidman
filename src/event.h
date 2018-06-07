@@ -346,7 +346,7 @@ private:
  * After movement has finished, the duration from event onset to movement end
  * is drawn as feedback to the subsequent frames. Depending on the target_ and
  * tolerance_  variables, the time is drawn either in green if the duration is
- * within limits (succesfull movement) or in red if not (failed movement). The
+ * within limits (successful movement) or in red if not (failed movement). The
  * event emits the succesCode if the movement succeeded and the failCode
  * otherwise.
  *
@@ -354,7 +354,7 @@ private:
  * movement shown as white pixels. The emitted pixmap can then be drawn to a
  * MotionDialog.
  *
- * Currently movement is only detected from a ROI where the right hand was
+ * Currently movement is only detected from a ROI where the hands were
  * situated during the MEG experiments. This may have to be changed in the
  * future for different experiments.
  */

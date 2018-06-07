@@ -55,18 +55,18 @@ signals:
 protected:
     FileWriter(CycDataBuffer* cycBuf, const char* path, const char* suffix,
                const char* ext, QObject* parent = nullptr);
-	virtual ~FileWriter();
+    virtual ~FileWriter();
 
-	virtual void stoppableRun();
+    virtual void stoppableRun();
 
     // Return the header to be written at the beginning of the file.
-	virtual unsigned char* getHeader(int* _len) = 0;
+    virtual unsigned char* getHeader(int* _len) = 0;
 
 private:
-    CycDataBuffer*	cycBuf_;
-    QString			path_, suffix_, ext_;
+    CycDataBuffer*  cycBuf_;
+    QString         path_, suffix_, ext_;
 
-    int				streamId_;
+    int             streamId_;
 };
 
 #endif /* FILEWRITER_H_ */

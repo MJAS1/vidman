@@ -70,10 +70,10 @@ void FileWriter::stoppableRun()
                     emit error(QString("Error opening the file %1. %2")
                                .arg(name).arg(strerror(errno)));
                     continue;
-				}
-				header = getHeader(&headerLen);
-				outData.write((const char*)header, headerLen);
-			}
+                }
+                header = getHeader(&headerLen);
+                outData.write((const char*)header, headerLen);
+            }
 
             outData.write((const char*)(&(chunkAttrib.timestamp)),
                           sizeof(uint64_t));
@@ -81,21 +81,21 @@ void FileWriter::stoppableRun()
                           sizeof(uint8_t));
             outData.write((const char*)(&chunkAttrib.chunkSize),
                           sizeof(uint32_t));
-			outData.write((const char*)databuf, chunkAttrib.chunkSize);
-		}
+            outData.write((const char*)databuf, chunkAttrib.chunkSize);
+        }
         else {
             if (prevIsRec) {
-				outData.close();
-			}
-		}
+                outData.close();
+            }
+        }
 
-		prevIsRec = chunkAttrib.isRec;
+        prevIsRec = chunkAttrib.isRec;
 
         if(shouldStop_) {
             if(prevIsRec) {
-				outData.close();
-			}
-			return;
-		}
-	}
+                outData.close();
+            }
+            return;
+        }
+    }
 }

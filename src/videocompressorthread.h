@@ -44,7 +44,7 @@ protected:
 private:
     CycDataBuffer*	inpBuf_;
     CycDataBuffer*	outBuf_;
-    int				jpgQuality_;
+    int             jpgQuality_;
 };
 
 #endif /* VIDEOCOMPRESSORTHREAD_H_ */

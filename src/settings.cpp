@@ -49,7 +49,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         color = settings_.value("video/color").toBool();
     }
 
-    //Use vsync
+    // Use vsync
     if(!settings_.contains("video/vsync")) {
         settings_.setValue("video/vsync", true);
         vsync = false;
@@ -58,7 +58,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         vsync = settings_.value("video/vsync").toBool();
     }
 
-    //Flip the frames by default.
+    // Flip the frames by default.
     if(!settings_.contains("video/flip")) {
         settings_.setValue("video/flip", true);
         flip = true;
@@ -80,7 +80,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         flipCode = settings_.value("video/flipCode").toInt();
     }
 
-    //Add a fixation point to the video
+    // Add a fixation point to the video
     if(!settings_.contains("video/fixPoint")) {
         settings_.setValue("video/fixPoint", true);
         fixPoint = true;
@@ -89,7 +89,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         fixPoint = settings_.value("video/fixPoint").toBool();
     }
 
-    //Frames per second
+    // Frames per second
     if(!settings_.contains("video/fps")) {
         settings_.setValue("video/fps", 60);
         fps = 60;
@@ -98,7 +98,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         fps = settings_.value("video/fps").toInt();
     }
 
-    //Threhsold for movement detection
+    // Threhsold for movement detection
     if(!settings_.contains("video/movementThreshold")) {
         settings_.setValue("video/movementThreshold", 10);
         movementThreshold = 10;
@@ -107,7 +107,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         movementThreshold = settings_.value("video/movementThreshold").toInt();
     }
 
-    //Video frame width used for changing aspect ratio
+    // Video frame width used for changing aspect ratio
     if(!settings_.contains("video/videoWidth")) {
         settings_.setValue("video/videoWidth", 640);
         videoWidth = 640;
@@ -153,7 +153,7 @@ Settings::Settings() : settings_(ORG_NAME, APP_NAME)
         sprintf(storagePath, settings_.value("misc/data_storage_path").toString().toLocal8Bit().data());
     }
 
-    //Parallel port address
+    // Parallel port address
     if(!settings_.contains("misc/parallel_port_address")) {
         settings_.setValue("misc/parallel_port_address", 0x3010);
         printerPortAddr = 0x3010;

@@ -95,9 +95,9 @@ private:
 
     unsigned char*	dataBuf;
 
-    int				insertPtr;
-    int				getPtr;
-    int				bufSize;
+    int             insertPtr;
+    int             getPtr;
+    int             bufSize;
 
     // Counts the number of bytes available for reading
     QSemaphore*		buffSemaphore;

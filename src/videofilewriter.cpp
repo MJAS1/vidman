@@ -40,8 +40,7 @@ VideoFileWriter::VideoFileWriter(CycDataBuffer* cycBuf, const char* path,
     bufLen_ = strlen(MAGIC_VIDEO_STR) + sizeof(uint32_t);
     buf_ = new unsigned char[bufLen_];
 
-    if(!buf_)
-    {
+    if(!buf_) {
         cerr << "Error allocating memory!" << endl;
         abort();
     }

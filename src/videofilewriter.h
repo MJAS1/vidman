@@ -41,8 +41,8 @@ private:
     VideoFileWriter(const VideoFileWriter&);
     VideoFileWriter& operator=(const VideoFileWriter&);
 
-    int				bufLen_;
-    unsigned char*	buf_;
+    int             bufLen_;
+    unsigned char*  buf_;
 };
 
 #endif /* VIDEOFILEWRITER_H_ */
