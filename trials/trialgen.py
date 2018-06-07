@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """
+    trialgen.py
+
     Author: Manu Sutela
     Copyright (C) 2018 BioMag Laboratory, Helsinki University Central Hospital
 

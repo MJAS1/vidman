@@ -48,7 +48,7 @@ void VideoCompressorThread::stoppableRun()
     while(!shouldStop_)
     {
         // JPEG-related stuff
-        struct jpeg_compress_struct info;
+        struct jpeg_compress_struct cinfo;
         struct jpeg_error_mgr       jerr;
         JSAMPROW                    row_pointer;
         unsigned char*              jpgBuf=NULL;
