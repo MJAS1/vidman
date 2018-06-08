@@ -15,7 +15,7 @@ Thus far, a Stingray F033C FireWire video camera has been used during
 the experiments, but any FireWire camera should work.
 
 VidMan syncs trigger codes with vertical blanks, i.e., a trigger code is
-written to the parallel port each time a the front and back buffers are swapped
+written to the parallel port each time the front and back buffers are swapped
 and a new frame appears on the screen. Some problems with vsync were
 encountered on some older Ubuntu versions, but newer versions should be fine.
 VidMan requires a graphics card with OpenGL support. Some older Nvidia drivers
