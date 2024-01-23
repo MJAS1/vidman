@@ -18,6 +18,7 @@
  */
 
 #include <iostream>
+#include <math.h>
 #include <QCoreApplication>
 #include <QWindow>
 

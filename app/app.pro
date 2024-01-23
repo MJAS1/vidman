@@ -44,7 +44,7 @@ CONFIG(release, debug|release) {
     QMAKE_CXXFLAGS_RELEASE += -O3
 }
 
-PKGCONFIG += opencv
+PKGCONFIG += opencv4
 LIBS += -L../lib -lvidman_$$BUILD -ldc1394 -ljpeg
 
 TARGET = vidman_$$BUILD

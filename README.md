@@ -27,7 +27,7 @@ constant.
 
 ## Installation
 
-VidMan requires [Qt 4.8 or higher](https://www.qt.io/) and [OpenCV 3.0 or higher](https://opencv.org)
+VidMan requires [Qt 5.0 or higher](https://www.qt.io/) and [OpenCV 4.0 or higher](https://opencv.org)
 to compile. Other packages required are `libjpeg-dev` and
 `libdc1394-22-dev`, which can be installed via:
 
@@ -42,6 +42,12 @@ or from the command line inside the VidMan directory type:
 qmake CONFIG+=release
 make
 ```
+
+Additional steps I needed:
+ - Replace opencv with opencv4 in src.pro
+ - Install qtbase5-dev (really part of the first step), but not obvious
+ - Install libqt5opengl5-dev, libhighgui-dev
+
 
 ## Usage
 

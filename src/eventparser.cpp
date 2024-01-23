@@ -20,7 +20,7 @@
 #include <iostream>
 #include <QStringList>
 #include <sys/ioctl.h>
-#include <opencv/highgui.h>
+#include <opencv2/highgui.hpp>
 
 #include "mainwindow.h"
 #include "eventparser.h"
@@ -149,7 +149,7 @@ bool EventParser::parseObject(const QString &str)
 
     if(attr.objectType_ == "image") {
         cv::Mat file(cv::imread(attr.fileName_.toStdString(),
-                                CV_LOAD_IMAGE_UNCHANGED));
+                                cv::IMREAD_UNCHANGED));
         if(file.empty()) {
             emit error(QString("Error: couldn't load image file '%1'.")
                        .arg(attr.fileName_));

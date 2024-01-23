@@ -30,7 +30,7 @@ Camera::Camera() :
     empty_(true)
 {
     // Initialize the camera
-    capCam_.open(CV_CAP_FIREWIRE);
+    capCam_.open(cv::CAP_FIREWIRE);
     if(!capCam_.isOpened()) {
         cerr << "No cameras found" << endl;
         return;
@@ -63,7 +63,7 @@ Camera::Camera() :
     }
     cout << "Using camera with GUID " << dc1394Camera_->guid << endl;
 
-    capCam_.set(CV_CAP_PROP_BUFFERSIZE, RingBufSz);
+    capCam_.set(cv::CAP_PROP_BUFFERSIZE, RingBufSz);
     empty_ = false;
 }
 
@@ -79,7 +79,7 @@ Camera::~Camera()
 
 void Camera::setFPS(int fps)
 {
-    if(!capCam_.set(CV_CAP_PROP_FPS, fps))
+    if(!capCam_.set(cv::CAP_PROP_FPS, fps))
         cerr << "Couldn't set framerate" << endl;
 }
 
