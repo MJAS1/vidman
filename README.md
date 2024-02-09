@@ -29,10 +29,10 @@ constant.
 
 VidMan requires [Qt 5.0 or higher](https://www.qt.io/) and [OpenCV 4.0 or higher](https://opencv.org)
 to compile. Other packages required are `libjpeg-dev` and
-`libdc1394-22-dev`, which can be installed via:
+`libdc1394-22-dev`. On Ubuntu, requirements can be installed with:
 
 ```
-sudo apt-get install libjpeg-dev libdc1394-22-dev
+sudo apt install qtbase5-dev libopencv-dev libjpeg-dev libdc1394-dev
 ```
 
 To compile you can either open the project in Qt creator and proceed from there
@@ -42,12 +42,6 @@ or from the command line inside the VidMan directory type:
 qmake CONFIG+=release
 make
 ```
-
-Additional steps I needed:
- - Replace opencv with opencv4 in src.pro
- - Install qtbase5-dev (really part of the first step), but not obvious
- - Install libqt5opengl5-dev, libhighgui-dev
-
 
 ## Usage
 
