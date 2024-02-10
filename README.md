@@ -27,12 +27,12 @@ constant.
 
 ## Installation
 
-VidMan requires [Qt 4.8 or higher](https://www.qt.io/) and [OpenCV 3.0 or higher](https://opencv.org)
+VidMan requires [Qt 5.0 or higher](https://www.qt.io/) and [OpenCV 4.0 or higher](https://opencv.org)
 to compile. Other packages required are `libjpeg-dev` and
-`libdc1394-22-dev`, which can be installed via:
+`libdc1394-22-dev`. On Ubuntu, requirements can be installed with:
 
 ```
-sudo apt-get install libjpeg-dev libdc1394-22-dev
+sudo apt install qtbase5-dev libopencv-dev libjpeg-dev libdc1394-dev
 ```
 
 To compile you can either open the project in Qt creator and proceed from there

@@ -55,7 +55,7 @@ CameraWorker::CameraWorker(CycDataBuffer* cycBuf, Camera &cam):
         QImage fixImg(":/img/fixPoint.png");
         cv::Mat fixMat = cv::Mat(fixImg.height(), fixImg.width(), CV_8UC4,
                                  fixImg.bits(), fixImg.bytesPerLine()).clone();
-        cv::cvtColor(fixMat, fixMat, CV_RGBA2BGRA);
+        cv::cvtColor(fixMat, fixMat, cv::COLOR_RGBA2BGRA);
 
         if(!fixMat.empty()) {
             cv::Point2i pos((VIDEO_WIDTH-fixMat.cols)/2,
@@ -101,7 +101,7 @@ void CameraWorker::captureFrame()
 
     // Process signals emitted by events_->applyEvents().
     QCoreApplication::processEvents();
-    cv::cvtColor(frame_, frame_, CV_BGR2RGB);
+    cv::cvtColor(frame_, frame_, cv::COLOR_BGR2RGB);
 
     ChunkAttrib chunkAttrib;
     strncpy(chunkAttrib.log, log_.toStdString().c_str(), MAXLOG);

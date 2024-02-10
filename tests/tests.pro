@@ -28,7 +28,7 @@ else {
     CONFIG+=qtestlib
 }
 
-PKGCONFIG += opencv
+PKGCONFIG += opencv4
 LIBS += -L../lib -lvidman_debug -ldc1394 -ljpeg
 
 QMAKE_CXXFLAGS += -std=c++11

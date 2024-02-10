@@ -494,8 +494,8 @@ int MotionDetectorEvent::nChanges()
     cv::absdiff(prev_, next_, d1);
     cv::absdiff(current_, next_, d2);
     cv::bitwise_and(d1, d2, result_);
-    cv::cvtColor(result_, result_, CV_BGR2GRAY);
-    cv::threshold(result_, result_, 5, White, CV_THRESH_BINARY);
+    cv::cvtColor(result_, result_, cv::COLOR_BGR2GRAY);
+    cv::threshold(result_, result_, 5, White, cv::THRESH_BINARY);
     cv::erode(result_,result_,cv::Mat());
     cv::dilate(result_,result_,cv::Mat());
 
