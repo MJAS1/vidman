@@ -3,24 +3,14 @@ name: Test build from source
 on: [push, pull_request]
 jobs:
   test:
-    name: pytest
+    name: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Set up apt
       run: sudo apt-get update
     - name: Install apt dependencies
-      run: sudo DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y \
-        build-essential \
-        cmake \
-        qtbase5-dev \
-        libopencv-dev \
-        libjpeg-dev \
-        libdc1394-dev \
-        libopencv-dev \
-        qt5-qmake \
-        qtbase5-dev \
-        qtbase5-dev-tools
+      run: sudo DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get install -y build-essential cmake qtbase5-dev libopencv-dev libjpeg-dev libdc1394-dev libopencv-dev qt5-qmake qtbase5-dev qtbase5-dev-tools
     - name: Run qmake and make
       run: |
         qmake -makefile
