@@ -8,7 +8,7 @@ FROM ubuntu:22.04
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
+# Copy the parent directory contents into the container
 COPY . .
 
 # Install required apt packages
